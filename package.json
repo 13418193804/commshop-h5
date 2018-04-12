@@ -1,8 +1,8 @@
 {
-  "name": "vue-qq-music",
+  "name": "commonshop",
   "version": "1.0.0",
-  "description": "vue 重构 qq音乐移动端",
-  "author": "shenzekun <726664809@qq.com>",
+  "description": "vue 重构",
+  "author": "liulongtian <1750625203@qq.com>",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
