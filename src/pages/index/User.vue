@@ -25,13 +25,13 @@
 
 
 
-<div class="orderTitle">
+<div class="orderTitle" @click="getOrderList('')">
 <span>我的订单</span>   
     <i class="iconfont icon-youjiantou" style="font-size:20px;"></i>
 </div>
 
 <div class="order-content" >
-<div style="text-align:center;padding:10px 0;width:20%;" v-for="n in orderList" @click="getOrderList()">
+<div style="text-align:center;padding:10px 0;width:20%;" v-for="(n,index) in orderList" @click="getOrderList(n.status)">
     <div><img v-lazy="'1'" alt="" style="width:40px;height:40px;"></div>
     <div>{{n.name}}</div>
 </div>
@@ -82,37 +82,56 @@ import { Action } from "vuex-class";
 })
 export default class User extends Vue {
   @Action("setTabIndex") setTabIndex;
-  orderList=[
+  // ORDER_WAIT_PAY
+  // ORDER_CANCEL_PAY
+  // ORDER_WAIT_SENDGOODS
+  // ORDER_WAIT_RECVGOODS
+  // ORDER_WAIT_REVIEW
+  // ORDER_END_GOODS
+  // ORDER_FINISH
+  orderList = [
     {
-      name:"待付款",
-      url:"",
-      img:""
-    }, {
-      name:"待发货",
-      url:"",
-      img:""
-    }, {
-      name:"待收货",
-      url:"",
-      img:""
-    }, {
-      name:"待评价",
-      url:"",
-      img:""
-    }, {
-      name:"退换/售后",
-      url:"",
-      img:""
+      name: "待付款",
+      url: "",
+      img: "",
+      status: "ORDER_WAIT_PAY"
     },
-  ]
-  getOrderList(){
+    {
+      name: "待发货",
+      url: "",
+      img: "",
+      status: "ORDER_WAIT_SENDGOODS"
+    },
+    {
+      name: "待收货",
+      url: "",
+      img: "",
+      status: "ORDER_WAIT_RECVGOODS"
+    },
+    {
+      name: "待评价",
+      url: "",
+      img: "",
+      status: "ORDER_WAIT_REVIEW"
+    },
+    {
+      name: "退换/售后",
+      url: "",
+      img: "",
+      status: "REFUND"
+    }
+  ];
+  getOrderList(status) {
     this.$router.push({
-      name:'orderlist'
-    })
+      name: "orderlist",
+      query: {
+        orderStatus: status
+      }
+    });
   }
   tools(n) {
     if (n == 2) {
-      this.$router.push({name:"addresslist"})
+      this.$router.push({ name: "addresslist" });
     }
   }
   mounted() {
