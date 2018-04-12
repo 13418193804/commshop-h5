@@ -11,6 +11,7 @@
     "analyz": "NODE_ENV=production npm_config_report=true npm run build"
   },
   "dependencies": {
+    "axios": "^0.17.1",
     "qs": "^6.5.1",
     "swiper": "^4.1.6",
     "vant": "^1.0.3",
