@@ -1,0 +1,270 @@
+<template>
+  <div class="tab-contents" >
+    <comhead ref="comhead" title="购物车" isRightIcon="true"  ></comhead>
+<van-checkbox-group v-model="result">
+
+<van-cell-swipe :right-width="130" v-for="(item,index) in cartList">
+  <van-cell-group>
+    
+<div class="cartItem">
+
+<van-checkbox   :name="item.id">
+  </van-checkbox>
+
+<img v-lazy="item.goodsImg.split(',')[0]" style="width:90px;height:90px;"/>
+
+<div style="flex:1;padding:0 10px;">
+<div>{{item.goodsName}}</div>
+<div style="font-size:14px;color:#666">{{item.goodsName}}</div>
+                <div style="color:red">￥{{item.price}}</div>
+<van-stepper v-model="item.num" style="    float: right;"/>
+</div>
+
+</div>
+
+
+    
+  </van-cell-group>
+  <span slot="right" class="van-cell-swipe__right" @click="deleteCart()" >删除</span>
+  <div slot="right" @click="collect()" class="collect" style="background-color: #f90;width: 100%;
+    height: 100%; display: flex;
+    align-items: center;
+    justify-content: center;">收藏</div>
+</van-cell-swipe>
+</van-checkbox-group>
+
+
+
+<van-submit-bar
+  :price="totalMoney"
+  button-text="提交订单"
+  @submit="onSubmit" style="    margin-bottom: 50px;"
+>
+  <van-checkbox v-model="checked">全选</van-checkbox>
+</van-submit-bar>
+
+
+
+  </div>
+</template>
+
+<script lang="ts">
+import Vue from "vue";
+import Component from "vue-class-component";
+import Swipe from "../../components/Swipe.vue";
+import mixin from "../../config/mixin";
+import { Action } from "vuex-class";
+import comhead from "../../components/Comhead.vue";
+import { Toast } from "vant";
+
+@Component({
+  components: {
+    Swipe,
+    comhead
+  },
+  mixins: [mixin]
+})
+export default class Cart extends Vue {
+  @Action("setTabIndex") setTabIndex;
+  result = [];
+  cartList = [];
+    totalMoney=0;//总金额
+
+  
+  onSubmit() {
+    // if (this.result.length > 0) {
+    //   return;
+    // }
+
+
+    Vue.prototype.$reqFormPost(
+      "/prepare/order/add",
+      {
+        userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .userId,
+        token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .token,
+        cartIdList: this.result.join(",")
+      },
+      res => {
+        if (res == null) {
+          console.log("网络请求错误！");
+          return;
+        }
+        console.log(res);
+
+        if (res.data.status != 200) {
+          console.log(
+            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+          );
+          Toast(res.data.message);
+          return;
+        }
+          this.$router.push({
+      path: "/settle",
+      query: {
+       prepareId: res.data.prepareId
+      }
+    });
+        console.log("预支付订单ID",res.data.prepareId);
+      }
+    );
+
+
+
+
+  
+  }
+  deleteCart(index) {
+    this.cartList.splice(index, 1);
+  }
+  collect() {
+    Toast("收藏成功");
+  }
+  getCartList() {
+    Vue.prototype.$reqFormPost(
+      "/shop/cart/query",
+      {
+        userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .userId,
+        token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .token
+      },
+      res => {
+        if (res == null) {
+          console.log("网络请求错误！");
+          return;
+        }
+        if (res.data.status != 200) {
+          console.log(
+            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+          );
+          return;
+        }
+        console.log("查询购物车", res.data);
+        this.cartList = res.data.data.carts
+      }
+    );
+  }
+
+  mounted() {
+    this.setTabIndex(2);
+    this.getCartList()
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+@import "../../style/utils.scss";
+
+.radios,
+.playlists {
+  margin: 14px 10px 10px;
+  .title {
+    color: #000;
+    font-size: 16px;
+    margin-bottom: 11px;
+    font-weight: normal;
+  }
+  .list {
+    display: flex;
+    flex-wrap: wrap;
+    .list-item {
+      flex: 1;
+      width: 45%;
+      flex-basis: 40%;
+      background-color: #fff;
+      font-size: 14px;
+      margin-bottom: 10px;
+      &:nth-child(2n + 1) {
+        margin-right: 8px;
+      }
+      .list-media {
+        position: relative;
+        margin-bottom: 5px;
+      }
+      .list-info {
+        height: 36px;
+        padding: 0 7px 5px;
+        color: #000;
+        .list_tit {
+          @include ellipsis;
+        }
+      }
+      .listen_count {
+        position: absolute;
+        left: 5px;
+        bottom: 7px;
+        line-height: 12px;
+        color: #fff;
+      }
+      .icon {
+        background-image: url("../../assets/list_sprite.png");
+        background-repeat: no-repeat;
+        background-size: 24px 60px;
+      }
+      .icon_listen {
+        float: left;
+        width: 10px;
+        height: 10px;
+        background-position: 0 -50px;
+        margin-right: 5px;
+      }
+      .icon_play {
+        height: 24px;
+        bottom: 5px;
+        right: 5px;
+        width: 24px;
+        position: absolute;
+        background-position: 0 0;
+      }
+      img {
+        width: 100%;
+        display: block;
+        min-height: 145px;
+      }
+    }
+  }
+}
+
+.tab-contents {
+  position: relative;
+}
+.loading {
+  text-align: center;
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #f4f4f4;
+  img {
+    height: 100px;
+    width: 100px;
+    margin-top: 127px;
+  }
+}
+</style>
+<style>
+.van-cell-swipe__right {
+  color: #fff;
+  font-size: 15px;
+  width: 65px;
+  display: inline-block;
+  text-align: center;
+  background-color: #f44;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cartItem {
+  padding: 10px;
+  background-color: #f2f2f2;
+  display: flex;
+  align-items: center;
+}
+.van-checkbox {
+  padding: 0 10px;
+}
+</style>
