@@ -26,6 +26,7 @@ const setPrepareId: Action<any, any> = ({ commit }, obj) => {
     commit(MutationTreeType.PREPAREID, obj);
 };
 
+
 // get 对外抛出  @Active 取值
 const actions: ActionTree<any, any> = {
     setUserName,
@@ -33,6 +34,7 @@ const actions: ActionTree<any, any> = {
     setTokenInfo,
     setLoginVerifyCode,
     setAddressItem,
-    setPrepareId
+    setPrepareId,
+
 };
 export default actions;

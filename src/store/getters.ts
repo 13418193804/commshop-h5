@@ -28,34 +28,41 @@
 // }
 
 
-import {MutationTreeType} from './mutation-types';
+import { MutationTreeType } from './mutation-types';
 
-    export default {
-        
-        [MutationTreeType.USER_NAME](state) {
-             return state.userName
-         },
-         [MutationTreeType.TAB_INDEX](state) {
-            return state.tabIndex
-        },
-        [MutationTreeType.TOKEN_INFO](state) {
-            if ((localStorage[MutationTreeType.TOKEN_INFO] || '') != '') {
-                state.tokenInfo = JSON.parse(localStorage[MutationTreeType.TOKEN_INFO])
-                return state.tokenInfo;
-            } else {
-                return state.tokenInfo
-            }
-        },
-        [MutationTreeType.VERCODE](state) {
-            return state.codeObj
-        },
-        
-        [MutationTreeType.ADDRESS_ITEM](state) {
-            return state.addressItem
-        },
-        [MutationTreeType.PREPAREID](state) {
-            return state.prepareId
-        },
-        
-        
-     }
+export default {
+
+    [MutationTreeType.USER_NAME](state) {
+        return state.userName
+    },
+    [MutationTreeType.TAB_INDEX](state) {
+        return state.tabIndex
+    },
+    [MutationTreeType.TOKEN_INFO](state) {
+        if ((localStorage[MutationTreeType.TOKEN_INFO] || '') != '') {
+            state.tokenInfo = JSON.parse(localStorage[MutationTreeType.TOKEN_INFO])
+            return state.tokenInfo;
+        } else {
+            return state.tokenInfo
+        }
+    },
+    [MutationTreeType.VERCODE](state) {
+        return state.codeObj
+    },
+
+    [MutationTreeType.ADDRESS_ITEM](state) {
+        return state.addressItem
+    },
+    [MutationTreeType.PREPAREID](state) {
+        return state.prepareId
+    },
+    [MutationTreeType.PREPAREID](state) {
+        return state.prepareId
+    },
+    [MutationTreeType.SYSTEM](state) {
+        return {
+            availWidth: window.screen.availWidth,
+            availHeight: window.screen.availHeight
+        };
+    }
+}

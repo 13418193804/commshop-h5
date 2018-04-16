@@ -211,6 +211,8 @@ export default class shopIndex extends Vue {
     }
   }
   mounted() {
+
+    
     this.setTabIndex(0);
     this.initIndex();
   }
