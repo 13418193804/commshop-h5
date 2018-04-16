@@ -71,24 +71,4 @@ export default class App extends Vue {
   bottom: 20px;
   border-radius: 30px;
 }
-.van-field{
-  width:620px;
-  height:90px;
-  padding:0 0 0 30px;
-  font-size: 30px;
-  line-height: 88px;
-  vertical-align:baseline;
-  color: #000000;
-  box-sizing:border-box;
-  border: 1px solid #d2d2d2;
-  border-radius: 8px;
-}
-.van-button{
-  width:620px;
-  height:90px;
-  font-size: 34px;
-  color: #FFFFFF;
-  background-color: #F4C542;
-  border-radius: 8px;
-}
 </style>

@@ -4,12 +4,12 @@
     <div class="bodyLabel">
 
       <div style="text-align:center;margin-top:230px;">
-        <img v-lazy="'1'"  style="width:200px;height:200px;border-radius: 50px;margin:0 0 70px;">
-        <van-field v-model="loginName"  placeholder="请输入用户名" style="margin-bottom:36px;"/>
+        <img v-lazy="'1'" :style="handlePX('width',200),handlePX('height',200)" style="border-radius: 50px;margin:0 0 70px;">
+        <van-field class="login-input" v-model="loginName"  placeholder="请输入用户名" style="margin-bottom:36px;"/>
 
-        <van-field v-model="password" type="password"  placeholder="请输入密码" style="margin-bottom:70px;"/>
+        <van-field class="login-input" v-model="password" type="password"  placeholder="请输入密码" style="margin-bottom:70px;"/>
 
-        <van-button size="normal" :block="true" style="margin:70px 0 30px;" @click="doLogin()">登录</van-button>
+        <van-button class="login-button" size="normal" :block="true" style="margin:70px 0 30px;" @click="doLogin()">登录</van-button>
 
         <div class="tips">
           <div>
@@ -87,7 +87,12 @@ export default class shopIndex extends Vue {
       }
     );
   }
-  mounted() {}
+
+handlePX(CssName,PxNumber){
+  console.log(CssName)
+  return CssName+":"+this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth/750*PxNumber+"px";
+}
+
 }
 </script>
 
@@ -116,6 +121,26 @@ export default class shopIndex extends Vue {
     line-height:35px;
     display: inline-block;
   }
+}
+.login-button{
+  width:620px;
+  height:90px;
+  font-size: 34px;
+  color: #FFFFFF;
+  background-color: #F4C542;
+  border-radius: 8px;
+}
+.login-input{
+  width:620px;
+  height:90px;
+  padding:0 0 0 30px;
+  font-size: 30px;
+  line-height: 88px;
+  vertical-align:baseline;
+  color: #000000;
+  box-sizing:border-box;
+  border: 1px solid #d2d2d2;
+  border-radius: 8px;
 }
 </style>
 
