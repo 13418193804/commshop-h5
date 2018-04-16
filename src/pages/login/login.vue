@@ -39,7 +39,9 @@ import { Toast } from "vant";
 // import { recommendList } from '../../service/getData';
 
 @Component({
-  components: {},
+  components: {
+    
+  },
   mixins: [mixin]
 })
 export default class shopIndex extends Vue {

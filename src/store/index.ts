@@ -11,18 +11,19 @@ const state = {
     song: {}, // 歌的信息
     artist: '', // 歌的作者
     isPlay: false, // 是否播放
-    userName:"userName",
-    tabIndex:1,
-    tokenInfo:{
-        userId:"",
-        token:""
+    userName: "userName",
+    tabIndex: 1,
+    tokenInfo: {
+        userId: "",
+        token: ""
     },
-    codeObj:60,
-    addressItem:{
-        
+    codeObj: 60,
+    addressItem: {
+
     },
-    prepareId:""
-    
+    prepareId: "",
+
+
 };
 export default new Vuex.Store({
     state,

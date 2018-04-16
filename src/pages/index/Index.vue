@@ -63,7 +63,7 @@
                       </div>
                   
                   
-                   <div style="padding-left:10px;line-height: 23px;">
+                   <div style="padding-left:10px;line-height: 23px;flex:1;">
                      <div class="textLabel">
                       {{goods.goodsName}}
                     </div>
@@ -84,20 +84,25 @@
               
                 <div class="goodsBody" v-if="items.columnNum === 2">
                     <div v-for="(goods,goodsIndex) in items.items" class="goodsItem">
-                   <div style="  width:-webkit-fill-available;  padding: 10px;">
-                      <div style="    border: 1px #e5e5e5 solid;box-sizing: border-box;display:flex;align-items: center;justify-content: center;width:150px;height:150px;    overflow: hidden;    position: relative;">
+                   <div style="  width:-webkit-fill-available;  ">
+                      <div style="    border: 1px #e5e5e5 solid;box-sizing: border-box;display:flex;
+                      align-items: center;justify-content: center;width:150px;height:150px;   
+                       overflow: hidden;    position: relative;    margin: 5px auto;">
                        <img v-lazy="goods.goodsImg.split(',')[0]" style="width:-webkit-fill-available;"/>
                       <div class="textLabel" style="    position: absolute;bottom: 0;    width: 100%;
     background-color: #fff;
     opacity: 0.6;">{{goods.jingle}}</div>
 
                       </div>
+                      <div style="width:150px;margin:0 auto;">
                    <div class="textLabel">
                       {{goods.goodsName}}
                     </div>
                        <div style="color:red">
                       ￥{{goods.labelPrice}}
                     </div>
+</div>
+                    
                     </div>
                     </div>
                 </div>
@@ -206,6 +211,8 @@ export default class shopIndex extends Vue {
     }
   }
   mounted() {
+
+    
     this.setTabIndex(0);
     this.initIndex();
   }
