@@ -58,17 +58,16 @@
                 <div class="goodsBody" v-if="items.columnNum ===1">
                <div v-for="(goods,goodsIndex) in items.items" class="goodsItem" style="width:-webkit-fill-available;">
                    <div style="  width:-webkit-fill-available;  padding: 10px;display:flex;">
-                      <div style="display:flex;    align-items: center;justify-content: center;width:140px;height:140px;    overflow: hidden;">
-                       <img v-lazy="goods.goodsImg.split(',')[0]" style="width:140px;;"/>
+                      <div style="display:flex;    align-items: center;justify-content: center;    overflow: hidden;" :style="handleImageWidth1()">
+                       <img v-lazy="goods.goodsImg.split(',')[0]" style="width:100%"/>
                       </div>
                   
                   
-                   <div style="padding-left:10px;line-height: 23px;flex:1;">
-                     <div class="textLabel">
-                      {{goods.goodsName}}
+                   <div style="padding-left:10px;line-height: 23px;flex:1;" class="textLabel">
+                     <div class="textLabel">{{goods.goodsName}}
                     </div>
-                         <div class="textLabel" style="color:#666;font-size:14px;">
-                      {{goods.jingle}}
+                         <div  class="textLabel"  style="color:#666;font-size:14px;">
+                     {{goods.jingle}}
                     </div>
                        <div style="padding:5px;">
                       <span style="color:red">￥{{goods.marketPrice}}</span>
@@ -86,8 +85,9 @@
                     <div v-for="(goods,goodsIndex) in items.items" class="goodsItem">
                    <div style="  width:-webkit-fill-available;  ">
                       <div style="    border: 1px #e5e5e5 solid;box-sizing: border-box;display:flex;
-                      align-items: center;justify-content: center;width:150px;height:150px;   
-                       overflow: hidden;    position: relative;    margin: 5px auto;">
+                      align-items: center;justify-content: center;   
+                       overflow: hidden;    position: relative;    margin: 5px auto;"
+                       :style="handleImageWidth()">
                        <img v-lazy="goods.goodsImg.split(',')[0]" style="width:-webkit-fill-available;"/>
                       <div class="textLabel" style="    position: absolute;bottom: 0;    width: 100%;
     background-color: #fff;
@@ -210,9 +210,29 @@ export default class shopIndex extends Vue {
       );
     }
   }
+  handleImageWidth() {
+    return (
+      "width:" +
+      this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth *
+        0.45 +
+      "px;height:" +
+      this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth *
+        0.45 +
+      "px;"
+    );
+  }
+  handleImageWidth1() {
+    return (
+      "width:" +
+      this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth *
+        0.35 +
+      "px;height:" +
+      this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth *
+        0.35 +
+      "px;"
+    );
+  }
   mounted() {
-
-    
     this.setTabIndex(0);
     this.initIndex();
   }
