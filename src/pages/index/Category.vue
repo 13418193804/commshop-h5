@@ -4,7 +4,6 @@
 
 <div class="contentBody">
 <div class="leftTitle">
-
         <div v-for="(item,index) in catList" class="left-box-item " :class="index == selectIndex?'active':'fontcolor'" @click="selectCategoyItem(index)">
          <div style="display:flex;    position: relative;    justify-content: center;align-items: center;">
            <div class="activeItem"></div>
@@ -67,11 +66,10 @@ export default class Category extends Vue {
     console.log("分类页加载");
   }
   goProductList(item, index) {
+  
     this.$router.push({
       path: "/productlist",
-      query: {
-        secCategoryItem: JSON.stringify(item)
-      }
+     query:item
     });
   }
   selectCategoyItem(index) {
@@ -238,9 +236,8 @@ export default class Category extends Vue {
     left: 15px;
   }
 }
-.fontcolor{
+.fontcolor {
   color: #a1a1a1;
-  
 }
 </style>
 <style>
