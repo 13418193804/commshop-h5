@@ -3,23 +3,23 @@
 
     <div class="bodyLabel">
 
-      <div style="text-align:center;margin-top:230px;">
-        <img v-lazy="'1'" :style="handlePX('width',200),handlePX('height',200)" style="border-radius: 50px;margin:0 0 70px;">
-        <van-field class="login-input" v-model="loginName"  placeholder="请输入用户名" style="margin-bottom:36px;"/>
+      <div :style="handlePX('margin-top',230)" style="text-align:center;">
+        <img v-lazy="'1'" :style="handlePX('width',200)+handlePX('height',200)" style="border-radius: 50%;margin-bottom:30px">
+        <van-field class="login-input" v-model="loginName"  placeholder="请输入用户名" :style="handlePX('width',620)+handlePX('height',90)+handlePX('font-size',30)" style="margin:0 0 16px;"/>
 
-        <van-field class="login-input" v-model="password" type="password"  placeholder="请输入密码" style="margin-bottom:70px;"/>
+        <van-field class="login-input" v-model="password" type="password"  placeholder="请输入密码" :style="handlePX('width',620)+handlePX('height',90)+handlePX('font-size',30)"/>
 
-        <van-button class="login-button" size="normal" :block="true" style="margin:70px 0 30px;" @click="doLogin()">登录</van-button>
+        <van-button class="login-button" size="normal" :block="true"  :style="handlePX('width',620)+handlePX('height',90)+handlePX('line-height',88)+handlePX('font-size',34)" @click="doLogin()" style="margin:35px 0 15px;">登录</van-button>
 
         <div class="tips">
           <div>
-            <img v-lazy="'1'">
-            <a url="#">注册新用户</a>
+            <img v-lazy="'1'" :style="handlePX('width',35)+handlePX('height',35)">
+            <a url="#" :style="handlePX('line-height',35)+handlePX('font-size',28)">注册新用户</a>
           </div>
-          <div style="width:4px;height:25px;background-color:#A3A3A3;margin:5px 15px;"></div>
+          <div :style="handlePX('width',4)+handlePX('height',25)" style="background-color:#A3A3A3;margin:5px 15px;"></div>
           <div>
-            <img v-lazy="'1'">
-            <a url="#">忘记密码?</a>
+            <img v-lazy="'1'" :style="handlePX('width',35)+handlePX('height',35)">
+            <a url="#" :style="handlePX('line-height',35)+handlePX('font-size',28)">忘记密码?</a>
           </div>
         </div>
 
@@ -39,9 +39,7 @@ import { Toast } from "vant";
 // import { recommendList } from '../../service/getData';
 
 @Component({
-  components: {
-    
-  },
+  components: {},
   mixins: [mixin]
 })
 export default class shopIndex extends Vue {
@@ -88,11 +86,12 @@ export default class shopIndex extends Vue {
     );
   }
 
-handlePX(CssName,PxNumber){
-  console.log(CssName)
-  return CssName+":"+this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth/750*PxNumber+"px";
-}
+  handlePX(CssName, PxNumber) {
+    return CssName +":" +this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth /750 * PxNumber +"px;";
+  }
+  methods:{
 
+  }
 }
 </script>
 
@@ -100,45 +99,34 @@ handlePX(CssName,PxNumber){
 @import "../../style/utils.scss";
 .bodyLabel {
   width: 100%;
-  height: 100vh;
+  // height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.tips{
-  display:flex;
-  flex-direction:row;
+.tips {
+  display: flex;
+  flex-direction: row;
   justify-content: center;
-  div img{
-    width:35px;
-    height:35px;
-    vertical-align:top;
+  div img {
+    vertical-align: top;
   }
-  div a{
-    font-size:28px;
-    color:#A3A3A3;
-    line-height:35px;
+  div a {
+    color: #a3a3a3;
     display: inline-block;
   }
 }
-.login-button{
-  width:620px;
-  height:90px;
-  font-size: 34px;
-  color: #FFFFFF;
-  background-color: #F4C542;
+.login-button {
+  color: #ffffff;
+  background-color: #f4c542;
   border-radius: 8px;
 }
-.login-input{
-  width:620px;
-  height:90px;
-  padding:0 0 0 30px;
-  font-size: 30px;
-  line-height: 88px;
-  vertical-align:baseline;
+.login-input {
+  padding-left:15px;
+  vertical-align: baseline;
   color: #000000;
-  box-sizing:border-box;
+  box-sizing: border-box;
   border: 1px solid #d2d2d2;
   border-radius: 8px;
 }
