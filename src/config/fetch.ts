@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Vue from 'vue';
+import { Toast } from "vant";
 
 const bizUrl = "http://sr.cncloud.com/qichang"
 // let base = 'http://119.23.44.223:8080/';
@@ -39,7 +40,7 @@ export const reqFormUpload = (url, form, callBack) => {
         }
         )
         .catch(error => {
-            console.log(error)
+            console.log(error);
         });
 };
 
@@ -51,7 +52,7 @@ export const reqFormPost = (url, data, callBack) => {
             }
         })
         .then(res => {
-            callBack(res)
+            callBack(res);
 
             if (res == null || res.data == null) {
                 console.error('网络请求失败');
@@ -61,14 +62,14 @@ export const reqFormPost = (url, data, callBack) => {
         }
         )
         .catch(error => {
-            console.log(error)
+            Toast(error.toString())
         });
 };
 
 export const reqUrlGet = (url, data, callBack) => {
     axios.get(bizUrl + url + '?' + querystring.encode(data))
         .then(res => {
-            callBack(res)
+            callBack(res);
             if (res == null || res.data == null) {
                 console.error('网络请求失败');
                 callBack(null);

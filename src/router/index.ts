@@ -36,8 +36,7 @@ export default new Router({
                 {
                     path: '/user',
                     component:  r => require.ensure([], () => r(require('../pages/index/User')), 'user')
-                },
-                  
+                }
             ]
         },
         {
@@ -85,6 +84,21 @@ export default new Router({
             name: 'orderlist',
             component:  r => require.ensure([], () => r(require('../pages/order/orderlist')), 'orderlist')
         },
+        {
+            path: '/pay',
+            name: 'pay',
+            component:  r => require.ensure([], () => r(require('../pages/order/pay')), 'pay')
+        },
+        {
+            path: '/paysuccess',
+            name: 'paysuccess',
+            component:  r => require.ensure([], () => r(require('../pages/order/paysuccess')), 'paysuccess')
+        },
+        {
+            path: '/orderdetail',
+            name: 'orderdetail',
+            component:  r => require.ensure([], () => r(require('../pages/order/orderdetail')), 'orderdetail')
+        }
         
     ]
 });
