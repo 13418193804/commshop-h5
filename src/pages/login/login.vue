@@ -16,7 +16,7 @@
             <img v-lazy="'1'">
             <a url="#">注册新用户</a>
           </div>
-          <div class="" style="width:4px;height:25px;background-color:#A3A3A3;margin:5px 15px;"></div>
+          <div style="width:4px;height:25px;background-color:#A3A3A3;margin:5px 15px;"></div>
           <div>
             <img v-lazy="'1'">
             <a url="#">忘记密码?</a>
