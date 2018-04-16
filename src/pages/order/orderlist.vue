@@ -15,21 +15,23 @@
   v-model="loading"
   :finished="finished"
   @load="onLoad"
->
-  <div v-for="(item,index) in orderList.allOrder.orderList" >
-          <div class="orderTitle">  
-              <div>
+ >
+  <div v-for="(item,index) in orderList.allOrder.orderList" @click="goDetail(item)">
+          <div class="orderTitle textLabel">  
+              <div style="padding-left:10px;">
                 订单号:{{item.orderId}}
               </div>
-              <div>
-                {{item.orderStatus}}
+              <div  style="display: flex;    align-items: center;" >
+                <span :style="formatStatusColor(item.orderStatus)">{{formatStatus(item.orderStatus)}}</span>
+                     <div style="padding:0 15px;position: relative;" v-if="item.orderStatus=='ORDER_FINISH'">
+                       <div class="deleteBorder"> </div>
+                <i class="iconfont icon-iconfontshanchu3" style=""></i>
               </div>
-
+              <div v-else style="width:10px"></div>
+              </div>
           </div>
     <div class="detailBody">
         <div v-for="items in  item.detailList">
-             
-             
     <div class="product1">
        <div style='display:flex;align-items:center'>
         <img v-lazy='items.goodsImg' style='height:80px;width:80px'/>
@@ -43,6 +45,7 @@
       </div>
       <div style='text-align:center;font-size:14px'>
         <div >￥{{items.goodsPrice}}</div>
+        <div class="labelPrice" v-if="items.labelPrice">原价:{{items.labelPrice}}</div>
         <div>X {{items.goodsNum}}</div>
       </div>
     </div>
@@ -53,9 +56,35 @@
       <span style='margin:0 10rpx ;'>共<span style='margin:0 10rpx;'>
           {{item.orderGoodsNum}}
         </span>件商品</span>
-        <span>合计：<span>￥{{item.orderTotalPrice}}</span>
+        <span>合计：<span>￥{{item.orderTotalPrice.toFixed(2)}}</span>
+        <span>(含运费{{item.transportPrice.toFixed(2)}})</span>
         </span>
 </div>
+
+    <div class="settingBody" v-if="item.orderStatus === 'ORDER_WAIT_PAY'">
+      <van-button size="small" style="margin-right:10px;">取消订单</van-button>
+      <van-button size="small" style="margin-right:10px;" :style="formatButtonColor()">支付订单</van-button>
+    </div>
+
+      <div class="settingBody" v-if="item.orderStatus === 'ORDER_WAIT_SENDGOODS'">
+      <van-button size="small" style="margin-right:10px;" :style="formatButtonColor()">申请退款</van-button>
+    </div>
+      <div class="settingBody" v-if="item.orderStatus === 'ORDER_WAIT_RECVGOODS'">
+      <van-button size="small" style="margin-right:10px;">查看物流</van-button>
+      <van-button size="small" style="margin-right:10px;">退货/退款</van-button>
+      <van-button size="small" style="margin-right:10px;" :style="formatButtonColor()">确认收货</van-button>
+    </div>
+
+     <div class="settingBody" v-if="item.orderStatus === 'ORDER_WAIT_REVIEW' ||item.orderStatus === 'ORDER_FINISH'">
+      <van-button size="small" style="margin-right:10px;">再次购买</van-button>
+      <van-button size="small" style="margin-right:10px;">退换/售后</van-button>
+      <van-button size="small" style="margin-right:10px;" :style="formatButtonColor()">评价</van-button>
+    </div>
+
+
+
+
+
 
   <div style="background-color:#f7f7f7;height:10px;">
 
@@ -83,6 +112,7 @@ import { Action } from "vuex-class";
 import { Toast } from "vant";
 // import { recommendList } from '../../service/getData';
 import comhead from "../../components/Comhead.vue";
+import axios from "axios";
 
 @Component({
   components: {
@@ -134,7 +164,55 @@ export default class orderList extends Vue {
       status: "REFUND"
     }
   ];
-
+  // ORDER_WAIT_PAY
+  // ORDER_CANCEL_PAY
+  // ORDER_WAIT_SENDGOODS
+  // ORDER_WAIT_RECVGOODS
+  // ORDER_WAIT_REVIEW
+  // ORDER_END_GOODS
+  // ORDER_FINISH
+  formatStatusColor(status) {
+    switch (status) {
+      case "ORDER_WAIT_SENDGOODS":
+        return "color:red";
+      case "ORDER_WAIT_RECVGOODS":
+        return "color:red";
+      case "ORDER_CANCEL_PAY":
+        return "color:red";
+      case "ORDER_WAIT_PAY":
+        return "color:red";
+      case "ORDER_WAIT_REVIEW":
+        return "color:#ffc630";
+      case "ORDER_FINISH":
+        return "color:#ffc630;";
+    }
+  }
+  formatButtonColor() {
+    return "border-color:#ffc630;color:#ffc630";
+  }
+  formatStatus(status) {
+    // ORDER_WAIT_PAY
+    // ORDER_CANCEL_PAY
+    // ORDER_WAIT_SENDGOODS
+    // ORDER_WAIT_RECVGOODS
+    // ORDER_WAIT_REVIEW
+    // ORDER_END_GOODS
+    // ORDER_FINISH
+    switch (status) {
+      case "ORDER_WAIT_PAY":
+        return "等待付款";
+      case "ORDER_CANCEL_PAY":
+        return "交易取消";
+      case "ORDER_WAIT_SENDGOODS":
+        return "等待发货";
+      case "ORDER_WAIT_RECVGOODS":
+        return "等待收货";
+      case "ORDER_END_GOODS":
+        return "交易结束";
+      case "ORDER_WAIT_REVIEW" || "ORDER_FINISH":
+        return "交易完成";
+    }
+  }
   getOrderList(orderStatus) {
     Vue.prototype.$reqFormPost(
       "/order/queryorder",
@@ -162,9 +240,17 @@ export default class orderList extends Vue {
       }
     );
   }
-
+  goDetail(item){ 
+    this.$router.push({
+      name:"orderdetail",
+        query:{
+          orderId:item.orderId
+        }
+      
+    })
+  }
   mounted() {
-    console.log(this.$route.query)
+    console.log(this.$route.query);
     this.orderTitleList.forEach((item, index) => {
       if (this.$route.query.orderStatus == item.status) {
         this.active = index;
@@ -189,11 +275,29 @@ export default class orderList extends Vue {
   justify-content: center;
 }
 .orderTitle {
+  font-size: 14px;
+
   display: flex;
   height: 50px;
   line-height: 50px;
+  justify-content: space-between;
 }
 .detailBody {
+}
+.deleteBorder {
+  border-left: 1px #e5e5e5 solid;
+  padding: 0 10px;
+  position: absolute;
+  height: 20px;
+  left: 4px;
+  top: 15px;
+}
+.settingBody {
+  border-top: 1px #e5e5e5 solid;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 50px;
 }
 </style>
 

@@ -91,9 +91,15 @@
       </div>
 
 
-
-
-
+<!-- {{detatil.imageList}} -->
+<!-- {{detatil.detail.imageList}} -->
+<div style="    display: flex;
+    flex-wrap: wrap;">
+<div v-for="(item,index) in detatil.detail.imageList" style="    line-height: 0;">
+<img  v-lazy="item"  style="width:100%;"/>
+</div>
+</div>
+<div style="height:50px;"></div>
 
 
   </div>
@@ -193,6 +199,8 @@ export default class ProductDetail extends Vue {
           console.log("预支付订单ID", res.data.data.prepareId);
         }
       );
+    }else{
+      this.addCart()
     }
     console.log(this.pageType);
     // console.log(this.skuItem.skuId);
@@ -281,8 +289,8 @@ export default class ProductDetail extends Vue {
       }
     }
     this.chosenList.push();
-    console.log(this.skuItem);
   }
+ 
   addCart() {
     Vue.prototype.$reqFormPost(
       "/shop/cart/add",
@@ -292,7 +300,7 @@ export default class ProductDetail extends Vue {
         token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
           .token,
         goodsId: this.goodsId,
-        skuId: this.detatil.sku[0].skuId
+        skuId: this.skuItem['skuId']
       },
       res => {
         if (res == null) {
@@ -305,6 +313,7 @@ export default class ProductDetail extends Vue {
           );
           return;
         }
+        Toast('加入成功')
         console.log("加入购物车", res.data);
       }
     );

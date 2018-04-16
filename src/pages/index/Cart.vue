@@ -19,10 +19,7 @@
                 <div style="color:red">￥{{item.price}}</div>
 <van-stepper v-model="item.num" style="    float: right;"/>
 </div>
-
 </div>
-
-
     
   </van-cell-group>
   <span slot="right" class="van-cell-swipe__right" @click="deleteCart()" >删除</span>
@@ -33,7 +30,7 @@
 </van-cell-swipe>
 </van-checkbox-group>
 
-
+<div style="height:99px"></div>
 
 <van-submit-bar
   :price="totalMoney"
@@ -65,17 +62,17 @@ import { Toast } from "vant";
   mixins: [mixin]
 })
 export default class Cart extends Vue {
+  @Action("setPrepareId") setPrepareId;
+
   @Action("setTabIndex") setTabIndex;
   result = [];
   cartList = [];
-    totalMoney=0;//总金额
+  totalMoney = 0; //总金额
 
-  
   onSubmit() {
     // if (this.result.length > 0) {
     //   return;
     // }
-
 
     Vue.prototype.$reqFormPost(
       "/prepare/order/add",
@@ -87,6 +84,7 @@ export default class Cart extends Vue {
         cartIdList: this.result.join(",")
       },
       res => {
+          
         if (res == null) {
           console.log("网络请求错误！");
           return;
@@ -100,20 +98,13 @@ export default class Cart extends Vue {
           Toast(res.data.message);
           return;
         }
-          this.$router.push({
-      path: "/settle",
-      query: {
-       prepareId: res.data.prepareId
-      }
-    });
-        console.log("预支付订单ID",res.data.prepareId);
+        this.setPrepareId(res.data.data.prepareId);
+        this.$router.push({
+          path: "/settle"
+        });
+        console.log("预支付订单ID", res.data.prepareId);
       }
     );
-
-
-
-
-  
   }
   deleteCart(index) {
     this.cartList.splice(index, 1);
@@ -142,14 +133,14 @@ export default class Cart extends Vue {
           return;
         }
         console.log("查询购物车", res.data);
-        this.cartList = res.data.data.carts
+        this.cartList = res.data.data.carts;
       }
     );
   }
 
   mounted() {
     this.setTabIndex(2);
-    this.getCartList()
+    this.getCartList();
   }
 }
 </script>

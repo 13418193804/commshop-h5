@@ -4,10 +4,26 @@
             <transition name="move" mode="out-in"><router-view></router-view></transition>
         </div>
         <van-tabbar v-model="active">
-  <van-tabbar-item icon="shop" @click="selectTab(0)">首页</van-tabbar-item>
-  <van-tabbar-item icon="chat" @click="selectTab(1)">分类</van-tabbar-item>
-  <van-tabbar-item icon="records" @click="selectTab(2)">购物车</van-tabbar-item>
-  <van-tabbar-item icon="gold-coin" @click="selectTab(3)">个人</van-tabbar-item>
+  <van-tabbar-item  @click="selectTab(0)">
+    <div style="text-align:center">
+      <i class="iconfont icon-shouye" style="font-size:22px;"></i>
+    </div>
+    首页</van-tabbar-item>
+  <van-tabbar-item  @click="selectTab(1)">
+   <div style="text-align:center">
+      <i class="iconfont icon-fenleifill" style="font-size:22px;"></i>
+    </div>
+    分类</van-tabbar-item>
+  <van-tabbar-item  @click="selectTab(2)">
+   <div style="text-align:center">
+      <i class="iconfont icon-gouwucheman" style="font-size:22px;"></i>
+    </div>
+    购物车</van-tabbar-item>
+  <van-tabbar-item  @click="selectTab(3)">
+  <div style="text-align:center">
+      <i class="iconfont icon-iconuser" style="font-size:22px;"></i>
+    </div>
+    个人</van-tabbar-item>
 </van-tabbar>
   </div>
 </template>
