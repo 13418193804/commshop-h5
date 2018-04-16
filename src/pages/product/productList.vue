@@ -38,13 +38,16 @@ import comhead from "../../components/Comhead.vue";
   mixins: [mixin]
 })
 
-//  handleHeight(){
-//         return document.getElementsByClassName("bodyItem")[0].offsetWidth + 'px'
-//     }
+
 export default class ProductList extends Vue {
+
   secCategoryItem = {
-    catId: ""
+    catId: "",
   };
+
+
+
+
   goodsList = [];
   goProductDetail(goodsId) {
     this.$router.push({

@@ -70,9 +70,9 @@
       <van-button size="small" style="margin-right:10px;" :style="formatButtonColor()">申请退款</van-button>
     </div>
       <div class="settingBody" v-if="item.orderStatus === 'ORDER_WAIT_RECVGOODS'">
-      <van-button size="small" style="margin-right:10px;">查看物流</van-button>
+      <van-button size="small" style="margin-right:10px;" @click.stop="getShip(item)">查看物流</van-button>
       <van-button size="small" style="margin-right:10px;">退货/退款</van-button>
-      <van-button size="small" style="margin-right:10px;" :style="formatButtonColor()">确认收货</van-button>
+      <van-button size="small" style="margin-right:10px;" :style="formatButtonColor()" @click.stop="recvgoods(item.orderId)">确认收货</van-button>
     </div>
 
      <div class="settingBody" v-if="item.orderStatus === 'ORDER_WAIT_REVIEW' ||item.orderStatus === 'ORDER_FINISH'">
@@ -109,7 +109,7 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import mixin from "../../config/mixin";
 import { Action } from "vuex-class";
-import { Toast } from "vant";
+import { Toast,Dialog } from "vant";
 // import { recommendList } from '../../service/getData';
 import comhead from "../../components/Comhead.vue";
 import axios from "axios";
@@ -186,6 +186,43 @@ export default class orderList extends Vue {
       case "ORDER_FINISH":
         return "color:#ffc630;";
     }
+  }
+  getShip(item){
+    this.$router.push({name:"ship",query:item})
+  }
+  recvgoods(orderId){
+      Dialog.confirm({
+  title: '提示',
+  message: '确认收货?'
+}).then(() => {
+Vue.prototype.$reqFormPost(
+      "/order/queryorder",
+      {
+        userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .userId,
+        token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .token,
+      orderId:orderId
+      },
+      res => {
+        if (res == null) {
+          console.log("网络请求错误！");
+          return;
+        }
+        if (res.data.status != 200) {
+          console.log(
+            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+          );
+          Toast(res.data.message);
+          return;
+        }
+        this.getOrderList(this.$route.query.orderStatus)
+      }
+    );
+  // on confirm
+}).catch(() => {
+  // on cancel
+});
   }
   formatButtonColor() {
     return "border-color:#ffc630;color:#ffc630";

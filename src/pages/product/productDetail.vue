@@ -78,21 +78,13 @@
       <div style='display:flex;align-items:center'>数量：</div>
 
     <van-stepper v-model="num" style="    float: right;"/>
-
     </div>
-
   <div style='display:flex;justify-content: center;align-items: center;width:100%;color:#fff;background-color:rgb(229, 28, 35);' @click='addCar'>
       <div style='margin:10px'>确定</div>
     </div>
       </div>
 </div>
-
-
       </div>
-
-
-<!-- {{detatil.imageList}} -->
-<!-- {{detatil.detail.imageList}} -->
 <div style="    display: flex;
     flex-wrap: wrap;">
 <div v-for="(item,index) in detatil.detail.imageList" style="    line-height: 0;">

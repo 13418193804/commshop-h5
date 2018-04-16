@@ -98,6 +98,11 @@ export default new Router({
             path: '/orderdetail',
             name: 'orderdetail',
             component:  r => require.ensure([], () => r(require('../pages/order/orderdetail')), 'orderdetail')
+        },
+        {
+            path: '/ship',
+            name: 'ship',
+            component:  r => require.ensure([], () => r(require('../pages/order/ship')), 'ship')
         }
         
     ]
