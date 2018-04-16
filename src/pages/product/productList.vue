@@ -8,10 +8,8 @@
     <div class="bodyItem" style="display:flex;" @click="goProductDetail(item.goodsId)">
   <div>
 
-
     <div><img v-lazy="item.goodsImg.split(',')[0]" style="width:100px;height:100px;"/></div>
     <div> {{item.goodsName}}</div>
-
   </div>
     </div>
   </van-col>
@@ -42,7 +40,6 @@ import comhead from "../../components/Comhead.vue";
 export default class ProductList extends Vue {
 
   secCategoryItem = {
-    catId: "",
   };
 
 
@@ -62,7 +59,7 @@ export default class ProductList extends Vue {
     Vue.prototype.$reqFormPost(
       "/user/goods/list",
       {
-        catId: this.secCategoryItem.catId
+        catId: this.secCategoryItem['catId']
       },
       res => {
         if (res == null) {
@@ -79,9 +76,29 @@ export default class ProductList extends Vue {
       }
     );
   }
-
+  
+  getCategoryList(){
+     Vue.prototype.$reqFormPost("/user/cat/list", {
+     parentId:  this.$route.query.parentId
+     }, res => {
+      if (res == null) {
+        console.log("网络请求错误！");
+        return;
+      }
+      if (res.data.status != 200) {
+        console.log(
+          "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+        );
+        return;
+      }
+      console.log(res.data.data);
+    });
+      
+    }
   mounted() {
-    this.secCategoryItem = JSON.parse(this.$route.query.secCategoryItem);
+    console.log(this.$route.query)
+  
+    this.secCategoryItem = this.$route.query
     this.getProductList();
   }
 }
