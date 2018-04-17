@@ -103,6 +103,11 @@ export default new Router({
             path: '/ship',
             name: 'ship',
             component:  r => require.ensure([], () => r(require('../pages/order/ship')), 'ship')
+        },
+        {
+            path: '/forget',
+            name: 'forget',
+            component:  r => require.ensure([], () => r(require('../pages/login/forget')), 'forget')
         }
         
     ]
