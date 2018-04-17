@@ -1,30 +1,32 @@
 <template>
   <div class="tab-contents">
-
-        <div class="bodyLabel">
+<comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="用户注册" isRightIcon="true"  ></comhead>
+        <div class="bodyLabel" :style="handlePX('padding-top',80)">
 
 <div style="text-align:center;">
-<van-field v-model="loginName"  label="用户名" placeholder="请输入用户名" />
+<van-field class="sign-input" v-model="loginName"  placeholder="请输入手机号码"  :style="handlePX('width',620)+handlePX('margin-bottom',36)+handlePX('height',90)" />
 
-<van-field v-model="password" type="password"  label="密码" placeholder="输入6-12位密码" />
-<van-field v-model="repassword" type="password"  label="密码" placeholder="确认密码" />
-
-
-<van-cell-group>
+<!-- <van-cell-group>
   <van-field
     center
     v-model="code"
-    label="　"
     placeholder="请输入验证码"
     icon="clear"
     @click-icon="code = ''"
   >
-    <van-button slot="button" size="small" type="primary" @click="getVistyCode()">{{vistyText()}}</van-button>
+    <van-button class="sign-mini-button" slot="button" size="small" type="primary" @click="getVistyCode()">{{vistyText()}}</van-button>
   </van-field>
-</van-cell-group>
+</van-cell-group> -->
+<div class="sign-code-group">
+<van-field class="sign-input" v-model="code" placeholder="请输入验证码" :style="handlePX('width',295)+handlePX('height',90)"/>
+<van-button class="sign-mini-button" slot="button" size="small" type="primary" @click="getVistyCode()" :style="handlePX('width',295)+handlePX('height',90)">{{vistyText()}}</van-button>
+</div>
 
+<van-field class="sign-input" v-model="password" type="password" placeholder="输入6-12位密码" :style="handlePX('width',620)+handlePX('margin-top',36)+handlePX('height',90)"/>
+<van-field class="sign-input" v-model="repassword" type="password" placeholder="请确认密码" :style="handlePX('width',620)+handlePX('margin-top',36)+handlePX('height',90)"/>
 
-<van-button size="normal" :block="true" style="margin:20px 0;" @click="doSign()">立即注册</van-button>
+<van-button class="sign-button" size="normal" :block="true" style="margin:20px 0;" @click="doSign()" :style="handlePX('width',620)+handlePX('margin-top',390)+handlePX('height',90)">立即注册</van-button>
+<div><p style="color:#d2d2d2;">注册表示您同意<a href="#" style="color:#f4c542;">《用户协议》</a></p></div>  
 
 </div>  
 
@@ -39,11 +41,14 @@ import Component from "vue-class-component";
 import mixin from "../../config/mixin";
 import { Action } from "vuex-class";
 import { Toast } from 'vant';
+import comhead from "../../components/Comhead.vue";
 
 // import { recommendList } from '../../service/getData';
 
 @Component({
-  components: {},
+  components: {
+    comhead
+  },
   mixins: [mixin]
 }) 
 export default class Sign extends Vue {
@@ -138,6 +143,9 @@ Toast(res.data.message)
         this.$router.push("/login")
       })
  }  
+ handlePX(CssName, PxNumber) {
+    return CssName +":" +this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth /750 * PxNumber +"px;";
+  }
   mounted() {
 
 
@@ -157,7 +165,29 @@ Toast(res.data.message)
     height:100vh;
     display:flex;
      align-items: flex-start;justify-content: center;
-     padding:90px 20px;
+}
+.sign-button {
+  color: #ffffff;
+  background-color: #f4c542;
+  border-radius: 8px;
+}
+.sign-input {
+  vertical-align: baseline;
+  color: #000000;
+  box-sizing: border-box;
+  border: 1px solid #d2d2d2;
+  border-radius: 8px;
+}
+.sign-mini-button{
+  background-color: #fff;
+  color: #f4c542;
+  border: 1px solid #f4c542;
+  border-radius: 8px;
+}
+.sign-code-group{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 </style>
 

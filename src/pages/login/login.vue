@@ -1,15 +1,15 @@
 <template>
   <div class="tab-contents">
 
-    <div class="bodyLabel">
+    <div class="bodyLabel" :style="handlePX('padding-left',65)+handlePX('padding-right',65)">
 
-      <div :style="handlePX('margin-top',230)" style="text-align:center;">
+      <div style="text-align:center;">
         <img v-lazy="'1'" :style="handlePX('width',200)+handlePX('height',200)" style="border-radius: 50%;margin-bottom:30px">
-        <van-field class="login-input" v-model="loginName"  placeholder="请输入用户名" :style="handlePX('width',620)+handlePX('height',90)+handlePX('font-size',30)" style="margin:0 0 16px;"/>
+        <van-field class="login-input" v-model="loginName"  placeholder="请输入用户名" :style="handlePX('width',620)+handlePX('font-size',30)+handlePX('padding-left',30)+handlePX('height',90)" style="margin:0 0 16px;"/>
 
-        <van-field class="login-input" v-model="password" type="password"  placeholder="请输入密码" :style="handlePX('width',620)+handlePX('height',90)+handlePX('font-size',30)"/>
+        <van-field class="login-input" v-model="password" type="password"  placeholder="请输入密码" :style="handlePX('width',620)+handlePX('font-size',30)+handlePX('padding-left',30)+handlePX('height',90)"/>
 
-        <van-button class="login-button" size="normal" :block="true"  :style="handlePX('width',620)+handlePX('height',90)+handlePX('line-height',88)+handlePX('font-size',34)" @click="doLogin()" style="margin:35px 0 15px;">登录</van-button>
+        <van-button class="login-button" size="normal" :block="true"  :style="handlePX('width',620)+handlePX('line-height',88)+handlePX('font-size',34)+handlePX('height',90)" @click="doLogin()" style="margin:35px 0 15px;">登录</van-button>
 
         <div class="tips">
           <div>
@@ -89,7 +89,7 @@ export default class shopIndex extends Vue {
   handlePX(CssName, PxNumber) {
     return CssName +":" +this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth /750 * PxNumber +"px;";
   }
-  methods:{
+  methods(){
 
   }
 }
@@ -99,7 +99,7 @@ export default class shopIndex extends Vue {
 @import "../../style/utils.scss";
 .bodyLabel {
   width: 100%;
-  // height: 100vh;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -110,7 +110,7 @@ export default class shopIndex extends Vue {
   flex-direction: row;
   justify-content: center;
   div img {
-    vertical-align: top;
+    vertical-align: middle;
   }
   div a {
     color: #a3a3a3;
@@ -123,7 +123,6 @@ export default class shopIndex extends Vue {
   border-radius: 8px;
 }
 .login-input {
-  padding-left:15px;
   vertical-align: baseline;
   color: #000000;
   box-sizing: border-box;
