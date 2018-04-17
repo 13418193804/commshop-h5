@@ -7,7 +7,6 @@
   <van-cell-group>
     
 <div class="cartItem">
-
 <van-checkbox   :name="item.id">
   </van-checkbox>
 
@@ -22,13 +21,14 @@
 </div>
     
   </van-cell-group>
-  <span slot="right" class="van-cell-swipe__right" @click="deleteCart()" >删除</span>
+  <span slot="right" class="van-cell-swipe__right" @click="deleteCart(index)" >删除</span>
   <div slot="right" @click="collect()" class="collect" style="background-color: #f90;width: 100%;
     height: 100%; display: flex;
     align-items: center;
     justify-content: center;">收藏</div>
 </van-cell-swipe>
 </van-checkbox-group>
+
 
 <div style="height:99px"></div>
 
@@ -37,9 +37,8 @@
   button-text="提交订单"
   @submit="onSubmit" style="    margin-bottom: 50px;"
 >
-  <van-checkbox v-model="checked">全选</van-checkbox>
+  <van-checkbox v-model="checked" @change="allSelect">全选</van-checkbox>
 </van-submit-bar>
-
 
 
   </div>
@@ -66,9 +65,22 @@ export default class Cart extends Vue {
 
   @Action("setTabIndex") setTabIndex;
   result = [];
+  checked = false;
   cartList = [];
   totalMoney = 0; //总金额
 
+  allSelect(e) {
+    if (e) {
+      let result = [];
+      this.cartList.forEach((item, index) => {
+        console.log();
+        result.push(item.id);
+      });
+      this.result = result;
+    } else {
+      this.result = [];
+    }
+  }
   onSubmit() {
     // if (this.result.length > 0) {
     //   return;
@@ -84,7 +96,6 @@ export default class Cart extends Vue {
         cartIdList: this.result.join(",")
       },
       res => {
-          
         if (res == null) {
           console.log("网络请求错误！");
           return;
@@ -107,7 +118,30 @@ export default class Cart extends Vue {
     );
   }
   deleteCart(index) {
-    this.cartList.splice(index, 1);
+    Vue.prototype.$reqFormPost(
+      "/shop/cart/delete",
+      {
+        userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .userId,
+        token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .token,
+        cartIds: this.cartList[index].id
+      },
+      res => {
+        if (res == null) {
+          console.log("网络请求错误！");
+          return;
+        }
+        if (res.data.status != 200) {
+          console.log(
+            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+          );
+          return;
+        }
+        Toast("已删除");
+        this.getCartList();
+      }
+    );
   }
   collect() {
     Toast("收藏成功");
