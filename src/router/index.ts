@@ -27,88 +27,89 @@ export default new Router({
                 },
                 {
                     path: '/category',
-                    component:  r => require.ensure([], () => r(require('../pages/index/category')), 'category')
+                    component: r => require.ensure([], () => r(require('../pages/index/category')), 'category')
                 },
                 {
                     path: '/cart',
-                    component:  r => require.ensure([], () => r(require('../pages/index/Cart')), 'cart')
+                    name: 'cart',
+                    component: r => require.ensure([], () => r(require('../pages/index/Cart')), 'cart')
                 },
                 {
                     path: '/user',
-                    component:  r => require.ensure([], () => r(require('../pages/index/User')), 'user')
+                    component: r => require.ensure([], () => r(require('../pages/index/User')), 'user')
                 }
             ]
         },
         {
             path: '/productlist',
             name: 'productlist',
-            component:  r => require.ensure([], () => r(require('../pages/product/productList')), 'user')
+            component: r => require.ensure([], () => r(require('../pages/product/productList')), 'user')
         },
         {
             path: '/login',
             name: 'login',
-            component:  r => require.ensure([], () => r(require('../pages/login/login')), 'login')
+            component: r => require.ensure([], () => r(require('../pages/login/login')), 'login')
         },
         {
             path: '/sign',
             name: 'sign',
-            component:  r => require.ensure([], () => r(require('../pages/login/sign')), 'user')
+            component: r => require.ensure([], () => r(require('../pages/login/sign')), 'user')
         },
         {
             path: '/productdetail',
             name: 'productdetail',
-            component:  r => require.ensure([], () => r(require('../pages/product/productDetail')), 'productdetail')
+            component: r => require.ensure([], () => r(require('../pages/product/productDetail')), 'productdetail')
         },
         {
             path: '/settle',
             name: 'settle',
-            component:  r => require.ensure([], () => r(require('../pages/order/settle')), 'settle')
+            component: r => require.ensure([], () => r(require('../pages/order/settle')), 'settle')
         },
         {
             path: '/addresslist',
             name: 'addresslist',
-            component:  r => require.ensure([], () => r(require('../pages/address/addresslist')), 'addresslist')
+            component: r => require.ensure([], () => r(require('../pages/address/addresslist')), 'addresslist')
         },
         {
             path: '/address',
             name: 'address',
-            component:  r => require.ensure([], () => r(require('../pages/address/address')), 'address')
+            component: r => require.ensure([], () => r(require('../pages/address/address')), 'address')
         },
         {
             path: '/selectaddress',
             name: 'selectaddress',
-            component:  r => require.ensure([], () => r(require('../pages/address/selectaddress')), 'selectaddress')
+            component: r => require.ensure([], () => r(require('../pages/address/selectaddress')), 'selectaddress')
         },
         {
             path: '/orderlist',
             name: 'orderlist',
-            component:  r => require.ensure([], () => r(require('../pages/order/orderlist')), 'orderlist')
+            component: r => require.ensure([], () => r(require('../pages/order/orderlist')), 'orderlist')
         },
         {
             path: '/pay',
             name: 'pay',
-            component:  r => require.ensure([], () => r(require('../pages/order/pay')), 'pay')
+            component: r => require.ensure([], () => r(require('../pages/order/pay')), 'pay')
         },
         {
             path: '/paysuccess',
             name: 'paysuccess',
-            component:  r => require.ensure([], () => r(require('../pages/order/paysuccess')), 'paysuccess')
+            component: r => require.ensure([], () => r(require('../pages/order/paysuccess')), 'paysuccess')
         },
         {
             path: '/orderdetail',
             name: 'orderdetail',
-            component:  r => require.ensure([], () => r(require('../pages/order/orderdetail')), 'orderdetail')
+            component: r => require.ensure([], () => r(require('../pages/order/orderdetail')), 'orderdetail')
         },
         {
             path: '/ship',
             name: 'ship',
-            component:  r => require.ensure([], () => r(require('../pages/order/ship')), 'ship')
+            component: r => require.ensure([], () => r(require('../pages/order/ship')), 'ship')
         },
         {
             path: '/forget',
             name: 'forget',
-            component:  r => require.ensure([], () => r(require('../pages/login/forget')), 'forget')
+            component: r => require.ensure([], () => r(require('../pages/login/forget')), 'forget')
         }
-        
+
     ]
 });

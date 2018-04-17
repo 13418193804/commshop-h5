@@ -48,21 +48,16 @@
                 </div>
             </div>
             </div>
-
-
           <div v-if="items.componentType === 'COMPONENT_TYPE_GOODS_TAG'">
               <div class="goodsTitleTab">
                   <span>{{items.name}}</span>
               </div>
-
                 <div class="goodsBody" v-if="items.columnNum ===1">
                <div v-for="(goods,goodsIndex) in items.items" class="goodsItem" style="width:-webkit-fill-available;">
                    <div style="  width:-webkit-fill-available;  padding: 10px;display:flex;">
                       <div style="display:flex;    align-items: center;justify-content: center;    overflow: hidden;" :style="handleImageWidth1()">
                        <img v-lazy="goods.goodsImg.split(',')[0]" style="width:100%"/>
                       </div>
-                  
-                  
                    <div style="padding-left:10px;line-height: 23px;flex:1;" class="textLabel">
                      <div class="textLabel">{{goods.goodsName}}
                     </div>
