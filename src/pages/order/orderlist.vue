@@ -22,7 +22,11 @@
                 订单号:{{item.orderId}}
               </div>
               <div  style="display: flex;    align-items: center;" >
-                <span :style="formatStatusColor(item.orderStatus)">{{formatStatus(item.orderStatus)}}</span>
+
+                <span v-if="item.detailList[0].refundStatus == 'APPLY_REFUND'">退款中</span>
+
+                <span v-if="item.detailList[0].refundStatus == 'WITHOUT_REFUND'" :style="formatStatusColor(item.orderStatus)">{{formatStatus(item.orderStatus)}}</span>
+                  
                      <div style="padding:0 15px;position: relative;" v-if="item.orderStatus=='ORDER_FINISH'">
                        <div class="deleteBorder"> </div>
                 <i class="iconfont icon-iconfontshanchu3" style=""></i>
@@ -67,7 +71,10 @@
     </div>
 
       <div class="settingBody" v-if="item.orderStatus === 'ORDER_WAIT_SENDGOODS'">
-      <van-button size="small" style="margin-right:10px;" :style="formatButtonColor()">申请退款</van-button>
+
+      <van-button v-if="item.detailList[0].refundStatus == 'APPLY_REFUND'" size="small" style="margin-right:10px;" :style="formatButtonColor()" @click.stop="doCancelRefund(item)">取消退款</van-button>
+
+      <van-button v-if="item.detailList[0].refundStatus == 'WITHOUT_REFUND'" size="small" style="margin-right:10px;" :style="formatButtonColor()" @click.stop="doRefund(item)">申请退款</van-button>
     </div>
       <div class="settingBody" v-if="item.orderStatus === 'ORDER_WAIT_RECVGOODS'">
       <van-button size="small" style="margin-right:10px;" @click.stop="getShip(item)">查看物流</van-button>
@@ -171,6 +178,88 @@ export default class orderList extends Vue {
   // ORDER_WAIT_REVIEW
   // ORDER_END_GOODS
   // ORDER_FINISH
+
+doCancelRefund(item){
+  console.log("取消退款")
+Vue.prototype.$reqFormPost(
+          "/order/refund/delete",
+          {
+            userId: this.$store.getters[
+              Vue.prototype.MutationTreeType.TOKEN_INFO
+            ].userId,
+            token: this.$store.getters[
+              Vue.prototype.MutationTreeType.TOKEN_INFO
+            ].token,
+            refundId: item.detailList[0].refundOrderList[0].refundId
+          },
+          res => {
+            if (res == null) {
+              console.log("网络请求错误！");
+              return;
+            }
+            if (res.data.status != 200) {
+              console.log(
+                "需控制错误码" +
+                  res.data.status +
+                  ",错误信息：" +
+                  res.data.message
+              );
+              Toast(res.data.message);
+              return;
+            }
+
+            console.log("取消退款成功")
+          }
+        );
+
+
+}
+  doRefund(item) {
+    console.log(item);
+    Dialog.confirm({
+      title: "提示",
+      message: "确定申请退款吗？"
+    })
+      .then(() => {
+
+        Vue.prototype.$reqFormPost(
+          "/order/refund/apply",
+          {
+            userId: this.$store.getters[
+              Vue.prototype.MutationTreeType.TOKEN_INFO
+            ].userId,
+            token: this.$store.getters[
+              Vue.prototype.MutationTreeType.TOKEN_INFO
+            ].token,
+            orderId: item.orderId,
+            money: item.orderTotalPrice,
+            refundType: "REFUND"
+          },
+          res => {
+            if (res == null) {
+              console.log("网络请求错误！");
+              return;
+            }
+            if (res.data.status != 200) {
+              console.log(
+                "需控制错误码" +
+                  res.data.status +
+                  ",错误信息：" +
+                  res.data.message
+              );
+              Toast(res.data.message);
+              return;
+            }
+
+            console.log("申请退款成功")
+          }
+        );
+        // on confirm
+      })
+      .catch(() => {
+        // on cancel
+      });
+  }
   formatStatusColor(status) {
     switch (status) {
       case "ORDER_WAIT_SENDGOODS":

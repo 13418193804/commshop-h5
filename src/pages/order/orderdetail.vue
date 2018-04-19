@@ -73,6 +73,9 @@
  <div>
         创建时间：{{detail.createTime}}
     </div>
+ <div>
+        支付时间：{{detail.payTime}}
+    </div>
 
 </div>
         <div style="height:10px;background-color:#f7f7f7;"></div>
@@ -106,7 +109,7 @@ import comhead from "../../components/Comhead.vue";
   mixins: [mixin]
 })
 export default class orderdetail extends Vue {
-  orderId = "";
+  orderId ="";
   detail = "";
   formatStatus(status) {
     // ORDER_WAIT_PAY

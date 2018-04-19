@@ -66,7 +66,7 @@ export default class shopIndex extends Vue {
             .token,
           body: this.obj["body"],
           outTradeNo: this.obj["payId"],
-          totalFee:0.01
+          totalFee:1
         },
         res => {
           if (res == null) {

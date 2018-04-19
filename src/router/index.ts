@@ -109,7 +109,13 @@ export default new Router({
             path: '/forget',
             name: 'forget',
             component: r => require.ensure([], () => r(require('../pages/login/forget')), 'forget')
+        },
+        {
+            path: '/refund',
+            name: 'refund',
+            component: r => require.ensure([], () => r(require('../pages/order/refund')), 'refund')
         }
+        
 
     ]
 });
