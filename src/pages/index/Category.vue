@@ -16,7 +16,7 @@
 
 
 <div class="catList">
-    <div style="width:33%;padding:15px;overflow: hidden;" v-for="(item,index) in catContent" @click="goProductList(item,index)">
+    <div style="width:33%;padding:15px;overflow: hidden;" v-for="(item,index) in catContent" @click="goProductList(item.catId,item.parentId,index)">
     <div class="cat-item" >
             <div>
                  <img v-lazy="item.catIcon"  alt="" style="    border-radius: 50px;">
@@ -65,11 +65,16 @@ export default class Category extends Vue {
     this.getCatList();
     console.log("分类页加载");
   }
-  goProductList(item, index) {
-  
+  goProductList(catId,parentCatId,selectIndex) {
+    
     this.$router.push({
       path: "/productlist",
-     query:item
+     query:{
+       catId:catId,
+       parentCatId,
+       selectIndex,
+       title: this.catList[this.selectIndex].catName
+       }
     });
   }
   selectCategoyItem(index) {
@@ -88,7 +93,7 @@ export default class Category extends Vue {
         );
         return;
       }
-      console.log(res.data.data.children);
+      console.log("selectCategoyItem",res.data.data.children);
       this.catList = res.data.data.children;
       this.selectCategoyItem(this.selectIndex);
     });
