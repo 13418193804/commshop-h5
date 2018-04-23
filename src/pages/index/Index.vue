@@ -48,58 +48,53 @@
                 </div>
             </div>
             </div>
+
+
+
           <div v-if="items.componentType === 'COMPONENT_TYPE_GOODS_TAG'">
               <div class="goodsTitleTab">
                   <span>{{items.name}}</span>
               </div>
                 <div class="goodsBody" v-if="items.columnNum ===1">
-               <div v-for="(goods,goodsIndex) in items.items" class="goodsItem" style="width:-webkit-fill-available;">
-                   <div style="  width:-webkit-fill-available;  padding: 10px;display:flex;">
-                      <div style="display:flex;    align-items: center;justify-content: center;    overflow: hidden;" :style="handleImageWidth1()">
-                       <img v-lazy="goods.goodsImg.split(',')[0]" style="width:100%"/>
+                  <div v-for="(goods,goodsIndex) in items.items" class="goodsItem" style="width:-webkit-fill-available;border-top: 1px solid #C5C4C4;">
+                    <div style="width:-webkit-fill-available;padding:10px;display:flex;">
+                      <div style="display:flex;align-items:center;justify-content:center;overflow:hidden;" :style="handlePX('height', 270)+handlePX('width', 270)">
+                        <img v-lazy="goods.goodsImg.split(',')[0]" style="width:100%"/>
                       </div>
-                   <div style="padding-left:10px;line-height: 23px;flex:1;" class="textLabel">
-                     <div class="textLabel">{{goods.goodsName}}
+                      <div style="padding-left:10px;line-height: 23px;flex:1;" class="textLabel">
+                        <div>
+                          <img src="../../assets/image/新品特价.png" :style="handlePX('width',92)+handlePX('height',30)" style="vertical-align: middle;"/>
+                          <span class="textLabel" style="color:#000000;" :style="handlePX('font-size',28)">{{goods.goodsName}}</span>
+                        </div>
+                        <div class="textLabel"  style="color:#A3A3A3;" :style="handlePX('font-size',28)+handlePX('line-height',44)">{{goods.jingle}}</div>
+                        <div style="padding:5px;">
+                          <span style="color:#E05459" :style="handlePX('font-size',34)">￥{{goods.marketPrice}}</span>
+                          <span style="color:#C5C4C4;text-decoration:line-through;" :style="handlePX('font-size',24)">原价:{{goods.labelPrice}}</span>
+                        </div>
+                        <van-button style="border-radius:4%;background-color:#F4C542;color:#FFFFFF;border:#F4C542;" :style="handlePX('width',200)+handlePX('height',55)+handlePX('line-height',55)">立即抢购</van-button>
+                      </div>
                     </div>
-                         <div  class="textLabel"  style="color:#666;font-size:14px;">
-                     {{goods.jingle}}
-                    </div>
-                       <div style="padding:5px;">
-                      <span style="color:red">￥{{goods.marketPrice}}</span>
-                      <span style="color:#969696;text-decoration:line-through;font-size:13px;">原价:{{goods.labelPrice}}</span>
-                    </div>
-                   </div>
-
-
-                    </div>
-
-                    </div>
+                  </div>
                 </div>
               
                 <div class="goodsBody" v-if="items.columnNum === 2">
-                    <div v-for="(goods,goodsIndex) in items.items" class="goodsItem">
-                   <div style="  width:-webkit-fill-available;  ">
-                      <div style="    border: 1px #e5e5e5 solid;box-sizing: border-box;display:flex;
-                      align-items: center;justify-content: center;   
-                       overflow: hidden;    position: relative;    margin: 5px auto;"
-                       :style="handleImageWidth()">
-                       <img v-lazy="goods.goodsImg.split(',')[0]" style="width:-webkit-fill-available;"/>
-                      <div class="textLabel" style="    position: absolute;bottom: 0;    width: 100%;
-    background-color: #fff;
-    opacity: 0.6;">{{goods.jingle}}</div>
-
+                  <div v-for="(goods,goodsIndex) in items.items" class="goodsItem">
+                    <div style="  width:-webkit-fill-available;  ">
+                      <div style="border: 1px #e5e5e5 solid;box-sizing: border-box;display:flex;align-items: center;justify-content:center;overflow:hidden;position:relative;margin:5px auto;" :style="handlePX('height', 410)+handlePX('width', 345)">
+                        <img src="../../assets/image/热.png" style="width:-webkit-fill-available;position: absolute;top: 0;left:0;" :style="handlePX('width', 43)+handlePX('height', 49)"/>
+                        <img v-lazy="goods.goodsImg.split(',')[0]" style="width:-webkit-fill-available;position: absolute;top: 0;z-index:-1;"/>
+                        <div class="textLabel" style="position: absolute;bottom: 0;width: 100%;background-color:rgba(207,207,207,0.3);text-align:center;color:#A3A3A3" :style="handlePX('height', 70)+handlePX('line-height', 70)+handlePX('font-size', 28)">{{goods.jingle}}</div>
                       </div>
-                      <div style="width:150px;margin:0 auto;">
-                   <div class="textLabel">
-                      {{goods.goodsName}}
+                      <div style="margin:5px auto;display:flex;justify-content: center;flex-direction: column;width:-webkit-fill-available;" :style="handlePX('width', 345)">
+                        <div>
+                          <img src="../../assets/image/满减.png" :style="handlePX('width',52)+handlePX('height',25)"/>
+                          <img src="../../assets/image/特价.png" :style="handlePX('width',52)+handlePX('height',25)"/>
+                        </div>
+                        <div class="textLabel" :style="handlePX('font-size',28)+handlePX('line-height',40)">{{goods.goodsName}}</div>
+                        <div style="color:#E05459" :style="handlePX('font-size',30)+handlePX('line-height',40)">￥{{goods.labelPrice}}</div>
+                      </div>
                     </div>
-                       <div style="color:red">
-                      ￥{{goods.labelPrice}}
-                    </div>
-</div>
-                    
-                    </div>
-                    </div>
+                  </div>
                 </div>
 
 
@@ -122,7 +117,7 @@
 </van-tabs>
 <div style="  position: absolute;
   top: 0;
-  right: 0;height:44px;line-height:44px;padding:0 5px">
+  right: 0;height:44px;line-height:44px;padding:0 5px;">
   <i class="iconfont icon-icon-arrow-bottom2"></i>
 </div>
 </div>
@@ -157,6 +152,7 @@ export default class shopIndex extends Vue {
   images = ["https://img.yzcdn.cn/1.jpg", "https://img.yzcdn.cn/2.jpg"];
   indexList = [];
   active = 0;
+  value = "";
   initIndex() {
     Vue.prototype.$reqUrlGet("/page/list", {}, res => {
       if (res == null) {
@@ -224,6 +220,17 @@ export default class shopIndex extends Vue {
       "px;height:" +
       this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth *
         0.35 +
+      "px;"
+    );
+  }
+
+  handlePX(CssName, PxNumber) {
+    return (
+      CssName +
+      ":" +
+      this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth /
+        750 *
+        PxNumber +
       "px;"
     );
   }

@@ -6,21 +6,23 @@
 <van-tabs :active="selectIndex" @click="selectCatItem">
   <van-tab v-for="(item,index) in catlist" :title="item.catName">
     <!-- <van-list v-model="loading" :finished="finished" @load="loadMore" :offset="30"> -->
+      <div :style="handlePX('line-height',100)+handlePX('font-size',32)" style="color:#000000;text-align:center;">{{catlist[selectIndex].catName}}</div>
     <van-list>
       <van-row  >
         <van-col span="12" v-for="item in goodsList">
           <div class="bodyItem" :style="handlePX('margin-bottom',50)" style="display:flex;justify-content:center;" @click="goProductDetail(item.goodsId)">
           <div>
-            <div :style="handlePX('width',345)+handlePX('height',350)" style="box-sizing: border-box;">
-              <img v-lazy="item.goodsImg.split(',')[0]" :style="handlePX('width',345)+handlePX('height',350)"/>
+            <div style="border: 1px #e5e5e5 solid;box-sizing: border-box;display:flex;align-items: center;justify-content:center;overflow:hidden;position:relative;margin:5px auto;" :style="handlePX('height', 410)+handlePX('width', 345)">
+              <img src="../../assets/image/热.png" style="width:-webkit-fill-available;position: absolute;top: 0;left:0;" :style="handlePX('width', 43)+handlePX('height', 49)"/>
+              <img v-lazy="item.goodsImg.split(',')[0]" style="width:-webkit-fill-available;position: absolute;top: 0;z-index:-1;"/>
+              <div class="textLabel" style="position: absolute;bottom: 0;width: 100%;background-color:rgba(207,207,207,0.3);text-align:center;color:#A3A3A3" :style="handlePX('height', 70)+handlePX('line-height', 70)+handlePX('font-size', 28)">{{item.jingle}}</div>
             </div>
-            <div :style="handlePX('height',50)+handlePX('font-size',28)+handlePX('line-height',50)" style="text-align:center;color:#A3A3A3;background-color:rgba(207,207,207,0.3);">{{item.goodsName}}</div>
             <div>
-              <img v-lazy="'1'" :style="handlePX('width',52)+handlePX('height',25)"/>
-              <img v-lazy="'1'" :style="handlePX('width',52)+handlePX('height',25)"/>
+              <img src="../../assets/image/满减.png" :style="handlePX('width',52)+handlePX('height',25)"/>
+              <img src="../../assets/image/特价.png" :style="handlePX('width',52)+handlePX('height',25)"/>
             </div>
-            <div :style="handlePX('font-size',28)" style="color:#000000;">{{item.goodsName}}</div>
-            <div :style="handlePX('font-size',30)" style="color:#E05459;">￥120.00</div>
+            <div class="textLabel" :style="handlePX('font-size',28)" style="color:#000000;">{{item.goodsName}}</div>
+            <div :style="handlePX('font-size',30)" style="color:#E05459;">￥{{item.labelPrice}}</div>
           </div>
         </div>
         </van-col>

@@ -119,6 +119,16 @@ export default new Router({
             path: '/collection',
             name: 'collection',
             component: r => require.ensure([], () => r(require('../pages/collection/collection')), 'collection')
+        },
+        {
+            path: '/add_bank_card',
+            name: 'add_bank_card',
+            component: r => require.ensure([], () => r(require('../pages/bank_card/add_bank_card')), 'add_bank_card')
+        },
+        {
+            path: '/my_bankcard',
+            name: 'my_bankcard',
+            component: r => require.ensure([], () => r(require('../pages/bank_card/my_bankcard')), 'my_bankcard')
         }
         
 
