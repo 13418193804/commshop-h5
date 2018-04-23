@@ -1,26 +1,30 @@
 <template>
-  <div class="tab-contents" style="height:-webkit-fill-available;background-color:#f7f7f7;">
+  <div class="tab-contents" style="height:-webkit-fill-available;background-color:#FFFFFF;">
         <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="我的收藏" isRightIcon="true" ></comhead>
 
     <div @click="toggle()" v-show="!isShow">编辑</div>
     <div @click="toggle()" v-show="isShow">删除</div>
 
-    <div v-for="(item, index) in goodsList" :key="index">
-        <input type="checkbox" :id="item.goodsId" :value="item.goodsId" v-model="checkedGoods" v-show="isShow">
-        <label :for="item.goodsId" style="display:flex;">
-            <div>
-                <img  v-lazy="item.goodsImg.split(',')[0]"  :style="handlePX('width',200)+handlePX('height',200)"/>
-            </div>
-            <div>
-                <div>
-                    <span :style="handlePX('width',90)+handlePX('height',28)" style="border:1px solid #fe4747;color:#fe4747;border-radius:8%;">新品特价</span>
-                    <span style="color:#575757;">{{item.goodsName}}</span>
-                </div>          
-                <span style="color:#989898;">{{item.jingle}}</span>
-                <div>
-                    <span style="color:#ff5359;">￥{{item.costPrice}}</span>
-                    <span style="color:#c7c5c5;text-decoration:line-through;">原价￥{{item.marketPrice}}</span>
+    <div v-for="(item, index) in goodsList" :key="index" style="display:flex;flex-direction:row;align-items:center;">
+        <div>
+          <input type="checkbox" :id="item.goodsId" :value="item.goodsId" v-model="checkedGoods" v-show="isShow">
+        </div>
+        <label :for="item.goodsId" style="display:flex;border-bottom:1px solid #e5e5e5;">
+            <div style="width:-webkit-fill-available;padding:10px;display:flex;">
+                <div style="display:flex;align-items:center;justify-content:center;overflow:hidden;" :style="handlePX('height', 200)+handlePX('width', 200)">
+                  <img v-lazy="item.goodsImg.split(',')[0]" style="width:100%"/>
                 </div>
+                <div style="padding-left:10px;flex:1;" class="textLabel" :style="handlePX('padding-top', 30)+handlePX('line-height', 48)">
+                  <div>
+                    <img src="../../assets/image/新品特价.png" :style="handlePX('width',92)+handlePX('height',30)" style="vertical-align: middle;"/>
+                    <span class="textLabel" style="color:#000000;" :style="handlePX('font-size',28)">{{item.goodsName}}</span>
+                  </div>
+                  <div class="textLabel"  style="color:#A3A3A3;" :style="handlePX('font-size',28)+handlePX('line-height',44)">{{item.jingle}}</div>
+                  <div>
+                    <span style="color:#E05459" :style="handlePX('font-size',34)">￥{{item.marketPrice}}</span>
+                    <span style="color:#C5C4C4;text-decoration:line-through;margin-left:5px;" :style="handlePX('font-size',24)">原价:{{item.labelPrice}}</span>
+                  </div>
+              </div>
             </div>
         </label>
     </div>

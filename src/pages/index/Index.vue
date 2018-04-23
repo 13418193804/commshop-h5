@@ -61,13 +61,13 @@
                       <div style="display:flex;align-items:center;justify-content:center;overflow:hidden;" :style="handlePX('height', 270)+handlePX('width', 270)">
                         <img v-lazy="goods.goodsImg.split(',')[0]" style="width:100%"/>
                       </div>
-                      <div style="padding-left:10px;line-height: 23px;flex:1;" class="textLabel">
+                      <div style="padding-left:10px;flex:1;" class="textLabel" :style="handlePX('line-height', 48)">
                         <div>
                           <img src="../../assets/image/新品特价.png" :style="handlePX('width',92)+handlePX('height',30)" style="vertical-align: middle;"/>
                           <span class="textLabel" style="color:#000000;" :style="handlePX('font-size',28)">{{goods.goodsName}}</span>
                         </div>
                         <div class="textLabel"  style="color:#A3A3A3;" :style="handlePX('font-size',28)+handlePX('line-height',44)">{{goods.jingle}}</div>
-                        <div style="padding:5px;">
+                        <div>
                           <span style="color:#E05459" :style="handlePX('font-size',34)">￥{{goods.marketPrice}}</span>
                           <span style="color:#C5C4C4;text-decoration:line-through;" :style="handlePX('font-size',24)">原价:{{goods.labelPrice}}</span>
                         </div>
