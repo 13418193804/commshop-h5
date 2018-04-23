@@ -114,6 +114,11 @@ export default new Router({
             path: '/refund',
             name: 'refund',
             component: r => require.ensure([], () => r(require('../pages/order/refund')), 'refund')
+        },
+        {
+            path: '/collection',
+            name: 'collection',
+            component: r => require.ensure([], () => r(require('../pages/collection/collection')), 'collection')
         }
         
 
