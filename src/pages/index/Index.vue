@@ -15,11 +15,16 @@
 </div>
 
 <div style=" position: relative;">
+  <div class="AllClassification" v-show="isShow">
+    <div class="ClassificationTitle"><span>全部分类</span><img v-lazy="'1'" style="width:20px;height:20px;"  @click="toggle()"/></div>
+    <div class="ClassificationName"><div v-for="(item,index) in indexList" :key="index"><div @click="changeTab(index)" :class="index==active?'ClassificationActive':''">{{item.pageName}}</div></div></div>
+  </div>
+
   <!-- swipeable -->
 <van-tabs :active="active" style="flex:1" @click="changeTab">
 
 
-  <van-tab v-for="(item,index) in indexList" :title="item.pageName"  >
+  <van-tab v-for="(item,index) in indexList" :title="item.pageName" >
 
         <div v-for="items in item.children">
 
@@ -39,9 +44,9 @@
           <div v-if="items.componentType === 'COMPONENT_TYPE_QUICK_BAR'">
             <div class="tab_box">
                 <div v-for=" (tab,tabIndex) in  items.items" style="width:25%;">
-                   <div style="  width:-webkit-fill-available;  padding: 10px;">
+                   <div style="width:-webkit-fill-available;padding: 10px;">
                     <div>
-                       <img v-lazy="tab.itemImgUrl" style="width:50px;height:50px;"/>
+                       <img v-lazy="tab.itemImgUrl" style="border-radius:50%;" :style="handlePX('width', 100)+handlePX('height', 100)"/>
                     </div>
                     <div>{{tab.itemName}}</div>
                     </div>
@@ -64,7 +69,7 @@
                   
               </div>
                 <div class="goodsBody" v-if="items.columnNum ===1">
-                  <div v-for="(goods,goodsIndex) in items.items" class="goodsItem" style="width:-webkit-fill-available;border-top: 1px solid #C5C4C4;">
+                  <div v-for="(goods,goodsIndex) in items.items" class="goodsItem" style="width:-webkit-fill-available;border-top: 1px solid #e5e5e5;">
                     <div style="width:-webkit-fill-available;padding:10px;display:flex;">
                       <div style="display:flex;align-items:center;justify-content:center;overflow:hidden;" :style="handlePX('height', 270)+handlePX('width', 270)">
                         <img v-lazy="goods.goodsImg.split(',')[0]" style="width:100%"/>
@@ -123,10 +128,8 @@
 
   </van-tab>
 </van-tabs>
-<div style="  position: absolute;
-  top: 0;
-  right: 0;height:44px;line-height:44px;padding:0 5px;">
-  <i class="iconfont icon-icon-arrow-bottom2"></i>
+<div style="position: absolute;top: 0;right: 0;height:44px;line-height:44px;padding:0 5px;">
+  <i class="iconfont icon-icon-arrow-bottom2" @click="toggle()"></i>
 </div>
 </div>
 
@@ -161,6 +164,7 @@ export default class shopIndex extends Vue {
   indexList = [];
   active = 0;
   value = "";
+  isShow = false;
   initIndex() {
     Vue.prototype.$reqUrlGet("/page/list", {}, res => {
       if (res == null) {
@@ -183,6 +187,8 @@ export default class shopIndex extends Vue {
     });
   }
   changeTab(active) {
+    this.active = active;
+    this.isShow = false;
     if (!this.indexList[active].children) {
       Vue.prototype.$reqFormPost(
         "/page/info",
@@ -209,6 +215,10 @@ export default class shopIndex extends Vue {
       );
     }
   }
+  toggle(){
+    this.isShow = !this.isShow;
+  }
+
   handleImageWidth() {
     return (
       "width:" +
@@ -363,10 +373,64 @@ export default class shopIndex extends Vue {
 .goodsItem {
   width: 50%;
 }
+.AllClassification {
+  position: absolute;
+  top: 0;
+  z-index: 11111;
+  width: 100%;
+  background-color: #ffffff;
+  .ClassificationTitle{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 15px;
+    height:40px;
+    span{
+      line-height:40px;
+    }
+  }
+  .ClassificationName{
+    padding:0 15px 30px;
+    display: flex;
+    flex-flow: row wrap;
+    align-content: flex-start;
+    div{
+      padding:0 8px;
+      flex: 0 0 25%;
+      div{
+        margin-top: 17px;
+        height:30px;
+        line-height: 28px;
+        text-align: center;
+        box-sizing: border-box;
+        border:1px solid #9f9f9f;
+        color:#9f9f9f;
+        border-radius: 40%;
+        overflow: hidden;
+      }
+      .ClassificationActive{
+        border:1px solid #ffc630;
+        color:#ffc630;
+      }
+    }
+  }
+}
 </style>
 <style>
 .van-tabs--line .van-tabs__wrap {
   margin-right: 36px;
+}
+.van-swipe__indicators {
+  left: auto;
+  right: 5%;
+}
+.van-swipe__indicators > i {
+  width: 8px;
+  height: 5px;
+  background-color: #d0d0d0;
+}
+.van-swipe__indicators > .van-swipe__indicator--active {
+  width: 15px;
+  background-color: #ffc630;
 }
 </style>
 
