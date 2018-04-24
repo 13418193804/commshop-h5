@@ -1,16 +1,9 @@
 <template>
   <div class="tab-contents">
-
-
-
     <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="我的订单" isRightIcon="true"  ></comhead>
-
-
-
         <van-tabs :active="active" :sticky="true" >
   <van-tab v-for="(item,index) in orderTitleList" :title="item.name" style="border-top:1px #e5e5e5 solid;">
       <div v-if="index==0">
-
     <van-list
   v-model="loading"
   :finished="finished"

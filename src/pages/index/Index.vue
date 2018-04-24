@@ -53,7 +53,15 @@
 
           <div v-if="items.componentType === 'COMPONENT_TYPE_GOODS_TAG'">
               <div class="goodsTitleTab">
-                  <span>{{items.name}}</span>
+                  <div style="">
+                    <span style="color:#ffc630;margin:0 3px">C</span>
+                    <span>{{items.name}}</span>
+                     <div style="font-size: 12px;color: #999;">
+                    CUSTOM RECOMMENDATION
+                  </div>
+                  </div>
+                 
+                  
               </div>
                 <div class="goodsBody" v-if="items.columnNum ===1">
                   <div v-for="(goods,goodsIndex) in items.items" class="goodsItem" style="width:-webkit-fill-available;border-top: 1px solid #C5C4C4;">
@@ -339,10 +347,12 @@ export default class shopIndex extends Vue {
   flex-wrap: wrap;
 }
 .goodsTitleTab {
-  background-color: #f2f2f2;
-  height: 44px;
-  line-height: 44px;
-  font-size: 14px;
+  height: 62px;
+  display: flex;
+  color: #666;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
   text-align: center;
 }
 .goodsBody {

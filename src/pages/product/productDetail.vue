@@ -3,7 +3,7 @@
     background-color: #e4e4e4;
     overflow: auto;
     height: 100vh;">
-    <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="商品详情" isRightIcon="true"  ></comhead>
+    <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"   :contextIndex="1" isRightIcon="true"  ></comhead>
 
         <van-swipe :autoplay="3000">
   <van-swipe-item v-for="(image, index) in detatil['goodsImg'].split(',')" :key="index" style="height:300px;    display: flex;align-items: center;justify-content: center;">

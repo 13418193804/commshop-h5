@@ -13,13 +13,27 @@
         </span>
       </div>
   
-      <div style="width: 76%;">
+      <div style="width: 76%;" v-if="title">
         {{title}}
       </div>
   
-      <div style="width: 12%;display: flex;align-items: center;visibility:hidden">
+    <div style="width: 76%;" v-if="contextIndex">
+      <!-- <div>{{contextIndex}}</div> -->
+<div style="    display: flex;
+    justify-content: center;
+    align-items: center;" >
+    <div class="bodyContent">
+        <div style="padding:5px 15px;" :class="contextIndex==1 ?'checkbody':''">商品</div>
+      <div style="padding:5px 15px;" :class="contextIndex==2 ?'checkbody':''">详情</div>
+    </div>
+</div>
+      </div>
+
+      <div style="width: 12%;display: flex;align-items: center;">
         <span @click="rightClick">
         <span v-if="rightTitle" style="font-size:14px">{{rightTitle}}</span>
+          <i v-if="isRightIcon"  class="iconfont " :class="isRightIcon" style="color:#101010;margin-top:-5px;margin:10px"></i>
+     
           <!-- <icon v-if="isRightIcon" :name="rightIconName" scale="1.5" style="color:#101010;margin: 10px 10px"></icon> -->
         </span>
       </div>
@@ -36,6 +50,9 @@ import { Prop } from 'vue-property-decorator';
 
 @Component
 export default class Comhead extends Vue {
+
+
+
     @Prop({ required: false })
     isRightIcon: any;
     @Prop({ required: false })
@@ -54,7 +71,8 @@ export default class Comhead extends Vue {
     lineShow: any;
     @Prop({ required: false })
     skin: any;
-    
+     @Prop({ required: false })
+    contextIndex: any;
 
   type = "H5";
   leftScale = "1.5";
@@ -62,6 +80,7 @@ export default class Comhead extends Vue {
     this.$emit("rightClick");
   }
   leftClick() {
+    
     if(this.isLeftIcon == 'icon-zuo'){
       this.$router.go(-1);
       return
@@ -82,7 +101,7 @@ export default class Comhead extends Vue {
   border-bottom: solid 1px #e5e5e5;
   justify-content: flex-end;
   height: 52px;
-  background-color: #f8f8f8;
+  background-color: #FAFAFA;
   display: flex;
   align-items: center;
   position: fixed;
@@ -99,5 +118,14 @@ export default class Comhead extends Vue {
   height: 52px;
   margin-top: 0px;
   color: white;
+}
+.bodyContent{
+  border:1px #d2d2d2 solid;
+  display: flex;
+    border-radius: 6px;
+    font-size: 15px;
+}
+.checkbody{
+  background-color:#EBEBEB;
 }
 </style>
