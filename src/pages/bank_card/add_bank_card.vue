@@ -20,7 +20,7 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import mixin from "../../config/mixin";
 import { Action } from "vuex-class";
-import { Toast } from 'vant';
+import { Toast } from "vant";
 import comhead from "../../components/Comhead.vue";
 
 @Component({
@@ -29,30 +29,29 @@ import comhead from "../../components/Comhead.vue";
   },
   mixins: [mixin]
 })
-
 export default class add_bank_card extends Vue {
+  realName = "";
+  bankName = "";
+  cardId = "";
+  subBranch = "";
 
-    realName="";
-    bankName="";
-    cardId="";
-    subBranch="";
-
-    addcard(){
-        Vue.prototype.$reqFormPost(
+  addcard() {
+    if (this.cardId == "" || this.bankName == ""|| this.realName == ""|| this.subBranch == "") {
+      return;
+    }
+    Vue.prototype.$reqFormPost(
       "/bank/card/add",
       {
         // token: '2c353ced5a3bb09cf7f05e57155999cd',
         // userId: 'UI5add43d15b065d5be5116746',
-        userId: this.$store.getters[
-          Vue.prototype.MutationTreeType.TOKEN_INFO
-        ].userId,
-        token: this.$store.getters[
-          Vue.prototype.MutationTreeType.TOKEN_INFO
-        ].token,
-        cardId:this.cardId,
-        bankName:this.bankName,
-        realName:this.realName,
-        subBranch:this.subBranch,
+        userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .userId,
+        token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .token,
+        cardId: this.cardId,
+        bankName: this.bankName,
+        realName: this.realName,
+        subBranch: this.subBranch
       },
       res => {
         if (res == null) {
@@ -64,14 +63,18 @@ export default class add_bank_card extends Vue {
             "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
           );
           return;
-        }        
-        console.log(res.data)
+        }
+        this.$router.replace({
+          path: "/my_bankcard",
+          query: {}
+        });
+        console.log(res.data);
       }
-     );
-    }
+    );
+  }
 
-    mounted() {
-      console.log("添加银行卡")
+  mounted() {
+    console.log("添加银行卡");
   }
 }
 </script>
