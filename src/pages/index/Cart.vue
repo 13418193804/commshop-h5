@@ -26,7 +26,17 @@
     height: 100%; display: flex;
     align-items: center;
     justify-content: center;">收藏</div>
+    <div style="background-color:#f7f7f7;height:10px;"></div>
 </van-cell-swipe>
+
+<div :style="maxHeightdiv()" style="width:100%;background-color:#f7f7f7;    display: flex;
+    justify-content: center;
+    align-items: center;" v-if="!cartList || cartList.length==0">
+    <div>
+  <img src="../../assets/cart/空购物车拷贝.png" :style="handleImageWidth1()"/>
+  <div style="text-align:center;color:#ffc630;font-size:17px;">立即逛逛>></div>
+  </div>
+</div> 
 </van-checkbox-group>
 
 
@@ -68,7 +78,20 @@ export default class Cart extends Vue {
   checked = false;
   cartList = [];
   totalMoney = 0; //总金额
-
+  maxHeightdiv(){
+return "height:" +(this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availHeight-152 )+"px;"
+  }
+ handleImageWidth1() {
+    return (
+      "width:" +
+      this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth *
+        0.45 +
+      "px;height:" +
+      this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth *
+        0.45 +
+      "px;"
+    );
+  }
   allSelect(e) {
     if (e) {
       let result = [];
@@ -285,11 +308,27 @@ export default class Cart extends Vue {
 }
 .cartItem {
   padding: 10px;
-  background-color: #f2f2f2;
   display: flex;
   align-items: center;
 }
 .van-checkbox {
   padding: 0 10px;
 }
+.van-submit-bar__bar{
+  border-top:1px solid #e5e5e5; 
+  box-sizing: border-box;
+  }
+  .van-submit-bar__price-text{
+    visibility: hidden;
+    
+  }
+ .van-button--danger{
+      background-color:#ffc630;
+    border: 1px solid #ffc630;
+}
+.van-checkbox--checked{
+      border-color: #f44;
+    background-color: #f44;
+}
+  
 </style>

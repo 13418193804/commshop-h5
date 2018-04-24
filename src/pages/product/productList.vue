@@ -6,7 +6,9 @@
 <van-tabs :active="selectIndex" @click="selectCatItem">
   <van-tab v-for="(item,index) in catlist" :title="item.catName">
     <!-- <van-list v-model="loading" :finished="finished" @load="loadMore" :offset="30"> -->
+      <div style="background-color:#f7f7f7;height:10px;"></div>
       <div :style="handlePX('line-height',100)+handlePX('font-size',32)" style="color:#000000;text-align:center;">{{catlist[selectIndex].catName}}</div>
+  
     <van-list>
       <van-row  >
         <van-col span="12" v-for="item in goodsList">
