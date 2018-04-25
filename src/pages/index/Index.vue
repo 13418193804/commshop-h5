@@ -21,7 +21,7 @@
   </div>
 
   <!-- swipeable -->
-<van-tabs :active="active" style="flex:1" @click="changeTab">
+<van-tabs :active="active" style="flex:1" @click="changeTab" class="index_tabs">
 
 
   <van-tab v-for="(item,index) in indexList" :title="item.pageName" >
@@ -420,16 +420,16 @@ export default class shopIndex extends Vue {
 .van-tabs--line .van-tabs__wrap {
   margin-right: 36px;
 }
-.van-swipe__indicators {
+.index_tabs .van-swipe__indicators {
   left: auto;
   right: 5%;
 }
-.van-swipe__indicators > i {
+.index_tabs .van-swipe__indicators > i {
   width: 8px;
   height: 5px;
   background-color: #d0d0d0;
 }
-.van-swipe__indicators > .van-swipe__indicator--active {
+.index_tabs .van-swipe__indicators > .van-swipe__indicator--active {
   width: 15px;
   background-color: #ffc630;
 }
