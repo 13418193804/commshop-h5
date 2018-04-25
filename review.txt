@@ -5,4 +5,4 @@
 4、银行页面my_bankcard  进入页面会自动触发isDefaultchange（）函数的Bug
                        设置默认地址 会触发多次isDefaultchange（）函数的Bug
 5、产品详细页 produvtDetail  只有静态页面   （2）推荐商品栏 不能滑动 点击
-6、setting文件夹里面的页面  除了跳转 基本交互已完成
+6、essential_information 基本信息页面  头像上传没做   性别修改是用单选框的

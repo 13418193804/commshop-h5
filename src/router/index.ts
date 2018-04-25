@@ -146,9 +146,9 @@ export default new Router({
             component: r => require.ensure([], () => r(require('../pages/setting/feedback')), 'feedback')
         },
         {
-            path: '/modify_password',
-            name: 'modify_password',
-            component: r => require.ensure([], () => r(require('../pages/setting/modify_password')), 'modify_password')
+            path: '/update_info',
+            name: 'update_info',
+            component: r => require.ensure([], () => r(require('../pages/setting/update_info')), 'update_info')
         },
         {
             path: '/setting',

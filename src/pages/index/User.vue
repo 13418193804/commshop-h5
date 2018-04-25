@@ -3,7 +3,7 @@
       <div class="user-background">
           <div class="user-tool">
              <div style="padding: 10px;">
-                  <i class="iconfont icon-setting" style="font-size:25px;"></i>
+                  <i class="iconfont icon-setting" style="font-size:25px;" @click="go_setting()"></i>
              </div>
    <div style="line-height:47px;">
      <span style="padding: 10px;">
@@ -78,7 +78,7 @@
 </div>
 
 
-<div style="text-align:center;padding:10px;width:25%;" >
+<div style="text-align:center;padding:10px;width:25%;" @click="mybankcard()">
     <div>
       <img src="../../assets/image/我的银行卡.png" alt="" style="width:30px;height:30px;" >
 </div>
@@ -178,6 +178,12 @@ export default class User extends Vue {
     if (n.name == '地址管理') {
       this.$router.push({ name: "addresslist" });
     }
+  }
+  go_setting(){
+    this.$router.push("/setting");
+  }
+  mybankcard(){
+    this.$router.push("/my_bankcard");
   }
   mounted() {
     this.setTabIndex(3);
