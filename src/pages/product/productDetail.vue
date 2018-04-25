@@ -20,10 +20,146 @@
 <span class="labelPrice" style="margin:0 10px;font-size:14px;">原价:{{detatil.labelPrice}}</span>
                 </div>
             </div>
-         <div class="comment">
+            <div class="comment">
+              <div>用户评价</div>
+              <div>
+                <img v-lazy="'1'" :style="handlePX('width',28)+handlePX('height',24)"/>
+                <span>999</span>
+              </div>
+              
             </div>
         </div>
   
+        <div class="functionList" style="margin-top:10px;">
+          <van-cell-group>
+            <van-cell title="请选择规格数量" is-link />
+            <van-cell title="限制：特价商品不可与优惠卷叠加使用"/>
+            <van-cell is-link>
+              <template slot="title">
+                <span class="van-cell-text">领卷：</span>
+                <img v-lazy="'1'" :style="handlePX('width',112)+handlePX('height',26)"/>
+              </template>
+            </van-cell>
+            <van-cell>
+              <template slot="title">
+                <span class="van-cell-text">备注：</span>
+                <span style="color:#ff6d72;">【新货促销，1周内发货】</span>
+              </template>
+            </van-cell>
+            <van-cell>
+              <template slot="title">
+                <span class="van-cell-text">服务：</span>
+                <span>7天无忧退换货</span>
+                <span>24小时快速退款</span>
+                <span>中宜自营严选</span>
+              </template>
+            </van-cell>          
+          </van-cell-group>
+        </div>
+
+        <div class="userCommentList" style="background-color:#ffffff;margin-top:10px;">
+          <van-cell-group>
+            <van-cell title="用户评价（999+）" is-link value="99%好评" />
+          </van-cell-group>
+          <div class="userComment" style="padding:10px 15px;">
+            <div>
+              <img v-lazy="'1'" :style="handlePX('width',45)+handlePX('height',45)" style="vertical-align:middle;border-radius:50%;"/>
+              <span>这个用户</span>
+              <img v-lazy="'1'" :style="handlePX('width',140)+handlePX('height',25)" style="vertical-align:middle;"/>
+            </div>
+            <div style="color:#999999;">2018.02.05 22:01 款式：高灯</div>
+            <div>物流很快，到了就用上了。很舒服，睡得很香</div>
+            <div>
+              <img v-lazy="'1'" :style="handlePX('width',100)+handlePX('height',100)"/>
+              <img v-lazy="'1'" :style="handlePX('width',100)+handlePX('height',100)"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="recommend" style="background-color:#ffffff;margin-top:10px;">
+          <van-tabs>
+            <van-tab v-for="(item,index) in tablist" :title="item" :key="index">
+              <div style="display:flex;overflow:hidden;">
+                <div>
+                  <div style="border: 1px #e5e5e5 solid;box-sizing: border-box;display:flex;align-items: center;justify-content:center;overflow:hidden;position:relative;" :style="handlePX('height', 410)+handlePX('width', 345)">
+                    <img src="../../assets/image/热.png" style="width:-webkit-fill-available;position: absolute;top: 0;left:0;" :style="handlePX('width', 43)+handlePX('height', 49)"/>
+                    <img v-lazy="'1'" style="width:-webkit-fill-available;position: absolute;top: 0;z-index:-1;"/>
+                    <div class="textLabel" style="position: absolute;bottom: 0;width: 100%;background-color:rgba(207,207,207,0.3);text-align:center;color:#A3A3A3" :style="handlePX('height', 70)+handlePX('line-height', 70)+handlePX('font-size', 28)">单双人床上用品</div>
+                  </div>
+                  <div style="display:flex;justify-content: center;flex-direction: column;width:-webkit-fill-available;" :style="handlePX('width', 345)">
+                    <div>
+                      <img src="../../assets/image/满减.png" :style="handlePX('width',52)+handlePX('height',25)"/>
+                      <img src="../../assets/image/特价.png" :style="handlePX('width',52)+handlePX('height',25)"/>
+                    </div>
+                    <div class="textLabel" :style="handlePX('font-size',28)+handlePX('line-height',40)">全棉四件套全棉裸睡水洗棉</div>
+                    <div style="color:#E05459" :style="handlePX('font-size',30)+handlePX('line-height',40)">￥1111</div>
+                  </div>
+                </div>
+                <div>
+                  <div style="border: 1px #e5e5e5 solid;box-sizing: border-box;display:flex;align-items: center;justify-content:center;overflow:hidden;position:relative;" :style="handlePX('height', 410)+handlePX('width', 345)">
+                    <img src="../../assets/image/热.png" style="width:-webkit-fill-available;position: absolute;top: 0;left:0;" :style="handlePX('width', 43)+handlePX('height', 49)"/>
+                    <img v-lazy="'1'" style="width:-webkit-fill-available;position: absolute;top: 0;z-index:-1;"/>
+                    <div class="textLabel" style="position: absolute;bottom: 0;width: 100%;background-color:rgba(207,207,207,0.3);text-align:center;color:#A3A3A3" :style="handlePX('height', 70)+handlePX('line-height', 70)+handlePX('font-size', 28)">单双人床上用品</div>
+                  </div>
+                  <div style="display:flex;justify-content: center;flex-direction: column;width:-webkit-fill-available;" :style="handlePX('width', 345)">
+                    <div>
+                      <img src="../../assets/image/满减.png" :style="handlePX('width',52)+handlePX('height',25)"/>
+                      <img src="../../assets/image/特价.png" :style="handlePX('width',52)+handlePX('height',25)"/>
+                    </div>
+                    <div class="textLabel" :style="handlePX('font-size',28)+handlePX('line-height',40)">全棉四件套全棉裸睡水洗棉</div>
+                    <div style="color:#E05459" :style="handlePX('font-size',30)+handlePX('line-height',40)">￥1111</div>
+                  </div>
+                </div>
+                <div>
+                  <div style="border: 1px #e5e5e5 solid;box-sizing: border-box;display:flex;align-items: center;justify-content:center;overflow:hidden;position:relative;" :style="handlePX('height', 410)+handlePX('width', 345)">
+                    <img src="../../assets/image/热.png" style="width:-webkit-fill-available;position: absolute;top: 0;left:0;" :style="handlePX('width', 43)+handlePX('height', 49)"/>
+                    <img v-lazy="'1'" style="width:-webkit-fill-available;position: absolute;top: 0;z-index:-1;"/>
+                    <div class="textLabel" style="position: absolute;bottom: 0;width: 100%;background-color:rgba(207,207,207,0.3);text-align:center;color:#A3A3A3" :style="handlePX('height', 70)+handlePX('line-height', 70)+handlePX('font-size', 28)">单双人床上用品</div>
+                  </div>
+                  <div style="display:flex;justify-content: center;flex-direction: column;width:-webkit-fill-available;" :style="handlePX('width', 345)">
+                    <div>
+                      <img src="../../assets/image/满减.png" :style="handlePX('width',52)+handlePX('height',25)"/>
+                      <img src="../../assets/image/特价.png" :style="handlePX('width',52)+handlePX('height',25)"/>
+                    </div>
+                    <div class="textLabel" :style="handlePX('font-size',28)+handlePX('line-height',40)">全棉四件套全棉裸睡水洗棉</div>
+                    <div style="color:#E05459" :style="handlePX('font-size',30)+handlePX('line-height',40)">￥1111</div>
+                  </div>
+                </div>
+              </div>
+            </van-tab>
+          </van-tabs>
+        </div>
+
+        <div style="background-color:#ffffff;margin-top:10px;padding:10px 15px;">
+          <div style="display:flex;border-bottom:1px solid #ededed;">
+            <div style="color:#a3a3a3;" :style="handlePX('width',150)">颜色</div>
+            <div style="flex:1;padding-left:10px;">
+              <div :style="handlePX('line-height',50)">酒红，白色</div>
+            </div>
+          </div>
+          <div style="display:flex;border-bottom:1px solid #ededed;">
+            <div style="color:#a3a3a3;" :style="handlePX('width',150)">主要材质</div>
+            <div style="flex:1;padding-left:10px;" >
+              <div :style="handlePX('line-height',50)">外枕套：60%聚酯纤维，40%莱赛尔纤维</div>
+              <div :style="handlePX('line-height',50)">外枕套：60%聚酯纤维，40%莱赛尔纤维</div>
+            </div>
+          </div>
+          <div style="display:flex;border-bottom:1px solid #ededed;">
+            <div style="color:#a3a3a3;" :style="handlePX('width',150)">温馨提示</div>
+            <div style="flex:1;padding-left:10px;">
+              <div :style="handlePX('line-height',50)">1、双层内外枕套配有拉链可拆洗，可直接打开看到</div>
+              <div :style="handlePX('line-height',50)">1、双层内外枕套配有拉链可拆洗，可直接打开看到</div>
+              <div :style="handlePX('line-height',50)">外枕套：60%聚酯纤维，40%莱赛尔纤维</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <img v-lazy="'1'" style="width:100%;"/>
+          <img v-lazy="'1'" style="width:100%;"/>
+        </div>
+
+
 <van-goods-action>
   <van-goods-action-mini-btn icon="chat" text="客服" @click="onClickMiniBtn" />
   <van-goods-action-mini-btn icon="cart" text="购物车" @click="onClickMiniBtn" />
@@ -105,6 +241,7 @@ import mixin from "../../config/mixin";
 import comhead from "../../components/Comhead.vue";
 import { Toast } from "vant";
 import { Action } from "vuex-class";
+import { Cell, CellGroup } from 'vant';
 
 @Component({
   components: {
@@ -120,6 +257,7 @@ import { Action } from "vuex-class";
 export default class ProductDetail extends Vue {
   @Action("setPrepareId") setPrepareId;
   
+  tablist=['大家还看了','新品推荐'];
   goodsList = [];
   goodsId = "";
   detatil = {
@@ -353,6 +491,16 @@ export default class ProductDetail extends Vue {
     );
   }
 
+  handlePX(CssName, PxNumber) {
+    return (
+      CssName +
+      ":" +
+      this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth /
+        750 *
+        PxNumber +
+      "px;"
+    );
+  }
   mounted() {
     console.log(this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]);
     this.goodsId = this.$route.query.goodsId;
@@ -374,13 +522,26 @@ export default class ProductDetail extends Vue {
   background-color: #fff;
   display: flex;
   font-size: 16px;
-}
-.goodstitle {
   padding: 10px;
-  flex: 1;
-
-  line-height: 25px;
+  .goodstitle {
+    flex: 1;
+    line-height: 25px;
+  }
+  .comment{
+    display: flex;
+    align-items: flex-end;
+    div{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      span{
+        color:#ffc200;
+      }
+    }
+  }
 }
+
+
 .bodyLabel {
   width: 100%;
   height: 100vh;
