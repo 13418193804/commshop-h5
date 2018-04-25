@@ -68,7 +68,7 @@
                  
                   
               </div>
-                <div class="goodsBody" v-if="items.columnNum ===1">
+                <div class="goodsBody" v-if="items.columnNum ===1" >
                   <div v-for="(goods,goodsIndex) in items.items" class="goodsItem" style="width:-webkit-fill-available;border-top: 1px solid #e5e5e5;">
                     <div style="width:-webkit-fill-available;padding:10px;display:flex;">
                       <div style="display:flex;align-items:center;justify-content:center;overflow:hidden;" :style="handlePX('height', 270)+handlePX('width', 270)">
@@ -90,7 +90,7 @@
                   </div>
                 </div>
               
-                <div class="goodsBody" v-if="items.columnNum === 2">
+                <div class="goodsBody" v-if="items.columnNum === 2" style="  padding:10px 0;border-top:1px #e5e5e5 solid;">
                   <div v-for="(goods,goodsIndex) in items.items" class="goodsItem">
                     <div style="  width:-webkit-fill-available;  ">
                       <div style="border: 1px #e5e5e5 solid;box-sizing: border-box;display:flex;align-items: center;justify-content:center;overflow:hidden;position:relative;margin:5px auto;" :style="handlePX('height', 410)+handlePX('width', 345)">
@@ -110,7 +110,7 @@
                   </div>
                 </div>
 
-
+<div style="height:10px; background-color:#f7f7f7;"></div>
 
 
 
@@ -357,7 +357,7 @@ export default class shopIndex extends Vue {
   flex-wrap: wrap;
 }
 .goodsTitleTab {
-  height: 62px;
+  height: 70px;
   display: flex;
   color: #666;
   justify-content: center;
@@ -366,6 +366,7 @@ export default class shopIndex extends Vue {
   text-align: center;
 }
 .goodsBody {
+
   width: -webkit-fill-available;
   display: flex;
   flex-wrap: wrap;
