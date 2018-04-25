@@ -1,9 +1,9 @@
 <template>
   <div class="tab-contents" style="height:-webkit-fill-available;background-color:#FFFFFF;">
-        <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="我的收藏" isRightIcon="true" ></comhead>
+        <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @rightClick="toggle()" :rightTitle="!isShow?'编辑':'删除'" @leftClick="false"  title="我的收藏"  ></comhead>
 
-    <div @click="toggle()" v-show="!isShow">编辑</div>
-    <div @click="toggle()" v-show="isShow">删除</div>
+    <!-- <div @click="toggle()" v-show="!isShow"></div>
+    <div @click="toggle()" v-show="isShow">删除</div> -->
 
     <div v-for="(item, index) in goodsList" :key="index" style="display:flex;flex-direction:row;align-items:center;">
         <div>

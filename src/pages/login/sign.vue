@@ -60,6 +60,7 @@ export default class Sign extends Vue {
   isGetverify = true; //当前允许发送验证码
   timerNum = 60;
   timer = 60;
+  recommontId='';
   timelop() {
     let self = this;
 
@@ -129,7 +130,7 @@ export default class Sign extends Vue {
         loginName: this.loginName,
         password: this.password,
         code: this.code,
-        recommontId: "001" //推荐者ID
+        recommontId: this.recommontId //推荐者ID
       },
       res => {
         if (res == null) {
@@ -157,6 +158,7 @@ export default class Sign extends Vue {
     );
   }
   mounted() {
+    this.recommontId =  this.$route.query.recommontId?this.$route.query.recommontId:''
     if (this.$store.getters[Vue.prototype.MutationTreeType.VERCODE] < 60) {
       this.timerNum = this.$store.getters[
         Vue.prototype.MutationTreeType.VERCODE
