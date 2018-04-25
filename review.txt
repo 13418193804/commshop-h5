@@ -3,5 +3,6 @@
 3、收藏页collection（1）多选 样式没添加（2）右上角按钮没添加
     （3）bug 先点商品列表  再点 编辑按钮 会默认选择之前点过的东西 (4)收藏页 获取列表 未做分页 下拉功能
 4、银行页面my_bankcard  进入页面会自动触发isDefaultchange（）函数的Bug
-                       设置默认地址 会触发2次isDefaultchange（）函数的Bug
+                       设置默认地址 会触发多次isDefaultchange（）函数的Bug
 5、产品详细页 produvtDetail  只有静态页面   （2）推荐商品栏 不能滑动 点击
+6、setting文件夹里面的页面  除了跳转 基本交互已完成
