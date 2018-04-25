@@ -129,7 +129,33 @@ export default new Router({
             path: '/my_bankcard',
             name: 'my_bankcard',
             component: r => require.ensure([], () => r(require('../pages/bank_card/my_bankcard')), 'my_bankcard')
+        },
+        {
+            path: '/about_us',
+            name: 'about_us',
+            component: r => require.ensure([], () => r(require('../pages/setting/about_us')), 'about_us')
+        },
+        {
+            path: '/essential_information',
+            name: 'essential_information',
+            component: r => require.ensure([], () => r(require('../pages/setting/essential_information')), 'essential_information')
+        },
+        {
+            path: '/feedback',
+            name: 'feedback',
+            component: r => require.ensure([], () => r(require('../pages/setting/feedback')), 'feedback')
+        },
+        {
+            path: '/modify_password',
+            name: 'modify_password',
+            component: r => require.ensure([], () => r(require('../pages/setting/modify_password')), 'modify_password')
+        },
+        {
+            path: '/setting',
+            name: 'setting',
+            component: r => require.ensure([], () => r(require('../pages/setting/setting')), 'setting')
         }
+        
         
 
     ]
