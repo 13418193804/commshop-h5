@@ -31,6 +31,9 @@ export default class feedback extends Vue {
 
   content="";
   feedback() {
+    if(this.content==""){
+      return
+    }
     Vue.prototype.$reqFormPost(
       "/user/feedback",
       {
@@ -57,6 +60,7 @@ export default class feedback extends Vue {
           return;
         }
         console.log('res.data',res.data)
+        this.$router.push("/setting");
       }
     );
   }

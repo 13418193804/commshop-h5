@@ -1,5 +1,5 @@
  <template>
-  <div class="tab-contents" style="height:-webkit-fill-available;background-color:#FFFFFF;">
+  <div class="tab-contents" style="height:-webkit-fill-available;background-color:#f3f3f3;">
         <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="基本信息" isRightIcon="true" ></comhead>
 
     <van-cell-group>
@@ -11,9 +11,9 @@
                 <img v-lazy="'1'" :style="handlePX('width',60)+handlePX('height',60)" style="border-radius:50%;"/>
             </div>
         </van-cell>
-        <van-cell title="用户名" is-link :value="userinfo.nickName" />
-        <van-cell title="性别" is-link :value="userinfo.sex" />
-        <van-cell title="手机" is-link :value="userinfo.mobile" />
+        <van-cell title="用户名" is-link :value="userinfo.nickName" @click="go_updatenickName()"/>
+        <van-cell title="性别" is-link :value="userinfo.sex" @click="go_updatesex()"/>
+        <van-cell title="手机" is-link :value="userinfo.loginName"/>
     </van-cell-group>
     
 
@@ -64,12 +64,27 @@ export default class essential_information extends Vue {
           Toast(res.data.message);
           return;
         }
-        console.log('res.data',res.data)
-        this.userinfo=res.data;
+        console.log('res.data.data',res.data.data)
+        this.userinfo=res.data.data;
       }
     );
   }
-
+  go_updatenickName(){
+    this.$router.push({
+      path: "/update_info",
+      query: {
+        updatename: 'nickName'
+      }
+    });
+  }
+  go_updatesex(){
+    this.$router.push({
+      path: "/update_info",
+      query: {
+        updatename: 'sex'
+      }
+    });
+  }
   handlePX(CssName, PxNumber) {
     return CssName +":" +this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth /750 * PxNumber +"px;";
   }
