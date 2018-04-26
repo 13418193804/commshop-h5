@@ -42,8 +42,6 @@ export default class add_bank_card extends Vue {
     Vue.prototype.$reqFormPost(
       "/bank/card/add",
       {
-        // token: '2c353ced5a3bb09cf7f05e57155999cd',
-        // userId: 'UI5add43d15b065d5be5116746',
         userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
           .userId,
         token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
@@ -64,10 +62,7 @@ export default class add_bank_card extends Vue {
           );
           return;
         }
-        this.$router.replace({
-          path: "/my_bankcard",
-          query: {}
-        });
+        this.$router.go(-1);
         console.log(res.data);
       }
     );

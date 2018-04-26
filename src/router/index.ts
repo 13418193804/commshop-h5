@@ -154,8 +154,32 @@ export default new Router({
             path: '/setting',
             name: 'setting',
             component: r => require.ensure([], () => r(require('../pages/setting/setting')), 'setting')
+        },
+        {
+            path: '/reward',
+            name: 'reward',
+            component: r => require.ensure([], () => r(require('../pages/reward/reward')), 'reward')
+        },
+        {
+            path: '/my_member',
+            name: 'my_member',
+            component: r => require.ensure([], () => r(require('../pages/reward/my_member')), 'my_member')
+        },
+        {
+            path: '/my_reward',
+            name: 'my_reward',
+            component: r => require.ensure([], () => r(require('../pages/reward/my_reward')), 'my_reward')
+        },
+        {
+            path: '/present_record',
+            name: 'present_record',
+            component: r => require.ensure([], () => r(require('../pages/reward/present_record')), 'present_record')
+        },
+        {
+            path: '/select_bankcard',
+            name: 'select_bankcard',
+            component: r => require.ensure([], () => r(require('../pages/reward/select_bankcard')), 'select_bankcard')
         }
-        
         
 
     ]

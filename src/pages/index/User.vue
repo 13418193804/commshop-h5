@@ -70,7 +70,7 @@
 
 <div class="order-content" style="border-bottom:solid 1px #e5e5e5;">
 
-<div style="text-align:center;padding:10px;width:25%;" >
+<div style="text-align:center;padding:10px;width:25%;" @click="myreward()">
     <div>
       <img src="../../assets/image/我的奖励.png" alt="" style="width:30px;height:30px;" >
 </div>
@@ -175,6 +175,9 @@ export default class User extends Vue {
     });
   }
   tools(n) {
+    if (n.name == '我的收藏') {
+      this.$router.push({ name: "collection" });
+    }
     if (n.name == '地址管理') {
       this.$router.push({ name: "addresslist" });
     }
@@ -182,8 +185,11 @@ export default class User extends Vue {
   go_setting(){
     this.$router.push("/setting");
   }
-  mybankcard(){
+  mybankcard(){ 
     this.$router.push("/my_bankcard");
+  }
+  myreward(){
+    this.$router.push("/reward");
   }
   mounted() {
     this.setTabIndex(3);

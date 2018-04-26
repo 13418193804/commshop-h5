@@ -1,31 +1,29 @@
 <template>
   <div class="tab-contents">
-<comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="我的银行卡" isRightIcon="true"  ></comhead>
+    <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="选择银行" isRightIcon="true"  ></comhead>
   
-  <div v-for="(item, index) in cardlist" :key="index" :style="handlePX('height', 300)+handlePX('padding', 30)" style="border-bottom:15px solid #f5f5f5;">
-    <div :style="handlePX('height', 140)" style="border:1px solid #d9d9d9;border-radius:6%;box-sizing:border-box;display:flex;align-items:center;">
+  <div v-for="(item, index) in cardlist" :key="index" :style="handlePX('padding', 30)+handlePX('padding-top', 0)+handlePX('padding-bottom', 0)">
+    <div :style="handlePX('height', 160)" style="border-bottom:1px solid #dedede;box-sizing:border-box;display:flex;align-items:center;">
       <img v-lazy="'1'" :style="handlePX('height', 70)+handlePX('widht', 70)+handlePX('margin-left', 20)" style="border-radius:50%;"/>
-      <div :style="handlePX('margin-left', 20)+handlePX('width', 200)">
-        <div>{{item.bankName}}</div>
-        <div style="font-size:12px;">信用卡</div>
+      <div :style="handlePX('margin-left', 20)" style="flex:1;">
+        <div>{{item.bankName}}<span style="font-size:12px;">(信用卡)</span></div>
+        <div>{{item.cardId}}</div>
       </div>
-      <div :style="handlePX('padding-top', 20)">{{item.cardId}}</div>
-    </div>
-    <div :style="handlePX('height', 40)+handlePX('line-height', 40)+handlePX('margin-top', 20)" style="display:flex;justify-content:space-between;">
-      <div>
-        <van-radio-group v-model="isDefaultid" :change="isDefaultchange()">
-        <van-radio :name="item.id">设置默认</van-radio>
+      <van-radio-group v-model="isDefaultid" :change="isDefaultchange()">
+        <van-radio :name="item.id"></van-radio>
         </van-radio-group>
-      </div>
-      <div @click="deletebankcard(item.id)"><img v-lazy="'1'" :style="handlePX('height', 40)+handlePX('widht', 40)" style="vertical-align: top;"/>    删除</div>
     </div>
   </div>
 
-  <div :style="handlePX('height', 300)+handlePX('padding', 30)">
-    <div @click="addbangcard()" :style="handlePX('height', 140)" style="color:#959595;border:1px solid #d9d9d9;border-radius:6%;box-sizing:border-box;display:flex;align-items:center;justify-content:center;">
+  <div :style="handlePX('padding', 30)+handlePX('padding-top', 60)">
+    <div @click="addbangcard()" :style="handlePX('height', 140)" style="color:#959595;border:1px solid #d9d9d9;box-sizing:border-box;display:flex;align-items:center;justify-content:center;">
       +添加银行卡
     </div>
   </div>
+
+    <div :style="handlePX('padding', 30)">
+        <van-button style="width:100%;color:#ffffff;background-color:#ffc530;border-radius:8px;">确认</van-button>
+    </div>
 
   </div>
 </template>
@@ -44,15 +42,14 @@ import comhead from "../../components/Comhead.vue";
   },
   mixins: [mixin]
 })
-export default class mybankcard extends Vue {
-  cardlist = [];
+export default class select_bankcard extends Vue {
+
+    cardlist = [];
   isDefaultid = "";
   getBankCardList() {
     Vue.prototype.$reqFormPost(
       "/bank/card/list",
       {
-        // token: "2c353ced5a3bb09cf7f05e57155999cd",
-        // userId: "UI5add43d15b065d5be5116746"
         userId: this.$store.getters[
           Vue.prototype.MutationTreeType.TOKEN_INFO
         ].userId,
@@ -81,42 +78,10 @@ export default class mybankcard extends Vue {
       }
     );
   }
-  deletebankcard(cardid) {
-    Vue.prototype.$reqFormPost(
-      "/bank/card/delete",
-      {
-        // token: "2c353ced5a3bb09cf7f05e57155999cd",
-        // userId: "UI5add43d15b065d5be5116746",
-        userId: this.$store.getters[
-          Vue.prototype.MutationTreeType.TOKEN_INFO
-        ].userId,
-        token: this.$store.getters[
-          Vue.prototype.MutationTreeType.TOKEN_INFO
-        ].token,
-        id: cardid
-      },
-      res => {
-        if (res == null) {
-          console.log("网络请求错误！");
-          return;
-        }
-        if (res.data.status != 200) {
-          console.log(
-            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
-          );
-          return;
-        }
-        this.getBankCardList();
-        console.log("/bank/card/delete", res.data.message);
-      }
-    );
-  }
   isDefaultchange() {
     Vue.prototype.$reqFormPost(
       "/bank/card/setdefault",
       {
-        // token: "2c353ced5a3bb09cf7f05e57155999cd",
-        // userId: "UI5add43d15b065d5be5116746",
         userId: this.$store.getters[
           Vue.prototype.MutationTreeType.TOKEN_INFO
         ].userId,
@@ -156,9 +121,10 @@ export default class mybankcard extends Vue {
       "px;"
     );
   }
+
   mounted() {
     this.getBankCardList();
-    console.log("我的银行卡");
+    console.log("选择银行");
   }
 }
 </script>
