@@ -7,18 +7,18 @@
                 <img v-lazy="'1'" :style="handlePX('width', 55)+handlePX('height', 55)" style="vertical-align: middle;"/>
                 <span>奖励金</span>
             </div>
-            <div :style="handlePX('margin-top', 20)" style="color:#ffc600;">￥299.00</div>
-            <div style="color:#ababab;">提现>></div>
+            <div :style="handlePX('margin-top', 20)" style="color:#ffc600;">￥{{award.awardBalance}}</div>
+            <div style="color:#ababab;" @click="gogetreward()">提现>></div>
             <van-button :style="handlePX('width', 220)+handlePX('height', 60)+handlePX('line-height', 60)+handlePX('margin-top', 20)">我的成员</van-button>
         </div>
         <div :style="handlePX('height', 300)" style="display:flex;justify-content:center;align-items:center;flex:1;flex-direction:column;">
             <div>
                 <img v-lazy="'1'" :style="handlePX('width', 55)+handlePX('height', 55)" style="vertical-align: middle;"/>
-                <span>奖励金</span>
+                <span>累积奖励金</span>
             </div>
-            <div :style="handlePX('margin-top', 20)" style="color:#ffc600;">￥299.00</div>
-            <div style="color:#ababab;">提现>></div>
-            <van-button :style="handlePX('width', 220)+handlePX('height', 60)+handlePX('line-height', 60)+handlePX('margin-top', 20)">我的成员</van-button>
+            <div :style="handlePX('margin-top', 20)" style="color:#ffc600;">￥{{award.awardAmount}}</div>
+            <div style="color:#ababab;" @click="gorewarddetail()">明细>></div>
+            <van-button :style="handlePX('width', 220)+handlePX('height', 60)+handlePX('line-height', 60)+handlePX('margin-top', 20)">奖励规则</van-button>
         </div>
     </div>
 
@@ -50,10 +50,42 @@ import comhead from "../../components/Comhead.vue";
 })
 export default class my_reward extends Vue {
 
-handlePX(CssName, PxNumber) {
+    award="";
+
+    getreward(){
+    Vue.prototype.$reqFormPost("/user/account/query", {
+      userId: this.$store.getters[
+            Vue.prototype.MutationTreeType.TOKEN_INFO
+        ].userId,
+        token: this.$store.getters[
+            Vue.prototype.MutationTreeType.TOKEN_INFO
+        ].token,
+     }, res => {
+      if (res == null) {
+        console.log("网络请求错误！");
+        return;
+      }
+      if (res.data.status != 200) {
+        console.log(
+          "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+        );
+        return;
+      }
+      this.award = res.data.data
+      console.log("award",res.data.data);
+    });
+  }
+    gogetreward(){
+        this.$router.push("/reward");
+    }
+    gorewarddetail(){
+    this.$router.push("/present_record");
+  }
+    handlePX(CssName, PxNumber) {
     return CssName +":" +this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth /750 * PxNumber +"px;";
   }
   mounted() {
+      this.getreward()
     console.log("我的奖励");
   }
 }

@@ -7,3 +7,4 @@
 5、产品详细页 produvtDetail  只有静态页面   （2）推荐商品栏 不能滑动 点击
 6、essential_information 基本信息页面  头像上传没做   性别修改是用单选框的
 7、我的成员页面my_member 提现记录页面present_record    分页未做
+8、我的奖励页my_reward  下面的最新消息栏 不知接哪个接口数据 没做

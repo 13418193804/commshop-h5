@@ -22,7 +22,7 @@
   </div>
 
     <div :style="handlePX('padding', 30)">
-        <van-button style="width:100%;color:#ffffff;background-color:#ffc530;border-radius:8px;">确认</van-button>
+        <van-button style="width:100%;color:#ffffff;background-color:#ffc530;border-radius:8px;" @click="goback()">确认</van-button>
     </div>
 
   </div>
@@ -110,6 +110,9 @@ export default class select_bankcard extends Vue {
       path: "/add_bank_card",
       query: {}
     });
+  }
+  goback(){
+    this.$router.go(-1);
   }
   handlePX(CssName, PxNumber) {
     return (

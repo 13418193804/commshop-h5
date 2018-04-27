@@ -181,6 +181,9 @@ export default class User extends Vue {
     if (n.name == '地址管理') {
       this.$router.push({ name: "addresslist" });
     }
+    if (n.name == '我的成员') {
+      this.$router.push({ name: "my_member" });
+    }
   }
   go_setting(){
     this.$router.push("/setting");
@@ -189,7 +192,7 @@ export default class User extends Vue {
     this.$router.push("/my_bankcard");
   }
   myreward(){
-    this.$router.push("/reward");
+    this.$router.push("/my_reward");
   }
   mounted() {
     this.setTabIndex(3);
