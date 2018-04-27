@@ -9,7 +9,7 @@
             </div>
             <div :style="handlePX('margin-top', 20)" style="color:#ffc600;">￥{{award.awardBalance}}</div>
             <div style="color:#ababab;" @click="gogetreward()">提现>></div>
-            <van-button :style="handlePX('width', 220)+handlePX('height', 60)+handlePX('line-height', 60)+handlePX('margin-top', 20)">我的成员</van-button>
+            <van-button :style="handlePX('width', 220)+handlePX('height', 60)+handlePX('line-height', 60)+handlePX('margin-top', 20)" @click="gomember()">我的成员</van-button>
         </div>
         <div :style="handlePX('height', 300)" style="display:flex;justify-content:center;align-items:center;flex:1;flex-direction:column;">
             <div>
@@ -80,6 +80,9 @@ export default class my_reward extends Vue {
     }
     gorewarddetail(){
     this.$router.push("/present_record");
+  }
+  gomember(){
+    this.$router.push("/my_member");
   }
     handlePX(CssName, PxNumber) {
     return CssName +":" +this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth /750 * PxNumber +"px;";
