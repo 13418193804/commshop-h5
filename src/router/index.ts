@@ -179,8 +179,18 @@ export default new Router({
             path: '/select_bankcard',
             name: 'select_bankcard',
             component: r => require.ensure([], () => r(require('../pages/reward/select_bankcard')), 'select_bankcard')
+        },
+        {
+            path: '/coupon',
+            name: 'coupon',
+            component: r => require.ensure([], () => r(require('../pages/coupon/coupon')), 'coupon')
+        },
+        {
+            path: '/collar_center',
+            name: 'collar_center',
+            component: r => require.ensure([], () => r(require('../pages/coupon/collar_center')), 'collar_center')
         }
         
-
+        
     ]
 });

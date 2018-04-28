@@ -181,6 +181,9 @@ export default class User extends Vue {
     if (n.name == '地址管理') {
       this.$router.push({ name: "addresslist" });
     }
+    if (n.name == '优惠券') {
+      this.$router.push({ name: "coupon" });
+    }
     if (n.name == '我的成员') {
       this.$router.push({ name: "my_member" });
     }

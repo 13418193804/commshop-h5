@@ -1,0 +1,145 @@
+<template>
+  <div class="tab-contents">
+    <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="优惠卷" isRightIcon="true"  ></comhead>
+
+    <van-tabs>
+      <van-tab v-for="(item,index) in tablist" :title="item" :key="index">
+
+        <!-- 空空如也情况 -->
+        <!-- <div style="background-color:#F4F4F4;height:-webkit-fill-available;display:flex;flex-direction:column;align-items: center;">
+          <img src="../../assets/image/空空如也.png" :style="handlePX('width', 280)+handlePX('height', 280)+handlePX('margin-top', 110)"/>
+          <div :style="handlePX('font-size', 30)" style="color:#7E7E7E;">空空如也~~</div>
+        </div> -->
+
+        <!-- 有卷列表 -->
+        <div class="coupon_list">
+          <!-- 未使用列表 -->          
+          <div class="coupon_notused" :style="handlePX('width', 702)+handlePX('height', 248)+handlePX('margin-top', 20)">
+            <div class="coupon_cardbox" :style="handlePX('padding-top', 30)">
+              <div class="coupon_car_left" :style="handlePX('padding-left', 60)">
+                <div style="color:#fff;" :style="handlePX('font-size', 65)">100<span :style="handlePX('font-size', 42)">元</span></div>
+                <div style="color:rgba(255,255,255,0.8);">满299减100</div>
+              </div>
+              <div class="coupon_car_right" :style="handlePX('padding-right', 42)+handlePX('padding-top', 30)">
+                <van-button size="mini" :style="handlePX('width', 135)+handlePX('height', 40)" style="border:0;background-color:rgba(255,255,255,0.9);color:#fd5f61;">去使用</van-button>
+                <div style="color:rgba(255,255,255,0.8);" :style="handlePX('font-size', 26)">2018.03.24-2018.03.24</div>
+              </div>
+            </div>
+            <div class="coupon_car_bottom" :style="handlePX('line-height', 52)+handlePX('font-size', 20)+handlePX('padding-left', 40)">全场通用；特价商品或其他优惠活动商品不可叠加使用</div>
+          </div>
+
+          <!-- 已使用列表 -->      
+          <div class="coupon_used" :style="handlePX('width', 702)+handlePX('height', 248)+handlePX('margin-top', 20)">
+            <div class="coupon_cardbox" :style="handlePX('padding-top', 30)">
+              <div class="coupon_car_left" :style="handlePX('padding-left', 60)">
+                <div style="color:#fff;" :style="handlePX('font-size', 65)">100<span :style="handlePX('font-size', 42)">元</span></div>
+                <div style="color:rgba(255,255,255,0.8);">满299减100</div>
+              </div>
+              <div class="coupon_car_right" :style="handlePX('padding-right', 42)+handlePX('padding-top', 30)">
+                <div :style="handlePX('width', 135)+handlePX('height', 40)" style="color:rgba(255,255,255,0.8);">已使用</div>
+                <div style="color:rgba(255,255,255,0.8);" :style="handlePX('font-size', 26)">2018.03.24-2018.03.24</div>
+              </div>
+            </div>
+            <div class="coupon_car_bottom" :style="handlePX('line-height', 52)+handlePX('font-size', 20)+handlePX('padding-left', 40)">全场通用；特价商品或其他优惠活动商品不可叠加使用</div>
+          </div>
+
+          <!-- 已过期列表 -->      
+          <div class="coupon_overdue" :style="handlePX('width', 702)+handlePX('height', 248)+handlePX('margin-top', 20)">
+            <div class="coupon_cardbox" :style="handlePX('padding-top', 30)">
+              <div class="coupon_car_left" :style="handlePX('padding-left', 60)">
+                <div style="color:#fff;" :style="handlePX('font-size', 65)">100<span :style="handlePX('font-size', 42)">元</span></div>
+                <div style="color:rgba(255,255,255,0.8);">满299减100</div>
+              </div>
+              <div class="coupon_car_right" style="align-self: flex-end;" :style="handlePX('padding-right', 42)+handlePX('padding-top', 30)">
+                <div style="color:rgba(255,255,255,0.8);" :style="handlePX('font-size', 26)">2018.03.24-2018.03.24</div>
+              </div>
+            </div>
+            <div class="coupon_car_bottom" :style="handlePX('line-height', 52)+handlePX('font-size', 20)+handlePX('padding-left', 40)">全场通用；特价商品或其他优惠活动商品不可叠加使用</div>
+          </div>
+
+
+        </div>
+
+        <!--领卷按钮   -->
+        <div :style="handlePX('padding', 30)+handlePX('margin-top', 100)">
+          <div @click="go_collar_center()" :style="handlePX('height', 90)" style="border:1px solid #ffce5b;border-radius: 8px;display: flex;justify-content: center;align-items: center;">
+            <img src="../../assets/image/优惠卷.png" :style="handlePX('width', 45)+handlePX('height', 45)"/>
+            <div style="color:#ffce5b;">去领卷中心逛逛</div>
+          </div>
+        </div>
+
+      </van-tab>
+    </van-tabs>
+
+  </div>
+</template>
+
+<script lang="ts">
+import Vue from "vue";
+import Component from "vue-class-component";
+import mixin from "../../config/mixin";
+import { Action } from "vuex-class";
+import { Toast } from "vant";
+import comhead from "../../components/Comhead.vue";
+
+@Component({
+  components: {
+    comhead
+  },
+  mixins: [mixin]
+})
+export default class coupon extends Vue {
+  tablist=['未使用','已使用','已失效'];
+  go_collar_center(){
+    this.$router.push("/collar_center");
+  }
+  handlePX(CssName, PxNumber) {
+    return CssName +":" +this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth /750 * PxNumber +"px;";
+  }
+  mounted() {
+
+    console.log("优惠卷");
+  }
+}
+</script>
+
+
+<style lang="scss" scoped>
+@import "../../style/utils.scss";
+.coupon_list{
+  display:flex;
+  align-items: center;
+  flex-direction: column;
+  .coupon_notused{
+    background-image: url('../../assets/image/未使用优惠卷.png');
+    background-size: 100% 100%;
+    position: relative;
+  }
+  .coupon_used{
+    background-image: url('../../assets/image/已使用优惠卷.png');
+    background-size: 100% 100%;
+    position: relative;
+  }
+  .coupon_overdue{
+    background-image: url('../../assets/image/已过期优惠卷.png');
+    background-size: 100% 100%;
+    position: relative;
+  }
+}
+.coupon_cardbox{
+  display:flex;
+  justify-content:space-between;
+  .coupon_car_right{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+    justify-content:space-between;
+  }
+}
+.coupon_car_bottom{
+  bottom:0;
+  position:absolute;
+  text-align:center;
+  color:#fff;
+}
+</style>
