@@ -77,55 +77,25 @@
         </div>
 
         <div class="recommend" style="background-color:#ffffff;margin-top:10px;">
-          <van-tabs>
-            <van-tab v-for="(item,index) in tablist" :title="item" :key="index">
-              <div style="display:flex;overflow:hidden;">
-                <div>
+          <van-tabs @click="selecttablist">
+            <van-tab v-for="(item,index) in tablist" :title="item" :key="index" >
+              <van-swipe :autoplay="2000">
+                <van-swipe-item v-for="(items,index) in tabgoodslist" :key="index">
                   <div style="border: 1px #e5e5e5 solid;box-sizing: border-box;display:flex;align-items: center;justify-content:center;overflow:hidden;position:relative;" :style="handlePX('height', 410)+handlePX('width', 345)">
-                    <img src="../../assets/image/热.png" style="width:-webkit-fill-available;position: absolute;top: 0;left:0;" :style="handlePX('width', 43)+handlePX('height', 49)"/>
-                    <img v-lazy="'1'" style="width:-webkit-fill-available;position: absolute;top: 0;z-index:-1;"/>
-                    <div class="textLabel" style="position: absolute;bottom: 0;width: 100%;background-color:rgba(207,207,207,0.3);text-align:center;color:#A3A3A3" :style="handlePX('height', 70)+handlePX('line-height', 70)+handlePX('font-size', 28)">单双人床上用品</div>
-                  </div>
-                  <div style="display:flex;justify-content: center;flex-direction: column;width:-webkit-fill-available;" :style="handlePX('width', 345)">
-                    <div>
-                      <img src="../../assets/image/满减.png" :style="handlePX('width',52)+handlePX('height',25)"/>
-                      <img src="../../assets/image/特价.png" :style="handlePX('width',52)+handlePX('height',25)"/>
+                      <img src="../../assets/image/热.png" style="width:-webkit-fill-available;position: absolute;top: 0;left:0;" :style="handlePX('width', 43)+handlePX('height', 49)"/>
+                      <img v-lazy="'1'" style="width:-webkit-fill-available;position: absolute;top: 0;z-index:-1;"/>
+                      <div class="textLabel" style="position: absolute;bottom: 0;width: 100%;background-color:rgba(207,207,207,0.3);text-align:center;color:#A3A3A3" :style="handlePX('height', 70)+handlePX('line-height', 70)+handlePX('font-size', 28)">{{items.jingle}}</div>
                     </div>
-                    <div class="textLabel" :style="handlePX('font-size',28)+handlePX('line-height',40)">全棉四件套全棉裸睡水洗棉</div>
-                    <div style="color:#E05459" :style="handlePX('font-size',30)+handlePX('line-height',40)">￥1111</div>
-                  </div>
-                </div>
-                <div>
-                  <div style="border: 1px #e5e5e5 solid;box-sizing: border-box;display:flex;align-items: center;justify-content:center;overflow:hidden;position:relative;" :style="handlePX('height', 410)+handlePX('width', 345)">
-                    <img src="../../assets/image/热.png" style="width:-webkit-fill-available;position: absolute;top: 0;left:0;" :style="handlePX('width', 43)+handlePX('height', 49)"/>
-                    <img v-lazy="'1'" style="width:-webkit-fill-available;position: absolute;top: 0;z-index:-1;"/>
-                    <div class="textLabel" style="position: absolute;bottom: 0;width: 100%;background-color:rgba(207,207,207,0.3);text-align:center;color:#A3A3A3" :style="handlePX('height', 70)+handlePX('line-height', 70)+handlePX('font-size', 28)">单双人床上用品</div>
-                  </div>
-                  <div style="display:flex;justify-content: center;flex-direction: column;width:-webkit-fill-available;" :style="handlePX('width', 345)">
-                    <div>
-                      <img src="../../assets/image/满减.png" :style="handlePX('width',52)+handlePX('height',25)"/>
-                      <img src="../../assets/image/特价.png" :style="handlePX('width',52)+handlePX('height',25)"/>
+                    <div style="display:flex;justify-content: center;flex-direction: column;width:-webkit-fill-available;" :style="handlePX('width', 345)">
+                      <div>
+                        <img src="../../assets/image/满减.png" :style="handlePX('width',52)+handlePX('height',25)"/>
+                        <img src="../../assets/image/特价.png" :style="handlePX('width',52)+handlePX('height',25)"/>
+                      </div>
+                      <div class="textLabel" :style="handlePX('font-size',28)+handlePX('line-height',40)">{{items.goodsName}}</div>
+                      <div style="color:#E05459" :style="handlePX('font-size',30)+handlePX('line-height',40)">￥{{items.labelPrice}}</div>
                     </div>
-                    <div class="textLabel" :style="handlePX('font-size',28)+handlePX('line-height',40)">全棉四件套全棉裸睡水洗棉</div>
-                    <div style="color:#E05459" :style="handlePX('font-size',30)+handlePX('line-height',40)">￥1111</div>
-                  </div>
-                </div>
-                <div>
-                  <div style="border: 1px #e5e5e5 solid;box-sizing: border-box;display:flex;align-items: center;justify-content:center;overflow:hidden;position:relative;" :style="handlePX('height', 410)+handlePX('width', 345)">
-                    <img src="../../assets/image/热.png" style="width:-webkit-fill-available;position: absolute;top: 0;left:0;" :style="handlePX('width', 43)+handlePX('height', 49)"/>
-                    <img v-lazy="'1'" style="width:-webkit-fill-available;position: absolute;top: 0;z-index:-1;"/>
-                    <div class="textLabel" style="position: absolute;bottom: 0;width: 100%;background-color:rgba(207,207,207,0.3);text-align:center;color:#A3A3A3" :style="handlePX('height', 70)+handlePX('line-height', 70)+handlePX('font-size', 28)">单双人床上用品</div>
-                  </div>
-                  <div style="display:flex;justify-content: center;flex-direction: column;width:-webkit-fill-available;" :style="handlePX('width', 345)">
-                    <div>
-                      <img src="../../assets/image/满减.png" :style="handlePX('width',52)+handlePX('height',25)"/>
-                      <img src="../../assets/image/特价.png" :style="handlePX('width',52)+handlePX('height',25)"/>
-                    </div>
-                    <div class="textLabel" :style="handlePX('font-size',28)+handlePX('line-height',40)">全棉四件套全棉裸睡水洗棉</div>
-                    <div style="color:#E05459" :style="handlePX('font-size',30)+handlePX('line-height',40)">￥1111</div>
-                  </div>
-                </div>
-              </div>
+                </van-swipe-item>
+              </van-swipe>
             </van-tab>
           </van-tabs>
         </div>
@@ -160,11 +130,11 @@
         </div>
 
 
-<van-goods-action>
-  <van-goods-action-mini-btn icon="chat" text="客服" @click="onClickMiniBtn" />
-  <van-goods-action-mini-btn icon="cart" text="购物车" @click="onClickMiniBtn" />
-  <van-goods-action-big-btn text="加入购物车" @click="changeModel('cart')" />
-  <van-goods-action-big-btn text="立即购买" @click="changeModel('pay')" primary />
+<van-goods-action style="z-index:1000;background-color: #ffffff;">
+  <van-goods-action-mini-btn icon="chat" text="客服" @click="onClickMiniBtn" style="display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 10px;"/>
+  <van-goods-action-mini-btn icon="cart" text="购物车" @click="onClickMiniBtn" style="display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 10px;"/>
+  <van-goods-action-big-btn text="加入购物车" @click="changeModel('cart')" style="flex:1;"/>
+  <van-goods-action-big-btn text="立即购买" @click="changeModel('pay')" primary style="flex:1;"/>
 </van-goods-action>
 
 
@@ -258,6 +228,10 @@ export default class ProductDetail extends Vue {
   @Action("setPrepareId") setPrepareId;
   
   tablist=['大家还看了','新品推荐'];
+  tabgoodslist=[];
+  likeList=[];
+  newList=[];
+
   goodsList = [];
   goodsId = "";
   detatil = {
@@ -469,11 +443,15 @@ export default class ProductDetail extends Vue {
           );
           return;
         }
-
+        console.log('res.data',res.data)
         if (res.data.data.singleStatus) {
           this.skuItem = res.data.data.sku[0];
         }
         this.detatil = res.data.data;
+
+        this.tabgoodslist = res.data.data.likeList;
+        this.likeList = res.data.data.likeList;
+        this.newList = res.data.data.newList;
 
         this.detatil.skuKey.forEach((keyItem, keyIndex) => {
           keyItem.valueList.forEach((valueItem, valueIndex) => {
@@ -490,7 +468,15 @@ export default class ProductDetail extends Vue {
       }
     );
   }
-
+  selecttablist(index){
+    this.tabgoodslist=[];
+    if(index==0){
+      this.tabgoodslist=this.likeList
+    }
+    if(index==1){
+      this.tabgoodslist=this.newList
+    }
+  }
   handlePX(CssName, PxNumber) {
     return (
       CssName +
