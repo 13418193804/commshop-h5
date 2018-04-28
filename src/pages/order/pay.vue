@@ -15,15 +15,16 @@
                       <span class="marketPrice">￥{{obj.payTotal}}</span>  元
                 </div>
 </div>
-
 <div>
-
-
 </div>
 
 <div style="margin:30px;">
 <van-radio-group v-model="payActive">
   <van-radio name="ali">支付宝支付</van-radio>
+</van-radio-group>
+
+<van-radio-group v-model="payActive">
+  <van-radio name="wechat">微信支付</van-radio>
 </van-radio-group>
 
 
@@ -66,7 +67,7 @@ export default class shopIndex extends Vue {
             .token,
           body: this.obj["body"],
           outTradeNo: this.obj["payId"],
-          totalFee:1
+          totalFee: 1
         },
         res => {
           if (res == null) {
@@ -83,9 +84,13 @@ export default class shopIndex extends Vue {
             Toast(res.data.message);
             return;
           }
-          window.location.href="https://openapi.alipay.com/gateway.do?"+res.data.data.orderString;
+          window.location.href =
+            "https://openapi.alipay.com/gateway.do?" +
+            res.data.data.orderString;
         }
       );
+    }else{
+      console.log('微信支付')
     }
   }
 

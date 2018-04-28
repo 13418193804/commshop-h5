@@ -21,7 +21,7 @@
   </div>
 
   <!-- swipeable -->
-<van-tabs :active="active" style="flex:1" @click="changeTab" class="index_tabs">
+<van-tabs :active="active" style="flex:1" @click="changeTab" class="index_tabs" swipe-threshold="4">
 
 
   <van-tab v-for="(item,index) in indexList" :title="item.pageName" >

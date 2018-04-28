@@ -71,4 +71,7 @@ export default class App extends Vue {
   bottom: 20px;
   border-radius: 30px;
 }
+.van-tab{
+  min-width: 79px;
+}
 </style>
