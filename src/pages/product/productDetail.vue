@@ -79,8 +79,8 @@
         <div class="recommend" style="background-color:#ffffff;margin-top:10px;">
           <van-tabs @click="selecttablist">
             <van-tab v-for="(item,index) in tablist" :title="item" :key="index" >
-              <van-swipe :autoplay="2000">
-                <van-swipe-item v-for="(items,index) in tabgoodslist" :key="index">
+              <div style="display:flex;overflow: auto;">
+                <div v-for="(items,index) in tabgoodslist" :key="index" @click="goProductDetail(item.goodsId)" :style="handlePX('padding-bottom',65)+handlePX('padding-top',20)+handlePX('padding-left',30)">
                   <div style="border: 1px #e5e5e5 solid;box-sizing: border-box;display:flex;align-items: center;justify-content:center;overflow:hidden;position:relative;" :style="handlePX('height', 410)+handlePX('width', 345)">
                       <img src="../../assets/image/热.png" style="width:-webkit-fill-available;position: absolute;top: 0;left:0;" :style="handlePX('width', 43)+handlePX('height', 49)"/>
                       <img v-lazy="'1'" style="width:-webkit-fill-available;position: absolute;top: 0;z-index:-1;"/>
@@ -94,8 +94,8 @@
                       <div class="textLabel" :style="handlePX('font-size',28)+handlePX('line-height',40)">{{items.goodsName}}</div>
                       <div style="color:#E05459" :style="handlePX('font-size',30)+handlePX('line-height',40)">￥{{items.labelPrice}}</div>
                     </div>
-                </van-swipe-item>
-              </van-swipe>
+                </div>
+              </div>
             </van-tab>
           </van-tabs>
         </div>
@@ -167,10 +167,10 @@
 
 
     <div style='font-size:14px;max-height:300px;overflow:auto;'>
-      <div v-for='(item,indextop) in detatil.skuKey' >
+      <div v-for='(item,indextop) in detatil.skuKey' :key="indextop">
       <div style='padding:5px 20px 0;'>{{item.skuKeyIdName}}</div>
       <div class='skuKeyBox'>
-      <div v-for="(items,index) in  item.valueList" >
+      <div v-for="(items,index) in  item.valueList" :key="index">
         <div  :class="chosenList[indextop] === items ?'sku_box_select':'sku_box' " 
         :style="items.disable?'color:#ccc;':''+ chosenList[indextop] === items.skuValueId?'background-color:#E41C24;color:#fff':'' " @click.stop='selectSku(indextop,items)'  >{{items.skuValueName}}</div>
       </div>
@@ -193,7 +193,7 @@
       </div>
 <div style="    display: flex;
     flex-wrap: wrap;">
-<div v-for="(item,index) in detatil.detail.imageList" style="    line-height: 0;">
+<div v-for="(item,index) in detatil.imageList" :key="index" style="line-height: 0;">
 <img  v-lazy="item"  style="width:100%;"/>
 </div>
 </div>
@@ -476,6 +476,14 @@ export default class ProductDetail extends Vue {
     if(index==1){
       this.tabgoodslist=this.newList
     }
+  }
+  goProductDetail(goodsId){
+    this.$router.push({
+      path: "/productdetail",
+      query: {
+        goodsId: goodsId
+      }
+    });
   }
   handlePX(CssName, PxNumber) {
     return (

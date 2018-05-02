@@ -4,14 +4,14 @@
 <!-- <div class="bodyContent"> -->
 
 <van-tabs :active="selectIndex" @click="selectCatItem">
-  <van-tab v-for="(item,index) in catlist" :title="item.catName">
+  <van-tab v-for="(item,index) in catlist" :title="item.catName" :key="index">
     <!-- <van-list v-model="loading" :finished="finished" @load="loadMore" :offset="30"> -->
       <div style="background-color:#f7f7f7;height:10px;"></div>
       <div :style="handlePX('line-height',100)+handlePX('font-size',32)" style="color:#000000;text-align:center;">{{catlist[selectIndex].catName}}</div>
   
     <van-list>
       <van-row  >
-        <van-col span="12" v-for="item in goodsList">
+        <van-col span="12" v-for="(item,goodsListindex) in goodsList" :key="goodsListindex">
           <div class="bodyItem" :style="handlePX('margin-bottom',50)" style="display:flex;justify-content:center;" @click="goProductDetail(item.goodsId)">
           <div>
             <div style="border: 1px #e5e5e5 solid;box-sizing: border-box;display:flex;align-items: center;justify-content:center;overflow:hidden;position:relative;margin:5px auto;" :style="handlePX('height', 410)+handlePX('width', 345)">
@@ -84,6 +84,7 @@ export default class ProductList extends Vue {
       this.pageIndex = 0;
     }
     this.catId = item['catId'];
+    this.selectIndex = index;
     this.getProductList();    
     this.$router.replace({
       path: "/productlist",

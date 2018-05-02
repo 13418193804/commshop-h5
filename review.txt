@@ -1,11 +1,13 @@
-1、商品列表productlist (1)下拉无限 加载  已经注释
+1、商品列表productlist (1)无限下拉 加载  已经注释
 2、首页index (1) 副标题 没添加样式  (2) 搜索栏上的图标没改
 3、收藏页collection（1）多选 样式没添加（2）右上角按钮没添加
     （3）bug 先点商品列表  再点 编辑按钮 会默认选择之前点过的东西 (4)收藏页 获取列表 未做分页 下拉功能
 4、银行页面my_bankcard  进入页面会自动触发isDefaultchange（）函数的Bug
                        设置默认地址 会触发多次isDefaultchange（）函数的Bug
-5、产品详细页 produvtDetail  只有静态页面   （2）推荐商品栏 做成轮播图 未布局
+5、产品详细页 produvtDetail  只有静态页面  
 6、essential_information 基本信息页面  头像上传没做   性别修改是用单选框的
 7、我的成员页面my_member 提现记录页面present_record    分页未做
 8、我的奖励页my_reward  下面的最新消息栏 不知接哪个接口数据 没做
 9、优惠卷页面coupon 未接数据  领卷中心collar_center 右上角还没加按钮图标
+
+van-tab修改后 不会横向滚动 展示不了后面的item

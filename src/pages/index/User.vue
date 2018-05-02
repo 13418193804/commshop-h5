@@ -17,7 +17,7 @@
 
             
 
-<div style="font-size:16px;">
+<div style="font-size:16px;" @click="go_essential()">
     <img  v-lazy="'1'" style="width:100px;height:100px;border-radius: 100px;"/>
     <div>普通用户名称</div>
 </div>
@@ -31,7 +31,7 @@
 </div>
 
 <div class="order-content" >
-<div style="text-align:center;padding:10px 0;width:20%;" v-for="(n,index) in orderList" @click="getOrderList(n.status)">
+<div style="text-align:center;padding:10px 0;width:20%;" v-for="(n,index) in orderList" :key="index" @click="getOrderList(n.status)">
     <div>
       <img src="../../assets/image/未付款.png" alt="" style="width:40px;height:40px;" v-if="index == 0">
       <img src="../../assets/image/未发货.png" alt="" style="width:40px;height:40px;" v-if="index == 1">
@@ -56,7 +56,7 @@
 
 
 <div class="order-content" style="border-bottom:solid 1px #e5e5e5;">
-<div style="text-align:center;padding:10px;width:25%;" v-for="(n,index) in toolsList" @click="tools(n)">
+<div style="text-align:center;padding:10px;width:25%;" v-for="(n,index) in toolsList" :key="index" @click="tools(n)">
     <div>
     <img src="../../assets/image/我的收藏.png" alt="" style="width:30px;height:30px;" v-if="index == 0">
       <img src="../../assets/image/地址管理.png" alt="" style="width:30px;height:30px;" v-if="index == 1">
@@ -190,6 +190,9 @@ export default class User extends Vue {
   }
   go_setting(){
     this.$router.push("/setting");
+  }
+  go_essential(){
+    this.$router.push("/essential_information");    
   }
   mybankcard(){ 
     this.$router.push("/my_bankcard");
