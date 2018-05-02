@@ -2,7 +2,7 @@
   <div class="tab-contents" style="height:-webkit-fill-available;">
             <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="订单详情" isRightIcon="true"  ></comhead>
             <div style="background-color:#f7f7f7;display: flex;justify-content: space-between;padding: 10px;font-size: 16px;align-items: center;">
-                <div>订单状态</div>
+                <div style="font-size:16px">订单金额（含运费）：￥{{detail.orderTotalPrice.toFixed(2)}}</div>
                 <div :style="formatStatusColor(detail.orderStatus)">{{formatStatus(detail.orderStatus)}}</div>
             </div>
      <div style="    display: flex;height: 5px;">
@@ -56,10 +56,17 @@
                 <div style="margin-right:10px;">￥{{detail.transportPrice.toFixed(2)}}</div>
         </div>
 
-      <div style="margin:0 0 0 10px;display:flex;justify-content: space-between;padding:10px;">
+      <div style="margin:0 0 0 10px;display:flex;justify-content: space-between;padding:10px;border-bottom:1px #e5e5e5 solid;">
                 <div>订单总价</div>
                 <div style="margin-right:10px;" class="marketPrice">￥{{detail.orderTotalPrice.toFixed(2)}}</div>
         </div>
+
+
+<div style="margin:0 0 0 10px;display:flex;justify-content:flex-end;padding:10px;">
+            按钮
+        </div>
+
+
 
     </div>
 
@@ -76,7 +83,9 @@
  <div>
         支付时间：{{detail.payTime}}
     </div>
-
+ <!-- <div>
+        收货时间：{{detail.payTime}}
+    </div> -->
 </div>
         <div style="height:10px;background-color:#f7f7f7;"></div>
 <div style="    display: flex;
@@ -109,7 +118,7 @@ import comhead from "../../components/Comhead.vue";
   mixins: [mixin]
 })
 export default class orderdetail extends Vue {
-  orderId ="";
+  orderId = "";
   detail = "";
   formatStatus(status) {
     // ORDER_WAIT_PAY
@@ -121,13 +130,13 @@ export default class orderdetail extends Vue {
     // ORDER_FINISH
     switch (status) {
       case "ORDER_WAIT_PAY":
-        return "等待付款";
+        return "未付款";
       case "ORDER_CANCEL_PAY":
-        return "交易取消";
+        return "已取消";
       case "ORDER_WAIT_SENDGOODS":
-        return "等待发货";
+        return "未发货";
       case "ORDER_WAIT_RECVGOODS":
-        return "等待收货";
+        return "未收货";
       case "ORDER_END_GOODS":
         return "交易结束";
       case "ORDER_WAIT_REVIEW" || "ORDER_FINISH":

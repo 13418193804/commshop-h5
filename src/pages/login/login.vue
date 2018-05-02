@@ -43,8 +43,8 @@ import { Toast } from "vant";
   mixins: [mixin]
 })
 export default class shopIndex extends Vue {
-  loginName = "13418193804";
-  password = "5164659";
+  loginName = "13277931892";
+  password = "123456";
   @Action("setTokenInfo") setTokenInfo;
 
   clearLoginName() {

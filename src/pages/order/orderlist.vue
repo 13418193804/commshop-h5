@@ -71,20 +71,19 @@
     </div>
       <div class="settingBody" v-if="item.orderStatus === 'ORDER_WAIT_RECVGOODS'">
       <van-button size="small" style="margin-right:10px;" @click.stop="getShip(item)">查看物流</van-button>
-      <van-button size="small" style="margin-right:10px;">退货/退款</van-button>
-      <van-button size="small" style="margin-right:10px;" :style="formatButtonColor()" @click.stop="recvgoods(item.orderId)">确认收货</van-button>
+      <van-button size="small" style="margin-right:10px;" @click.stop="doRefund(item)">退货/退款</van-button>
+      <van-button size="small" style="margin-right:10px;"  :style="formatButtonColor()" @click.stop="recvgoods(item.orderId)">确认收货</van-button>
     </div>
 
      <div class="settingBody" v-if="item.orderStatus === 'ORDER_WAIT_REVIEW' ||item.orderStatus === 'ORDER_FINISH'">
-      <van-button size="small" style="margin-right:10px;" @click.stop="buyAgain(item.orderId)">再次购买</van-button>
-      <van-button size="small" style="margin-right:10px;">退换/售后</van-button>
-      <van-button size="small" style="margin-right:10px;" :style="formatButtonColor()">评价</van-button>
+      <van-button size="small" style="margin-right:10px;" :style="formatButtonColor()" @click.stop="buyAgain(item.orderId)">再次购买</van-button>
+      <van-button size="small" style="margin-right:10px;" @click.stop="doRefund(item)">退换/售后</van-button>
+      <van-button size="small" style="margin-right:10px;" v-if="item.orderStatus === 'ORDER_WAIT_REVIEW'" :style="formatButtonColor()">评价</van-button>
     </div>
 
-
-
-
-
+     <div class="settingBody" v-if="item.orderStatus === 'ORDER_CANCEL_PAY'">
+      <van-button size="small" style="margin-right:10px;" :style="formatButtonColor()" @click.stop="buyAgain(item.orderId)">再次购买</van-button>
+    </div>
 
   <div style="background-color:#f7f7f7;height:10px;">
 
@@ -200,7 +199,6 @@ Vue.prototype.$reqFormPost(
               Toast(res.data.message);
               return;
             }
-
             console.log("取消退款成功")
           }
         );
@@ -208,50 +206,57 @@ Vue.prototype.$reqFormPost(
 
 }
   doRefund(item) {
-    console.log(item);
-    Dialog.confirm({
-      title: "提示",
-      message: "确定申请退款吗？"
-    })
-      .then(() => {
+    console.log(item.orderId);
+  this.$router.push({
+      name: "refund",
+      query: {
+        orderId: item.orderId
+      }
+    });
+    // Dialog.confirm({
+    //   title: "提示",
+    //   message: "确定申请退款吗？"
+    // })
+    //   .then(() => {
 
-        Vue.prototype.$reqFormPost(
-          "/order/refund/apply",
-          {
-            userId: this.$store.getters[
-              Vue.prototype.MutationTreeType.TOKEN_INFO
-            ].userId,
-            token: this.$store.getters[
-              Vue.prototype.MutationTreeType.TOKEN_INFO
-            ].token,
-            orderId: item.orderId,
-            money: item.orderTotalPrice,
-            refundType: "REFUND"
-          },
-          res => {
-            if (res == null) {
-              console.log("网络请求错误！");
-              return;
-            }
-            if (res.data.status != 200) {
-              console.log(
-                "需控制错误码" +
-                  res.data.status +
-                  ",错误信息：" +
-                  res.data.message
-              );
-              Toast(res.data.message);
-              return;
-            }
+    //     Vue.prototype.$reqFormPost(
+    //       "/order/refund/apply",
+    //       {
+    //         userId: this.$store.getters[
+    //           Vue.prototype.MutationTreeType.TOKEN_INFO
+    //         ].userId,
+    //         token: this.$store.getters[
+    //           Vue.prototype.MutationTreeType.TOKEN_INFO
+    //         ].token,
+    //         orderId: item.orderId,
+    //         money: item.orderTotalPrice,
+    //         refundType: "REFUND"
+    //       },
+    //       res => {
+    //         if (res == null) {
+    //           console.log("网络请求错误！");
+    //           return;
+    //         }
+    //         if (res.data.status != 200) {
+    //           console.log(
+    //             "需控制错误码" +
+    //               res.data.status +
+    //               ",错误信息：" +
+    //               res.data.message
+    //           );
+    //           Toast(res.data.message);
+    //           return;
+    //         }
+    //         console.log("申请退款成功")
+    //       }
+    //     );
+    //     // on confirm
+    //   })
+    //   .catch(() => {
+    //     // on cancel
+    //   });
 
-            console.log("申请退款成功")
-          }
-        );
-        // on confirm
-      })
-      .catch(() => {
-        // on cancel
-      });
+
   }
   formatStatusColor(status) {
     switch (status) {
@@ -351,13 +356,13 @@ Vue.prototype.$reqFormPost(
     // ORDER_FINISH
     switch (status) {
       case "ORDER_WAIT_PAY":
-        return "等待付款";
+        return "未付款";
       case "ORDER_CANCEL_PAY":
-        return "交易取消";
+        return "已取消";
       case "ORDER_WAIT_SENDGOODS":
-        return "等待发货";
+        return "未发货";
       case "ORDER_WAIT_RECVGOODS":
-        return "等待收货";
+        return "未收货";
       case "ORDER_END_GOODS":
         return "交易结束";
       case "ORDER_WAIT_REVIEW" || "ORDER_FINISH":
