@@ -9,15 +9,15 @@
             <van-checkbox  :name="item.goodsId" v-show="isShow" style="margin-left:5px;"></van-checkbox>
           </van-checkbox-group>
         </div>
-        <label :for="item.goodsId" style="display:flex;" @click="goProductDetail(item.goodsId)">
-            <div style="width:-webkit-fill-available;padding:10px;display:flex;">
+        <div :for="item.goodsId" :style="handlePX('width', 720)" style="display:flex;" @click="goProductDetail(item.goodsId)">
+            <div style="padding:10px;display:flex;flex:1;">
                 <div style="display:flex;align-items:center;justify-content:center;overflow:hidden;" :style="handlePX('height', 200)+handlePX('width', 200)">
                   <img v-lazy="item.goodsImg.split(',')[0]" style="width:100%"/>
                 </div>
                 <div style="padding-left:10px;flex:1;" class="textLabel" :style="handlePX('line-height', 48)">
-                  <div>
+                  <div style="max-width:calc;display: flex;align-items: center;">
                     <img src="../../assets/image/新品特价.png" :style="handlePX('width',92)+handlePX('height',30)" style="vertical-align: middle;"/>
-                    <span class="textLabel" style="color:#000000;" :style="handlePX('font-size',28)">{{item.goodsName}}</span>
+                    <div class="textLabel" style="color:#000000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" :style="handlePX('font-size',28)+handlePX('width',320)">{{item.goodsName}}</div>
                   </div>
                   <div class="textLabel"  style="color:#A3A3A3;" :style="handlePX('font-size',28)+handlePX('line-height',44)">{{item.jingle}}</div>
                   <div style="padding-top:5px;">
@@ -26,7 +26,10 @@
                   </div>
               </div>
             </div>
-        </label>
+        </div>
+    </div>
+    <div v-if="goodsList.length==0" style="position: fixed;left: 50%;top: 50%;-webkit-transform: translate(-50%, -50%);transform: translate(-50%, -50%);}">
+      暂无收藏
     </div>
 
     
@@ -55,32 +58,36 @@ export default class collection extends Vue {
 
   toggle(){
       if(this.isShow==true){
-          Vue.prototype.$reqFormPost(
-      "/fav/delete",
-      {
-        userId: this.$store.getters[
-            Vue.prototype.MutationTreeType.TOKEN_INFO
-        ].userId,
-        token: this.$store.getters[
-            Vue.prototype.MutationTreeType.TOKEN_INFO
-        ].token,
-        goodsIds: this.checkedGoods,
-      },
-      res => {
-        if (res == null) {
-          console.log("网络请求错误！");
-          return;
+        if(this.checkedGoods.length==0){
+          Toast('没有选商品')
+          return
         }
-        if (res.data.status != 200) {
-          console.log(
-            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+        Vue.prototype.$reqFormPost(
+        "/fav/delete",
+        {
+          userId: this.$store.getters[
+              Vue.prototype.MutationTreeType.TOKEN_INFO
+          ].userId,
+          token: this.$store.getters[
+              Vue.prototype.MutationTreeType.TOKEN_INFO
+          ].token,
+          goodsIds: this.checkedGoods,
+        },
+        res => {
+          if (res == null) {
+            console.log("网络请求错误！");
+            return;
+          }
+          if (res.data.status != 200) {
+            console.log(
+              "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+            );
+            return;
+          }        
+          this.getProductList();
+          }
           );
-          return;
-        }        
-        this.getProductList();
-         }
-        );
-       }
+        }
       this.isShow = !this.isShow;
   }
 
