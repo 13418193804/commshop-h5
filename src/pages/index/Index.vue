@@ -69,7 +69,7 @@
                   
               </div>
                 <div class="goodsBody" v-if="items.columnNum ===1" >
-                  <div v-for="(goods,goodsIndex) in items.items" class="goodsItem" style="width:-webkit-fill-available;border-top: 1px solid #e5e5e5;">
+                  <div v-for="(goods,goodsIndex) in items.items" @click="goProductDetail(goods.goodsId)" :key="goodsIndex" class="goodsItem" style="width:-webkit-fill-available;border-top: 1px solid #e5e5e5;">
                     <div style="width:-webkit-fill-available;padding:10px;display:flex;">
                       <div style="display:flex;align-items:center;justify-content:center;overflow:hidden;" :style="handlePX('height', 270)+handlePX('width', 270)">
                         <img v-lazy="goods.goodsImg.split(',')[0]" style="width:100%"/>
@@ -91,7 +91,7 @@
                 </div>
               
                 <div class="goodsBody" v-if="items.columnNum === 2" style="  padding:10px 0;border-top:1px #e5e5e5 solid;">
-                  <div v-for="(goods,goodsIndex) in items.items" class="goodsItem">
+                  <div v-for="(goods,goodsIndex) in items.items" @click="goProductDetail(goods.goodsId)" :key="goodsIndex" class="goodsItem">
                     <div style="  width:-webkit-fill-available;  ">
                       <div style="border: 1px #e5e5e5 solid;box-sizing: border-box;display:flex;align-items: center;justify-content:center;overflow:hidden;position:relative;margin:5px auto;" :style="handlePX('height', 410)+handlePX('width', 345)">
                         <img src="../../assets/image/热.png" style="width:-webkit-fill-available;position: absolute;top: 0;left:0;" :style="handlePX('width', 43)+handlePX('height', 49)"/>
@@ -217,6 +217,14 @@ export default class shopIndex extends Vue {
   }
   toggle(){
     this.isShow = !this.isShow;
+  }
+  goProductDetail(goodsId){
+    this.$router.push({
+      path: "/productdetail",
+      query: {
+        goodsId: goodsId
+      }
+    });
   }
 
   handleImageWidth() {
