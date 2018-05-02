@@ -24,11 +24,7 @@
 
     <div :style="handlePX('padding', 30)">
         <div style="color:#959595;">最新消息</div>
-        <div :style="handlePX('height', 88)+handlePX('line-height', 88)" style="border-bottom:1px solid #e7e7e7;font-size:14px;">A成员在03/21 13：00消费90元，你获得2元奖励</div>
-        <div :style="handlePX('height', 88)+handlePX('line-height', 88)" style="border-bottom:1px solid #e7e7e7;font-size:14px;">A成员在03/21 13：00消费90元，你获得2元奖励</div>
-        <div :style="handlePX('height', 88)+handlePX('line-height', 88)" style="border-bottom:1px solid #e7e7e7;font-size:14px;">A成员在03/21 13：00消费90元，你获得2元奖励</div>
-        <div :style="handlePX('height', 88)+handlePX('line-height', 88)" style="border-bottom:1px solid #e7e7e7;font-size:14px;">A成员在03/21 13：00消费90元，你获得2元奖励</div>
-        <div :style="handlePX('height', 88)+handlePX('line-height', 88)" style="border-bottom:1px solid #e7e7e7;font-size:14px;">A成员在03/21 13：00消费90元，你获得2元奖励</div>
+        <div v-for="(item, index) in awardList" :key="index" :style="handlePX('height', 88)+handlePX('line-height', 88)" style="border-bottom:1px solid #e7e7e7;font-size:14px;">{{item.member.nickName}}在{{item.createTime}}消费{{item.payTotal}}元，你获得{{item.awardAmount}}元奖励</div>
     </div>
 
   </div>
@@ -51,6 +47,7 @@ import comhead from "../../components/Comhead.vue";
 export default class my_reward extends Vue {
 
     award="";
+    awardList=[];
 
     getreward(){
     Vue.prototype.$reqFormPost("/user/account/query", {
@@ -75,6 +72,31 @@ export default class my_reward extends Vue {
       console.log("award",res.data.data);
     });
   }
+  get_user_rewardlist(){
+    Vue.prototype.$reqFormPost("/award/record/userquery", {
+      userId: this.$store.getters[
+          Vue.prototype.MutationTreeType.TOKEN_INFO
+      ].userId,
+      token: this.$store.getters[
+          Vue.prototype.MutationTreeType.TOKEN_INFO
+      ].token,
+      // page:0,
+      // pageSize:20
+     }, res => {
+      if (res == null) {
+        console.log("网络请求错误！");
+        return;
+      }
+      if (res.data.status != 200) {
+        console.log(
+          "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+        );
+        return;
+      }
+      this.awardList = res.data.awardList
+      console.log("awardList",res.data.awardList);
+    });
+  }
     gogetreward(){
         this.$router.push("/reward");
     }
@@ -88,7 +110,8 @@ export default class my_reward extends Vue {
     return CssName +":" +this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth /750 * PxNumber +"px;";
   }
   mounted() {
-      this.getreward()
+    this.getreward();
+    this.get_user_rewardlist();
     console.log("我的奖励");
   }
 }

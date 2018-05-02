@@ -2,25 +2,25 @@
   <div class="tab-contents" style="height:-webkit-fill-available;background-color:#FFFFFF;">
         <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @rightClick="toggle()" :rightTitle="!isShow?'编辑':'删除'" @leftClick="false"  title="我的收藏"  ></comhead>
 
-    <!-- <div @click="toggle()" v-show="!isShow"></div>
-    <div @click="toggle()" v-show="isShow">删除</div> -->
 
-    <div v-for="(item, index) in goodsList" :key="index" style="display:flex;flex-direction:row;align-items:center;">
+    <div v-for="(item, index) in goodsList" :key="index" style="display:flex;flex-direction:row;align-items:center;border-bottom:1px solid #e5e5e5;">
         <div>
-          <input type="checkbox" :id="item.goodsId" :value="item.goodsId" v-model="checkedGoods" v-show="isShow">
+          <van-checkbox-group v-model="checkedGoods">
+            <van-checkbox  :name="item.goodsId" v-show="isShow" style="margin-left:5px;"></van-checkbox>
+          </van-checkbox-group>
         </div>
-        <label :for="item.goodsId" style="display:flex;border-bottom:1px solid #e5e5e5;">
+        <label :for="item.goodsId" style="display:flex;" @click="goProductDetail(item.goodsId)">
             <div style="width:-webkit-fill-available;padding:10px;display:flex;">
                 <div style="display:flex;align-items:center;justify-content:center;overflow:hidden;" :style="handlePX('height', 200)+handlePX('width', 200)">
                   <img v-lazy="item.goodsImg.split(',')[0]" style="width:100%"/>
                 </div>
-                <div style="padding-left:10px;flex:1;" class="textLabel" :style="handlePX('padding-top', 30)+handlePX('line-height', 48)">
+                <div style="padding-left:10px;flex:1;" class="textLabel" :style="handlePX('line-height', 48)">
                   <div>
                     <img src="../../assets/image/新品特价.png" :style="handlePX('width',92)+handlePX('height',30)" style="vertical-align: middle;"/>
                     <span class="textLabel" style="color:#000000;" :style="handlePX('font-size',28)">{{item.goodsName}}</span>
                   </div>
                   <div class="textLabel"  style="color:#A3A3A3;" :style="handlePX('font-size',28)+handlePX('line-height',44)">{{item.jingle}}</div>
-                  <div>
+                  <div style="padding-top:5px;">
                     <span style="color:#E05459" :style="handlePX('font-size',34)">￥{{item.marketPrice}}</span>
                     <span style="color:#C5C4C4;text-decoration:line-through;margin-left:5px;" :style="handlePX('font-size',24)">原价:{{item.labelPrice}}</span>
                   </div>
@@ -42,7 +42,6 @@ import Component from "vue-class-component";
 import mixin from "../../config/mixin";
 import { Action } from "vuex-class";
 import { Toast } from "vant";
-// import { recommendList } from '../../service/getData';
 import comhead from "../../components/Comhead.vue";
 
 @Component({
@@ -59,8 +58,6 @@ export default class collection extends Vue {
           Vue.prototype.$reqFormPost(
       "/fav/delete",
       {
-        // token: '2c353ced5a3bb09cf7f05e57155999cd',
-        // userId: 'UI5add43d15b065d5be5116746',
         userId: this.$store.getters[
             Vue.prototype.MutationTreeType.TOKEN_INFO
         ].userId,
@@ -91,8 +88,6 @@ export default class collection extends Vue {
     Vue.prototype.$reqFormPost(
       "/fav/query",
       {
-        // token: '2c353ced5a3bb09cf7f05e57155999cd',
-        // userId: 'UI5add43d15b065d5be5116746',
         userId: this.$store.getters[
           Vue.prototype.MutationTreeType.TOKEN_INFO
         ].userId,
@@ -119,6 +114,14 @@ export default class collection extends Vue {
     );
   }
 
+  goProductDetail(goodsId){
+    this.$router.push({
+      path: "/productdetail",
+      query: {
+        goodsId: goodsId
+      }
+    });
+  }
 
 
   handlePX(CssName, PxNumber) {
