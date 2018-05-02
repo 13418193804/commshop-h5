@@ -4,7 +4,7 @@
     （3）bug 先点商品列表  再点 编辑按钮 会默认选择之前点过的东西 (4)收藏页 获取列表 未做分页 下拉功能
 4、银行页面my_bankcard  进入页面会自动触发isDefaultchange（）函数的Bug
                        设置默认地址 会触发多次isDefaultchange（）函数的Bug
-5、产品详细页 produvtDetail  只有静态页面   （2）推荐商品栏 做成轮播图 未布局
+5、产品详细页 produvtDetail  只有静态页面  
 6、essential_information 基本信息页面  头像上传没做   性别修改是用单选框的
 7、我的成员页面my_member 提现记录页面present_record    分页未做
 8、我的奖励页my_reward  下面的最新消息栏 不知接哪个接口数据 没做
