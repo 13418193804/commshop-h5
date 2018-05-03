@@ -4,12 +4,12 @@
   
   <div v-for="(item, index) in cardlist" :key="index" :style="handlePX('padding', 30)+handlePX('padding-top', 0)+handlePX('padding-bottom', 0)">
     <div :style="handlePX('height', 160)" style="border-bottom:1px solid #dedede;box-sizing:border-box;display:flex;align-items:center;">
-      <img v-lazy="'1'" :style="handlePX('height', 70)+handlePX('widht', 70)+handlePX('margin-left', 20)" style="border-radius:50%;"/>
+      <img src="../../assets/image/招商银行.png" :style="handlePX('height', 70)+handlePX('widht', 70)+handlePX('margin-left', 20)" style="border-radius:50%;"/>
       <div :style="handlePX('margin-left', 20)" style="flex:1;">
         <div>{{item.bankName}}<span style="font-size:12px;">(信用卡)</span></div>
         <div>{{item.cardId}}</div>
       </div>
-      <van-radio-group v-model="isDefaultid" :change="isDefaultchange()">
+      <van-radio-group v-model="isDefaultid" >
         <van-radio :name="item.id"></van-radio>
         </van-radio-group>
     </div>
@@ -22,7 +22,7 @@
   </div>
 
     <div :style="handlePX('padding', 30)">
-        <van-button style="width:100%;color:#ffffff;background-color:#ffc530;border-radius:8px;" @click="goback()">确认</van-button>
+        <van-button style="width:100%;color:#ffffff;background-color:#ffc530;border-radius:10px;" @click="goback()">确认</van-button>
     </div>
 
   </div>
@@ -78,33 +78,7 @@ export default class select_bankcard extends Vue {
       }
     );
   }
-  isDefaultchange() {
-    Vue.prototype.$reqFormPost(
-      "/bank/card/setdefault",
-      {
-        userId: this.$store.getters[
-          Vue.prototype.MutationTreeType.TOKEN_INFO
-        ].userId,
-        token: this.$store.getters[
-          Vue.prototype.MutationTreeType.TOKEN_INFO
-        ].token,
-        id: this.isDefaultid
-      },
-      res => {
-        if (res == null) {
-          console.log("网络请求错误！");
-          return;
-        }
-        if (res.data.status != 200) {
-          console.log(
-            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
-          );
-          return;
-        }
-        console.log("/bank/card/setdefault", res.data.message);
-      }
-    );
-  }
+
   addbangcard() {
     this.$router.push({
       path: "/add_bank_card",
@@ -112,7 +86,12 @@ export default class select_bankcard extends Vue {
     });
   }
   goback(){
-    this.$router.go(-1);
+    this.$router.push({
+      path: "/reward",
+      query: {
+        cardid: this.isDefaultid
+      }
+    });
   }
   handlePX(CssName, PxNumber) {
     return (
