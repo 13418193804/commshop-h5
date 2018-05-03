@@ -3,7 +3,7 @@
     <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="关于我们" isRightIcon="true" ></comhead>
 
     <div :style="handlePX('padding-top',40)+handlePX('padding-bottom',60)" style="display: flex;flex-direction: column;align-items: center;">
-        <img v-lazy="'1'" :style="handlePX('width',120)+handlePX('height',120)"/>
+        <img src="../../assets/image/LOGO.png" :style="handlePX('width',120)+handlePX('height',120)"/>
         <div :style="handlePX('margin-top',35)">版本号 V1.0.0</div>
     </div>
     

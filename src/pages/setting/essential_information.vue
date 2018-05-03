@@ -8,12 +8,13 @@
               <span class="van-cell-text" :style="handlePX('line-height',60)">头像</span>
             </template>
             <div :style="handlePX('height',60)">
-                <img v-lazy="'1'" :style="handlePX('width',60)+handlePX('height',60)" style="border-radius:50%;"/>
+                <img v-if="userIcon" v-lazy="userIcon" :style="handlePX('width',60)+handlePX('height',60)" style="border-radius:50%;"/>
+                <img v-else src="../../assets/image/头像.png" :style="handlePX('width',60)+handlePX('height',60)" style="border-radius:50%;"/>
             </div>
         </van-cell>
-        <van-cell title="用户名" is-link :value="userinfo.nickName" @click="go_updatenickName()"/>
-        <van-cell title="性别" is-link :value="userinfo.sex" @click="go_updatesex()"/>
-        <van-cell title="手机" is-link :value="userinfo.loginName"/>
+        <van-cell title="用户名" is-link :value="nickName" @click="go_updatenickName()"/>
+        <van-cell title="性别" is-link :value="sex" @click="go_updatesex()"/>
+        <van-cell title="手机" is-link :value="loginName"/>
     </van-cell-group>
     
 
@@ -37,7 +38,10 @@ import comhead from "../../components/Comhead.vue";
 })
 export default class essential_information extends Vue {
 
-    userinfo="";
+  userIcon="";
+  nickName="";
+  sex="";
+  loginName="";
 
   queryuser() {
     Vue.prototype.$reqFormPost(
@@ -64,8 +68,10 @@ export default class essential_information extends Vue {
           Toast(res.data.message);
           return;
         }
-        console.log('res.data.data',res.data.data)
-        this.userinfo=res.data.data;
+        this.userIcon=res.data.data.userIcon;
+        this.nickName=res.data.data.nickName;
+        this.sex=res.data.data.sex;
+        this.loginName=res.data.data.loginName;
       }
     );
   }
@@ -73,7 +79,8 @@ export default class essential_information extends Vue {
     this.$router.push({
       path: "/update_info",
       query: {
-        updatename: 'nickName'
+        updatename: 'nickName',
+        nickName:this.nickName
       }
     });
   }
@@ -81,7 +88,8 @@ export default class essential_information extends Vue {
     this.$router.push({
       path: "/update_info",
       query: {
-        updatename: 'sex'
+        updatename: 'sex',
+        sex:this.sex
       }
     });
   }

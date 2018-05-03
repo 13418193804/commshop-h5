@@ -32,6 +32,7 @@ export default class feedback extends Vue {
   content="";
   feedback() {
     if(this.content==""){
+      Toast('请输入反馈内容');
       return
     }
     Vue.prototype.$reqFormPost(
@@ -59,6 +60,7 @@ export default class feedback extends Vue {
           Toast(res.data.message);
           return;
         }
+        Toast('已提交');        
         console.log('res.data',res.data)
         this.$router.push("/setting");
       }
