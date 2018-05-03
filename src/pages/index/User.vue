@@ -3,7 +3,7 @@
       <div class="user-background">
           <div class="user-tool">
              <div style="padding: 10px;">
-                  <i class="iconfont icon-setting" style="font-size:25px;" @click="go_setting()"></i>
+                  <i class="iconfont icon-setting1" style="font-size:25px;" @click="go_setting()"></i>
              </div>
    <div style="line-height:47px;">
      <span style="padding: 10px;">
