@@ -18,7 +18,12 @@
             
 
 <div style="font-size:16px;" @click="go_essential()">
+<<<<<<< HEAD
     <img  src="../../assets/image/头像.png" style="width:100px;height:100px;border-radius: 100px;"/>
+=======
+    <img v-if="userIcon" v-lazy="userIcon" style="width:100px;height:100px;border-radius: 100px;"/>
+    <img v-else src="../../assets/image/头像.png" style="width:100px;height:100px;border-radius: 100px;"/>
+>>>>>>> 5cfa51f004e66258250c64a30a75bb5c4d883eb7
     <div>普通用户名称</div>
 </div>
       </div>
@@ -120,7 +125,7 @@ export default class User extends Vue {
   // ORDER_WAIT_REVIEW
   // ORDER_END_GOODS
   // ORDER_FINISH
-
+  userIcon="";
   orderList = [
     {
       name: "待付款",
@@ -174,6 +179,34 @@ export default class User extends Vue {
       }
     });
   }
+  queryuserinfo(){
+    Vue.prototype.$reqFormPost(
+      "/user/query",
+      {
+        userId: this.$store.getters[
+          Vue.prototype.MutationTreeType.TOKEN_INFO
+        ].userId,
+        token: this.$store.getters[
+          Vue.prototype.MutationTreeType.TOKEN_INFO
+        ].token,
+      },
+      res => {
+        if (res == null) {
+          console.log("网络请求错误！");
+          return;
+        }
+        if (res.data.status != 200) {
+          console.log(
+            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+          );
+          return;
+        }
+        
+        this.userIcon = res.data.data.userIcon;
+        console.log('userIcon',res.data.data.userIcon);
+      }
+    );
+  }
   tools(n) {
     if (n.name == '我的收藏') {
       this.$router.push({ name: "collection" });
@@ -202,6 +235,7 @@ export default class User extends Vue {
   }
   mounted() {
     this.setTabIndex(3);
+    this.queryuserinfo();
     console.log("个人中心加载");
   }
 }

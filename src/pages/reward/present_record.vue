@@ -5,7 +5,7 @@
     <van-cell-group>
         <van-cell v-for="(item, index) in recordList" :key="index" :value="item.updateTime">
             <template slot="title">
-            <span class="van-cell-text">{{item.amount}}</span>
+            <span class="van-cell-text">-{{item.amount}}</span>
             </template>
         </van-cell>
     </van-cell-group>

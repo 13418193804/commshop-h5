@@ -7,12 +7,11 @@
         <van-field v-model="newPassword" type="password" label="新密码" placeholder="请输入新密码" />
         <van-field v-model="againnewPassword" type="password" label="重新新密码" placeholder="请再次输入新密码" />
     </van-cell-group>
+
     <van-cell-group v-if="updatename === 'nickName'">
         <van-field v-model="nickName" label="用户名" placeholder="请输入用户名" />
     </van-cell-group>
-    <!-- <van-cell-group v-if="updatename === 'sex'">
-        <van-field v-model="sex" label="性别" placeholder="请输入性别" />
-    </van-cell-group> -->
+
     <van-radio-group v-model="sex" v-if="updatename === 'sex'">
       <van-cell-group>
         <van-cell><van-radio name="男">男</van-radio></van-cell>
@@ -50,10 +49,16 @@ export default class update_info extends Vue {
   againnewPassword="";
   updatename="";
   updatepassword() {
-    if (this.oldPassword == "" || this.newPassword == ""|| this.againnewPassword == "") {
+    if (this.oldPassword == "") {
+      Toast('请输入原密码');
+      return;
+    }
+    if (this.newPassword == "") {
+      Toast('新密码不能为空');
       return;
     }
     if (this.newPassword !== this.againnewPassword ) {
+      Toast('两次输入密码不一致');      
       return;
     }
     Vue.prototype.$reqFormPost(
@@ -82,6 +87,7 @@ export default class update_info extends Vue {
           Toast(res.data.message);
           return;
         }
+        Toast('修改成功');        
         console.log('res.data',res.data)
         this.$router.push("/setting");
       }
@@ -161,7 +167,13 @@ export default class update_info extends Vue {
 
   mounted() {
     this.updatename = this.$route.query.updatename;
-      console.log("收藏页面")
+    if(this.$route.query.nickName){
+      this.nickName = this.$route.query.nickName
+    }
+    if(this.$route.query.sex){
+      this.sex = this.$route.query.sex
+    }
+    console.log("收藏页面")
   }
 
 }
