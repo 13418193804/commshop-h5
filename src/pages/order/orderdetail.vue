@@ -167,7 +167,6 @@
                 
         </div>
 
-        <div style="height:10px;background-color:#f7f7f7;"></div>
 
 </div>
 
