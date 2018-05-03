@@ -63,7 +63,16 @@
 
 
 <div style="margin:0 0 0 10px;display:flex;justify-content:flex-end;padding:10px;">
-            按钮
+
+            <div class="settingBody" v-if="detail.orderStatus === 'ORDER_WAIT_PAY'">
+      <van-button size="small" style="margin-right:10px;" @click="doCancel()">取消订单</van-button>
+      <van-button size="small" style="margin-right:10px;" :style="formatButtonColor()" >支付订单</van-button>
+    </div>
+
+      <van-button v-if="detail.detailList[0].refundStatus == 'WITHOUT_REFUND'" size="small" style="margin-right:10px;" :style="formatButtonColor()" @click="doRefund()">申请退款</van-button>
+
+                  <van-button v-if="detail.detailList[0].refundStatus == 'APPLY_REFUND'" size="small" style="margin-right:10px;"  :style="formatButtonColor()" @click="cancelRefund()">取消退款</van-button>
+
         </div>
 
 
@@ -75,12 +84,12 @@
 <div style="padding:10px;    line-height: 24px;">
     
   <div>
-        订单号：{{detail.orderId}}
+        订单编号：{{detail.orderId}}
     </div>
  <div>
         创建时间：{{detail.createTime}}
     </div>
- <div>
+ <div v-if="detail.payTime">
         支付时间：{{detail.payTime}}
     </div>
  <!-- <div>
@@ -98,8 +107,34 @@
 
 </div>
 
+<div v-if="detail.detailList[0].refundOrderList[0]">
+        <div style="height:10px;background-color:#f7f7f7;"></div>
+      <div style="margin:0 0 0 10px;display:flex;justify-content: space-between;padding:10px;border-bottom:1px #e5e5e5 solid;">
+                <div>售后类型</div>
+                <div style="margin-right:10px;">{{detail.detailList[0].refundOrderList[0].refundType=='REFUND'?'退款':'退货/退款'}} </div>
+        </div>
+
+      <div style="margin:0 0 0 10px;padding:10px;" >
+        
+      <div>
+        售后原因
+      </div>
+      
+      <p style="color:#999;">
+        {{detail.detailList[0].refundOrderList[0].refundReason}}
+      </p>
+      </div>
 
 
+<div style="display:flex;padding:20px;">
+
+  <div v-for="n in  detail.detailList[0].refundOrderList[0].refundImg?detail.detailList[0].refundOrderList[0].refundImg.split(','):[]">
+          <img :src="n" style="width: 80px;height: 80px;"/>
+    </div>
+
+</div>
+
+</div>
 
   </div>
 </template>
@@ -109,7 +144,8 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import mixin from "../../config/mixin";
 import { Action } from "vuex-class";
-import { Toast } from "vant";
+import { Toast, Dialog } from "vant";
+
 // import { recommendList } from '../../service/getData';
 import comhead from "../../components/Comhead.vue";
 
@@ -120,6 +156,9 @@ import comhead from "../../components/Comhead.vue";
 export default class orderdetail extends Vue {
   orderId = "";
   detail = "";
+  formatButtonColor() {
+    return "border-color:#ffc630;color:#ffc630";
+  }
   formatStatus(status) {
     // ORDER_WAIT_PAY
     // ORDER_CANCEL_PAY
@@ -142,6 +181,93 @@ export default class orderdetail extends Vue {
       case "ORDER_WAIT_REVIEW" || "ORDER_FINISH":
         return "交易完成";
     }
+  }
+    doCancel(){
+       Dialog.confirm({
+      title: "提示",
+      message: "是否取消订单?"
+    })
+      .then(() => {
+Vue.prototype.$reqFormPost(
+          "/order/cancel",
+          {
+            userId: this.$store.getters[
+              Vue.prototype.MutationTreeType.TOKEN_INFO
+            ].userId,
+            token: this.$store.getters[
+              Vue.prototype.MutationTreeType.TOKEN_INFO
+            ].token,
+            orderId: this.detail['orderId']
+          },
+          res => {
+            if (res == null) {
+              console.log("网络请求错误！");
+              return;
+            }
+            if (res.data.status != 200) {
+              console.log(
+                "需控制错误码" +
+                  res.data.status +
+                  ",错误信息：" +
+                  res.data.message
+              );
+              Toast(res.data.message);
+              return;
+            }
+            this.queryDetail();
+
+            console.log("取消订单")
+          }
+        );
+           // on confirm
+      })
+      .catch(() => {
+        // on cancel
+      });
+}
+  cancelRefund() {
+    Dialog.confirm({
+      title: "提示",
+      message: "是否取消申请退款?"
+    })
+      .then(() => {
+        Vue.prototype.$reqFormPost(
+          "/order/refund/delete",
+          {
+            userId: this.$store.getters[
+              Vue.prototype.MutationTreeType.TOKEN_INFO
+            ].userId,
+            token: this.$store.getters[
+              Vue.prototype.MutationTreeType.TOKEN_INFO
+            ].token,
+            refundId: this.detail["detailList"][0].refundOrderList[0].refundId
+          },
+          res => {
+            if (res == null) {
+              console.log("网络请求错误！");
+              return;
+            }
+            if (res.data.status != 200) {
+              console.log(
+                "需控制错误码" +
+                  res.data.status +
+                  ",错误信息：" +
+                  res.data.message
+              );
+              Toast(res.data.message);
+              return;
+            }
+              Toast('取消成功');
+            this.queryDetail();
+          }
+        );
+        // on confirm
+      })
+      .catch(() => {
+        // on cancel
+      });
+
+    console.log("取消退款");
   }
   queryDetail() {
     Vue.prototype.$reqFormPost(
@@ -186,7 +312,16 @@ export default class orderdetail extends Vue {
         return "color:#ffc630;";
     }
   }
-  mounted() {
+    doRefund() {
+      console.log('申请退款')
+  this.$router.push({
+      name: "refund",
+      query: {
+        orderId: this.detail['orderId']
+      }
+    });
+    }
+    mounted() {
     this.orderId = this.$route.query.orderId;
     this.queryDetail();
   }

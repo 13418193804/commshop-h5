@@ -16,7 +16,7 @@
               </div>
               <div  style="display: flex;    align-items: center;" >
 
-                <span v-if="item.detailList[0].refundStatus == 'APPLY_REFUND'">退款中</span>
+                <span v-if="item.detailList[0].refundStatus == 'APPLY_REFUND'" style="color:red">退款中</span>
 
                 <span v-if="item.detailList[0].refundStatus == 'WITHOUT_REFUND'" :style="formatStatusColor(item.orderStatus)">{{formatStatus(item.orderStatus)}}</span>
                   
@@ -42,7 +42,7 @@
       </div>
       <div style='text-align:center;font-size:14px'>
         <div >￥{{items.goodsPrice}}</div>
-        <div class="labelPrice" v-if="items.labelPrice">原价:{{items.labelPrice}}</div>
+        <div class="labelPrice" v-if="items.labelPrice">￥{{items.labelPrice}}</div>
         <div>X {{items.goodsNum}}</div>
       </div>
     </div>
@@ -59,7 +59,7 @@
 </div>
 
     <div class="settingBody" v-if="item.orderStatus === 'ORDER_WAIT_PAY'">
-      <van-button size="small" style="margin-right:10px;">取消订单</van-button>
+      <van-button size="small" style="margin-right:10px;" @click.stop="doCancel(item)">取消订单</van-button>
       <van-button size="small" style="margin-right:10px;" :style="formatButtonColor()">支付订单</van-button>
     </div>
 
@@ -170,9 +170,40 @@ export default class orderList extends Vue {
   // ORDER_WAIT_REVIEW
   // ORDER_END_GOODS
   // ORDER_FINISH
+doCancel(item){
+Vue.prototype.$reqFormPost(
+          "/order/cancel",
+          {
+            userId: this.$store.getters[
+              Vue.prototype.MutationTreeType.TOKEN_INFO
+            ].userId,
+            token: this.$store.getters[
+              Vue.prototype.MutationTreeType.TOKEN_INFO
+            ].token,
+            orderId: item.orderId
+          },
+          res => {
+            if (res == null) {
+              console.log("网络请求错误！");
+              return;
+            }
+            if (res.data.status != 200) {
+              console.log(
+                "需控制错误码" +
+                  res.data.status +
+                  ",错误信息：" +
+                  res.data.message
+              );
+              Toast(res.data.message);
+              return;
+            }
+            this.getOrderList(this.$route.query.orderStatus);
 
+            console.log("取消订单")
+          }
+        );
+}
 doCancelRefund(item){
-  console.log("取消退款")
 Vue.prototype.$reqFormPost(
           "/order/refund/delete",
           {
@@ -199,6 +230,8 @@ Vue.prototype.$reqFormPost(
               Toast(res.data.message);
               return;
             }
+            this.getOrderList(this.$route.query.orderStatus);
+            
             console.log("取消退款成功")
           }
         );

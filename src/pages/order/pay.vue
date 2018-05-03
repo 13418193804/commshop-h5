@@ -90,6 +90,8 @@ export default class shopIndex extends Vue {
         }
       );
     }else{
+        
+      
       console.log('微信支付')
     }
   }
