@@ -1,5 +1,5 @@
 <template>
-  <div class="tab-contents" style="height:-webkit-fill-available;background-color:#f7f7f7;">
+  <div class="tab-contents" style="height:-webkit-fill-available;background-color:#f7f7f7;    overflow: auto;">
             <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="物流信息" isRightIcon="true"  ></comhead>
      
       <div class="detailBody">
@@ -23,15 +23,17 @@
     </div>
 </div>
 </div>
-
-<div>
+<div class="contentBox" style="border-bottom:1px #e5e5e5 solid;">
     <div>物流公司：{{ $route.query.transportName}} </div>
     <div>物流电话：{{ $route.query.transportMobile}} </div>
     <div>物流单号：{{ $route.query.transportNo}} </div>
 </div>
-
-    
-
+<div>
+<div v-for="(item,index) in shipInfoList" class="contentBox" :style="index != 0 ?'color:#999':''">
+  <div>{{item.time}}</div>
+  <div>{{item.context}}</div>
+</div>
+</div>
 
 
   </div>
@@ -86,6 +88,11 @@ export default class shopIndex extends Vue {
 
 <style lang="scss" scoped>
 @import "../../style/utils.scss";
+.contentBox{
+  font-size:15px;
+  padding-left:  20px;
+  margin:5px;
+}
 </style>
 
 

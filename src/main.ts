@@ -12,10 +12,8 @@ import Api from './config/fetch';
 import MutationTreeType from './store/mutation-types';
 import MintUI from 'mint-ui';
 
-
 Vue.use(MutationTreeType);
 Vue.use(MintUI);
-
 Vue.use(Vuex);
 Vue.use(Api);
 Vue.use(Vant);
@@ -27,7 +25,7 @@ Vue.use(VueLazyload, {
     loading: require('./assets/default_pic.jpg'),
     attempt: 1
 });
-
+console.log(require('./assets/default_pic.jpg'))
 const init = new Vue({
     router,
     store,

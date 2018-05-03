@@ -134,6 +134,46 @@
 
 </div>
 
+
+<div >
+        <div style="height:10px;background-color:#f7f7f7;"></div>
+   <div style="margin:0 0 0 10px;display:flex;justify-content: space-between;padding:10px;border-bottom:1px #e5e5e5 solid;">
+                <div>请在七天内将商品寄回一下地址并填写物流单号：</div>
+        </div>
+       <div style="margin:0 0 0 10px;display:flex;justify-content: space-between;padding:10px;">
+                
+ <span>{{detail.detailList[0].refundOrderList[0].contactName}}</span>
+      <span style="margin-right:10px;">{{detail.detailList[0].refundOrderList[0].contactMobile}}</span>
+    </div>
+      <div style="display:flex; margin:0 0 0 10px;   align-items: center;padding: 5px;     font-size: 14px;border-bottom:1px #e5e5e5 solid; " >
+                  <div>
+                    <i class="iconfont icon-location" style="margin-right:10px;font-size:22px;"></i>
+                  </div>
+                    <div class="lineTwo">
+                         {{detail.detailList[0].refundOrderList[0].provinceName}}{{detail.detailList[0].refundOrderList[0].cityName}}{{detail.detailList[0].refundOrderList[0].countryName}}{{detail.detailList[0].refundOrderList[0].address}}</div>
+              </div>
+              </div>
+           </div>
+
+                
+ <div style="margin:0 0 0 10px;display:flex;justify-content: space-between;padding:10px;border-bottom:1px #e5e5e5 solid;">
+                <div>物流单号:<span style="color:#999">未填写</span></div>
+              <van-button size="small" :style="formatButtonColor()">填写</van-button>
+                
+        </div>
+
+
+
+                
+        </div>
+
+        <div style="height:10px;background-color:#f7f7f7;"></div>
+
+</div>
+
+
+
+
 </div>
 
   </div>
@@ -182,13 +222,13 @@ export default class orderdetail extends Vue {
         return "交易完成";
     }
   }
-    doCancel(){
-       Dialog.confirm({
+  doCancel() {
+    Dialog.confirm({
       title: "提示",
       message: "是否取消订单?"
     })
       .then(() => {
-Vue.prototype.$reqFormPost(
+        Vue.prototype.$reqFormPost(
           "/order/cancel",
           {
             userId: this.$store.getters[
@@ -197,7 +237,7 @@ Vue.prototype.$reqFormPost(
             token: this.$store.getters[
               Vue.prototype.MutationTreeType.TOKEN_INFO
             ].token,
-            orderId: this.detail['orderId']
+            orderId: this.detail["orderId"]
           },
           res => {
             if (res == null) {
@@ -216,15 +256,15 @@ Vue.prototype.$reqFormPost(
             }
             this.queryDetail();
 
-            console.log("取消订单")
+            console.log("取消订单");
           }
         );
-           // on confirm
+        // on confirm
       })
       .catch(() => {
         // on cancel
       });
-}
+  }
   cancelRefund() {
     Dialog.confirm({
       title: "提示",
@@ -257,7 +297,7 @@ Vue.prototype.$reqFormPost(
               Toast(res.data.message);
               return;
             }
-              Toast('取消成功');
+            Toast("取消成功");
             this.queryDetail();
           }
         );
@@ -312,16 +352,16 @@ Vue.prototype.$reqFormPost(
         return "color:#ffc630;";
     }
   }
-    doRefund() {
-      console.log('申请退款')
-  this.$router.push({
+  doRefund() {
+    console.log("申请退款");
+    this.$router.push({
       name: "refund",
       query: {
-        orderId: this.detail['orderId']
+        orderId: this.detail["orderId"]
       }
     });
-    }
-    mounted() {
+  }
+  mounted() {
     this.orderId = this.$route.query.orderId;
     this.queryDetail();
   }

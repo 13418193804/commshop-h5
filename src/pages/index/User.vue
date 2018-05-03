@@ -18,7 +18,7 @@
             
 
 <div style="font-size:16px;" @click="go_essential()">
-    <img  v-lazy="'1'" style="width:100px;height:100px;border-radius: 100px;"/>
+    <img  src="../../assets/image/头像.png" style="width:100px;height:100px;border-radius: 100px;"/>
     <div>普通用户名称</div>
 </div>
       </div>

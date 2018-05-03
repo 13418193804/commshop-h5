@@ -76,7 +76,7 @@
           </div>
         </div>
 
-        <div class="recommend" style="background-color:#ffffff;margin-top:10px;">
+        <div class="recommend" style="background-color:#ffffff;margin-top:10px;z-index:2;">
           <van-tabs @click="selecttablist">
             <van-tab v-for="(item,index) in tablist" :title="item" :key="index" >
               <div style="display:flex;overflow: auto;">
@@ -130,7 +130,7 @@
         </div>
 
 
-<van-goods-action style="z-index:1000;background-color: #ffffff;">
+<van-goods-action style="z-index:90;background-color: #ffffff;">
   <van-goods-action-mini-btn icon="chat" text="客服" @click="onClickMiniBtn" style="display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 10px;"/>
   <van-goods-action-mini-btn icon="cart" text="购物车" @click="onClickMiniBtn" style="display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 10px;"/>
   <van-goods-action-big-btn text="加入购物车" @click="changeModel('cart')" style="flex:1;"/>

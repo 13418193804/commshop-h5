@@ -74,7 +74,15 @@ export default class App extends Vue {
   bottom: 20px;
   border-radius: 30px;
 }
+.van-tabs__nav{
+  -webkit-overflow-scrolling: touch;
+  overflow: auto ;
+}
 .van-tab{
   min-width: 79px;
 }
+.van-tabs__wrap{
+  z-index: 79;
+}
+
 </style>

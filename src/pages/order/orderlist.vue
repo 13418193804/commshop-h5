@@ -1,24 +1,30 @@
 <template>
   <div class="tab-contents">
     <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="我的订单" isRightIcon="true"  ></comhead>
-        <van-tabs :active="active" :sticky="true" >
-  <van-tab v-for="(item,index) in orderTitleList" :title="item.name" style="border-top:1px #e5e5e5 solid;">
-      <div v-if="index==0">
-    <van-list
-  v-model="loading"
-  :finished="finished"
-  @load="onLoad"
- >
-  <div v-for="(item,index) in orderList.allOrder.orderList" @click="goDetail(item)">
+     
+        <van-tabs :active="active" :sticky="true" @click="changePage">
+  <van-tab v-for="(n,sindex) in orderTitleList"  :title="n.name" style="border-top:1px #e5e5e5 solid;">
+
+
+      <div >
+    <ul
+  v-infinite-scroll="loadMore"
+  :infinite-scroll-disabled="loading"
+  infinite-scroll-distance="20" >
+  
+        <li v-for="(item,index) in orderList[returnKey()].orderList" @click="goDetail(item)">
+
+  <div >
           <div class="orderTitle textLabel">  
               <div style="padding-left:10px;">
                 订单号:{{item.orderId}}
               </div>
               <div  style="display: flex;    align-items: center;" >
 
-                <span v-if="item.detailList[0].refundStatus == 'APPLY_REFUND'" style="color:red">退款中</span>
+                <span v-if="item.detailList[0].refundStatus == 'APPLY_REFUND' ||item.detailList[0].refundStatus ==  'WAIT_GOODS_BACK'|| item.detailList[0].refundStatus ==   'WAIT_RECVGOODS'" style="color:red">退款中</span>
 
                 <span v-if="item.detailList[0].refundStatus == 'WITHOUT_REFUND'" :style="formatStatusColor(item.orderStatus)">{{formatStatus(item.orderStatus)}}</span>
+                <span v-if="item.detailList[0].refundStatus == 'SUCCEED_REFUND'" style="color:#ffc630;">已退款</span>
                   
                      <div style="padding:0 15px;position: relative;" v-if="item.orderStatus=='ORDER_FINISH'">
                        <div class="deleteBorder"> </div>
@@ -89,11 +95,20 @@
 
   </div>
   </div>
-
-</van-list>
-
+ </li>
+        </ul>
 
       </div>
+   
+<div style="    display: flex;
+    align-items: center;
+    justify-content: center;font-size:14px;padding:15px;">
+
+    <div v-if="loading">加载中...</div>
+    <div v-else>-</div>
+  
+</div>
+
 
    
   </van-tab>
@@ -124,18 +139,16 @@ export default class orderList extends Vue {
   finished = false;
 
   orderList = {
-    allOrder: {},
-    orderList: { orderList: [] },
-    orderList_pay: { orderList: [] },
-    orderList_send: { orderList: [] },
-    orderList_reacv: { orderList: [] },
-    orderList_finish: { orderList: [] },
-    orderList_refund: { orderList: [] }
+    orderList: { orderList: [], pageSize: 10 },
+    orderList_pay: { orderList: [], pageSize: 10 },
+    orderList_send: { orderList: [], pageSize: 10 },
+    orderList_reacv: { orderList: [], pageSize: 10 },
+    orderList_finish: { orderList: [], pageSize: 10 },
+    orderList_refund: { orderList: [], pageSize: 10 }
   };
   onLoad() {
     setTimeout(() => {}, 500);
   }
-
   active = 0;
   orderTitleList = [
     {
@@ -163,6 +176,27 @@ export default class orderList extends Vue {
       status: "REFUND"
     }
   ];
+  loadMore() {
+    this.loading = true;
+    let self = this;
+    setTimeout(() => {
+      switch (this.active) {
+        case 0:
+          console.log("查询全部订单");
+          // pageSize
+          self.loading = false;
+          break;
+        case 1:
+          break;
+        case 2:
+          break;
+        case 3:
+          break;
+        case 4:
+          break;
+      }
+    }, 1000);
+  }
   // ORDER_WAIT_PAY
   // ORDER_CANCEL_PAY
   // ORDER_WAIT_SENDGOODS
@@ -170,126 +204,70 @@ export default class orderList extends Vue {
   // ORDER_WAIT_REVIEW
   // ORDER_END_GOODS
   // ORDER_FINISH
-doCancel(item){
-Vue.prototype.$reqFormPost(
-          "/order/cancel",
-          {
-            userId: this.$store.getters[
-              Vue.prototype.MutationTreeType.TOKEN_INFO
-            ].userId,
-            token: this.$store.getters[
-              Vue.prototype.MutationTreeType.TOKEN_INFO
-            ].token,
-            orderId: item.orderId
-          },
-          res => {
-            if (res == null) {
-              console.log("网络请求错误！");
-              return;
-            }
-            if (res.data.status != 200) {
-              console.log(
-                "需控制错误码" +
-                  res.data.status +
-                  ",错误信息：" +
-                  res.data.message
-              );
-              Toast(res.data.message);
-              return;
-            }
-            this.getOrderList(this.$route.query.orderStatus);
+  doCancel(item) {
+    Vue.prototype.$reqFormPost(
+      "/order/cancel",
+      {
+        userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .userId,
+        token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .token,
+        orderId: item.orderId
+      },
+      res => {
+        if (res == null) {
+          console.log("网络请求错误！");
+          return;
+        }
+        if (res.data.status != 200) {
+          console.log(
+            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+          );
+          Toast(res.data.message);
+          return;
+        }
+        this.getOrderList(this.$route.query.orderStatus);
 
-            console.log("取消订单")
-          }
-        );
-}
-doCancelRefund(item){
-Vue.prototype.$reqFormPost(
-          "/order/refund/delete",
-          {
-            userId: this.$store.getters[
-              Vue.prototype.MutationTreeType.TOKEN_INFO
-            ].userId,
-            token: this.$store.getters[
-              Vue.prototype.MutationTreeType.TOKEN_INFO
-            ].token,
-            refundId: item.detailList[0].refundOrderList[0].refundId
-          },
-          res => {
-            if (res == null) {
-              console.log("网络请求错误！");
-              return;
-            }
-            if (res.data.status != 200) {
-              console.log(
-                "需控制错误码" +
-                  res.data.status +
-                  ",错误信息：" +
-                  res.data.message
-              );
-              Toast(res.data.message);
-              return;
-            }
-            this.getOrderList(this.$route.query.orderStatus);
-            
-            console.log("取消退款成功")
-          }
-        );
+        console.log("取消订单");
+      }
+    );
+  }
+  doCancelRefund(item) {
+    Vue.prototype.$reqFormPost(
+      "/order/refund/delete",
+      {
+        userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .userId,
+        token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .token,
+        refundId: item.detailList[0].refundOrderList[0].refundId
+      },
+      res => {
+        if (res == null) {
+          console.log("网络请求错误！");
+          return;
+        }
+        if (res.data.status != 200) {
+          console.log(
+            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+          );
+          Toast(res.data.message);
+          return;
+        }
+        this.getOrderList(this.$route.query.orderStatus);
 
-
-}
+        console.log("取消退款成功");
+      }
+    );
+  }
   doRefund(item) {
     console.log(item.orderId);
-  this.$router.push({
+    this.$router.push({
       name: "refund",
       query: {
         orderId: item.orderId
       }
     });
-    // Dialog.confirm({
-    //   title: "提示",
-    //   message: "确定申请退款吗？"
-    // })
-    //   .then(() => {
-
-    //     Vue.prototype.$reqFormPost(
-    //       "/order/refund/apply",
-    //       {
-    //         userId: this.$store.getters[
-    //           Vue.prototype.MutationTreeType.TOKEN_INFO
-    //         ].userId,
-    //         token: this.$store.getters[
-    //           Vue.prototype.MutationTreeType.TOKEN_INFO
-    //         ].token,
-    //         orderId: item.orderId,
-    //         money: item.orderTotalPrice,
-    //         refundType: "REFUND"
-    //       },
-    //       res => {
-    //         if (res == null) {
-    //           console.log("网络请求错误！");
-    //           return;
-    //         }
-    //         if (res.data.status != 200) {
-    //           console.log(
-    //             "需控制错误码" +
-    //               res.data.status +
-    //               ",错误信息：" +
-    //               res.data.message
-    //           );
-    //           Toast(res.data.message);
-    //           return;
-    //         }
-    //         console.log("申请退款成功")
-    //       }
-    //     );
-    //     // on confirm
-    //   })
-    //   .catch(() => {
-    //     // on cancel
-    //   });
-
-
   }
   formatStatusColor(status) {
     switch (status) {
@@ -402,7 +380,26 @@ Vue.prototype.$reqFormPost(
         return "交易完成";
     }
   }
+
+  returnKey(){
+     switch (this.active) {
+      case 0:
+        return "orderList";
+      case 1:
+        return "orderList_pay";
+      case 2:
+        return "orderList_send";
+      case 3:
+        return "orderList_reacv";
+      case 4:
+        return "orderList_finish";
+      case 5:
+        return "orderList_refund";
+    }
+  }
   getOrderList(orderStatus) {
+
+    let valKey = this.returnKey()
     Vue.prototype.$reqFormPost(
       "/order/queryorder",
       {
@@ -410,7 +407,9 @@ Vue.prototype.$reqFormPost(
           .userId,
         token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
           .token,
-        orderStatus: orderStatus
+        orderStatus: orderStatus,
+        page: 0,
+        pageSize: this.orderList[valKey].pageSize
       },
       res => {
         if (res == null) {
@@ -424,8 +423,7 @@ Vue.prototype.$reqFormPost(
           Toast(res.data.message);
           return;
         }
-        this.orderList.allOrder = res.data.data;
-        console.log(res.data.data);
+       this.orderList[valKey].orderList = res.data.data.orderList;
       }
     );
   }
@@ -436,6 +434,9 @@ Vue.prototype.$reqFormPost(
         orderId: item.orderId
       }
     });
+  }
+  changePage(index){
+            this.getOrderList(this.orderTitleList[index].status);
   }
   mounted() {
     console.log(this.$route.query);

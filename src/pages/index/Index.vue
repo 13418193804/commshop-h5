@@ -425,6 +425,7 @@ export default class shopIndex extends Vue {
 }
 </style>
 <style>
+
 .van-tabs--line .van-tabs__wrap {
   margin-right: 36px;
 }

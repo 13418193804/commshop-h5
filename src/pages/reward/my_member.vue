@@ -7,7 +7,6 @@
   :infinite-scroll-disabled="loading"
   infinite-scroll-distance="20" >
 
-      <!-- <van-list v-model="loading" :finished="finished" @load="onLoad" :offset="300" > -->
         <li v-for="(item, index) in memberList" :key="index">
 <div class="van-cell van-hairline" style="    justify-content: space-between;">
           <div >
@@ -65,7 +64,6 @@ export default class my_member extends Vue {
           .userId,
         token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
           .token,
-
         page: this.pageindex,
         pageSize: 20
       },
