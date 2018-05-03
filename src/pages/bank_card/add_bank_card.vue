@@ -36,7 +36,20 @@ export default class add_bank_card extends Vue {
   subBranch = "";
 
   addcard() {
-    if (this.cardId == "" || this.bankName == ""|| this.realName == ""|| this.subBranch == "") {
+    if (this.realName == "") {
+      Toast('请输入持卡人真实姓名');
+      return;
+    }
+    if (this.bankName == "") {
+      Toast('请填写开户银行名称');
+      return;
+    }
+    if (this.cardId == "") {
+      Toast('请填写银行卡号');
+      return;
+    }
+    if (this.subBranch == "") {
+      Toast('请填写银行卡所在支行');
       return;
     }
     Vue.prototype.$reqFormPost(

@@ -4,7 +4,7 @@
     <div style="display:flex;align-items:center;background-color:#ffffff;">
         <div :style="handlePX('height', 300)" style="display:flex;justify-content:center;align-items:center;flex:1;flex-direction:column;">
             <div>
-                <img v-lazy="'1'" :style="handlePX('width', 55)+handlePX('height', 55)" style="vertical-align: middle;"/>
+                <img src="../../assets/image/金币.png" :style="handlePX('width', 55)+handlePX('height', 55)" style="vertical-align: middle;"/>
                 <span>奖励金</span>
             </div>
             <div :style="handlePX('margin-top', 20)" style="color:#ffc600;">￥{{award.awardBalance}}</div>
@@ -13,7 +13,7 @@
         </div>
         <div :style="handlePX('height', 300)" style="display:flex;justify-content:center;align-items:center;flex:1;flex-direction:column;">
             <div>
-                <img v-lazy="'1'" :style="handlePX('width', 55)+handlePX('height', 55)" style="vertical-align: middle;"/>
+                <img src="../../assets/image/金币.png" :style="handlePX('width', 55)+handlePX('height', 55)" style="vertical-align: middle;"/>
                 <span>累积奖励金</span>
             </div>
             <div :style="handlePX('margin-top', 20)" style="color:#ffc600;">￥{{award.awardAmount}}</div>
@@ -24,7 +24,8 @@
 
     <div :style="handlePX('padding', 30)">
         <div style="color:#959595;">最新消息</div>
-        <div v-for="(item, index) in awardList" :key="index" :style="handlePX('height', 88)+handlePX('line-height', 88)" style="border-bottom:1px solid #e7e7e7;font-size:14px;">{{item.member.nickName}}在{{item.createTime}}消费{{item.payTotal}}元，你获得{{item.awardAmount}}元奖励</div>
+        <div v-if="awardList" v-for="(item, index) in awardList" :key="index" :style="handlePX('height', 88)+handlePX('line-height', 88)" style="border-bottom:1px solid #e7e7e7;font-size:14px;">{{item.member.nickName}}在{{item.createTime}}消费{{item.payTotal}}元，你获得{{item.awardAmount}}元奖励</div>
+        <div v-if="!awardList">暂无记录</div>
     </div>
 
   </div>

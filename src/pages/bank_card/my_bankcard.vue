@@ -3,8 +3,8 @@
 <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="我的银行卡" isRightIcon="true"  ></comhead>
   
   <div v-for="(item, index) in cardlist" :key="index" :style="handlePX('height', 300)+handlePX('padding', 30)" style="border-bottom:15px solid #f5f5f5;">
-    <div :style="handlePX('height', 140)" style="border:1px solid #d9d9d9;border-radius:6%;box-sizing:border-box;display:flex;align-items:center;">
-      <img v-lazy="'1'" :style="handlePX('height', 70)+handlePX('widht', 70)+handlePX('margin-left', 20)" style="border-radius:50%;"/>
+    <div :style="handlePX('height', 140)" style="border:1px solid #d9d9d9;border-radius:8px;box-sizing:border-box;display:flex;align-items:center;">
+      <img src="../../assets/image/招商银行.png" :style="handlePX('height', 70)+handlePX('widht', 70)+handlePX('margin-left', 20)" style="border-radius:50%;"/>
       <div :style="handlePX('margin-left', 20)+handlePX('width', 200)">
         <div>{{item.bankName}}</div>
         <div style="font-size:12px;">信用卡</div>
@@ -14,15 +14,15 @@
     <div :style="handlePX('height', 40)+handlePX('line-height', 40)+handlePX('margin-top', 20)" style="display:flex;justify-content:space-between;">
       <div>
         <van-radio-group v-model="isDefaultid" :change="isDefaultchange()">
-        <van-radio :name="item.id">设置默认</van-radio>
+        <van-radio :name="item.id">默认地址</van-radio>
         </van-radio-group>
       </div>
-      <div @click="deletebankcard(item.id)"><img v-lazy="'1'" :style="handlePX('height', 40)+handlePX('widht', 40)" style="vertical-align: top;"/>    删除</div>
+      <div @click="deletebankcard(item.id)"><img src="../../assets/image/删除.png" :style="handlePX('height', 40)+handlePX('widht', 40)" style="vertical-align: top;"/>删除</div>
     </div>
   </div>
 
   <div :style="handlePX('height', 300)+handlePX('padding', 30)">
-    <div @click="addbangcard()" :style="handlePX('height', 140)" style="color:#959595;border:1px solid #d9d9d9;border-radius:6%;box-sizing:border-box;display:flex;align-items:center;justify-content:center;">
+    <div @click="addbangcard()" :style="handlePX('height', 140)" style="color:#959595;border:1px solid #d9d9d9;border-radius:8px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;">
       +添加银行卡
     </div>
   </div>
@@ -51,8 +51,6 @@ export default class mybankcard extends Vue {
     Vue.prototype.$reqFormPost(
       "/bank/card/list",
       {
-        // token: "2c353ced5a3bb09cf7f05e57155999cd",
-        // userId: "UI5add43d15b065d5be5116746"
         userId: this.$store.getters[
           Vue.prototype.MutationTreeType.TOKEN_INFO
         ].userId,
@@ -85,8 +83,6 @@ export default class mybankcard extends Vue {
     Vue.prototype.$reqFormPost(
       "/bank/card/delete",
       {
-        // token: "2c353ced5a3bb09cf7f05e57155999cd",
-        // userId: "UI5add43d15b065d5be5116746",
         userId: this.$store.getters[
           Vue.prototype.MutationTreeType.TOKEN_INFO
         ].userId,
@@ -115,8 +111,6 @@ export default class mybankcard extends Vue {
     Vue.prototype.$reqFormPost(
       "/bank/card/setdefault",
       {
-        // token: "2c353ced5a3bb09cf7f05e57155999cd",
-        // userId: "UI5add43d15b065d5be5116746",
         userId: this.$store.getters[
           Vue.prototype.MutationTreeType.TOKEN_INFO
         ].userId,
