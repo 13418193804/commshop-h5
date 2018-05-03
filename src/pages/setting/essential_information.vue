@@ -3,20 +3,22 @@
         <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="基本信息" isRightIcon="true" ></comhead>
 
     <van-cell-group>
-        <van-cell is-link>
-            <template slot="title">
-              <span class="van-cell-text" :style="handlePX('line-height',60)">头像</span>
-            </template>
-            <div :style="handlePX('height',60)">
-                <img v-if="userIcon" v-lazy="userIcon" :style="handlePX('width',60)+handlePX('height',60)" style="border-radius:50%;"/>
-                <img v-else src="../../assets/image/头像.png" :style="handlePX('width',60)+handlePX('height',60)" style="border-radius:50%;"/>
-            </div>
-        </van-cell>
+        <van-uploader :after-read="onRead" style="width: 100%;height: 100%;" accept="image/jpg,image/png, image/jpeg" >
+          <van-cell is-link>
+              <template slot="title">
+                <span class="van-cell-text" :style="handlePX('line-height',60)">头像</span>
+              </template>
+              <div :style="handlePX('height',60)">
+                  <img v-if="userIcon" v-lazy="userIcon" :style="handlePX('width',60)+handlePX('height',60)" style="border-radius:50%;"/>
+                  <img v-else src="../../assets/image/头像.png" :style="handlePX('width',60)+handlePX('height',60)" style="border-radius:50%;"/>
+              </div>
+          </van-cell>
+        </van-uploader>
         <van-cell title="用户名" is-link :value="nickName" @click="go_updatenickName()"/>
         <van-cell title="性别" is-link :value="sex" @click="go_updatesex()"/>
         <van-cell title="手机" is-link :value="loginName"/>
     </van-cell-group>
-    
+
 
 
 
@@ -92,6 +94,55 @@ export default class essential_information extends Vue {
         sex:this.sex
       }
     });
+  }
+  onRead(file) {
+    let form = new FormData();
+    form.append("file", file.file);
+    Vue.prototype.$reqFormUpload("/fileupload", form, res => {
+      if (res == null) {
+        console.log("网络请求错误！");
+        return;
+      }
+      if (res.data.status != 200) {
+        console.log(
+          "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+        );
+        Toast(res.data.message);
+        return;
+      }
+      console.log("文件上传", res.data.data.filename);
+      this.updateuserinfo(res.data.data.filename)
+    });
+  }
+  updateuserinfo(userIcon){
+    Vue.prototype.$reqFormPost(
+      "/user/update",
+      {
+        userId: this.$store.getters[
+            Vue.prototype.MutationTreeType.TOKEN_INFO
+        ].userId,
+        token: this.$store.getters[
+            Vue.prototype.MutationTreeType.TOKEN_INFO
+        ].token,
+        userIcon:userIcon
+      },
+      res => {
+        if (res == null) {
+          console.log("网络请求错误！");
+          return;
+        }
+        console.log(res);
+
+        if (res.data.status != 200) {
+          console.log(
+            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+          );
+          Toast(res.data.message);
+          return;
+        }
+        console.log('updateuserinfo',res.data)
+        this.queryuser();
+      });
   }
   handlePX(CssName, PxNumber) {
     return CssName +":" +this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth /750 * PxNumber +"px;";
