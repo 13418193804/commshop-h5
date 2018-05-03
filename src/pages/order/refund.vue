@@ -59,10 +59,6 @@
                 <div style="margin-right:10px;" class="marketPrice">￥{{detail.orderTotalPrice.toFixed(2)}}</div>
         </div>
 
-
-
-
-
     </div>
 
         <div style="height:10px;background-color:#f7f7f7;"></div>
@@ -118,14 +114,25 @@
 </van-uploader>
 </div>
 
-<div style="el-upload--picture-card">
-  <img v-for="(item,index) in refundObj.refundImgs" :src="item" style="width:100%;"/>
+<div class="el-upload--picture-card" style="position: relative;"  v-for="(item,index) in refundObj.refundImgs">
+
+  <img  :src="item" style="width:100%;"/>
+
+  
+<i class="iconfont icon-shanchu3" style="    color: #000;
+    position: absolute;
+    right: -8px;
+    top: -8px;
+    height: 17px;
+    line-height: 17px;" @click="removeByValue(refundObj.refundImgs,item)"></i>
+
+
 </div>
 
 </div>
 
 <div style="margin: 10px;">
- <van-button size="large">提交</van-button>
+ <van-button size="large" @click="doRefund()">提交</van-button>
 </div>
 
 
@@ -151,21 +158,27 @@ export default class Refund extends Vue {
   detail = "";
   refundObj = {
     refundType: "REFUND",
-    refundImgs:[]
+    refundImgs: [],
+    reason: ""
   };
   changerefundType(data) {
     this.refundObj.refundType = data;
   }
-
-  onRead(file) {
-
-
-    console.log();
-      let form =  new FormData()
-form.append('file',file.file); 
-
-    Vue.prototype.$reqFormUpload(
-      "/fileupload",form,
+  doRefund() {
+    Vue.prototype.$reqFormPost(
+      "/order/refund/apply",
+      (<any>Object).assign(
+        {
+          refundImgs: this.refundObj.refundImgs.join(","),
+          userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+            .userId,
+          token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+            .token,
+          orderId: this.orderId,
+          money: this.detail["payTotal"]
+        },
+        this.refundObj
+      ),
       res => {
         if (res == null) {
           console.log("网络请求错误！");
@@ -178,12 +191,44 @@ form.append('file',file.file);
           Toast(res.data.message);
           return;
         }
-     let refundImgs =    this.refundObj.refundImgs?this.refundObj.refundImgs:[]
-     refundImgs.push(res.data.data.filename);
-   this.refundObj.refundImgs =  refundImgs
-          console.log('文件上传',res.data.data.filename)
+        Toast("申请成功");
+        console.log("申请退款后", res.data);
+        this.$router.go(-1);
       }
     );
+  }
+  removeByValue(arr, val) {
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i] == val) {
+        arr.splice(i, 1);
+        break;
+      }
+    }
+  }
+  onRead(file) {
+    console.log();
+    let form = new FormData();
+    form.append("file", file.file);
+
+    Vue.prototype.$reqFormUpload("/fileupload", form, res => {
+      if (res == null) {
+        console.log("网络请求错误！");
+        return;
+      }
+      if (res.data.status != 200) {
+        console.log(
+          "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+        );
+        Toast(res.data.message);
+        return;
+      }
+      let refundImgs = this.refundObj.refundImgs
+        ? this.refundObj.refundImgs
+        : [];
+      refundImgs.push(res.data.data.filename);
+      this.refundObj.refundImgs = refundImgs;
+      console.log("文件上传", res.data.data.filename);
+    });
   }
   formatStatus(status) {
     // ORDER_WAIT_PAY
@@ -288,6 +333,7 @@ form.append('file',file.file);
   cursor: pointer;
   line-height: 146px;
   vertical-align: top;
+  margin: 10px;
 }
 .el-upload {
   display: inline-block;
