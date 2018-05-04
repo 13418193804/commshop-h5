@@ -36,14 +36,14 @@ export default {
         return state.userName
     },
     [MutationTreeType.TAB_INDEX](state) {
-        return state.tabIndex
+        return state.tabIndex;
     },
     [MutationTreeType.TOKEN_INFO](state) {
-        if ((localStorage[MutationTreeType.TOKEN_INFO] || '') != '') {
-            state.tokenInfo = JSON.parse(localStorage[MutationTreeType.TOKEN_INFO])
+        if ((localStorage[MutationTreeType.TOKEN_INFO] || '') !== '') {
+            state.tokenInfo = JSON.parse(localStorage[MutationTreeType.TOKEN_INFO]);
             return state.tokenInfo;
         } else {
-            return state.tokenInfo
+            return state.tokenInfo;
         }
     },
     [MutationTreeType.VERCODE](state) {
