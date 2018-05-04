@@ -88,8 +88,9 @@
     <van-button size="small">联系客服</van-button>
 
 </div>
-        <div style="height:10px;background-color:#f7f7f7;"></div>
 
+
+        <div style="height:10px;background-color:#f7f7f7;"></div>
 <div style="    display: flex;      justify-content: space-between;align-items: center;padding: 10px;">
   <div>售后类型</div>
   <div class="selectBox" :class="refundObj.refundType == 'REFUND' ?'selectType':''"  @click="changerefundType('REFUND')">
@@ -115,10 +116,7 @@
 </div>
 
 <div class="el-upload--picture-card" style="position: relative;"  v-for="(item,index) in refundObj.refundImgs">
-
   <img  :src="item" style="width:100%;"/>
-
-  
 <i class="iconfont icon-shanchu3" style="    color: #000;
     position: absolute;
     right: -8px;
