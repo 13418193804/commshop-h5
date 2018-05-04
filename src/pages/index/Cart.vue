@@ -1,6 +1,6 @@
 <template>
   <div class="tab-contents" >
-    <comhead ref="comhead" title="购物车" isRightIcon="true"  ></comhead>
+    <comhead ref="comhead" title="购物车" isRightIcon="true"  rightTitle="删除" @rightClick="deleteshopCart()"></comhead>
 <van-checkbox-group v-model="result" @change="checkchange()">
 
 <van-cell-swipe :right-width="130" v-for="(item,index) in cartList" :key="index">
@@ -34,7 +34,7 @@
     align-items: center;" v-if="!cartList || cartList.length==0">
     <div>
   <img src="../../assets/cart/空购物车拷贝.png" :style="handleImageWidth1()"/>
-  <div style="text-align:center;color:#ffc630;font-size:17px;">立即逛逛>></div>
+  <div style="text-align:center;color:#ffc630;font-size:17px;" @click="goindex()">立即逛逛>></div>
   </div>
 </div> 
 </van-checkbox-group>
@@ -42,12 +42,8 @@
 
 <div style="height:99px"></div>
 
-<van-submit-bar
-  :price="totalMoney"
-  button-text="提交订单"
-  @submit="onSubmit" style="    margin-bottom: 50px;"
->
-  <van-checkbox v-model="checked" @change="allSelect">全选</van-checkbox>
+<van-submit-bar  :price="totalMoney" button-text="提交订单" @submit="onSubmit" style="margin-bottom:50px;">
+  <van-checkbox v-if="cartList.length>0" v-model="checked" @change="allSelect">全选</van-checkbox>
 </van-submit-bar>
 
 
@@ -92,19 +88,17 @@ export default class Cart extends Vue {
       "px;"
     );
   }
-  allSelect(e) {
-    console.log(e)
-    if (e) {
+  allSelect() {   
+    if (this.checked) {
       let result = [];
       this.cartList.forEach((item, index) => {
         console.log();
         result.push(item.id);
       });
       this.result = result;
-    } else {
-      this.result = [];
+    }else{
+      this.result=[];
     }
-    this.totalPrice();
   }
   totalPrice() {
     var totalMoney = 0;
@@ -127,7 +121,7 @@ export default class Cart extends Vue {
     this.totalPrice();
   }
   onSubmit() {
-    if (this.result.length < 0) {
+    if (this.result.length <= 0) {
       Toast('您还没选择商品');
       return;
     }
@@ -172,6 +166,36 @@ export default class Cart extends Vue {
         token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
           .token,
         cartIds: this.cartList[index].id
+      },
+      res => {
+        if (res == null) {
+          console.log("网络请求错误！");
+          return;
+        }
+        if (res.data.status != 200) {
+          console.log(
+            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+          );
+          return;
+        }
+        Toast("已删除");
+        this.getCartList();
+      }
+    );
+  }
+  deleteshopCart() {
+    if (this.result.length <= 0) {
+      Toast('您还没选择商品');
+      return;
+    }
+    Vue.prototype.$reqFormPost(
+      "/shop/cart/delete",
+      {
+        userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .userId,
+        token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .token,
+        cartIds: this.result.join(",")
       },
       res => {
         if (res == null) {
@@ -272,6 +296,9 @@ export default class Cart extends Vue {
     );
   }
 
+  goindex(){
+    this.$router.push("/");
+  }
   mounted() {
     this.setTabIndex(2);
      if(this.$store.getters[
