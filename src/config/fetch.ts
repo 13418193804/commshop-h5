@@ -45,6 +45,7 @@ export const reqFormUpload = (url, form, callBack) => {
 };
 
 export const reqFormPost = (url, data, callBack) => {
+
     axios.post(bizUrl + url, querystring.encode(data),
         {
             headers: {
@@ -52,6 +53,11 @@ export const reqFormPost = (url, data, callBack) => {
             }
         })
         .then(res => {
+            if (res.data.status == 401 && res.data.message == "用户信息未找到") {
+                Toast(res.data.message);
+                window['myvue'].$router.push({ name: 'login' });
+                return;
+            }
             callBack(res);
 
             if (res == null || res.data == null) {
@@ -69,6 +75,11 @@ export const reqFormPost = (url, data, callBack) => {
 export const reqUrlGet = (url, data, callBack) => {
     axios.get(bizUrl + url + '?' + querystring.encode(data))
         .then(res => {
+            if (res.data.status == 401 && res.data.message == "用户信息未找到") {
+                Toast(res.data.message);
+                window['myvue'].$router.push({ name: 'login' });
+                return;
+            }
             callBack(res);
             if (res == null || res.data == null) {
                 console.error('网络请求失败');

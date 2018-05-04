@@ -231,7 +231,13 @@ export default class User extends Vue {
   }
   mounted() {
     this.setTabIndex(3);
+    if(this.$store.getters[
+          Vue.prototype.MutationTreeType.TOKEN_INFO
+        ].userId != '' && this.$store.getters[
+          Vue.prototype.MutationTreeType.TOKEN_INFO
+        ].token!= ''){
     this.queryuserinfo();
+        }
     console.log("个人中心加载");
   }
 }

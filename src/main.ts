@@ -25,10 +25,11 @@ Vue.use(VueLazyload, {
     loading: require('./assets/default_pic.jpg'),
     attempt: 1
 });
-console.log(require('./assets/default_pic.jpg'))
 const init = new Vue({
     router,
     store,
     components: { App },
     template: '<App/>'
 }).$mount('#app');
+
+window['myvue'] = init;

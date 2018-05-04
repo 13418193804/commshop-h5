@@ -18,9 +18,8 @@ import Component from 'vue-class-component';
 // })
 export default class App extends Vue {
 
-  mount(){
 
-  }
+
 
 }
 </script>
