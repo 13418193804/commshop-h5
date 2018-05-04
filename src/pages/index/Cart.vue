@@ -1,13 +1,13 @@
 <template>
   <div class="tab-contents" >
     <comhead ref="comhead" title="购物车" isRightIcon="true"  ></comhead>
-<van-checkbox-group v-model="result">
+<van-checkbox-group v-model="result" @change="checkchange()">
 
-<van-cell-swipe :right-width="130" v-for="(item,index) in cartList">
+<van-cell-swipe :right-width="130" v-for="(item,index) in cartList" :key="index">
   <van-cell-group>
     
 <div class="cartItem">
-<van-checkbox   :name="item.id">
+<van-checkbox   :name="item.id" >
   </van-checkbox>
 
 <img v-lazy="item.goodsImg.split(',')[0]" style="width:90px;height:90px;"/>
@@ -16,7 +16,7 @@
 <div>{{item.goodsName}}</div>
 <div style="font-size:14px;color:#666">{{item.goodsName}}</div>
                 <div style="color:red">￥{{item.price}}</div>
-<van-stepper v-model="item.num" style="    float: right;"/>
+<van-stepper v-model="item.num" @plus="pluscart(item.id,item.num)" @minus="minuscart(item.id,item.num)" style="float: right;"/>
 </div>
 </div>
     
@@ -77,9 +77,9 @@ export default class Cart extends Vue {
   result = [];
   checked = false;
   cartList = [];
-  totalMoney = 0; //总金额
+  totalMoney = 0.00; //总金额
   maxHeightdiv(){
-return "height:" +(this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availHeight-152 )+"px;"
+    return "height:" +(this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availHeight-152 )+"px;"
   }
  handleImageWidth1() {
     return (
@@ -93,6 +93,7 @@ return "height:" +(this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].av
     );
   }
   allSelect(e) {
+    console.log(e)
     if (e) {
       let result = [];
       this.cartList.forEach((item, index) => {
@@ -103,11 +104,33 @@ return "height:" +(this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].av
     } else {
       this.result = [];
     }
+    this.totalPrice();
+  }
+  totalPrice() {
+    var totalMoney = 0;
+    for (var i = 0; i < this.cartList.length; i++) {
+      if (this.result.indexOf(this.cartList[i].id)!== -1) {
+        totalMoney = totalMoney+(this.cartList[i].price * this.cartList[i].num);
+      } 
+    }
+    totalMoney=totalMoney*100;
+    totalMoney.toString();
+    this.totalMoney = totalMoney;
+    console.log('totalMoney',totalMoney)
+  }
+  checkchange(){
+    if(this.result.length == this.cartList.length){
+      this.checked = true;
+    }else{
+      this.checked = false;
+    }
+    this.totalPrice();
   }
   onSubmit() {
-    // if (this.result.length > 0) {
-    //   return;
-    // }
+    if (this.result.length < 0) {
+      Toast('您还没选择商品');
+      return;
+    }
 
     Vue.prototype.$reqFormPost(
       "/prepare/order/add",
@@ -190,6 +213,60 @@ return "height:" +(this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].av
           return;
         }
         console.log("查询购物车", res.data);
+        this.cartList = res.data.data.carts;
+      }
+    );
+  }
+  pluscart(id,num){
+    Vue.prototype.$reqFormPost(
+      "/shop/cart/updatenum",
+      {
+        userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .userId,
+        token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .token,
+        cartId:id,  
+        num:num,
+      },
+      res => {
+        if (res == null) {
+          console.log("网络请求错误！");
+          return;
+        }
+        if (res.data.status != 200) {
+          console.log(
+            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+          );
+          return;
+        }
+        console.log("加1", res.data);
+        this.cartList = res.data.data.carts;
+      }
+    );
+  }
+  minuscart(id,num){
+    Vue.prototype.$reqFormPost(
+      "/shop/cart/updatenum",
+      {
+        userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .userId,
+        token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .token,
+        cartId:id,  
+        num:num,
+      },
+      res => {
+        if (res == null) {
+          console.log("网络请求错误！");
+          return;
+        }
+        if (res.data.status != 200) {
+          console.log(
+            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+          );
+          return;
+        }
+        console.log("减1", res.data);
         this.cartList = res.data.data.carts;
       }
     );
