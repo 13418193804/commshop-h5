@@ -24,9 +24,9 @@
 <van-tabs :active="active" style="flex:1" @click="changeTab" class="index_tabs" >
 
 
-  <van-tab v-for="(item,index) in indexList" :title="item.pageName" >
+  <van-tab v-for="(item,index) in indexList" :title="item.pageName" :key="index">
 
-        <div v-for="items in item.children">
+        <div v-for="(items,childrenIndex) in item.children" :key="childrenIndex">
 
             <!-- actionType -->
 
@@ -34,8 +34,8 @@
             <!-- 轮播图 -->
             <div v-if="items.componentType === 'COMPONENT_TYPE_SCROLL_HEADER'">
                <van-swipe :autoplay="3000" style="height:200px;z-index:999;" >
-                  <van-swipe-item v-for="(image, imageIndex) in items.items" >
-                       <img v-lazy="image.itemImgUrl" style="width:100%;"/>
+                  <van-swipe-item v-for="(image, imageIndex) in items.items" :key="imageIndex">
+                       <img v-lazy="image.itemImgUrl" style="width:100%;" @click="goActionType(image.actionType,image.actionValue)"/>
                   </van-swipe-item>
                 </van-swipe>
             </div>
@@ -43,7 +43,7 @@
             <!-- 标签栏 -->
           <div v-if="items.componentType === 'COMPONENT_TYPE_QUICK_BAR'">
             <div class="tab_box">
-                <div v-for=" (tab,tabIndex) in  items.items" style="width:25%;">
+                <div v-for=" (tab,tabIndex) in  items.items" style="width:25%;" :key="tabIndex">
                    <div style="width:-webkit-fill-available;padding: 10px;">
                     <div>
                        <img v-lazy="tab.itemImgUrl" style="border-radius:50%;" :style="handlePX('width', 100)+handlePX('height', 100)"/>
@@ -225,6 +225,53 @@ export default class shopIndex extends Vue {
         goodsId: goodsId
       }
     });
+  }
+
+  goActionType(actionType,actionValue){
+    if(actionType=='ACTION_TYPE_GOODSID'){
+      var goodsId= actionValue
+      this.$router.push({
+        path: "/productdetail",
+        query: {
+          goodsId: goodsId
+        }
+      });
+    }
+    if(actionType=='ACTION_TYPE_TAGID'){
+      Vue.prototype.$reqFormPost("/user/cat/querytree", {}, res => {
+      if (res == null) {
+        console.log("网络请求错误！");
+        return;
+      }
+      if (res.data.status != 200) {
+        console.log(
+          "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+        );
+        return;
+      }
+      for(var i=0;i < res.data.data.children.length;i++){
+        for(var j=0;j < res.data.data.children[i].children.length;j++){
+          if(res.data.data.children[i].children[j].catId == actionValue){
+            var selectIndex = j.toString();
+            this.$router.push({
+              path: "/productlist",
+              query:{
+                catId:res.data.data.children[i].children[j].catId,
+                parentCatId:res.data.data.children[i].children[j].parentId,
+                selectIndex:selectIndex,
+                title: res.data.data.children[i].label,
+                }
+            });
+            return
+          }
+        }
+      }
+    });
+    }
+    if(actionType=='ACTION_TYPE_URL'){
+      return;      
+    }
+    return;
   }
 
   handleImageWidth() {
