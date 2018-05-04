@@ -65,7 +65,7 @@
 
     <div class="settingBody" v-if="item.orderStatus === 'ORDER_WAIT_PAY'">
       <van-button size="small" style="margin-right:10px;" @click.stop="doCancel(item)">取消订单</van-button>
-      <van-button size="small" style="margin-right:10px;" :style="formatButtonColor()">支付订单</van-button>
+      <van-button size="small" style="margin-right:10px;" :style="formatButtonColor()"  @click.stop="payOrder(item)">支付订单</van-button>
     </div>
 
       <div class="settingBody" v-if="item.orderStatus === 'ORDER_WAIT_SENDGOODS'">
@@ -193,6 +193,13 @@ export default class orderList extends Vue {
       status: "REFUND"
     }
   ];
+
+  payOrder(item){
+      this.$router.push({
+          name: "pay",
+          query:{body:item.orderTitle,payId:item.payNo,payTotal:item.payTotal}
+        });
+  }
   loadMore() {
     this.loading = true;
     let self = this;

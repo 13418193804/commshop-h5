@@ -71,13 +71,16 @@
 
             <div class="settingBody" v-if="detail.orderStatus === 'ORDER_WAIT_PAY'">
       <van-button size="small" style="margin-right:10px;" @click="doCancel()">取消订单</van-button>
-      <van-button size="small" style="margin-right:10px;" :style="formatButtonColor()" >支付订单</van-button>
+      <van-button size="small" style="margin-right:10px;" :style="formatButtonColor()" @click="payOrder()">支付订单</van-button>
     </div>
 
-      <van-button v-if="detail.detailList[0].refundStatus == 'WITHOUT_REFUND'" size="small" style="margin-right:10px;" :style="formatButtonColor()" @click="doRefund()">申请退款</van-button>
+      <van-button v-if="detail.detailList[0].refundStatus == 'WITHOUT_REFUND' &&detail.orderStatus !== 'ORDER_CANCEL_PAY' " size="small" style="margin-right:10px;" :style="formatButtonColor()" @click="doRefund()">申请退款</van-button>
 
                   <van-button v-if="detail.detailList[0].refundStatus == 'APPLY_REFUND'" size="small" style="margin-right:10px;"  :style="formatButtonColor()" @click="cancelRefund()">取消退款</van-button>
 
+ <div class="settingBody" v-if="detail.orderStatus === 'ORDER_CANCEL_PAY'">
+      <van-button size="small" style="margin-right:10px;" :style="formatButtonColor()" @click="buyAgain()">再次购买</van-button>
+    </div>
         </div>
 
 
@@ -217,6 +220,31 @@ export default class orderdetail extends Vue {
   }
   formatButtonColor() {
     return "border-color:#ffc630;color:#ffc630";
+  }
+  buyAgain() {
+    Vue.prototype.$reqFormPost(
+      "/order/buyagain",
+      {
+        userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .userId,
+        token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .token,
+        orderId: this.orderId
+      },
+      res => {
+        if (res == null) {
+          console.log("网络请求错误！");
+          return;
+        }
+        if (res.data.status != 200) {
+          console.log(
+            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+          );
+          return;
+        }
+        this.$router.push({ name: "cart" });
+      }
+    );
   }
   formatStatus(status) {
     // ORDER_WAIT_PAY
@@ -379,6 +407,13 @@ export default class orderdetail extends Vue {
         orderId: this.detail["orderId"]
       }
     });
+  }
+  
+  payOrder(){
+      this.$router.push({
+          name: "pay",
+          query:{body:this.detail['orderTitle'],payId:this.detail['payNo'],payTotal:this.detail['payTotal']}
+        });
   }
   mounted() {
     this.orderId = this.$route.query.orderId;

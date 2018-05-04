@@ -301,7 +301,13 @@ export default class Cart extends Vue {
   }
   mounted() {
     this.setTabIndex(2);
+     if(this.$store.getters[
+          Vue.prototype.MutationTreeType.TOKEN_INFO
+        ].userId != '' && this.$store.getters[
+          Vue.prototype.MutationTreeType.TOKEN_INFO
+        ].token!= ''){
     this.getCartList();
+        }
   }
 }
 </script>
