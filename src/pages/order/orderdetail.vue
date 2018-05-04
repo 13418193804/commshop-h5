@@ -3,7 +3,12 @@
             <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="订单详情" isRightIcon="true"  ></comhead>
             <div style="background-color:#f7f7f7;display: flex;justify-content: space-between;padding: 10px;font-size: 16px;align-items: center;">
                 <div style="font-size:16px">订单金额（含运费）：￥{{detail.orderTotalPrice.toFixed(2)}}</div>
-                <div :style="formatStatusColor(detail.orderStatus)">{{formatStatus(detail.orderStatus)}}</div>
+               
+                <!-- <div :style="formatStatusColor(detail.orderStatus)">{{formatStatus(detail.orderStatus)}}</div> -->
+              <span v-if="detail.detailList[0].refundStatus == 'APPLY_REFUND' ||detail.detailList[0].refundStatus ==  'WAIT_GOODS_BACK'|| detail.detailList[0].refundStatus ==   'WAIT_RECVGOODS'" style="color:red">退款中</span>
+                <span v-if="detail.detailList[0].refundStatus == 'WITHOUT_REFUND'" :style="formatStatusColor(detail.orderStatus)">{{formatStatus(detail.orderStatus)}}</span>
+                <span v-if="detail.detailList[0].refundStatus == 'SUCCEED_REFUND'" style="color:#ffc630;">已退款</span>
+                  
             </div>
      <div style="    display: flex;height: 5px;">
          <img src="../../assets/jiange.png" style="width:100%;"/>
@@ -81,20 +86,23 @@
 
         <div style="height:10px;background-color:#f7f7f7;"></div>
 
-<div style="padding:10px;    line-height: 24px;">
+<div style="padding:10px;    line-height: 24px;color:#999">
     
-  <div>
+  <div v-if="detail.orderId">
         订单编号：{{detail.orderId}}
     </div>
- <div>
+  <div v-if="detail.createTime">
         创建时间：{{detail.createTime}}
     </div>
  <div v-if="detail.payTime">
         支付时间：{{detail.payTime}}
     </div>
- <!-- <div>
-        收货时间：{{detail.payTime}}
-    </div> -->
+ <div v-if="detail.shipTime">
+        发货时间：{{detail.shipTime}}
+    </div>
+ <div v-if="detail.detailList[0].refundOrderList[0]">
+        申请退款时间：{{detail.detailList[0].refundOrderList[0].createTime}}
+    </div>
 </div>
         <div style="height:10px;background-color:#f7f7f7;"></div>
 <div style="    display: flex;
@@ -126,16 +134,16 @@
       </div>
 
 
-<div style="display:flex;padding:20px;">
+<div style="display:flex;">
 
   <div v-for="n in  detail.detailList[0].refundOrderList[0].refundImg?detail.detailList[0].refundOrderList[0].refundImg.split(','):[]">
-          <img :src="n" style="width: 80px;height: 80px;"/>
+          <img :src="n" style="width: 80px;height: 80px;padding:10px;"/>
     </div>
 
 </div>
 
 
-<div >
+<div v-if="detail.detailList[0].refundStatus == 'WAIT_GOODS_BACK' ||detail.detailList[0].refundStatus ==  'WAIT_RECVGOODS'">
         <div style="height:10px;background-color:#f7f7f7;"></div>
    <div style="margin:0 0 0 10px;display:flex;justify-content: space-between;padding:10px;border-bottom:1px #e5e5e5 solid;">
                 <div>请在七天内将商品寄回一下地址并填写物流单号：</div>
@@ -155,10 +163,11 @@
               </div>
            </div>
 
-                
- <div style="margin:0 0 0 10px;display:flex;justify-content: space-between;padding:10px;border-bottom:1px #e5e5e5 solid;">
-                <div>物流单号:<span style="color:#999">未填写</span></div>
-              <van-button size="small" :style="formatButtonColor()">填写</van-button>
+
+
+ <div  v-if="detail.detailList[0].refundStatus == 'WAIT_GOODS_BACK'||detail.detailList[0].refundStatus ==  'WAIT_RECVGOODS'" style="margin:0 0 0 10px;display:flex;justify-content: space-between;padding:10px;border-bottom:1px #e5e5e5 solid;">
+                <div>物流单号:<span style="color:#999" v-if="detail.detailList[0].refundOrderList[0].transNo">{{detail.detailList[0].refundOrderList[0].transNo}}</span><span v-else>未填写</span></div>
+              <van-button size="small" :style="formatButtonColor()" @click="inputTransNo()" v-if="!detail.detailList[0].refundOrderList[0].transNo">填写</van-button>
                 
         </div>
 
@@ -195,6 +204,17 @@ import comhead from "../../components/Comhead.vue";
 export default class orderdetail extends Vue {
   orderId = "";
   detail = "";
+
+  inputTransNo(){
+   console.log('填写单号')
+   this.$router.push({
+     name:'refundbackgoods',
+     query:{
+       refundId:this.detail['detailList'][0].refundOrderList[0].refundId
+     }
+   });
+
+  }
   formatButtonColor() {
     return "border-color:#ffc630;color:#ffc630";
   }

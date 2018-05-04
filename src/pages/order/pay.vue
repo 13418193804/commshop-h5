@@ -67,7 +67,7 @@ export default class shopIndex extends Vue {
             .token,
           body: this.obj["body"],
           outTradeNo: this.obj["payId"],
-          totalFee: 1
+          totalFee: 0.01
         },
         res => {
           if (res == null) {
@@ -90,7 +90,7 @@ export default class shopIndex extends Vue {
         }
       );
     }else{
-      
+
         window.location.href ="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx2e2d97a4e10ef2b6&redirect_uri=http://sr.cncloud.com/qichang/wechat/enter/call?action=viewtest&response_type=code&scope=snsapi_userinfo&state="+
        this.obj["payId"] +"#wechat_redirect"
       

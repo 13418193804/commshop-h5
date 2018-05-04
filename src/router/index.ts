@@ -189,8 +189,12 @@ export default new Router({
             path: '/collar_center',
             name: 'collar_center',
             component: r => require.ensure([], () => r(require('../pages/coupon/collar_center')), 'collar_center')
+        },
+        {
+            path: '/refundbackgoods',
+            name: 'refundbackgoods',
+            component: r => require.ensure([], () => r(require('../pages/order/refundBackGoods.vue')))
         }
-        
-        
+
     ]
 });
