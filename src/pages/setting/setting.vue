@@ -20,7 +20,7 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import mixin from "../../config/mixin";
 import { Action } from "vuex-class";
-import { Toast } from "vant";
+import { Toast,Dialog } from "vant";
 // import { recommendList } from '../../service/getData';
 import comhead from "../../components/Comhead.vue";
 
@@ -29,6 +29,7 @@ import comhead from "../../components/Comhead.vue";
   mixins: [mixin]
 })
 export default class setting extends Vue {
+  @Action("setTokenInfo") setTokenInfo;
 
   go_info(){
     this.$router.push("/essential_information");
@@ -48,8 +49,20 @@ export default class setting extends Vue {
     });
   }
   exit_logon(){
+      Dialog.confirm({
+      title: "提示",
+      message: "是否退出登陆?"
+    })
+      .then(() => {
+                this.setTokenInfo({   userId: "",
+        token: ""});
     localStorage.removeItem(Vue.prototype.MutationTreeType.TOKEN_INFO);
     this.$router.push("/login");
+
+     })
+      .catch(() => {
+        // on cancel
+      });
   }
   handlePX(CssName, PxNumber) {
     return CssName +":" +this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth /750 * PxNumber +"px;";
