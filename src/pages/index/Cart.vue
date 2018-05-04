@@ -42,7 +42,7 @@
 
 <div style="height:99px"></div>
 
-<van-submit-bar  :price="totalMoney" button-text="提交订单" @submit="onSubmit" style="margin-bottom:50px;">
+<van-submit-bar  :price="totalMoney" button-text="结算" @submit="onSubmit" style="margin-bottom:50px;">
   <van-checkbox v-if="cartList.length>0" v-model="checked" @change="allSelect">全选</van-checkbox>
 </van-submit-bar>
 
