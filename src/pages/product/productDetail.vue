@@ -5,11 +5,11 @@
     height: 100vh;">
     <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"   :contextIndex="1" isRightIcon="true"  ></comhead>
 
-        <van-swipe :autoplay="3000">
-  <van-swipe-item v-for="(image, index) in detatil['goodsImg'].split(',')" :key="index" style="height:300px;    display: flex;align-items: center;justify-content: center;">
-    <img v-lazy="image" />
-  </van-swipe-item>
-</van-swipe>
+        <van-swipe :autoplay="3000" style="height:300px;">
+          <van-swipe-item v-for="(image, index) in detatil['goodsImg'].split(',')"  :key="index" >
+            <img v-lazy="image" style="width:100%;" />
+          </van-swipe-item>
+        </van-swipe>
         
         <div class="goodsTitle">
             <div class="goodstitle">
