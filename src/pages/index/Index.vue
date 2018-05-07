@@ -110,6 +110,27 @@
                   </div>
                 </div>
 
+
+                <div class="goodsBody" v-if="items.columnNum === 3" style="  padding:10px 0;border-top:1px #e5e5e5 solid;">
+                  <div v-for="(goods,goodsIndex) in items.items" @click="goProductDetail(goods.goodsId)" :key="goodsIndex" class="goodsItem">
+                    <div style="  width:-webkit-fill-available;  ">
+                      <div style="border: 1px #e5e5e5 solid;box-sizing: border-box;display:flex;align-items: center;justify-content:center;overflow:hidden;position:relative;margin:5px auto;" :style="handlePX('height', 410)+handlePX('width', 345)">
+                        <img src="../../assets/image/热.png" style="width:-webkit-fill-available;position: absolute;top: 0;left:0;" :style="handlePX('width', 43)+handlePX('height', 49)"/>
+                        <img v-lazy="goods.goodsImg.split(',')[0]" style="width:-webkit-fill-available;position: absolute;top: 0;z-index:-1;"/>
+                        <div class="textLabel" style="position: absolute;bottom: 0;width: 100%;background-color:rgba(207,207,207,0.3);text-align:center;color:#A3A3A3" :style="handlePX('height', 70)+handlePX('line-height', 70)+handlePX('font-size', 28)">{{goods.jingle}}</div>
+                      </div>
+                      <div style="margin:5px auto;display:flex;justify-content: center;flex-direction: column;width:-webkit-fill-available;" :style="handlePX('width', 345)">
+                        <div>
+                          <img src="../../assets/image/满减.png" :style="handlePX('width',52)+handlePX('height',25)"/>
+                          <img src="../../assets/image/特价.png" :style="handlePX('width',52)+handlePX('height',25)"/>
+                        </div>
+                        <div class="textLabel" :style="handlePX('font-size',28)+handlePX('line-height',40)">{{goods.goodsName}}</div>
+                        <div style="color:#E05459" :style="handlePX('font-size',30)+handlePX('line-height',40)">￥{{goods.labelPrice}}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
 <div style="height:10px; background-color:#f7f7f7;"></div>
 
 
@@ -211,6 +232,27 @@ export default class shopIndex extends Vue {
 
           console.log(this.indexList[active]);
           this.indexList.push();
+          if(this.indexList[active].catId){
+            console.log('222',this.indexList[active].catId);
+            Vue.prototype.$reqFormPost(
+              "/user/goods/list",
+              {
+                catId:this.indexList[active].catId
+              },
+              res => {
+                if (res == null) {
+                  console.log("网络请求错误！");
+                  return;
+                }
+                if (res.data.status != 200) {
+                  Toast(res.data.message);
+                  return;
+                }                           
+                this.indexList[active].children.push({'componentType':"COMPONENT_TYPE_GOODS_TAG",'columnNum':1,'items':res.data.data.goodsList});      
+                this.indexList.push();   
+              }
+            );
+          }
         }
       );
     }
