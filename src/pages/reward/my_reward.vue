@@ -25,7 +25,7 @@
     <div :style="handlePX('padding', 30)">
         <div style="color:#959595;">最新消息</div>
         <ul v-infinite-scroll="loadMore" :infinite-scroll-disabled="loading" infinite-scroll-distance="20" >
-          <li v-for="(item, index) in awardList" :key="index" :style="handlePX('height', 88)+handlePX('line-height', 88)" style="border-bottom:1px solid #e7e7e7;font-size:14px;">{{item.member.nickName}}在{{item.createTime}}消费{{item.payTotal}}元，你获得{{item.awardAmount}}元奖励</li>
+          <li v-for="(item, index) in awardList" :key="index" :style="handlePX('line-height', 88)" style="border-bottom:1px solid #e7e7e7;font-size:14px;">{{item.member.nickName}}在{{item.createTime}}消费{{item.payTotal}}元，你获得{{item.awardAmount}}元奖励</li>
         </ul>
         <div style="display: flex;align-items: center;justify-content: center;font-size:14px;padding:15px;">
           <div v-if="loading">加载中...</div>
@@ -101,7 +101,6 @@ export default class my_reward extends Vue {
         );
         return;
       }
-      this.awardList = res.data.awardList
       let awardList = this.awardList ? this.awardList : [];
         for (let i = 0; i < res.data.data.awardList.length; i++) {
           awardList.push(res.data.data.awardList[i]);
@@ -110,7 +109,7 @@ export default class my_reward extends Vue {
           this.loading = false;
         }
         this.awardList = awardList;
-      console.log("awardList",res.data.awardList);
+      console.log("awardList",res.data.data.awardList);
     });
   }
     gogetreward(){

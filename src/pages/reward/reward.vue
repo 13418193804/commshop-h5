@@ -16,7 +16,7 @@
 
     <van-cell-group style="border-bottom:15px solid #f5f5f5;">
         <van-cell is-link  @click="goselectcard()">
-            <template slot="title">
+            <template slot="title" v-if="cardId">
                 <div style="display:flex;align-items:center;">
                     <img src="../../assets/image/招商银行.png" :style="handlePX('height', 70)+handlePX('widht', 70)+handlePX('margin-left', 20)" style="border-radius:50%;"/>
                     <div :style="handlePX('margin-left', 20)" style="flex:1;">
@@ -25,7 +25,12 @@
                     </div>
                 </div>
             </template>
-            <van-icon slot="right-icon" name="arrow" class="van-cell__right-icon" style="align-self:center;"/>
+            <template slot="title" v-else>
+                <div>
+                    请选择银行卡
+                </div>
+            </template>
+            <van-icon v-if="cardId" slot="right-icon" name="arrow" class="van-cell__right-icon" style="align-self:center;"/>
         </van-cell>
     </van-cell-group>
     
@@ -87,9 +92,12 @@ export default class reward extends Vue {
         );
         return;
       }
-      this.bankcard = res.data.data
-      this.cardId=res.data.data.id
       console.log("getdefault",res.data.data);
+      if(res.data.data){
+        this.bankcard = res.data.data
+        this.cardId=res.data.data.id
+      }      
+      return
     });
   }
   getbankcardinfo(){
@@ -150,6 +158,8 @@ export default class reward extends Vue {
         return;
       }
       console.log("addrecord",res.data);
+      Toast('提现成功');
+      this.getreward();      
     });
   }
   getreward(){

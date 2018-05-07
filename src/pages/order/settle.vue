@@ -28,7 +28,7 @@
          <img src="../../assets/jiange.png" style="width:100%;"/>
      </div>
 <div style="background-color:#fff;margin-bottom:10px;">
-<div v-for="(item,index) in shopCartList" >
+<div v-for="(item,index) in shopCartList" :key="index">
    
     <div class="product">
        <div style='display:flex;align-items:center'>
@@ -48,11 +48,16 @@
 </div>
 
 <div style="height:10px;background-color:#f7f7f7;"></div>
-<div class="settingItem">
+<!-- <div class="settingItem">
     <div>运费</div>
     <div>{{freight.toFixed(2)}}</div>
-</div>
-
+</div>   -->
+<van-cell-group>
+  <van-cell title="配送方式" is-link value="快递" />  
+  <van-cell title="运费" :value="freight.toFixed(2)" />
+  <van-cell title="发票抬头" is-link  />
+  <van-field v-model="remark" label="卖家留言选填：" type="textarea" placeholder="选填内容已和卖家协商确认" rows="1" autosize/>
+</van-cell-group>
 <div style="margin: 0 10px;text-align:right;padding:10px;">
      <span style='margin:0 10rpx;'>
           <!-- {{shopCartList[0].num}} -->
@@ -93,6 +98,7 @@ import comhead from "../../components/Comhead.vue";
 export default class shopIndex extends Vue {
   prepareId = "";
   pageType = "";
+  remark="";
   shopCartList = [];
   address = null;
   totalPrice = 0;
@@ -147,7 +153,8 @@ freight=0;
           .userId,
         token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
           .token,
-        prepareId: this.prepareId
+        prepareId: this.prepareId,
+        remark:this.remark
       },
       res => {
         if (res == null) {
@@ -210,6 +217,7 @@ freight=0;
   padding: 10px 0;
   background-color: #fff;
 }
+
 </style>
 
 
