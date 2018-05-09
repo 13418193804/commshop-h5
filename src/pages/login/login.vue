@@ -4,22 +4,23 @@
     <div class="bodyLabel" :style="handlePX('padding-left',65)+handlePX('padding-right',65)">
 
       <div style="text-align:center;">
-        <img v-lazy="'1'" :style="handlePX('width',200)+handlePX('height',200)" style="border-radius: 50%;margin-bottom:30px">
+        <img src="../../assets/image/LOGO.png" :style="handlePX('width',200)+handlePX('height',200)" style="margin-bottom:30px">
         <van-field class="login-input" v-model="loginName"  placeholder="请输入用户名" :style="handlePX('width',620)+handlePX('font-size',30)+handlePX('padding-left',30)+handlePX('height',90)" style="margin:0 0 16px;"/>
 
         <van-field class="login-input" v-model="password" type="password"  placeholder="请输入密码" :style="handlePX('width',620)+handlePX('font-size',30)+handlePX('padding-left',30)+handlePX('height',90)"/>
 
         <van-button class="login-button" size="normal" :block="true"  :style="handlePX('width',620)+handlePX('line-height',88)+handlePX('font-size',34)+handlePX('height',90)" @click="doLogin()" style="margin:35px 0 15px;">登录</van-button>
+        <van-button class="login-button-cancel" size="normal" :block="true"  :style="handlePX('width',620)+handlePX('line-height',88)+handlePX('font-size',34)+handlePX('height',90)" @click="goback()" style="margin:5px 0 15px;">取消</van-button>
 
         <div class="tips">
-          <div>
-            <img v-lazy="'1'" :style="handlePX('width',35)+handlePX('height',35)">
-            <a url="#" :style="handlePX('line-height',35)+handlePX('font-size',28)">注册新用户</a>
+          <div @click="gosign()">
+            <img src="../../assets/image/新用户注册.png" :style="handlePX('width',35)+handlePX('height',35)">
+            <span  :style="handlePX('line-height',35)+handlePX('font-size',28)">注册新用户</span>
           </div>
           <div :style="handlePX('width',4)+handlePX('height',25)" style="background-color:#A3A3A3;margin:5px 15px;"></div>
-          <div>
-            <img v-lazy="'1'" :style="handlePX('width',35)+handlePX('height',35)">
-            <a url="#" :style="handlePX('line-height',35)+handlePX('font-size',28)">忘记密码?</a>
+          <div @click="goforget()">
+            <img src="../../assets/image/忘记密码.png" :style="handlePX('width',35)+handlePX('height',35)">
+            <span  :style="handlePX('line-height',35)+handlePX('font-size',28)">忘记密码?</span>
           </div>
         </div>
 
@@ -43,8 +44,8 @@ import { Toast } from "vant";
   mixins: [mixin]
 })
 export default class shopIndex extends Vue {
-  loginName = "13277931892";
-  password = "123456";
+  loginName = "";
+  password = "";
   @Action("setTokenInfo") setTokenInfo;
 
   clearLoginName() {
@@ -85,7 +86,15 @@ export default class shopIndex extends Vue {
       }
     );
   }
-
+  gosign(){
+    this.$router.push("/sign");
+  }
+  goforget(){
+    this.$router.push("/forget");
+  }
+  goback(){
+    this.$router.go(-1);
+  }
   handlePX(CssName, PxNumber) {
     return CssName +":" +this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth /750 * PxNumber +"px;";
   }
@@ -120,6 +129,12 @@ export default class shopIndex extends Vue {
 .login-button {
   color: #ffffff;
   background-color: #f4c542;
+  border-radius: 8px;
+}
+.login-button-cancel{
+  border-color:#f4c542;
+  color:#f4c542;
+  background-color: #ffffff;  
   border-radius: 8px;
 }
 .login-input {

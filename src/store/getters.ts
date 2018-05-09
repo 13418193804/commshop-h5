@@ -27,13 +27,12 @@
 
 // }
 
-
 import { MutationTreeType } from './mutation-types';
 
 export default {
 
     [MutationTreeType.USER_NAME](state) {
-        return state.userName
+        return state.userName;
     },
     [MutationTreeType.TAB_INDEX](state) {
         return state.tabIndex;
@@ -47,17 +46,17 @@ export default {
         }
     },
     [MutationTreeType.VERCODE](state) {
-        return state.codeObj
+        return state.codeObj;
     },
 
     [MutationTreeType.ADDRESS_ITEM](state) {
-        return state.addressItem
+        return state.addressItem;
     },
     [MutationTreeType.PREPAREID](state) {
-        return state.prepareId
+        return state.prepareId;
     },
     [MutationTreeType.PREPAREID](state) {
-        return state.prepareId
+        return state.prepareId;
     },
     [MutationTreeType.SYSTEM](state) {
         return {
@@ -65,4 +64,4 @@ export default {
             availHeight: window.screen.availHeight
         };
     }
-}
+};

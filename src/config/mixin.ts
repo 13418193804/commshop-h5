@@ -15,8 +15,8 @@ const mixin = {
             return `${mins}:${secs}`;
         }
     },
-    mounted: ()=>{
-        console.log("mixin")
+    mounted: () => {
+        console.log('mixin');
     }
 };
 
