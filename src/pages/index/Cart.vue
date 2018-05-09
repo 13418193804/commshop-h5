@@ -22,7 +22,7 @@
     
   </van-cell-group>
   <span slot="right" class="van-cell-swipe__right" @click="deleteCart(index)" >删除</span>
-  <div slot="right" @click="collect()" class="collect" style="background-color: #f90;width: 100%;
+  <div slot="right" @click="collect(index)" class="collect" style="background-color: #f90;width: 100%;
     height: 100%; display: flex;
     align-items: center;
     justify-content: center;">收藏</div>
@@ -213,8 +213,31 @@ export default class Cart extends Vue {
       }
     );
   }
-  collect() {
-    Toast("收藏成功");
+  collect(index) {
+    Vue.prototype.$reqFormPost(
+      "/fav/add",
+      {
+        userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .userId,
+        token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .token,
+        goodsId: this.cartList[index].goodsId
+      },
+      res => {
+        if (res == null) {
+          console.log("网络请求错误！");
+          return;
+        }
+        if (res.data.status != 200) {
+          console.log(
+            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+          );
+          return;
+        }
+        Toast("收藏成功");
+        this.deleteCart(index);
+      }
+    );
   }
   getCartList() {
     Vue.prototype.$reqFormPost(
