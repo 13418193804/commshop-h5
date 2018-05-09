@@ -171,7 +171,14 @@ freight=0;
 
         this.$router.replace({
           name: "pay",
-          query: res.data.data
+          query: {
+            contactname:this.address.contactname,
+            contactmobile:this.address.contactmobile,
+            address:this.address.province + this.address.city + this.address.country + this.address.address,
+            body:res.data.data.body,
+            payId:res.data.data.payId,
+            payTotal:res.data.data.payTotal
+          }
         });
         console.log(res.data.data);
       }

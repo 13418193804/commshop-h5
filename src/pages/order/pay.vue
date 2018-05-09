@@ -1,38 +1,61 @@
 <template>
   <div class="tab-contents" style="height:-webkit-fill-available;background-color:#f7f7f7;">
             <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="支付" isRightIcon="true"  ></comhead>
-     
+     <div style="    display: flex;height: 5px;">
+         <img src="../../assets/jiange.png" style="width:100%;"/>
+     </div>
 
-              <div style="margin:30px;">
-                    <div>
-                    订单提交成功，请尽快付款！
-                </div>
-                <div>
-                    温馨提示：24小时内未付款将自动取消
-                </div>
+      <div style="padding:15px 0 0 15px;background-color:#fff;">
+        <div style="display:flex;">
+          <img src="../../assets/image/提交成功.png" :style="handlePX('width',40)+handlePX('height',40)"/>
+          <div>订单提交成功，请尽快付款！</div>
+        </div>
+        <div :style="handlePX('line-height',80)" style="color:#A3A3A3;">温馨提示：24小时内未付款将自动取消</div>
+        <div style="color:#A3A3A3;border-top:1px solid #EFEFEF;" :style="handlePX('line-height',80)">支付金额:<span class="marketPrice">￥{{obj.payTotal}}</span>  </div>
+      </div>
 
-                <div >
-                      <span class="marketPrice">￥{{obj.payTotal}}</span>  元
-                </div>
+      <div style="flex:1;padding:15px;background-color:#fff;margin-top:5px;">
+        <div style="font-size: 16px;display:flex;justify-content:space-between;">
+          <span>收货人:{{address.contactname}}</span>
+          <span style="margin-right:10px;">{{address.contactmobile}}</span>
+        </div>
+        <div style="display:flex;align-items: center;" >
+          <div>
+            <i class="iconfont icon-location" style="font-size:22px;"></i>
+          </div>
+          <div class="lineTwo">收货地址：{{address.province}}{{address.city}}{{address.country}}{{address.address}}</div>
+        </div>
+      </div>
+
+<div style="padding-top:15px;background-color:#fff;margin-top:5px;">
+  <div :style="handlePX('height',80)+handlePX('line-height',80)" style="margin-left:15px;color:#A3A3A3;border-bottom:1px solid #EFEFEF;">选择支付方式</div>
+  <van-radio-group v-model="payActive">
+    <van-cell-group>
+      <van-cell  clickable @click="payActive = 'ali'">
+        <template slot="title">
+          <div :style="handlePX('height',80)" style="display:flex;align-items: center;">        
+            <van-radio name="ali" />
+            <img src="../../assets/image/支付宝.png" style="vertical-align:sub;" :style="handlePX('width',40)+handlePX('height',40)"/>
+            <span>支付宝支付</span>
+          </div>
+        </template>
+      </van-cell>
+      <van-cell  clickable @click="payActive = 'wechat'">
+        <template slot="title">
+          <div :style="handlePX('height',80)" style="display:flex;align-items: center;">
+            <van-radio name="wechat" />
+            <img src="../../assets/image/微信.png" style="vertical-align:sub;" :style="handlePX('width',40)+handlePX('height',40)"/>
+            <span>微信支付</span>
+          </div>
+        </template>
+      </van-cell>
+    </van-cell-group>
+  </van-radio-group>
 </div>
-<div>
-</div>
-
-<div style="margin:30px;">
-<van-radio-group v-model="payActive">
-  <van-radio name="ali">支付宝支付</van-radio>
-</van-radio-group>
-
-<van-radio-group v-model="payActive">
-  <van-radio name="wechat">微信支付</van-radio>
-</van-radio-group>
 
 
-</div>
-
-
-<div style="margin:30px;">
-    <van-button size="large" @click="dopay">支付</van-button>
+<div style="margin:100px 15px 0;">
+    <van-button size="large" @click="dopay" style="color:#ffffff;background-color:#F4C542;">支付</van-button>
 </div>
 
 
@@ -53,11 +76,13 @@ import comhead from "../../components/Comhead.vue";
   mixins: [mixin]
 })
 export default class shopIndex extends Vue {
-  obj = {};
+  obj = {body:"",payId:"",payTotal:""};
+  address={contactname:"",contactmobile:"",address:""};
   payActive = "ali";
   dopay() {
     //    this.obj["payTotal"]
     if (this.payActive == "ali") {
+      console.log('支付宝支付')
       Vue.prototype.$reqFormPost(
         "/ali/pay/wap",
         {
@@ -97,10 +122,23 @@ export default class shopIndex extends Vue {
       console.log('微信支付')
     }
   }
-
+  handlePX(CssName, PxNumber) {
+    return (
+      CssName +
+      ":" +
+      this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth /
+        750 *
+        PxNumber +
+      "px;"
+    );
+  }
   mounted() {
-    console.log();
-    this.obj = this.$route.query;
+    this.obj.body = this.$route.query.body;
+    this.obj.payId = this.$route.query.payId;
+    this.obj.payTotal = this.$route.query.payTotal;
+    this.address.address = this.$route.query.address; 
+    this.address.contactname = this.$route.query.contactname; 
+    this.address.contactmobile = this.$route.query.contactmobile; 
   }
 }
 </script>
