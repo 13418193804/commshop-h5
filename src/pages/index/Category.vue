@@ -6,7 +6,7 @@
 
 <div class="contentBody">
 <div class="leftTitle">
-        <div v-for="(item,index) in catList" class="left-box-item " :class="index == selectIndex?'active':'fontcolor'" @click="selectCategoyItem(index)">
+        <div v-for="(item,index) in catList" :key="index" class="left-box-item" :class="index == selectIndex?'active':'fontcolor'" @click="selectCategoyItem(index)">
          <div style="display:flex;    position: relative;    justify-content: center;align-items: center;">
            <div class="activeItem"></div>
             {{item.label}}</div>
@@ -14,11 +14,11 @@
   </div>
 
 <div class="rightContent">
-     <div style="text-align:center;margin-top:15px;font-size:16px;">{{catList[selectIndex].catName}}</div>
+     <div v-for="(item,index) in catList" :key="index" v-if="index == selectIndex" style="text-align:center;margin-top:15px;font-size:16px;">{{item.catName}}</div>
 
 
 <div class="catList">
-    <div style="width:33%;padding:15px;overflow: hidden;" v-for="(item,index) in catContent" @click="goProductList(item.catId,item.parentId,index)">
+    <div style="width:33%;padding:15px;overflow:hidden;" v-for="(item,index) in catContent" :key="index" @click="goProductList(item.catId,item.parentId,index)">
     <div class="cat-item" >
             <div>
                  <img v-lazy="item.catIcon"  alt="" style="    border-radius: 50px;">
@@ -57,6 +57,7 @@ export default class Category extends Vue {
   catList = [];
   selectIndex = 0;
   catContent = [];
+  value='';
 
   @Action("setTabIndex") setTabIndex;
 
