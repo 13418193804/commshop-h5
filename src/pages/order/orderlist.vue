@@ -9,9 +9,7 @@
   infinite-scroll-distance="20" >
   <van-tab v-for="(n,sindex) in orderTitleList"  :title="n.name" style="border-top:1px #e5e5e5 solid;">
 
-
       <div >
-   
   
         <li v-for="(item,index) in orderList[returnKey()].orderList" @click="goDetail(item)">
 
@@ -156,12 +154,12 @@ export default class orderList extends Vue {
   finished = false;
 
   orderList = {
-    orderList: { orderList: [], pageSize: 10 ,loading:true},
-    orderList_pay: { orderList: [], pageSize: 10 ,loading:true},
-    orderList_send: { orderList: [], pageSize: 10  ,loading:true},
-    orderList_reacv: { orderList: [], pageSize: 10 ,loading:true },
-    orderList_finish: { orderList: [], pageSize: 10 ,loading:true },
-    orderList_refund: { orderList: [], pageSize: 10 ,loading:true }
+    orderList: { orderList: [], pageSize: 10, loading: true },
+    orderList_pay: { orderList: [], pageSize: 10, loading: true },
+    orderList_send: { orderList: [], pageSize: 10, loading: true },
+    orderList_reacv: { orderList: [], pageSize: 10, loading: true },
+    orderList_finish: { orderList: [], pageSize: 10, loading: true },
+    orderList_refund: { orderList: [], pageSize: 10, loading: true }
   };
   onLoad() {
     setTimeout(() => {}, 500);
@@ -194,18 +192,22 @@ export default class orderList extends Vue {
     }
   ];
 
-  payOrder(item){
-      this.$router.push({
-          name: "pay",
-          query:{body:item.orderTitle,payId:item.payNo,payTotal:item.payTotal}
-        });
+  payOrder(item) {
+    this.$router.push({
+      name: "pay",
+      query: {
+        body: item.orderTitle,
+        payId: item.payNo,
+        payTotal: item.payTotal
+      }
+    });
   }
   loadMore() {
     this.loading = true;
     let self = this;
     setTimeout(() => {
-       this.orderList[this.returnKey()].pageSize += 10;
-             this.getOrderList(this.orderTitleList[this.active].status);
+      this.orderList[this.returnKey()].pageSize += 10;
+      this.getOrderList(this.orderTitleList[this.active].status);
 
       // switch (this.active) {
       //   case 0:
@@ -220,9 +222,6 @@ export default class orderList extends Vue {
       //   case 4:
       //     break;
       // }
-
-
-
     }, 1000);
   }
   // ORDER_WAIT_PAY
@@ -254,13 +253,13 @@ export default class orderList extends Vue {
           Toast(res.data.message);
           return;
         }
-         this.getOrderList(this.orderTitleList[this.active].status);;
+        this.getOrderList(this.orderTitleList[this.active].status);
 
         console.log("取消订单");
       }
     );
   }
-  
+
   doRefund(item) {
     console.log(item.orderId);
     this.$router.push({
@@ -346,7 +345,7 @@ export default class orderList extends Vue {
               Toast(res.data.message);
               return;
             }
-             this.getOrderList(this.orderTitleList[this.active].status);
+            this.getOrderList(this.orderTitleList[this.active].status);
           }
         );
         // on confirm
@@ -377,15 +376,15 @@ export default class orderList extends Vue {
         return "未收货";
       case "ORDER_END_GOODS":
         return "交易结束";
-      case "ORDER_WAIT_REVIEW" :
+      case "ORDER_WAIT_REVIEW":
         return "待评价";
-         case "ORDER_FINISH":
+      case "ORDER_FINISH":
         return "交易完成";
     }
   }
 
-  returnKey(){
-     switch (this.active) {
+  returnKey() {
+    switch (this.active) {
       case 0:
         return "orderList";
       case 1:
@@ -401,14 +400,10 @@ export default class orderList extends Vue {
     }
   }
   getOrderList(orderStatus) {
+    let valKey = this.returnKey();
 
-
-    let valKey = this.returnKey()
-
-
-    
     Vue.prototype.$reqFormPost(
-      orderStatus!='REFUND'?"/order/queryorder":"/refund/order/query",
+      orderStatus != "REFUND" ? "/order/queryorder" : "/refund/order/query",
       {
         userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
           .userId,
@@ -430,20 +425,17 @@ export default class orderList extends Vue {
           Toast(res.data.message);
           return;
         }
-      
-      
-      if( this.orderList[valKey].loading){
-       this.orderList[valKey].orderList = res.data.data.orderList;
-   if(res.data.data.orderList.length != this.orderList[valKey].pageSize){
-          this.orderList[valKey].loading = false
-      }
-      }
+
+        if (this.orderList[valKey].loading) {
+          this.orderList[valKey].orderList = res.data.data.orderList;
+          if (
+            res.data.data.orderList.length != this.orderList[valKey].pageSize
+          ) {
+            this.orderList[valKey].loading = false;
+          }
+        }
       }
     );
-
-
-
-
   }
   goDetail(item) {
     this.$router.push({
@@ -453,23 +445,21 @@ export default class orderList extends Vue {
       }
     });
   }
-  changePage(index){
-    this.active = index
-            this.getOrderList(this.orderTitleList[index].status);
+  changePage(index) {
+    this.active = index;
+    this.getOrderList(this.orderTitleList[index].status);
   }
   mounted() {
-this.orderTitleList.forEach((item, index) => {
+    this.orderTitleList.forEach((item, index) => {
       if (this.$route.query.orderStatus == item.status) {
         this.active = index;
         return;
       }
     });
     if (this.$route.query.orderStatus === "REFUND") {
-
       return;
     }
-     this.getOrderList(this.orderTitleList[this.active].status);
-
+    this.getOrderList(this.orderTitleList[this.active].status);
   }
 }
 </script>

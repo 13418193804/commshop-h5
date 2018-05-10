@@ -4,14 +4,22 @@
 <!-- <div class="bodyContent"> -->
 
 <van-tabs :active="selectIndex" @click="selectCatItem">
+
   <van-tab v-for="(item,index) in catlist" :title="item.catName" :key="index">
-    <!-- <van-list v-model="loading" :finished="finished" @load="loadMore" :offset="30"> -->
+
+
       <div style="background-color:#f7f7f7;height:10px;"></div>
       <div :style="handlePX('line-height',100)+handlePX('font-size',32)" style="color:#000000;text-align:center;">{{catlist[selectIndex].catName}}</div>
-  
-    <van-list>
+
+<ul
+  v-infinite-scroll="loadMore"
+  infinite-scroll-disabled="loading"
+  infinite-scroll-distance="10">
+  <li  v-for="(item,goodsListindex) in goodsList">
+
+
       <van-row  >
-        <van-col span="12" v-for="(item,goodsListindex) in goodsList" :key="goodsListindex">
+        <van-col span="12">
           <div class="bodyItem" :style="handlePX('margin-bottom',50)" style="display:flex;justify-content:center;" @click="goProductDetail(item.goodsId)">
           <div style="overflow: hidden;">
             <div style="border: 1px #e5e5e5 solid;box-sizing: border-box;display:flex;align-items: center;justify-content:center;overflow:hidden;position:relative;margin:5px auto;" :style="handlePX('height', 410)+handlePX('width', 345)">
@@ -33,7 +41,21 @@
         </div>
         </van-col>
         </van-row>
-    </van-list>
+        </van-col>
+   </li>
+</ul>
+
+
+<div style="    display: flex;
+    align-items: center;
+    justify-content: center;font-size:14px;padding:15px;">
+
+    <div >加载中...</div>
+    <div>-</div>
+  
+</div>
+
+
 
 
   </van-tab>
@@ -71,7 +93,7 @@ export default class ProductList extends Vue {
   goodsList = [];
   catId='';
   parentCatId="";
-  pageIndex=0;
+  pageIndex=20;
   title="";
   goProductDetail(goodsId) {
     this.$router.push({
@@ -85,7 +107,7 @@ export default class ProductList extends Vue {
     let item = this.catlist[index];
     if(item['catId']!=this.catId){
       this.goodsList = []
-      this.pageIndex = 0;
+      this.pageIndex = 20;
     }
     this.catId = item['catId'];
     this.selectIndex = index;
@@ -100,13 +122,16 @@ export default class ProductList extends Vue {
        }
     });
   }
+  loadMore(){
+
+  }
   getProductList() {
     Vue.prototype.$reqFormPost(
       "/user/goods/list",
       {
         catId: this.catId,
-        page:this.pageIndex,
-        pageSize:20,
+        page: 0,
+        pageSize:this.pageIndex,
       },
       res => {
         if (res == null) {
@@ -119,6 +144,7 @@ export default class ProductList extends Vue {
           );
           return;
         }        
+
         if(this.pageIndex==0){
           this.goodsList = res.data.data.goodsList;
         }else{
@@ -130,15 +156,7 @@ export default class ProductList extends Vue {
       }
     );
   }
-  // 下拉
-  loadMore(){
-    console.log('loadMore');
-      setTimeout(() => {
-        this.pageIndex++;
-        this.getProductList();
-        console.log('pageIndex',this.pageIndex)
-      }, 200);
-  }
+
   onLoad() {
       setTimeout(() => {
         for (let i = 0; i < 10; i++) {
