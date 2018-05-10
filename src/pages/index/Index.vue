@@ -1,12 +1,10 @@
 <template>
   <div class="tab-contents">
-<div style="display:flex;">
-<van-search placeholder="搜索商品" v-model="value" style="flex:1"/>
+<div class="searchbox" style="display:flex;">
+  <van-search placeholder="搜索商品" v-model="value" style="flex:1;background-color: #fafafa;"/>
 <div>
-  <div style="font-size:12px;text-alig:center;    background-color: rgb(242, 242, 242);color:#666;padding:2px 10px 4px 0;">
-    <div style=" display: flex;
-  justify-content: center;
-  align-items: center;">
+  <div style="font-size:12px;text-alig:center;background-color: rgb(250, 250, 250);color:#666;padding:4px 10px;">
+    <div style=" display: flex;justify-content: center;align-items: center;">
       <i class="iconfont icon-xiaoxitianchong"  style="font-size:16px;margin:3px;"></i>
       </div>
      <div style="line-height: 15px;">消息</div>
@@ -533,6 +531,16 @@ export default class shopIndex extends Vue {
 }
 .van-tabs__wrap{
   overflow-x: auto;
+}
+.searchbox .van-search__input-wrap{
+  width:100%;
+}
+.searchbox .van-search__input-wrap input{
+  width:100%;
+  border-radius:30px;
+  border: 0;
+  background-color: #f0f0f0;
+  padding-left: 30px;
 }
 </style>
 
