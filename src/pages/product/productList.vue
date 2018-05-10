@@ -27,7 +27,7 @@
             </div>
            
             <div class="textLabel" :style="handlePX('font-size',28)" style="color:#000000;">{{item.goodsName}}</div>
-            <div :style="handlePX('font-size',30)" style="color:#E05459;">￥{{item.labelPrice}}</div>
+            <div :style="handlePX('font-size',30)" style="color:#E05459;">￥{{item.marketPrice}}</div>
             </div>
           </div>
         </div>

@@ -226,5 +226,10 @@ freight=0;
 }
 
 </style>
+<style>
+.van-field .van-cell__title{
+  max-width: 100px;
+}
+</style>
 
 

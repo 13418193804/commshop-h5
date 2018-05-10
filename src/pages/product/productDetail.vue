@@ -5,7 +5,7 @@
     height: 100vh;">
     <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"   :contextIndex="1" isRightIcon="true"  ></comhead>
 
-        <van-swipe :autoplay="3000" style="height:300px;">
+        <van-swipe :autoplay="3000">
           <van-swipe-item v-for="(image, index) in detatil['goodsImg'].split(',')"  :key="index" >
             <img v-lazy="image" style="width:100%;" />
           </van-swipe-item>
