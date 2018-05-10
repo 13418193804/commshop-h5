@@ -1,6 +1,8 @@
 <template>
   <div class="tab-contents">
-<van-search placeholder="搜索商品" v-model="value" style="z-index:999;"/>
+<div class="searchbox" style="display:flex;">
+  <van-search placeholder="搜索商品" v-model="value" style="flex:1;background-color: #fafafa;"/>
+</div>
 
 <div class="contentBody">
 <div class="leftTitle">
@@ -251,6 +253,16 @@ export default class Category extends Vue {
 }
 .van-search {
   background-color: #fafafa;
+}
+.searchbox .van-search__input-wrap{
+  width:100%;
+}
+.searchbox .van-search__input-wrap input{
+  width:100%;
+  border-radius:30px;
+  border: 0;
+  background-color: #f0f0f0;
+  padding-left: 30px;
 }
 </style>
 
