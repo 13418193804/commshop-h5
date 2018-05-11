@@ -208,20 +208,6 @@ export default class orderList extends Vue {
     setTimeout(() => {
       this.orderList[this.returnKey()].pageSize += 10;
       this.getOrderList(this.orderTitleList[this.active].status);
-
-      // switch (this.active) {
-      //   case 0:
-      //     self.loading = false;
-      //     break;
-      //   case 1:
-      //     break;
-      //   case 2:
-      //     break;
-      //   case 3:
-      //     break;
-      //   case 4:
-      //     break;
-      // }
     }, 1000);
   }
   // ORDER_WAIT_PAY
