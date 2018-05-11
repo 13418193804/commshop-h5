@@ -5,9 +5,9 @@
 
 <van-tabs :active="selectIndex" @click="selectCatItem">
 
-  <van-tab v-for="(item,index) in catlist" :title="item.catName" :key="index">
+  <van-tab v-for="(item,index) in catlist" :title="item.catName" :key="index" >
 
-
+<div v-if="selectIndex == index">
       <div style="background-color:#f7f7f7;height:10px;"></div>
       <div :style="handlePX('line-height',100)+handlePX('font-size',32)" style="color:#000000;text-align:center;">{{catlist[selectIndex].catName}}</div>
 
@@ -15,11 +15,11 @@
   v-infinite-scroll="loadMore"
   infinite-scroll-disabled="loading"
   infinite-scroll-distance="10">
-  <li  v-for="(item,goodsListindex) in goodsList">
+  <li  >
 
 
       <van-row  >
-        <van-col span="12">
+        <van-col span="12" v-for="(item,goodsListindex) in goodsList">
           <div class="bodyItem" :style="handlePX('margin-bottom',50)" style="display:flex;justify-content:center;" @click="goProductDetail(item.goodsId)">
           <div style="overflow: hidden;">
             <div style="border: 1px #e5e5e5 solid;box-sizing: border-box;display:flex;align-items: center;justify-content:center;overflow:hidden;position:relative;margin:5px auto;" :style="handlePX('height', 410)+handlePX('width', 345)">
@@ -41,26 +41,17 @@
         </div>
         </van-col>
         </van-row>
-        </van-col>
    </li>
 </ul>
-
-
+</div>
+  </van-tab>
+</van-tabs>
 <div style="    display: flex;
     align-items: center;
     justify-content: center;font-size:14px;padding:15px;">
-
-    <div >加载中...</div>
-    <div>-</div>
-  
+    <div v-if="loading">加载中...</div>
+    <div v-else>-</div>
 </div>
-
-
-
-
-  </van-tab>
-</van-tabs>
-
   </div>
   
 </template>
@@ -71,7 +62,7 @@ import Component from "vue-class-component";
 import Swipe from "../../components/Swipe.vue";
 import mixin from "../../config/mixin";
 import comhead from "../../components/Comhead.vue";
-import { List } from 'vant';
+import { List } from "vant";
 @Component({
   components: {
     Swipe,
@@ -79,22 +70,18 @@ import { List } from 'vant';
   },
   mixins: [mixin]
 })
-
-
 export default class ProductList extends Vue {
-
-  secCategoryItem = {
-  };
-  list= [];
-  loading=false;
-  finished= false;
-  selectIndex="";
-  catlist="";
+  secCategoryItem = {};
+  list = [];
+  loading = false;
+  finished = false;
+  selectIndex = "";
+  catlist = "";
   goodsList = [];
-  catId='';
-  parentCatId="";
-  pageIndex=20;
-  title="";
+  catId = "";
+  parentCatId = "";
+  pageIndex = 20;
+  title = "";
   goProductDetail(goodsId) {
     this.$router.push({
       path: "/productdetail",
@@ -103,27 +90,32 @@ export default class ProductList extends Vue {
       }
     });
   }
-  selectCatItem(index){
+  selectCatItem(index) {
     let item = this.catlist[index];
-    if(item['catId']!=this.catId){
-      this.goodsList = []
+    if (item["catId"] != this.catId) {
+      this.goodsList = [];
       this.pageIndex = 20;
     }
-    this.catId = item['catId'];
+    this.catId = item["catId"];
     this.selectIndex = index;
-    this.getProductList();    
+    this.getProductList();
     this.$router.replace({
       path: "/productlist",
-     query:{
-       catId:this.catId,
-       parentCatId:this.parentCatId,
-       selectIndex:index,
-       title:this.title
-       }
+      query: {
+        catId: this.catId,
+        parentCatId: this.parentCatId,
+        selectIndex: index,
+        title: this.title
+      }
     });
   }
-  loadMore(){
-
+  loadMore() {
+    this.loading = true;
+    let self = this;
+    setTimeout(() => {
+      this.pageIndex += 10;
+      this.getProductList();
+    }, 1000);
   }
   getProductList() {
     Vue.prototype.$reqFormPost(
@@ -131,7 +123,7 @@ export default class ProductList extends Vue {
       {
         catId: this.catId,
         page: 0,
-        pageSize:this.pageIndex,
+        pageSize: this.pageIndex
       },
       res => {
         if (res == null) {
@@ -143,55 +135,43 @@ export default class ProductList extends Vue {
             "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
           );
           return;
-        }        
+        }
 
-        if(this.pageIndex==0){
+        if (this.loading) {
           this.goodsList = res.data.data.goodsList;
-        }else{
-          for (let i = 0; i < res.data.data.goodsList.length; i++) {
-            this.goodsList.push(res.data.data.goodsList[i])
+          if (res.data.data.goodsList.length != this.pageIndex) {
+            this.loading = false;
           }
         }
-        
       }
     );
   }
 
-  onLoad() {
-      setTimeout(() => {
-        for (let i = 0; i < 10; i++) {
-          this.list.push(this.list.length + 1);
+  getCategoryList() {
+    Vue.prototype.$reqFormPost(
+      "/user/cat/list",
+      {
+        parentId: this.parentCatId
+      },
+      res => {
+        if (res == null) {
+          console.log("网络请求错误！");
+          return;
         }
-        this.loading = false;
-
-        if (this.list.length >= 40) {
-          this.finished = true;
+        if (res.data.status != 200) {
+          console.log(
+            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+          );
+          return;
         }
-      }, 500);
-    }
-  getCategoryList(){
-     Vue.prototype.$reqFormPost("/user/cat/list", {
-      parentId:  this.parentCatId
-     }, res => {
-      if (res == null) {
-        console.log("网络请求错误！");
-        return;
+        this.catlist = res.data.data;
+        console.log("getCategoryList", res.data.data);
       }
-      if (res.data.status != 200) {
-        console.log(
-          "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
-        );
-        return;
-      }
-      this.catlist = res.data.data
-      console.log("getCategoryList",res.data.data);
-    });
-      
-    }
+    );
+  }
 
   mounted() {
-   
-   //load products
+    //load products
     this.catId = this.$route.query.catId;
     this.getProductList();
 
@@ -204,11 +184,17 @@ export default class ProductList extends Vue {
 
     //load title
     this.title = this.$route.query.title;
-   
   }
 
   handlePX(CssName, PxNumber) {
-    return CssName +":" +this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth /750 * PxNumber +"px;";
+    return (
+      CssName +
+      ":" +
+      this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth /
+        750 *
+        PxNumber +
+      "px;"
+    );
   }
 }
 </script>

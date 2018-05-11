@@ -74,7 +74,7 @@
                       </div>
                       <div style="padding-left:10px;flex:1;" class="textLabel" :style="handlePX('line-height', 48)">
                         <div>
-                          <img src="../../assets/image/新品特价.png" :style="handlePX('width',92)+handlePX('height',30)" style="vertical-align: middle;"/>
+                          <img src="../../assets/image/新品特价.png"  :style="handlePX('width',92)+handlePX('height',30)"  style="vertical-align: middle;"/>
                           <span class="textLabel" style="color:#000000;" :style="handlePX('font-size',28)">{{goods.goodsName}}</span>
                         </div>
                         <div class="textLabel"  style="color:#A3A3A3;" :style="handlePX('font-size',28)+handlePX('line-height',44)">{{goods.jingle}}</div>
