@@ -113,7 +113,7 @@ export default class ProductList extends Vue {
     this.loading = true;
     let self = this;
     setTimeout(() => {
-      this.pageIndex += 10;
+      this.pageIndex += 20;
       this.getProductList();
     }, 1000);
   }
