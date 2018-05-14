@@ -23,8 +23,8 @@
     justify-content: center;
     align-items: center;" >
     <div class="bodyContent">
-        <div style="padding:5px 15px;" :class="contextIndex==1 ?'checkbody':''">商品</div>
-      <div style="padding:5px 15px;" :class="contextIndex==2 ?'checkbody':''">详情</div>
+        <div style="padding:5px 15px;" :class="textindex==1 ?'checkbody':''" @click="changecontextIndex(1)">商品</div>
+      <div style="padding:5px 15px;" :class="textindex==2 ?'checkbody':''" @click="changecontextIndex(2)">详情</div>
     </div>
 </div>
       </div>
@@ -76,6 +76,7 @@ export default class Comhead extends Vue {
 
   type = "H5";
   leftScale = "1.5";
+  textindex=1;
   rightClick() {
     this.$emit("rightClick");
   }
@@ -87,7 +88,14 @@ export default class Comhead extends Vue {
     }
     this.$emit("leftClick");
   }
-
+  changecontextIndex(contextIndex){
+    if(contextIndex==1){
+      this.textindex=1;
+    }
+    if(contextIndex==2){
+      this.textindex=2;
+    }
+  }
   getBgColor() {}
   mounted() {
     console.log(this.title)

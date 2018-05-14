@@ -3,7 +3,7 @@
     background-color: #e4e4e4;
     overflow: auto;
     height: 100vh;">
-    <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"   :contextIndex="1" isRightIcon="true"  ></comhead>
+    <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"   :contextIndex="true" isRightIcon="true"  ></comhead>
 
         <van-swipe :autoplay="3000">
           <van-swipe-item v-for="(image, index) in detatil['goodsImg'].split(',')"  :key="index" >
@@ -79,11 +79,11 @@
         <div class="recommend" style="background-color:#ffffff;margin-top:10px;z-index:2;">
           <van-tabs @click="selecttablist">
             <van-tab v-for="(item,index) in tablist" :title="item" :key="index" >
-              <div style="display:flex;overflow: auto;">
+              <div style="display:flex;overflow: auto;" v-if="index==tabindex">
                 <div v-for="(items,index) in tabgoodslist" :key="index" @click="goProductDetail(item.goodsId)" :style="handlePX('padding-bottom',65)+handlePX('padding-top',20)+handlePX('padding-left',30)">
                   <div style="border: 1px #e5e5e5 solid;box-sizing: border-box;display:flex;align-items: center;justify-content:center;overflow:hidden;position:relative;" :style="handlePX('height', 410)+handlePX('width', 345)">
-                      <img src="../../assets/image/热.png" style="width:-webkit-fill-available;position: absolute;top: 0;left:0;" :style="handlePX('width', 43)+handlePX('height', 49)"/>
-                      <img v-lazy="'1'" style="width:-webkit-fill-available;position: absolute;top: 0;z-index:-1;"/>
+                      <img src="../../assets/image/热.png" style="width:-webkit-fill-available;position: absolute;top: 0;left:0;z-index:2;" :style="handlePX('width', 43)+handlePX('height', 49)"/>
+                      <img v-lazy="items.goodsImg.split(',')[0]" style="width:-webkit-fill-available;position: absolute;top: 0;"/>
                       <div class="textLabel" style="position: absolute;bottom: 0;width: 100%;background-color:rgba(207,207,207,0.3);text-align:center;color:#A3A3A3" :style="handlePX('height', 70)+handlePX('line-height', 70)+handlePX('font-size', 28)">{{items.jingle}}</div>
                     </div>
                     <div style="display:flex;justify-content: center;flex-direction: column;width:-webkit-fill-available;" :style="handlePX('width', 345)">
@@ -124,9 +124,10 @@
           </div>
         </div>
 
-        <div>
-          <img v-lazy="'1'" style="width:100%;"/>
-          <img v-lazy="'1'" style="width:100%;"/>
+        <div style="background-color:#ffffff;margin-top:10px;">
+          <div v-for="(item,index) in detatil.detail.imageList" :key="index">
+            <img v-lazy="item" style="width:100%;"/>
+          </div>
         </div>
 
 
@@ -231,13 +232,16 @@ export default class ProductDetail extends Vue {
   tabgoodslist=[];
   likeList=[];
   newList=[];
+  tabindex=0;
 
   goodsList = [];
   goodsId = "";
   detatil = {
     //    costPrice
     // createTime
-    // detail
+    detail:{
+      imageList:[],
+    },
     // favNum
     // favStatus
     // goodsCode
@@ -471,10 +475,12 @@ export default class ProductDetail extends Vue {
   selecttablist(index){
     this.tabgoodslist=[];
     if(index==0){
-      this.tabgoodslist=this.likeList
+      this.tabgoodslist=this.likeList;
+      this.tabindex=0
     }
     if(index==1){
-      this.tabgoodslist=this.newList
+      this.tabgoodslist=this.newList;
+      this.tabindex=1
     }
   }
   goProductDetail(goodsId){
