@@ -89,7 +89,7 @@ export default class update_info extends Vue {
         }
         Toast('修改成功');        
         console.log('res.data',res.data)
-        this.$router.push("/setting");
+        this.$router.go(-1);
       }
     );
   }
@@ -124,7 +124,7 @@ export default class update_info extends Vue {
           return;
         }
         console.log('res.data',res.data)
-        this.$router.push("/essential_information");
+        this.$router.go(-1);
       }
     );
     }
@@ -155,7 +155,7 @@ export default class update_info extends Vue {
           return;
         }
         console.log('res.data',res.data)
-        this.$router.push("/essential_information");
+        this.$router.go(-1);
       }
     );
     }

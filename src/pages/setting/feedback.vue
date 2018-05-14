@@ -62,7 +62,7 @@ export default class feedback extends Vue {
         }
         Toast('已提交');        
         console.log('res.data',res.data)
-        this.$router.push("/setting");
+        this.$router.go(-1);
       }
     );
   }
