@@ -123,7 +123,7 @@ Toast(res.data.message)
     }
     Vue.prototype.$reqFormPost("/user/password/find",{
        mobile:this.loginName,
-       password:this.password,
+       password:require('crypto').createHash('md5').update(this.password).digest('hex'),
        smsCode:this.smsCode,
        },res => {
         if (res == null) {
