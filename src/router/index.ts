@@ -194,6 +194,11 @@ export default new Router({
             path: '/refundbackgoods',
             name: 'refundbackgoods',
             component: r => require.ensure([], () => r(require('../pages/order/refundBackGoods.vue')))
+        },
+        {
+            path: '/goodscomment',
+            name: 'goodscomment',
+            component: r => require.ensure([], () => r(require('../pages/comment/goodscomment.vue')))
         }
 
     ]

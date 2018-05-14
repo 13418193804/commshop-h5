@@ -59,19 +59,20 @@
 
         <div class="userCommentList" style="background-color:#ffffff;margin-top:10px;">
           <van-cell-group>
-            <van-cell title="用户评价（999+）" is-link value="99%好评" />
+            <van-cell title="用户评价（999+）" is-link value="99%好评" @click="go_comment()"/>
           </van-cell-group>
-          <div class="userComment" style="padding:10px 15px;">
-            <div>
-              <img v-lazy="'1'" :style="handlePX('width',45)+handlePX('height',45)" style="vertical-align:middle;border-radius:50%;"/>
-              <span>这个用户</span>
-              <img v-lazy="'1'" :style="handlePX('width',140)+handlePX('height',25)" style="vertical-align:middle;"/>
-            </div>
-            <div style="color:#999999;">2018.02.05 22:01 款式：高灯</div>
-            <div>物流很快，到了就用上了。很舒服，睡得很香</div>
-            <div>
-              <img v-lazy="'1'" :style="handlePX('width',100)+handlePX('height',100)"/>
-              <img v-lazy="'1'" :style="handlePX('width',100)+handlePX('height',100)"/>
+          <div  v-for="(item,index) in detatil.commentList" :key="index">
+            <div class="userComment" style="padding:10px 15px;">
+              <div>
+                <img src="../../assets/image/头像.png" :style="handlePX('width',45)+handlePX('height',45)" style="vertical-align:middle;border-radius:50%;"/>
+                <span>{{item.user.nickName}}</span>
+                <img v-lazy="'1'" :style="handlePX('width',140)+handlePX('height',25)" style="vertical-align:middle;"/>
+              </div>
+              <div style="color:#999999;">{{item.createTime}}</div>
+              <div>{{item.commentContent}}</div>
+              <div v-if="item.commentImg" v-for="(itemimg,imgindex) in item.commentImg" :key="imgindex">
+                <img v-lazy="'1'" :style="handlePX('width',100)+handlePX('height',100)"/>
+              </div>
             </div>
           </div>
         </div>
@@ -132,8 +133,9 @@
 
 
 <van-goods-action style="z-index:90;background-color: #ffffff;">
-  <van-goods-action-mini-btn icon="chat" text="客服" @click="onClickMiniBtn" style="display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 10px;"/>
-  <van-goods-action-mini-btn icon="cart" text="购物车" @click="onClickMiniBtn" style="display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 10px;"/>
+  <van-goods-action-mini-btn icon="chat" text="客服" @click="onClickMiniBtn_service" style="display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 10px;"/>
+  <van-goods-action-mini-btn icon="cart" text="购物车" @click="onClickMiniBtn_cart" style="display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 10px;"/>
+  <van-goods-action-mini-btn icon="like" text="收藏" @click="onClickMiniBtn_collection" :class="{collection_color:isCollection}" style="display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 10px;"/>
   <van-goods-action-big-btn text="加入购物车" @click="changeModel('cart')" style="flex:1;"/>
   <van-goods-action-big-btn text="立即购买" @click="changeModel('pay')" primary style="flex:1;"/>
 </van-goods-action>
@@ -233,10 +235,12 @@ export default class ProductDetail extends Vue {
   likeList=[];
   newList=[];
   tabindex=0;
+  isCollection=false;
 
   goodsList = [];
   goodsId = "";
   detatil = {
+    commentList:[],
     //    costPrice
     // createTime
     detail:{
@@ -265,8 +269,103 @@ export default class ProductDetail extends Vue {
   skuattr = [];
   chosenList = [];
   skuItem = {};
-  onClickMiniBtn() {}
-  onClickBigBtn() {}
+  go_comment(){
+    this.$router.push({
+      path: "/goodscomment",
+      query: {
+        goodsId: this.goodsId
+      }
+    });
+  }
+  onClickMiniBtn_service() {
+    Toast('跳转到客服');
+  }
+  onClickMiniBtn_cart(){
+    this.$router.push("/cart");
+  }
+  onClickMiniBtn_collection(){
+    if(this.isCollection==false){
+      Vue.prototype.$reqFormPost(
+      "/fav/add",
+      {
+        userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .userId,
+        token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .token,
+        goodsId: this.goodsId,
+      },
+      res => {
+        if (res == null) {
+          console.log("网络请求错误！");
+          return;
+        }
+        if (res.data.status != 200) {
+          console.log(
+            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+          );
+          return;
+        }
+        Toast('已收藏');
+        this.collection_query();
+        }
+      );  
+    }else if(this.isCollection==true){
+      Vue.prototype.$reqFormPost(
+      "/fav/delete",
+      {
+        userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .userId,
+        token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .token,
+        goodsIds: this.goodsId,
+      },
+      res => {
+        if (res == null) {
+          console.log("网络请求错误！");
+          return;
+        }
+        if (res.data.status != 200) {
+          console.log(
+            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+          );
+          return;
+        }
+        Toast('已取消');
+        this.collection_query();
+        }
+      );  
+    }
+  }
+  collection_query(){
+    Vue.prototype.$reqFormPost(
+      "/fav/query",
+      {
+        userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .userId,
+        token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .token,
+      },
+      res => {
+        if (res == null) {
+          console.log("网络请求错误！");
+          return;
+        }
+        if (res.data.status != 200) {
+          console.log(
+            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+          );
+          return;
+        }
+        for (let i = 0; i < res.data.data.goodsList.length; i++) {
+          if(res.data.data.goodsList[i].goodsId.indexOf(this.goodsId)!== '-1'){
+            this.isCollection=true;
+            return;
+          }
+        }
+            this.isCollection=false;        
+        }
+      );
+  }
   addCar() {
     if (!this.skuItem["skuId"]) {
       return;
@@ -506,6 +605,7 @@ export default class ProductDetail extends Vue {
     this.goodsId = this.$route.query.goodsId;
     this.getProductDetail();
     console.log("----------------------");
+    this.collection_query();
   }
 }
 </script>
@@ -592,6 +692,10 @@ export default class ProductDetail extends Vue {
   position: absolute;
   bottom: -100%;
   animation: myfirst0001 0.5s;
+}
+
+.collection_color{
+  color:red;
 }
 
 @keyframes myfirst0001 {
