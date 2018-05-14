@@ -39,6 +39,12 @@ import { Action } from "vuex-class";
 import { Toast } from "vant";
 // import { recommendList } from '../../service/getData';
 
+// //MD5加密
+// export const md5Encrypt = (encryptString) => {
+//     let md5 = crypto.createHash('md5').update(encryptString).digest('hex');
+//     return md5;
+// };
+
 @Component({
   components: {},
   mixins: [mixin]
@@ -62,6 +68,8 @@ export default class shopIndex extends Vue {
         loginName: this.loginName,
         password: this.password
       },
+      // md5
+      // require('crypto').createHash('md5').update(this.password).digest('hex')
       res => {
         if (res == null) {
           console.log("网络请求错误！");
@@ -86,20 +94,27 @@ export default class shopIndex extends Vue {
       }
     );
   }
-  gosign(){
+  gosign() {
     this.$router.push("/sign");
   }
-  goforget(){
+  goforget() {
     this.$router.push("/forget");
   }
-  goback(){
+  goback() {
     this.$router.go(-1);
   }
   handlePX(CssName, PxNumber) {
-    return CssName +":" +this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth /750 * PxNumber +"px;";
+    return (
+      CssName +
+      ":" +
+      this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth /
+        750 *
+        PxNumber +
+      "px;"
+    );
   }
-  methods(){
-
+  mounted() {
+    
   }
 }
 </script>
@@ -131,10 +146,10 @@ export default class shopIndex extends Vue {
   background-color: #f4c542;
   border-radius: 8px;
 }
-.login-button-cancel{
-  border-color:#f4c542;
-  color:#f4c542;
-  background-color: #ffffff;  
+.login-button-cancel {
+  border-color: #f4c542;
+  color: #f4c542;
+  background-color: #ffffff;
   border-radius: 8px;
 }
 .login-input {
