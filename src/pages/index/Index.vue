@@ -74,7 +74,7 @@
                       </div>
                       <div style="padding-left:10px;flex:1;" class="textLabel" :style="handlePX('line-height', 48)">
                         <div>
-                          <img src="../../assets/image/新品特价.png"  :style="handlePX('width',92)+handlePX('height',30)"  style="vertical-align: middle;"/>
+                          <img src="../../assets/image/新品特价.png" v-if="goods.isBargain"  :style="handlePX('width',92)+handlePX('height',30)"  style="vertical-align: middle;"/>
                           <span class="textLabel" style="color:#000000;" :style="handlePX('font-size',28)">{{goods.goodsName}}</span>
                         </div>
                         <div class="textLabel"  style="color:#A3A3A3;" :style="handlePX('font-size',28)+handlePX('line-height',44)">{{goods.jingle}}</div>
@@ -98,8 +98,8 @@
                       </div>
                       <div style="margin:5px auto;display:flex;justify-content: center;flex-direction: column;width:-webkit-fill-available;" :style="handlePX('width', 345)">
                         <div>
-                          <img src="../../assets/image/满减.png" :style="handlePX('width',52)+handlePX('height',25)"/>
-                          <img src="../../assets/image/特价.png" :style="handlePX('width',52)+handlePX('height',25)"/>
+                          <img src="../../assets/image/满减.png" v-if="goods.couponList" :style="handlePX('width',52)+handlePX('height',25)"/>
+                          <img src="../../assets/image/特价.png" v-if="goods.isBargain" :style="handlePX('width',52)+handlePX('height',25)"/>
                         </div>
                         <div class="textLabel" :style="handlePX('font-size',28)+handlePX('line-height',40)">{{goods.goodsName}}</div>
                         <div style="color:#E05459" :style="handlePX('font-size',30)+handlePX('line-height',40)">￥{{goods.labelPrice}}</div>
