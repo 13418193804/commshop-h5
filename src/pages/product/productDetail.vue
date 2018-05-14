@@ -59,7 +59,7 @@
 
         <div class="userCommentList" style="background-color:#ffffff;margin-top:10px;">
           <van-cell-group>
-            <van-cell title="用户评价（999+）" is-link value="99%好评" @click="go_comment()"/>
+            <van-cell title="用户评价" is-link value="99%好评" @click="go_comment()"/>
           </van-cell-group>
           <div  v-for="(item,index) in detatil.commentList" :key="index">
             <div class="userComment" style="padding:10px 15px;">
@@ -136,8 +136,8 @@
   <van-goods-action-mini-btn icon="chat" text="客服" @click="onClickMiniBtn_service" style="display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 10px;"/>
   <van-goods-action-mini-btn icon="cart" text="购物车" @click="onClickMiniBtn_cart" style="display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 10px;"/>
   <van-goods-action-mini-btn icon="like" text="收藏" @click="onClickMiniBtn_collection" :class="{collection_color:isCollection}" style="display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 10px;"/>
-  <van-goods-action-big-btn text="加入购物车" @click="changeModel('cart')" style="flex:1;"/>
-  <van-goods-action-big-btn text="立即购买" @click="changeModel('pay')" primary style="flex:1;"/>
+  <van-goods-action-big-btn text="立即购买" @click="changeModel('pay')" style="flex:1;"/>
+  <van-goods-action-big-btn text="加入购物车" @click="changeModel('cart')" primary style="flex:1;"/>
 </van-goods-action>
 
 
@@ -188,8 +188,14 @@
 
     <van-stepper v-model="num" style="    float: right;"/>
     </div>
-  <div style='display:flex;justify-content: center;align-items: center;width:100%;color:#fff;background-color:rgb(229, 28, 35);' @click='addCar'>
-      <div style='margin:10px'>确定</div>
+  <div>
+      <van-goods-action class="vangoods" style="z-index:90;background-color: #ffffff;">
+        <van-goods-action-mini-btn icon="chat" text="客服" @click="onClickMiniBtn_service" style="display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 10px;"/>
+        <van-goods-action-mini-btn icon="cart" text="购物车" @click="onClickMiniBtn_cart" style="display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 10px;"/>
+        <van-goods-action-mini-btn icon="like" text="收藏" @click="onClickMiniBtn_collection" :class="{collection_color:isCollection}" style="display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 10px;"/>
+        <van-goods-action-big-btn text="立即购买" @click="addCar()" style="flex:1;"/>
+        <van-goods-action-big-btn text="加入购物车" @click="addCar()" primary style="flex:1;"/>
+      </van-goods-action>
     </div>
       </div>
 </div>
@@ -368,6 +374,7 @@ export default class ProductDetail extends Vue {
   }
   addCar() {
     if (!this.skuItem["skuId"]) {
+      Toast('请选择规格属性');
       return;
     }
     if (this.pageType === "pay") {
@@ -521,6 +528,7 @@ export default class ProductDetail extends Vue {
           return;
         }
         Toast('加入成功')
+        this.keepModel=false;
         console.log("加入购物车", res.data);
       }
     );
@@ -696,6 +704,10 @@ export default class ProductDetail extends Vue {
 
 .collection_color{
   color:red;
+}
+
+.vangoods{
+  position: inherit;
 }
 
 @keyframes myfirst0001 {
