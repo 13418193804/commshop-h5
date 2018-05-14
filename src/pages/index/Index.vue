@@ -141,11 +141,12 @@
         </div>
 
 
-<div style="height:50px;"></div> 
 
 
 
   </van-tab>
+<div style="height:50px;"></div> 
+  
 </van-tabs>
 <div style="position: absolute;top: 0;right: 0;height:44px;line-height:44px;padding:0 5px;">
   <i class="iconfont icon-icon-arrow-bottom2" @click="toggle()"></i>

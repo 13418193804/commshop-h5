@@ -112,23 +112,19 @@
  </li>
 
       </div>
-   
-<div style="    display: flex;
+
+
+  </van-tab>
+ <div style="    display: flex;
     align-items: center;
     justify-content: center;font-size:14px;padding:15px;">
-
     <div v-if="orderList[returnKey()].loading">加载中...</div>
     <div v-else>-</div>
   
 </div>
 
-
-   
-  </van-tab>
         </ul>
-  
 </van-tabs>
-
 
   </div>
 </template>
