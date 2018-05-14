@@ -70,8 +70,8 @@ export default class update_info extends Vue {
         token: this.$store.getters[
             Vue.prototype.MutationTreeType.TOKEN_INFO
         ].token,
-        oldPassword:this.oldPassword,
-        newPassword:this.newPassword,
+        oldPassword:require('crypto').createHash('md5').update(this.oldPassword).digest('hex'),
+        newPassword:require('crypto').createHash('md5').update(this.newPassword).digest('hex'),
       },
       res => {
         if (res == null) {
