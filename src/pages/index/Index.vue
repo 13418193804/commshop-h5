@@ -131,8 +131,6 @@
 
 <div style="height:10px; background-color:#f7f7f7;"></div>
 
-
-
             </div>
 
 
@@ -231,12 +229,12 @@ export default class shopIndex extends Vue {
 
           console.log(this.indexList[active]);
           this.indexList.push();
-          if(this.indexList[active].catId){
-            console.log('222',this.indexList[active].catId);
+          if (this.indexList[active].catId) {
+            console.log("222", this.indexList[active].catId);
             Vue.prototype.$reqFormPost(
               "/user/goods/list",
               {
-                catId:this.indexList[active].catId
+                catId: this.indexList[active].catId
               },
               res => {
                 if (res == null) {
@@ -246,9 +244,13 @@ export default class shopIndex extends Vue {
                 if (res.data.status != 200) {
                   Toast(res.data.message);
                   return;
-                }                           
-                this.indexList[active].children.push({'componentType':"COMPONENT_TYPE_GOODS_TAG",'columnNum':1,'items':res.data.data.goodsList});      
-                this.indexList.push();   
+                }
+                this.indexList[active].children.push({
+                  componentType: "COMPONENT_TYPE_GOODS_TAG",
+                  columnNum: 1,
+                  items: res.data.data.goodsList
+                });
+                this.indexList.push();
               }
             );
           }
@@ -256,10 +258,10 @@ export default class shopIndex extends Vue {
       );
     }
   }
-  toggle(){
+  toggle() {
     this.isShow = !this.isShow;
   }
-  goProductDetail(goodsId){
+  goProductDetail(goodsId) {
     this.$router.push({
       path: "/productdetail",
       query: {
@@ -268,9 +270,9 @@ export default class shopIndex extends Vue {
     });
   }
 
-  goActionType(actionType,actionValue){
-    if(actionType=='ACTION_TYPE_GOODSID'){
-      var goodsId= actionValue
+  goActionType(actionType, actionValue) {
+    if (actionType == "ACTION_TYPE_GOODSID") {
+      var goodsId = actionValue;
       this.$router.push({
         path: "/productdetail",
         query: {
@@ -278,39 +280,39 @@ export default class shopIndex extends Vue {
         }
       });
     }
-    if(actionType=='ACTION_TYPE_TAGID'){
+    if (actionType == "ACTION_TYPE_TAGID") {
       Vue.prototype.$reqFormPost("/user/cat/querytree", {}, res => {
-      if (res == null) {
-        console.log("网络请求错误！");
-        return;
-      }
-      if (res.data.status != 200) {
-        console.log(
-          "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
-        );
-        return;
-      }
-      for(var i=0;i < res.data.data.children.length;i++){
-        for(var j=0;j < res.data.data.children[i].children.length;j++){
-          if(res.data.data.children[i].children[j].catId == actionValue){
-            var selectIndex = j.toString();
-            this.$router.push({
-              path: "/productlist",
-              query:{
-                catId:res.data.data.children[i].children[j].catId,
-                parentCatId:res.data.data.children[i].children[j].parentId,
-                selectIndex:selectIndex,
-                title: res.data.data.children[i].label,
+        if (res == null) {
+          console.log("网络请求错误！");
+          return;
+        }
+        if (res.data.status != 200) {
+          console.log(
+            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+          );
+          return;
+        }
+        for (var i = 0; i < res.data.data.children.length; i++) {
+          for (var j = 0; j < res.data.data.children[i].children.length; j++) {
+            if (res.data.data.children[i].children[j].catId == actionValue) {
+              var selectIndex = j.toString();
+              this.$router.push({
+                path: "/productlist",
+                query: {
+                  catId: res.data.data.children[i].children[j].catId,
+                  parentCatId: res.data.data.children[i].children[j].parentId,
+                  selectIndex: selectIndex,
+                  title: res.data.data.children[i].label
                 }
-            });
-            return
+              });
+              return;
+            }
           }
         }
-      }
-    });
+      });
     }
-    if(actionType=='ACTION_TYPE_URL'){
-      return;      
+    if (actionType == "ACTION_TYPE_URL") {
+      return;
     }
     return;
   }
@@ -462,7 +464,6 @@ export default class shopIndex extends Vue {
   text-align: center;
 }
 .goodsBody {
-
   width: -webkit-fill-available;
   display: flex;
   flex-wrap: wrap;
@@ -476,44 +477,43 @@ export default class shopIndex extends Vue {
   z-index: 11111;
   width: 100%;
   background-color: #ffffff;
-  .ClassificationTitle{
+  .ClassificationTitle {
     display: flex;
     justify-content: space-between;
     padding: 0 15px;
-    height:40px;
-    span{
-      line-height:40px;
+    height: 40px;
+    span {
+      line-height: 40px;
     }
   }
-  .ClassificationName{
-    padding:0 15px 30px;
+  .ClassificationName {
+    padding: 0 15px 30px;
     display: flex;
     flex-flow: row wrap;
     align-content: flex-start;
-    div{
-      padding:0 8px;
+    div {
+      padding: 0 8px;
       flex: 0 0 25%;
-      div{
+      div {
         margin-top: 17px;
-        height:30px;
+        height: 30px;
         line-height: 28px;
         text-align: center;
         box-sizing: border-box;
-        border:1px solid #9f9f9f;
-        color:#9f9f9f;
+        border: 1px solid #9f9f9f;
+        color: #9f9f9f;
         border-radius: 40%;
         overflow: hidden;
       }
-      .ClassificationActive{
-        border:1px solid #ffc630;
-        color:#ffc630;
+      .ClassificationActive {
+        border: 1px solid #ffc630;
+        color: #ffc630;
       }
     }
   }
 }
 </style>
 <style>
-
 .van-tabs--line .van-tabs__wrap {
   margin-right: 36px;
 }
@@ -530,15 +530,15 @@ export default class shopIndex extends Vue {
   width: 15px;
   background-color: #ffc630;
 }
-.van-tabs__wrap{
+.van-tabs__wrap {
   overflow-x: auto;
 }
-.searchbox .van-search__input-wrap{
-  width:100%;
+.searchbox .van-search__input-wrap {
+  width: 100%;
 }
-.searchbox .van-search__input-wrap input{
-  width:100%;
-  border-radius:30px;
+.searchbox .van-search__input-wrap input {
+  width: 100%;
+  border-radius: 30px;
   border: 0;
   background-color: #f0f0f0;
   padding-left: 30px;

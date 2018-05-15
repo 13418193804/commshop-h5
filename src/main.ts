@@ -13,18 +13,19 @@ import MutationTreeType from './store/mutation-types';
 import MintUI from 'mint-ui';
 
 Vue.use(MutationTreeType);
-Vue.use(MintUI);
-Vue.use(Vuex);
-Vue.use(Api);
-Vue.use(Vant);
-Vue.config.productionTip = false;
-
 Vue.use(VueLazyload, {
     preLoad: 1.3,
     error: require('./assets/default_pic.jpg'),
     loading: require('./assets/default_pic.jpg'),
     attempt: 1
 });
+Vue.use(MintUI);
+Vue.use(Vuex);
+Vue.use(Api);
+Vue.use(Vant);
+Vue.config.productionTip = false;
+
+
 const init = new Vue({
     router,
     store,
