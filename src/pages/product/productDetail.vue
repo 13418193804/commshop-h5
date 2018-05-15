@@ -57,7 +57,7 @@
           </van-cell-group>
         </div>
 
-        <div class="userCommentList" style="background-color:#ffffff;margin-top:10px;">
+        <div class="userCommentList" id="detail" style="background-color:#ffffff;margin-top:10px;">
           <van-cell-group>
             <van-cell title="用户评价" is-link value="99%好评" @click="go_comment()"/>
           </van-cell-group>
@@ -77,7 +77,7 @@
           </div>
         </div>
 
-        <div class="recommend" style="background-color:#ffffff;margin-top:10px;z-index:2;">
+        <div class="recommend"  style="background-color:#ffffff;margin-top:10px;z-index:2;">
           <van-tabs @click="selecttablist">
             <van-tab v-for="(item,index) in tablist" :title="item" :key="index" >
               <div style="display:flex;overflow: auto;" v-if="index==tabindex">
