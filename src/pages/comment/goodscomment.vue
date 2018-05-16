@@ -113,7 +113,9 @@ export default class goodscomment extends Vue {
             this.getstars(0);            
           }
           total.toFixed(2)
-          this.praise = total * 100;
+          if(res.data.data.commentList.length>0){
+            this.praise = total * 100;
+          }
         }
         }
       ); 

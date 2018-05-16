@@ -569,13 +569,15 @@ export default class ProductDetail extends Vue {
         // 评论数量
         this.commentnum=res.data.data.commentList.length;
         // 好评计算
-        let total = 0;
+        if(res.data.data.commentList.length>0){
+          let total = 0;
           for (let i = 0; i < res.data.data.commentList.length; i++) {
             total = res.data.data.commentList[i].star + total
           }
-        total=total/(res.data.data.commentList.length*5);
-        total.toFixed(2)
-        this.praise = total * 100;
+          total=total/(res.data.data.commentList.length*5);
+          total.toFixed(2)
+          this.praise = total * 100;
+        }  
 
         this.tabgoodslist = res.data.data.likeList;
         this.likeList = res.data.data.likeList;
