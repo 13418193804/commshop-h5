@@ -32,14 +32,21 @@
   
         <div class="functionList" style="margin-top:10px;">
           <van-cell-group>
-            <van-cell title="请选择规格数量" is-link />
-            <van-cell title="限制：特价商品不可与优惠卷叠加使用"/>
-            <van-cell is-link>
+            <van-cell title="请选择规格数量" is-link @click="changeModel()">
+              <template slot="title">
+                <span v-if="chosensku.length>0" class="van-cell-text">已选择:
+                  <span v-for="(item,index) in chosensku" :key="index"><span v-if="index!==0">，</span>{{item}}</span>
+                </span>
+                <span v-else class="van-cell-text">请选择规格数量</span>
+              </template>
+            </van-cell>
+            <!-- <van-cell title="限制：特价商品不可与优惠卷叠加使用"/> -->
+            <!-- <van-cell is-link>
               <template slot="title">
                 <span class="van-cell-text">领卷：</span>
                 <img v-lazy="'1'" :style="handlePX('width',112)+handlePX('height',26)"/>
               </template>
-            </van-cell>
+            </van-cell> -->
             <van-cell>
               <template slot="title">
                 <span class="van-cell-text">备注：</span>
@@ -59,7 +66,10 @@
 
         <div class="userCommentList" id="detail" style="background-color:#ffffff;margin-top:10px;">
           <van-cell-group>
-            <van-cell title="用户评价" is-link @click="go_comment()">
+            <van-cell is-link @click="go_comment()">
+              <template slot="title">
+                <span class="van-cell-text">用户评价({{commentnum}})</span>
+              </template>
               <template>
                 <span>{{praise}}%好评</span>
               </template>
@@ -79,6 +89,7 @@
               </div>
             </div>
           </div>
+          <div v-if="detatil.commentList.length==0" style="text-align: center;padding: 15px;">暂无评论</div>
         </div>
 
         <div class="recommend"  style="background-color:#ffffff;margin-top:10px;z-index:2;">
@@ -140,8 +151,8 @@
   <van-goods-action-mini-btn icon="chat" text="客服" @click="onClickMiniBtn_service" style="display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 10px;"/>
   <van-goods-action-mini-btn icon="cart" text="购物车" @click="onClickMiniBtn_cart" style="display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 10px;"/>
   <van-goods-action-mini-btn icon="like" text="收藏" @click="onClickMiniBtn_collection" :class="{collection_color:isCollection}" style="display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 10px;"/>
-  <van-goods-action-big-btn text="立即购买" @click="changeModel('pay')" style="flex:1;"/>
-  <van-goods-action-big-btn text="加入购物车" @click="changeModel('cart')" primary style="flex:1;"/>
+  <van-goods-action-big-btn text="立即购买" @click="changeModel()" style="flex:1;"/>
+  <van-goods-action-big-btn text="加入购物车" @click="changeModel()" primary style="flex:1;"/>
 </van-goods-action>
 
 
@@ -198,7 +209,7 @@
         <van-goods-action-mini-btn icon="cart" text="购物车" @click="onClickMiniBtn_cart" style="display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 10px;"/>
         <van-goods-action-mini-btn icon="like" text="收藏" @click="onClickMiniBtn_collection" :class="{collection_color:isCollection}" style="display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 10px;"/>
         <van-goods-action-big-btn text="立即购买" @click="addCar()" style="flex:1;"/>
-        <van-goods-action-big-btn text="加入购物车" @click="addCar()" primary style="flex:1;"/>
+        <van-goods-action-big-btn text="加入购物车" @click="addCart()" primary style="flex:1;"/>
       </van-goods-action>
     </div>
       </div>
@@ -275,11 +286,11 @@ export default class ProductDetail extends Vue {
     storageNum: 0
     // weight
   };
-  pageType: string = "add";
   num = 1;
   keepModel = false;
   skuattr = [];
   chosenList = [];
+  chosensku=[];
   skuItem = {};
   go_comment(){
     this.$router.push({
@@ -383,7 +394,6 @@ export default class ProductDetail extends Vue {
       Toast('请选择规格属性');
       return;
     }
-    if (this.pageType === "pay") {
       Vue.prototype.$reqFormPost(
         "/prepare/order/direct",
         {
@@ -419,14 +429,9 @@ export default class ProductDetail extends Vue {
           console.log("预支付订单ID", res.data.data.prepareId);
         }
       );
-    }else{
-      this.addCart()
-    }
-    console.log(this.pageType);
     // console.log(this.skuItem.skuId);
   }
-  changeModel(type) {
-    type ? (this.pageType = type) : "";
+  changeModel() {
     this.keepModel = !this.keepModel;
   }
 
@@ -440,8 +445,11 @@ export default class ProductDetail extends Vue {
       this.chosenList[indextop] === main.skuValueId
     ) {
       this.chosenList[indextop] = "";
+      this.chosensku[indextop] = "";
+      this.chosensku.splice(0,this.chosensku.length);
     } else {
       this.chosenList[indextop] = main.skuValueId;
+      this.chosensku[indextop] = main.skuValueName;      
     }
 
     this.chosenList = this.chosenList;
@@ -509,9 +517,14 @@ export default class ProductDetail extends Vue {
       }
     }
     this.chosenList.push();
+    this.chosensku.push();
   }
  
   addCart() {
+    if (!this.skuItem["skuId"]) {
+      Toast('请选择规格属性');
+      return;
+    }
     Vue.prototype.$reqFormPost(
       "/shop/cart/add",
       {
