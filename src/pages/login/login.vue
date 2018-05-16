@@ -66,7 +66,7 @@ export default class shopIndex extends Vue {
       "/auth/user/login",
       {
         loginName: this.loginName,
-        password: require('crypto').createHash('md5').update(this.password).digest('hex')
+        password: require('crypto').createHash('md5').update(this.loginName+this.password).digest('hex')
       },
       res => {
         if (res == null) {
