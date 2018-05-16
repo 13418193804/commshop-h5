@@ -103,7 +103,7 @@
                           <img src="../../assets/image/特价.png" v-if="goods.isBargain" :style="handlePX('width',52)+handlePX('height',25)"/>
                         </div>
                         <div class="textLabel" :style="handlePX('font-size',28)+handlePX('line-height',40)">{{goods.goodsName}}</div>
-                        <div style="color:#E05459" :style="handlePX('font-size',30)+handlePX('line-height',40)">￥{{goods.labelPrice}}</div>
+                        <div style="color:#E05459" :style="handlePX('font-size',30)+handlePX('line-height',40)">￥{{goods.marketPrice}}</div>
                       </div>
                     </div>
                   </div>
@@ -124,7 +124,7 @@
                           <img src="../../assets/image/特价.png" :style="handlePX('width',52)+handlePX('height',25)"/>
                         </div>
                         <div class="textLabel" :style="handlePX('font-size',28)+handlePX('line-height',40)">{{goods.goodsName}}</div>
-                        <div style="color:#E05459" :style="handlePX('font-size',30)+handlePX('line-height',40)">￥{{goods.labelPrice}}</div>
+                        <div style="color:#E05459" :style="handlePX('font-size',30)+handlePX('line-height',40)">￥{{goods.marketPrice}}</div>
                       </div>
                     </div>
                   </div>
@@ -540,7 +540,7 @@ export default class shopIndex extends Vue {
 }
 </style>
 <style>
-.van-tabs--line .van-tabs__wrap {
+.index_tabs .van-tabs__wrap {
   margin-right: 36px;
 }
 .index_tabs .van-swipe__indicators {
