@@ -20,6 +20,9 @@ const mutations: MutationTree<any> = {
     },
     [MutationTreeType.PREPAREID](state, prepareId) {
         state.prepareId = prepareId;
+    },
+    [MutationTreeType.labelActive](state, labelActive) {
+        state.labelActive = labelActive;
     }
 };
 export default mutations;

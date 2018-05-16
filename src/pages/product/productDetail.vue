@@ -235,7 +235,8 @@ import { Cell, CellGroup } from 'vant';
 //     }
 export default class ProductDetail extends Vue {
   @Action("setPrepareId") setPrepareId;
-  
+    @Action("setlabelActive") setlabelActive;
+
   tablist=['大家还看了','新品推荐'];
   tabgoodslist=[];
   likeList=[];
@@ -610,6 +611,12 @@ export default class ProductDetail extends Vue {
   }
   mounted() {
     console.log(this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]);
+      if(this.$route.query.availWidth&&this.$route.query.availHeight){
+        this.setlabelActive({
+          availWidth: this.$route.query.availWidth,
+        availHeight: this.$route.query.availHeight
+        })
+      }
     this.goodsId = this.$route.query.goodsId;
     this.getProductDetail();
     console.log("----------------------");

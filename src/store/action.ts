@@ -25,6 +25,10 @@ const setAddressItem: Action<any, any> = ({ commit }, obj) => {
 const setPrepareId: Action<any, any> = ({ commit }, obj) => {
     commit(MutationTreeType.PREPAREID, obj);
 };
+const setlabelActive: Action<any, any> = ({ commit }, obj) => {
+    commit(MutationTreeType.labelActive, obj);
+};
+
 
 
 // get 对外抛出  @Active 取值
@@ -35,6 +39,7 @@ const actions: ActionTree<any, any> = {
     setLoginVerifyCode,
     setAddressItem,
     setPrepareId,
+    setlabelActive,
 
 };
 export default actions;
