@@ -22,9 +22,9 @@
 <van-tabs :active="active" style="flex:1" @click="changeTab" class="index_tabs" >
 
 
-  <van-tab v-for="(item,index) in indexList" :title="item.pageName" :key="index">
-
-        <div v-for="(items,childrenIndex) in item.children" :key="childrenIndex">
+  <van-tab v-for="(item,index) in indexList" :title="item.pageName" :key="index" >
+<div v-if="active == index">
+        <div v-for="(items,childrenIndex) in item.children" :key="childrenIndex" >
 
             <!-- actionType -->
 
@@ -139,6 +139,7 @@
         </div>
 
 
+        </div>
 
 
 
@@ -227,10 +228,9 @@ export default class shopIndex extends Vue {
             children: res.data.data
           });
 
-          console.log(this.indexList[active]);
           this.indexList.push();
           if (this.indexList[active].catId) {
-            console.log("222", this.indexList[active].catId);
+            
             Vue.prototype.$reqFormPost(
               "/user/goods/list",
               {
@@ -250,9 +250,13 @@ export default class shopIndex extends Vue {
                   columnNum: 1,
                   items: res.data.data.goodsList
                 });
+
+                
                 this.indexList.push();
+
               }
             );
+
           }
         }
       );

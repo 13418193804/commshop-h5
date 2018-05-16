@@ -24,8 +24,6 @@ Vue.use(Vuex);
 Vue.use(Api);
 Vue.use(Vant);
 Vue.config.productionTip = false;
-
-
 const init = new Vue({
     router,
     store,

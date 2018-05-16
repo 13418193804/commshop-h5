@@ -42,7 +42,7 @@
 
 <div style="height:99px"></div>
 
-<van-submit-bar  :price="totalMoney" button-text="结算" @submit="onSubmit" style="margin-bottom:50px;">
+<van-submit-bar  :price="totalPrice()" button-text="结算" @submit="onSubmit" style="margin-bottom:50px;">
   <van-checkbox v-if="cartList.length>0" v-model="checked" @change="allSelect">全选</van-checkbox>
 </van-submit-bar>
 
@@ -109,8 +109,7 @@ export default class Cart extends Vue {
     }
     totalMoney=totalMoney*100;
     totalMoney.toString();
-    this.totalMoney = totalMoney;
-    console.log('totalMoney',totalMoney)
+   return totalMoney;
   }
   checkchange(){
     if(this.result.length == this.cartList.length){
@@ -118,7 +117,7 @@ export default class Cart extends Vue {
     }else{
       this.checked = false;
     }
-    this.totalPrice();
+ 
   }
   onSubmit() {
     if (this.result.length <= 0) {

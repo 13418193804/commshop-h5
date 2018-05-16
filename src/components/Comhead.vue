@@ -38,7 +38,7 @@
         </span>
       </div>
     </div>
-  <div class="baseLine" v-if="!lineShow"></div>
+  <div class="baseLine" v-if="!lineShow" id="top"></div>
   </div>
   <!-- end container -->
 </template>
@@ -46,60 +46,58 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import { Prop } from 'vue-property-decorator';
+import { Prop } from "vue-property-decorator";
 
 @Component
 export default class Comhead extends Vue {
-
-
-
-    @Prop({ required: false })
-    isRightIcon: any;
-    @Prop({ required: false })
-    title: any;
-    @Prop({ required: false })
-    isLeftIcon: any;
-    @Prop({ required: false })
-    rightTitle: any;
-    @Prop({ required: false })
-    leftTitle: any;
-    @Prop({ required: false })
-    leftIconName: any;
-    @Prop({ required: false })
-    rightIconName: any;
-    @Prop({ required: false })
-    lineShow: any;
-    @Prop({ required: false })
-    skin: any;
-     @Prop({ required: false })
-    contextIndex: any;
+  @Prop({ required: false })
+  isRightIcon: any;
+  @Prop({ required: false })
+  title: any;
+  @Prop({ required: false })
+  isLeftIcon: any;
+  @Prop({ required: false })
+  rightTitle: any;
+  @Prop({ required: false })
+  leftTitle: any;
+  @Prop({ required: false })
+  leftIconName: any;
+  @Prop({ required: false })
+  rightIconName: any;
+  @Prop({ required: false })
+  lineShow: any;
+  @Prop({ required: false })
+  skin: any;
+  @Prop({ required: false })
+  contextIndex: any;
 
   type = "H5";
   leftScale = "1.5";
-  textindex=1;
+  textindex = 1;
   rightClick() {
     this.$emit("rightClick");
   }
   leftClick() {
-    
-    if(this.isLeftIcon == 'icon-zuo'){
+    if (this.isLeftIcon == "icon-zuo") {
       this.$router.go(-1);
-      return
+      return;
     }
     this.$emit("leftClick");
   }
-  changecontextIndex(contextIndex){
-    if(contextIndex==1){
-      this.textindex=1;
+  changecontextIndex(contextIndex) {
+    if (contextIndex == 1) {
+      // location.hash="#top";
+      this.textindex = 1;
     }
-    if(contextIndex==2){
-      this.textindex=2;
+    if (contextIndex == 2) {
+      // location.hash="#detail";
+      this.textindex = 2;
     }
   }
   getBgColor() {}
   mounted() {
-    console.log(this.title)
-    console.log(this.isRightIcon)
+    console.log(this.title);
+    console.log(this.isRightIcon);
   }
 }
 </script>
@@ -109,7 +107,7 @@ export default class Comhead extends Vue {
   border-bottom: solid 1px #e5e5e5;
   justify-content: flex-end;
   height: 52px;
-  background-color: #FAFAFA;
+  background-color: #fafafa;
   display: flex;
   align-items: center;
   position: fixed;
@@ -127,13 +125,13 @@ export default class Comhead extends Vue {
   margin-top: 0px;
   color: white;
 }
-.bodyContent{
-  border:1px #d2d2d2 solid;
+.bodyContent {
+  border: 1px #d2d2d2 solid;
   display: flex;
-    border-radius: 6px;
-    font-size: 15px;
+  border-radius: 6px;
+  font-size: 15px;
 }
-.checkbody{
-  background-color:#EBEBEB;
+.checkbody {
+  background-color: #ebebeb;
 }
 </style>

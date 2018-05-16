@@ -34,11 +34,12 @@
 <div class="order-content" >
 <div style="text-align:center;padding:10px 0;width:20%;" v-for="(n,index) in orderList" :key="index" @click="getOrderList(n.status)">
     <div>
-      <img src="../../assets/image/未付款.png" alt="" style="width:40px;height:40px;" v-if="index == 0">
-      <img src="../../assets/image/未发货.png" alt="" style="width:40px;height:40px;" v-if="index == 1">
-      <img src="../../assets/image/待收货.png" alt="" style="width:40px;height:40px;" v-if="index == 2">
-      <img src="../../assets/image/待评价.png" alt="" style="width:40px;height:40px;" v-if="index ==3">
-      <img src="../../assets/image/退换售后.png" alt="" style="width:40px;height:40px;" v-if="index == 4">
+    
+      <img src="../../assets/image/未付款.png" alt="" class="orderIcon" v-if="index == 0">
+      <img src="../../assets/image/未发货.png" alt="" class="orderIcon" v-if="index == 1">
+      <img src="../../assets/image/待收货.png" alt="" class="orderIcon" v-if="index == 2">
+      <img src="../../assets/image/待评价.png" alt="" class="orderIcon" v-if="index ==3">
+      <img src="../../assets/image/退换售后.png" alt="" class="orderIcon" v-if="index == 4">
       </div>
     
     <div>{{n.name}}</div>
@@ -59,10 +60,10 @@
 <div class="order-content" style="border-bottom:solid 1px #e5e5e5;">
 <div style="text-align:center;padding:10px;width:25%;" v-for="(n,index) in toolsList" :key="index" @click="tools(n)">
     <div>
-    <img src="../../assets/image/我的收藏.png" alt="" style="width:30px;height:30px;" v-if="index == 0">
-      <img src="../../assets/image/地址管理.png" alt="" style="width:30px;height:30px;" v-if="index == 1">
-      <img src="../../assets/image/优惠卷.png" alt="" style="width:30px;height:30px;" v-if="index == 2">
-      <img src="../../assets/image/我的成员.png" alt="" style="width:30px;height:30px;" v-if="index ==3">
+    <img src="../../assets/image/我的收藏.png" alt="" class="moreIcon" v-if="index == 0">
+      <img src="../../assets/image/地址管理.png" alt="" class="moreIcon" v-if="index == 1">
+      <img src="../../assets/image/优惠卷.png" alt="" class="moreIcon" v-if="index == 2">
+      <img src="../../assets/image/我的成员.png" alt="" class="moreIcon" v-if="index ==3">
       </div>
     <div>{{n.name}}</div>
 </div>
@@ -73,7 +74,7 @@
 
 <div style="text-align:center;padding:10px;width:25%;" @click="myreward()">
     <div>
-      <img src="../../assets/image/我的奖励.png" alt="" style="width:30px;height:30px;" >
+      <img src="../../assets/image/我的奖励.png" alt="" class="moreIcon" >
 </div>
     <div>我的奖励</div>
 </div>
@@ -81,7 +82,7 @@
 
 <div style="text-align:center;padding:10px;width:25%;" @click="mybankcard()">
     <div>
-      <img src="../../assets/image/我的银行卡.png" alt="" style="width:30px;height:30px;" >
+      <img src="../../assets/image/我的银行卡.png" alt="" class="moreIcon" >
 </div>
     <div>我的银行卡</div>
 </div>
@@ -89,7 +90,7 @@
 
 <div style="text-align:center;padding:10px;width:25%;" >
     <div>
-      <img src="../../assets/image/联系客服.png" alt="" style="width:30px;height:30px;" >
+      <img src="../../assets/image/联系客服.png" alt="" class="moreIcon" >
 </div>
     <div>联系客服</div>
 </div>
@@ -121,7 +122,7 @@ export default class User extends Vue {
   // ORDER_WAIT_REVIEW
   // ORDER_END_GOODS
   // ORDER_FINISH
-  userIcon="";
+  userIcon = "";
   orderList = [
     {
       name: "待付款",
@@ -175,16 +176,14 @@ export default class User extends Vue {
       }
     });
   }
-  queryuserinfo(){
+  queryuserinfo() {
     Vue.prototype.$reqFormPost(
       "/user/query",
       {
-        userId: this.$store.getters[
-          Vue.prototype.MutationTreeType.TOKEN_INFO
-        ].userId,
-        token: this.$store.getters[
-          Vue.prototype.MutationTreeType.TOKEN_INFO
-        ].token,
+        userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .userId,
+        token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .token
       },
       res => {
         if (res == null) {
@@ -197,47 +196,47 @@ export default class User extends Vue {
           );
           return;
         }
-        
+
         this.userIcon = res.data.data.userIcon;
-        console.log('userIcon',res.data.data.userIcon);
+        console.log("userIcon", res.data.data.userIcon);
       }
     );
   }
   tools(n) {
-    if (n.name == '我的收藏') {
+    if (n.name == "我的收藏") {
       this.$router.push({ name: "collection" });
     }
-    if (n.name == '地址管理') {
+    if (n.name == "地址管理") {
       this.$router.push({ name: "addresslist" });
     }
-    if (n.name == '优惠券') {
+    if (n.name == "优惠券") {
       this.$router.push({ name: "coupon" });
     }
-    if (n.name == '我的成员') {
+    if (n.name == "我的成员") {
       this.$router.push({ name: "my_member" });
     }
   }
-  go_setting(){
+  go_setting() {
     this.$router.push("/setting");
   }
-  go_essential(){
-    this.$router.push("/essential_information");    
+  go_essential() {
+    this.$router.push("/essential_information");
   }
-  mybankcard(){ 
+  mybankcard() {
     this.$router.push("/my_bankcard");
   }
-  myreward(){
+  myreward() {
     this.$router.push("/my_reward");
   }
   mounted() {
     this.setTabIndex(3);
-    if(this.$store.getters[
-          Vue.prototype.MutationTreeType.TOKEN_INFO
-        ].userId != '' && this.$store.getters[
-          Vue.prototype.MutationTreeType.TOKEN_INFO
-        ].token!= ''){
-    this.queryuserinfo();
-        }
+    if (
+      this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].userId !=
+        "" &&
+      this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].token != ""
+    ) {
+      this.queryuserinfo();
+    }
     console.log("个人中心加载");
   }
 }
@@ -246,7 +245,7 @@ export default class User extends Vue {
 <style lang="scss" scoped>
 @import "../../style/utils.scss";
 .user-background {
-  background-image: url('../../assets/image/顶部底图.png') ;
+  background-image: url("../../assets/image/顶部底图.png");
   background-size: 100% 101%;
   width: 100%;
   height: 30vh;
@@ -265,8 +264,8 @@ export default class User extends Vue {
   width: -webkit-fill-available;
 }
 .orderTitle {
-  margin-left:10px;
-  
+  margin-left: 10px;
+
   display: flex;
   border-bottom: solid 1px #e5e5e5;
   align-items: center;
@@ -277,9 +276,17 @@ export default class User extends Vue {
   font-size: 14px;
 }
 .order-content {
-  margin-left:10px;
+  margin-left: 10px;
   display: flex;
   justify-content: flex-start;
   font-size: 14px;
+}
+.orderIcon {
+  width: 30px;
+  height: 30px;
+}
+.moreIcon {
+  width: 25px;
+  height: 25px;
 }
 </style>
