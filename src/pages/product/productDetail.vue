@@ -93,7 +93,7 @@
                         <img src="../../assets/image/特价.png" :style="handlePX('width',52)+handlePX('height',25)"/>
                       </div>
                       <div class="textLabel" :style="handlePX('font-size',28)+handlePX('line-height',40)">{{items.goodsName}}</div>
-                      <div style="color:#E05459" :style="handlePX('font-size',30)+handlePX('line-height',40)">￥{{items.labelPrice}}</div>
+                      <div style="color:#E05459" :style="handlePX('font-size',30)+handlePX('line-height',40)">￥{{items.marketPrice}}</div>
                     </div>
                 </div>
               </div>

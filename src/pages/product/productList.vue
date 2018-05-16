@@ -19,7 +19,7 @@
 
 
       <van-row  >
-        <van-col span="12" v-for="(item,goodsListindex) in goodsList">
+        <van-col span="12" v-for="(item,goodsListindex) in goodsList" :key="goodsListindex">
           <div class="bodyItem" :style="handlePX('margin-bottom',50)" style="display:flex;justify-content:center;" @click="goProductDetail(item.goodsId)">
           <div style="overflow: hidden;">
             <div style="border: 1px #e5e5e5 solid;box-sizing: border-box;display:flex;align-items: center;justify-content:center;overflow:hidden;position:relative;margin:5px auto;" :style="handlePX('height', 410)+handlePX('width', 345)">
