@@ -160,8 +160,8 @@
   <source src="http://www.w3school.com.cn/i/movie.mp4" type="video/mp4" />
 Your browser does not support the video tag.
 </video> -->
-<div class="topBigshit"></div> 
-<div class="bottomBigshit"></div> 
+<div class="topBigshit" v-if="$route.query.active"></div> 
+<div class="bottomBigshit" v-if="$route.query.active"></div> 
 
   </div>
 </template>
