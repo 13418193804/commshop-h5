@@ -20,11 +20,11 @@
 <span class="labelPrice" style="margin:0 10px;font-size:14px;">原价:{{detatil.labelPrice}}</span>
                 </div>
             </div>
-            <div class="comment">
+            <div class="comment" @click="go_comment()">
               <div>用户评价</div>
               <div>
-                <img v-lazy="'1'" :style="handlePX('width',28)+handlePX('height',24)"/>
-                <span>999</span>
+                <img src="../../assets/image/评价.png" :style="handlePX('width',28)+handlePX('height',24)"/>
+                <span>{{commentnum}}</span>
               </div>
               
             </div>
@@ -59,14 +59,18 @@
 
         <div class="userCommentList" id="detail" style="background-color:#ffffff;margin-top:10px;">
           <van-cell-group>
-            <van-cell title="用户评价" is-link value="99%好评" @click="go_comment()"/>
+            <van-cell title="用户评价" is-link @click="go_comment()">
+              <template>
+                <span>{{praise}}%好评</span>
+              </template>
+            </van-cell>
           </van-cell-group>
           <div  v-for="(item,index) in detatil.commentList" :key="index">
             <div class="userComment" style="padding:10px 15px;">
               <div>
-                <img src="../../assets/image/头像.png" :style="handlePX('width',45)+handlePX('height',45)" style="vertical-align:middle;border-radius:50%;"/>
+                <img v-if="item.user.userIcon" v-lazy="item.user.userIcon" :style="handlePX('width',45)+handlePX('height',45)" style="vertical-align:middle;border-radius:50%;"/>                
+                <img v-else src="../../assets/image/头像.png" :style="handlePX('width',45)+handlePX('height',45)" style="vertical-align:middle;border-radius:50%;"/>
                 <span>{{item.user.nickName}}</span>
-                <img v-lazy="'1'" :style="handlePX('width',140)+handlePX('height',25)" style="vertical-align:middle;"/>
               </div>
               <div style="color:#999999;">{{item.createTime}}</div>
               <div>{{item.commentContent}}</div>
@@ -245,6 +249,8 @@ export default class ProductDetail extends Vue {
 
   goodsList = [];
   goodsId = "";
+  commentnum=0;
+  praise=0;  
   detatil = {
     commentList:[],
     //    costPrice
@@ -559,6 +565,17 @@ export default class ProductDetail extends Vue {
           this.skuItem = res.data.data.sku[0];
         }
         this.detatil = res.data.data;
+
+        // 评论数量
+        this.commentnum=res.data.data.commentList.length;
+        // 好评计算
+        let total = 0;
+          for (let i = 0; i < res.data.data.commentList.length; i++) {
+            total = res.data.data.commentList[i].star + total
+          }
+        total=total/(res.data.data.commentList.length*5);
+        total.toFixed(2)
+        this.praise = total * 100;
 
         this.tabgoodslist = res.data.data.likeList;
         this.likeList = res.data.data.likeList;
