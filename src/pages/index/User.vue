@@ -42,11 +42,11 @@
         <img src="../../assets/image/退换售后.png" alt="" class="orderIcon" v-if="index == 4">
         </div>
       <div>{{n.name}}</div>
-      <div v-if="index == 0&&user.waitPayCount!==0" style="position: absolute;top:0;right:0;width:18px;height:18px;color:#ffffff;background-color:#FE4747;border-radius:50px;">{{user.waitPayCount}}</div>
-      <div v-if="index == 1&&user.waitSendCount!==0" style="position: absolute;top:0;right:0;width:18px;height:18px;color:#ffffff;background-color:#FE4747;border-radius:50px;">{{user.waitSendCount}}</div>
-      <div v-if="index == 2&&user.waitRecvgCount!==0" style="position: absolute;top:0;right:0;width:18px;height:18px;color:#ffffff;background-color:#FE4747;border-radius:50px;">{{user.waitRecvgCount}}</div>
-      <div v-if="index == 3&&user.waitReviewCount!==0" style="position: absolute;top:0;right:0;width:18px;height:18px;color:#ffffff;background-color:#FE4747;border-radius:50px;">{{user.waitReviewCount}}</div>
-      <div v-if="index == 4&&user.waitRefundCount!==0" style="position: absolute;top:0;right:0;width:18px;height:18px;color:#ffffff;background-color:#FE4747;border-radius:50px;">{{user.waitRefundCount}}</div>
+      <div v-if="index == 0&&user.waitPayCount!==0&&user.waitPayCount" style="position: absolute;top:0;right:0;width:18px;height:18px;color:#ffffff;background-color:#FE4747;border-radius:50px;">{{user.waitPayCount}}</div>
+      <div v-if="index == 1&&user.waitSendCount!==0&&user.waitSendCount" style="position: absolute;top:0;right:0;width:18px;height:18px;color:#ffffff;background-color:#FE4747;border-radius:50px;">{{user.waitSendCount}}</div>
+      <div v-if="index == 2&&user.waitRecvgCount!==0&&user.waitRecvgCount" style="position: absolute;top:0;right:0;width:18px;height:18px;color:#ffffff;background-color:#FE4747;border-radius:50px;">{{user.waitRecvgCount}}</div>
+      <div v-if="index == 3&&user.waitReviewCount!==0&&user.waitReviewCount" style="position: absolute;top:0;right:0;width:18px;height:18px;color:#ffffff;background-color:#FE4747;border-radius:50px;">{{user.waitReviewCount}}</div>
+      <div v-if="index == 4&&user.waitRefundCount!==0&&user.waitRefundCount" style="position: absolute;top:0;right:0;width:18px;height:18px;color:#ffffff;background-color:#FE4747;border-radius:50px;">{{user.waitRefundCount}}</div>
     </div>
 </div>
 
