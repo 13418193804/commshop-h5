@@ -8,6 +8,7 @@ export const MutationTreeType = {
     ADDRESS_ITEM: "address_item",//验证码时间
     PREPAREID: "PREPAREID",//验证码时间
     SYSTEM: "SYSTEM",//验证码时间
+    labelActive: "labelActive",//验证码时间
     
 
 }

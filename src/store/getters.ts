@@ -59,9 +59,6 @@ export default {
         return state.prepareId;
     },
     [MutationTreeType.SYSTEM](state) {
-        return {
-            availWidth: window.screen.availWidth,
-            availHeight: window.screen.availHeight
-        };
+        return state.labelActive;
     }
 };

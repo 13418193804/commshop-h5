@@ -75,7 +75,9 @@ export default class App extends Vue {
 }
 .van-tabs__nav{
   -webkit-overflow-scrolling: touch;
-  overflow: auto ;
+  overflow-x: auto ;
+  overflow-y: hidden ;
+  
 }
 .van-tab{
   min-width: 79px;

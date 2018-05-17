@@ -22,6 +22,10 @@ const state = {
 
     },
     prepareId: "",
+    labelActive:{
+        availWidth: window.screen.availWidth,
+        availHeight: window.screen.availHeight
+    }
 
 
 };

@@ -22,6 +22,7 @@
 <van-tabs :active="active" style="flex:1" @click="changeTab" class="index_tabs" >
 
 
+<!-- :style="$route.query.active?'margin-top:-45px':''" -->
   <van-tab v-for="(item,index) in indexList" :title="item.pageName" :key="index" >
 <div v-if="active == index">
         <div v-for="(items,childrenIndex) in item.children" :key="childrenIndex" >
@@ -159,7 +160,8 @@
   <source src="http://www.w3school.com.cn/i/movie.mp4" type="video/mp4" />
 Your browser does not support the video tag.
 </video> -->
-
+<div class="topBigshit" v-if="$route.query.active"></div> 
+<div class="bottomBigshit" v-if="$route.query.active"></div> 
 
   </div>
 </template>
@@ -170,6 +172,7 @@ import Component from "vue-class-component";
 import mixin from "../../config/mixin";
 import { Action } from "vuex-class";
 import { Toast } from "vant";
+import { Watch } from 'vue-property-decorator';
 
 // import { recommendList } from '../../service/getData';
 
@@ -179,6 +182,13 @@ import { Toast } from "vant";
 })
 export default class shopIndex extends Vue {
   @Action("setTabIndex") setTabIndex;
+  @Action("setlabelActive") setlabelActive;
+
+  @Watch('')
+  watchCount(newVal, oldVal) {
+    console.log("newVal", newVal, "oldVal", oldVal)
+  }
+  
   images = ["https://img.yzcdn.cn/1.jpg", "https://img.yzcdn.cn/2.jpg"];
   indexList = [];
   active = 0;
@@ -355,7 +365,19 @@ export default class shopIndex extends Vue {
     );
   }
   mounted() {
+
+    if(this.$route.query.active){
+      this.active = parseInt(this.$route.query.active);
+      if(this.$route.query.availWidth&&this.$route.query.availHeight){
+        this.setlabelActive({
+          availWidth: this.$route.query.availWidth,
+        availHeight: this.$route.query.availHeight
+        })
+      }
+    }
+
     this.setTabIndex(0);
+    
     this.initIndex();
   }
 }
@@ -546,6 +568,21 @@ export default class shopIndex extends Vue {
   border: 0;
   background-color: #f0f0f0;
   padding-left: 30px;
+}
+
+.bottomBigshit{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  z-index:9999;
+  height:50px;
+}
+.topBigshit{
+   position:absolute;
+  top:0;
+  width:100%;
+  z-index:9999;
+  height:100%;
 }
 </style>
 
