@@ -74,6 +74,7 @@ export default class my_reward extends Vue {
         console.log(
           "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
         );
+        Toast(res.data.message)
         return;
       }
       this.award = res.data.data
@@ -99,6 +100,7 @@ export default class my_reward extends Vue {
         console.log(
           "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
         );
+        Toast(res.data.message)
         return;
       }
       let awardList = this.awardList ? this.awardList : [];

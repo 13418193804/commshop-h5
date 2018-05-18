@@ -72,6 +72,8 @@ get editItem(){
           console.log(
             "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
           );
+                      Toast(res.data.message);
+
           return;
         }
         this.toolAddress(res.data.data);
@@ -113,6 +115,8 @@ get editItem(){
                 ",错误信息：" +
                 res.data.message
             );
+                        Toast(res.data.message);
+
             return;
           }
           Toast("保存成功");
@@ -151,6 +155,8 @@ get editItem(){
                 ",错误信息：" +
                 res.data.message
             );
+                        Toast(res.data.message);
+
             return;
           }
           Toast('保存成功')
@@ -188,6 +194,8 @@ get editItem(){
                 ",错误信息：" +
                 res.data.message
             );
+                        Toast(res.data.message);
+
             return;
           }
           Toast('保存成功')

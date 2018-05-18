@@ -62,7 +62,7 @@ import Component from "vue-class-component";
 import Swipe from "../../components/Swipe.vue";
 import mixin from "../../config/mixin";
 import comhead from "../../components/Comhead.vue";
-import { List } from "vant";
+import { List,Toast } from "vant";
 @Component({
   components: {
     Swipe,
@@ -134,6 +134,7 @@ export default class ProductList extends Vue {
           console.log(
             "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
           );
+          Toast(res.data.message)
           return;
         }
 
@@ -162,6 +163,7 @@ export default class ProductList extends Vue {
           console.log(
             "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
           );
+          Toast(res.data.message)
           return;
         }
         this.catlist = res.data.data;

@@ -175,6 +175,7 @@ export default class Cart extends Vue {
           console.log(
             "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
           );
+          Toast(res.data.message);
           return;
         }
         Toast("已删除");
@@ -205,6 +206,7 @@ export default class Cart extends Vue {
           console.log(
             "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
           );
+          Toast(res.data.message);
           return;
         }
         Toast("已删除");
@@ -231,6 +233,7 @@ export default class Cart extends Vue {
           console.log(
             "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
           );
+          Toast(res.data.message);
           return;
         }
         Toast("收藏成功");
@@ -256,6 +259,7 @@ export default class Cart extends Vue {
           console.log(
             "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
           );
+          Toast(res.data.message);
           return;
         }
         console.log("查询购物车", res.data);
@@ -283,6 +287,7 @@ export default class Cart extends Vue {
           console.log(
             "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
           );
+          Toast(res.data.message);
           return;
         }
         console.log("加1", res.data);
@@ -310,6 +315,7 @@ export default class Cart extends Vue {
           console.log(
             "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
           );
+          Toast(res.data.message);
           return;
         }
         console.log("减1", res.data);

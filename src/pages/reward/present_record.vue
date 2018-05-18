@@ -47,6 +47,7 @@ getrecordList(){
         console.log(
           "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
         );
+        Toast(res.data.message)
         return;
       }
       this.recordList = res.data.data.recordList
