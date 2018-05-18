@@ -53,9 +53,9 @@
     <div>{{freight.toFixed(2)}}</div>
 </div>   -->
 <van-cell-group>
-  <van-cell title="配送方式" is-link value="快递" />  
+  <van-cell title="配送方式"  value="快递" />  
   <van-cell title="运费" :value="freight.toFixed(2)" />
-  <van-cell title="发票抬头" is-link  />
+  <van-cell title="发票抬头" is-link :value="titlevalue"  @click="goinvoice()"/>
   <van-field v-model="remark" label="卖家留言选填：" type="textarea" placeholder="选填内容已和卖家协商确认" rows="1" autosize/>
 </van-cell-group>
 <div style="margin: 0 10px;text-align:right;padding:10px;">
@@ -98,6 +98,11 @@ import comhead from "../../components/Comhead.vue";
 export default class shopIndex extends Vue {
   prepareId = "";
   pageType = "";
+  titlevalue="";
+  couponId="";
+  titleType="";
+  invoiceTitle="";
+  invoiceNo="";
   remark="";
   shopCartList = [];
   address = null;
@@ -107,6 +112,11 @@ freight=0;
   goSelectAddress() {
     this.$router.push({
       name: "selectaddress"
+    });
+  }
+  goinvoice(){
+    this.$router.push({
+      name: "invoice"
     });
   }
   getPreInfo(prepareId) {
@@ -153,6 +163,10 @@ freight=0;
           .userId,
         token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
           .token,
+        couponId:this.couponId,
+        titleType:this.titleType,
+        invoiceTitle:this.invoiceTitle,
+        invoiceNo:this.invoiceNo,
         prepareId: this.prepareId,
         remark:this.remark
       },
@@ -191,6 +205,17 @@ freight=0;
     this.getPreInfo(
       this.$store.getters[Vue.prototype.MutationTreeType.PREPAREID]
     );
+    if(this.$route.query.titleType){
+      if(this.$route.query.titleType=='PERSON'){
+        this.titleType='PERSON';
+        this.titlevalue='个人';
+      }else if(this.$route.query.titleType=='COMPANY'){
+        this.titleType='COMPANY';
+        this.titlevalue='单位';        
+        this.invoiceTitle=this.$route.query.invoiceTitle;
+        this.invoiceNo=this.$route.query.invoiceNo;
+      }
+    }
   }
 }
 </script>
