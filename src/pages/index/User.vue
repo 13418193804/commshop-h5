@@ -19,7 +19,7 @@
 
 <div style="font-size:16px;" @click="go_essential()">
     <img v-if="userIcon" v-lazy="userIcon" style="width:100px;height:100px;border-radius: 100px;"/>
-    <img v-else src="../../assets/image/头像.png" style="width:100px;height:100px;border-radius: 100px;"/>
+    <img v-else src="../../assets/image/userIcon.png" style="width:100px;height:100px;border-radius: 100px;"/>
     <div>普通用户名称</div>
 </div>
       </div>

@@ -11,7 +11,7 @@
 <div class="van-cell van-hairline" style="    justify-content: space-between;">
           <div >
              <img v-if="item.userIcon" v-lazy="item.userIcon" :style="handlePX('width', 85)+handlePX('height', 85)" style="vertical-align: middle;border-radius: 100%;"/>
-            <img v-else src="../../assets/image/头像.png" :style="handlePX('width', 85)+handlePX('height', 85)" style="vertical-align: middle;border-radius: 100%;"/>
+            <img v-else src="../../assets/image/userIcon.png" :style="handlePX('width', 85)+handlePX('height', 85)" style="vertical-align: middle;border-radius: 100%;"/>
             <span >{{item.nickName}}</span>
           </div>
           <div style="">

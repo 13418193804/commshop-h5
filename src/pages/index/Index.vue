@@ -2,7 +2,7 @@
   <div class="tab-contents">
 <div class="searchbox" style="display:flex;">
   <van-search placeholder="搜索商品" v-model="value" style="flex:1;background-color: #fafafa;"/>
-<div>
+<div @click="goMessageList()">
   <div style="font-size:12px;text-alig:center;background-color: rgb(250, 250, 250);color:#666;padding:4px 10px;">
     <div style=" display: flex;justify-content: center;align-items: center;">
       <i class="iconfont icon-xiaoxitianchong"  style="font-size:16px;margin:3px;"></i>
@@ -194,6 +194,9 @@ export default class shopIndex extends Vue {
   active = 0;
   value = "";
   isShow = false;
+  goMessageList(){
+      this.$router.push('/messagelist')
+  }
   initIndex() {
     Vue.prototype.$reqUrlGet("/page/list", {}, res => {
       if (res == null) {

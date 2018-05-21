@@ -5,7 +5,7 @@
 
       <div style="text-align:center;">
         <img src="../../assets/image/LOGO.png" :style="handlePX('width',200)+handlePX('height',200)" style="margin-bottom:30px">
-        <van-field class="login-input" v-model="loginName"  placeholder="请输入用户名" :style="handlePX('width',620)+handlePX('font-size',30)+handlePX('padding-left',30)+handlePX('height',90)" style="margin:0 0 16px;"/>
+        <van-field class="login-input" v-model="loginName" type="number" placeholder="请输入用户名" :style="handlePX('width',620)+handlePX('font-size',30)+handlePX('padding-left',30)+handlePX('height',90)" style="margin:0 0 16px;"/>
 
         <van-field class="login-input" v-model="password" type="password"  placeholder="请输入密码" :style="handlePX('width',620)+handlePX('font-size',30)+handlePX('padding-left',30)+handlePX('height',90)"/>
 

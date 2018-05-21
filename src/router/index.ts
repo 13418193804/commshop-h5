@@ -204,6 +204,12 @@ export default new Router({
             path: '/invoice',
             name: 'invoice',
             component: r => require.ensure([], () => r(require('../pages/order/invoice.vue')))
+        },
+        {
+            path: '/messagelist',
+            name: 'messagelist',
+            component: r => require.ensure([], () => r(require('../pages/index/MessageList.vue')))
         }
+        
     ]
 });

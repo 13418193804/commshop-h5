@@ -79,7 +79,7 @@
             <div class="userComment" style="padding:10px 15px;">
               <div>
                 <img v-if="item.user.userIcon" v-lazy="item.user.userIcon" :style="handlePX('width',45)+handlePX('height',45)" style="vertical-align:middle;border-radius:50%;"/>                
-                <img v-else src="../../assets/image/头像.png" :style="handlePX('width',45)+handlePX('height',45)" style="vertical-align:middle;border-radius:50%;"/>
+                <img v-else src="../../assets/image/userIcon.png" :style="handlePX('width',45)+handlePX('height',45)" style="vertical-align:middle;border-radius:50%;"/>
                 <span>{{item.user.nickName}}</span>
               </div>
               <div style="color:#999999;">{{item.createTime}}</div>

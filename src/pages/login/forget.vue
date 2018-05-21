@@ -3,8 +3,8 @@
 <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="密码找回" isRightIcon="true"  ></comhead>
         <div class="bodyLabel" >
 
-<div style="text-align:center;":style="handlePX('margin-top',80)">
-<van-field class="sign-input" v-model="loginName"  placeholder="请输入手机号码"  :style="handlePX('width',620)+handlePX('margin-bottom',36)+handlePX('height',90)" />
+<div style="text-align:center;" :style="handlePX('margin-top',80)">
+<van-field class="sign-input" v-model="loginName" type="number"   placeholder="请输入手机号码"  :style="handlePX('width',620)+handlePX('margin-bottom',36)+handlePX('height',90)" />
 
 <div class="sign-code-group">
 <van-field class="sign-input" v-model="smsCode" placeholder="请输入验证码" :style="handlePX('width',295)+handlePX('height',90)"/>

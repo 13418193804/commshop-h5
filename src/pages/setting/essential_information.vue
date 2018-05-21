@@ -10,7 +10,7 @@
               </template>
               <div :style="handlePX('height',60)">
                   <img v-if="userIcon" v-lazy="userIcon" :style="handlePX('width',60)+handlePX('height',60)" style="border-radius:50%;"/>
-                  <img v-else src="../../assets/image/头像.png" :style="handlePX('width',60)+handlePX('height',60)" style="border-radius:50%;"/>
+                  <img v-else src="../../assets/image/userIcon.png" :style="handlePX('width',60)+handlePX('height',60)" style="border-radius:50%;"/>
               </div>
           </van-cell>
         </van-uploader>

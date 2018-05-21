@@ -4,7 +4,7 @@
         <div class="bodyLabel" :style="handlePX('padding-top',80)">
 
 <div style="text-align:center;">
-<van-field class="sign-input" v-model="loginName"  placeholder="请输入手机号码"  :style="handlePX('width',620)+handlePX('margin-bottom',36)+handlePX('height',90)" />
+<van-field class="sign-input" v-model="loginName" type="number"  placeholder="请输入手机号码"  :style="handlePX('width',620)+handlePX('margin-bottom',36)+handlePX('height',90)" />
 
 <!-- <van-cell-group>
   <van-field
