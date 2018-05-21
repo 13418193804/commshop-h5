@@ -196,7 +196,11 @@ export default class addcomment extends Vue {
         }
 
         console.log(res.data)
-        }
+        },
+        {
+        "Content-Type": "application/json"
+    }     
+
       ); 
   }
   handlePX(CssName, PxNumber) {

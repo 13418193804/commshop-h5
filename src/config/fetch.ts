@@ -44,13 +44,15 @@ export const reqFormUpload = (url, form, callBack) => {
         });
 };
 
-export const reqFormPost = (url, data, callBack) => {
-
+export const reqFormPost = (url, data, callBack, headers) => {
+    if (!headers) {
+        headers = {
+            "Content-Type": "application/x-www-form-urlencoded"
+        }
+    }
     axios.post(bizUrl + url, querystring.encode(data),
         {
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            }
+            headers: headers
         })
         .then(res => {
             if (res.data.status == 401 && res.data.message == "用户信息未找到") {
