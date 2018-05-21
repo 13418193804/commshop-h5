@@ -111,6 +111,7 @@ import Component from "vue-class-component";
 import Swipe from "../../components/Swipe.vue";
 import mixin from "../../config/mixin";
 import { Action } from "vuex-class";
+import { Toast } from "vant";
 
 @Component({
   components: {
@@ -200,6 +201,7 @@ export default class User extends Vue {
           console.log(
             "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
           );
+                  Toast(res.data.message);
           return;
         }
         this.user=res.data.data;

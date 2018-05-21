@@ -76,6 +76,7 @@ export default class my_member extends Vue {
           console.log(
             "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
           );
+          Toast(res.data.message)
           return;
         }
         console.log("请求完成", res.data.data.memberList);

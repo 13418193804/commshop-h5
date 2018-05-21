@@ -82,6 +82,7 @@ export default class collection extends Vue {
             console.log(
               "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
             );
+            Toast(res.data.message);
             return;
           }        
           this.getProductList();
@@ -113,6 +114,7 @@ export default class collection extends Vue {
           console.log(
             "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
           );
+          Toast(res.data.message);
           return;
         }        
         this.goodsList = res.data.data.goodsList;

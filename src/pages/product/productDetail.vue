@@ -327,6 +327,7 @@ export default class ProductDetail extends Vue {
           console.log(
             "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
           );
+          Toast(res.data.message)
           return;
         }
         Toast('已收藏');
@@ -352,6 +353,7 @@ export default class ProductDetail extends Vue {
           console.log(
             "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
           );
+          Toast(res.data.message)
           return;
         }
         Toast('已取消');
@@ -378,6 +380,7 @@ export default class ProductDetail extends Vue {
           console.log(
             "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
           );
+          Toast(res.data.message)
           return;
         }
         for (let i = 0; i < res.data.data.goodsList.length; i++) {
@@ -545,6 +548,7 @@ export default class ProductDetail extends Vue {
           console.log(
             "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
           );
+          Toast(res.data.message)
           return;
         }
         Toast('加入成功')
@@ -572,6 +576,7 @@ export default class ProductDetail extends Vue {
           console.log(
             "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
           );
+          Toast(res.data.message)
           return;
         }
         console.log('res.data',res.data)
