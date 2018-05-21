@@ -81,7 +81,7 @@
         </div>
 
         <div v-if="item.detailList[0].refundStatus == 'APPLY_REFUND'">
-      <van-button v-if="item.detailList[0].refundStatus == 'APPLY_REFUND'" size="small" style="margin-right:10px;" :style="formatButtonColor()" @click.stop="goDetail(item)">取消退款</van-button>
+      <van-button v-if="item.detailList[0].refundStatus == 'APPLY_REFUND'" size="small" style="margin-right:10px;" :style="formatButtonColor()">取消退款</van-button>
           </div>   
 
     </div>
@@ -91,7 +91,7 @@
         <div  v-if="item.detailList[0].refundStatus == 'WITHOUT_REFUND'  ">
       <van-button size="small" style="margin-right:10px;" :style="formatButtonColor()" @click.stop="buyAgain(item.orderId)">再次购买</van-button>
       <van-button size="small" style="margin-right:10px;" @click.stop="doRefund(item)">退换/售后</van-button>
-      <van-button size="small" style="margin-right:10px;" v-if="item.orderStatus === 'ORDER_WAIT_REVIEW'" :style="formatButtonColor()">评价商品</van-button>
+      <van-button size="small" style="margin-right:10px;" v-if="item.orderStatus === 'ORDER_WAIT_REVIEW'" :style="formatButtonColor()" @click.stop="gocomment(item)">评价商品</van-button>
     </div>
 
         <div v-if="item.detailList[0].refundStatus == 'APPLY_REFUND'">
@@ -425,6 +425,14 @@ export default class orderList extends Vue {
       name: "orderdetail",
       query: {
         orderId: item.orderId
+      }
+    });
+  }
+  gocomment(item){
+    this.$router.push({
+      name: "addcomment",
+      query: {
+        orderId:item.orderId,
       }
     });
   }

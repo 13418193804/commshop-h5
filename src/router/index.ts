@@ -204,6 +204,11 @@ export default new Router({
             path: '/invoice',
             name: 'invoice',
             component: r => require.ensure([], () => r(require('../pages/order/invoice.vue')))
+        },
+        {
+            path: '/addcomment',
+            name: 'addcomment',
+            component: r => require.ensure([], () => r(require('../pages/comment/addcomment.vue')))
         }
     ]
 });
