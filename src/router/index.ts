@@ -209,6 +209,11 @@ export default new Router({
             path: '/messagelist',
             name: 'messagelist',
             component: r => require.ensure([], () => r(require('../pages/index/MessageList.vue')))
+        },
+        {
+            path: '/addcomment',
+            name: 'addcomment',
+            component: r => require.ensure([], () => r(require('../pages/comment/addcomment.vue')))
         }
         
     ]
