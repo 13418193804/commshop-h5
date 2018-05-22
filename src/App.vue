@@ -67,7 +67,7 @@ export default class App extends Vue {
   color: #ffc630;
 }
 .van-tabs__nav-bar {
-  background-color: #ffc630;
+  background-color: rgb(255, 198, 48);
   left: 22px;
   width: 36px !important;
   bottom: 20px;
@@ -86,8 +86,9 @@ export default class App extends Vue {
   z-index: 79;
 }
 
-
-
+.van-submit-bar__price-interger{
+color:#f44!important;
+}
 .flex {
   display: -webkit-box;
   display: -webkit-flex;

@@ -9,11 +9,11 @@
   infinite-scroll-distance="20" >
   <van-tab v-for="(n,sindex) in orderTitleList"  :title="n.name" style="border-top:1px #e5e5e5 solid;">
 
-      <div >
+      <div  v-if="active == sindex">
   
         <li v-for="(item,index) in orderList[returnKey()].orderList" @click="goDetail(item)">
 
-  <div >
+  <div>
           <div class="orderTitle textLabel">  
               <div style="padding-left:10px;">
                 订单号:{{item.orderId}}

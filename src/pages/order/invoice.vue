@@ -1,6 +1,6 @@
  <template>
   <div class="tab-contents" style="height:-webkit-fill-available;background-color:#f3f3f3;">
-    <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="发票信息" isRightIcon="true" rightTitle="保存" @rightClick="save()" ></comhead>
+    <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="发票信息"  rightTitle="保存" @rightClick="save()" ></comhead>
 
     <van-radio-group v-model="radio">
         <van-cell-group>

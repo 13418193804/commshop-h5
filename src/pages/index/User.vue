@@ -32,7 +32,7 @@
 </div>
 
 <div class="order-content" >
-<div style="text-align:center;padding:10px 0;width:20%;" v-for="(n,index) in orderList" :key="index" @click="getOrderList(n.status)">
+<div style="text-align:center;padding:10px 0;width:20%;position: relative;" v-for="(n,index) in orderList" :key="index" @click="getOrderList(n.status)">
     <div style="position: relative;">
       <div>
         <img src="../../assets/image/未付款.png" alt="" class="orderIcon" v-if="index == 0">
@@ -42,11 +42,11 @@
         <img src="../../assets/image/退换售后.png" alt="" class="orderIcon" v-if="index == 4">
         </div>
       <div>{{n.name}}</div>
-      <div v-if="index == 0&&user.waitPayCount!==0&&user.waitPayCount" style="position: absolute;top:0;right:0;width:18px;height:18px;color:#ffffff;background-color:#FE4747;border-radius:50px;">{{user.waitPayCount}}</div>
-      <div v-if="index == 1&&user.waitSendCount!==0&&user.waitSendCount" style="position: absolute;top:0;right:0;width:18px;height:18px;color:#ffffff;background-color:#FE4747;border-radius:50px;">{{user.waitSendCount}}</div>
-      <div v-if="index == 2&&user.waitRecvgCount!==0&&user.waitRecvgCount" style="position: absolute;top:0;right:0;width:18px;height:18px;color:#ffffff;background-color:#FE4747;border-radius:50px;">{{user.waitRecvgCount}}</div>
-      <div v-if="index == 3&&user.waitReviewCount!==0&&user.waitReviewCount" style="position: absolute;top:0;right:0;width:18px;height:18px;color:#ffffff;background-color:#FE4747;border-radius:50px;">{{user.waitReviewCount}}</div>
-      <div v-if="index == 4&&user.waitRefundCount!==0&&user.waitRefundCount" style="position: absolute;top:0;right:0;width:18px;height:18px;color:#ffffff;background-color:#FE4747;border-radius:50px;">{{user.waitRefundCount}}</div>
+      <div v-if="index == 0&&user.waitPayCount!==0&&user.waitPayCount" class="messageFexid">{{user.waitPayCount}}</div>
+      <div v-if="index == 1&&user.waitSendCount!==0&&user.waitSendCount" class="messageFexid">{{user.waitSendCount}}</div>
+      <div v-if="index == 2&&user.waitRecvgCount!==0&&user.waitRecvgCount" class="messageFexid">{{user.waitRecvgCount}}</div>
+      <div v-if="index == 3&&user.waitReviewCount!==0&&user.waitReviewCount" class="messageFexid">{{user.waitReviewCount}}</div>
+      <div v-if="index == 4&&user.waitRefundCount!==0&&user.waitRefundCount" class="messageFexid">{{user.waitRefundCount}}</div>
     </div>
 </div>
 
@@ -296,5 +296,22 @@ export default class User extends Vue {
 .moreIcon {
   width: 25px;
   height: 25px;
+}
+.messageFexid{
+      background-color: #fe4747;
+    border-radius: 10px;
+    color: #fff;
+    display: inline-block;
+    font-size: 12px;
+    height: 18px;
+    line-height: 18px;
+    padding: 0 6px;
+    text-align: center;
+    white-space: nowrap;
+    border: 1px solid #fff;
+        position: absolute;
+    top: 0;
+    right: 30px;
+    transform: translateY(-50%) translateX(100%);
 }
 </style>
