@@ -56,7 +56,7 @@ import comhead from "../../components/Comhead.vue";
 export default class addcomment extends Vue {
   orderId="";
   orderdetail=[];
-  detailList={goodsId:"",orderId:"",skuId:"",skuKeyValue:""};
+  detailList={goodsId:"",orderId:"",skuId:"",skuKeyValue:"",id:""};
   commentContent="";
   starsnum=0;
   filename=[];
@@ -145,16 +145,17 @@ export default class addcomment extends Vue {
       if(this.commentContent==""){
           Toast("请填写评价");
       }
+      let commentImg = this.filename.toString()
       Vue.prototype.$reqFormPost(
       "/comment/add",
       {
-        commentModel:{
+        // commentModel:{
             "customCommentList": [
                 {
                 "commentContent": this.commentContent,
-                "commentImg": this.filename,
+                "commentImg": commentImg,
                 "goodsId": this.detailList.goodsId,
-                "orderDetailId": this.detailList.orderId,
+                "orderDetailId": this.detailList.id,
                 "skuId": this.detailList.skuId,
                 "skuKeyValue": this.detailList.skuKeyValue,
                 "star": this.starsnum
@@ -163,7 +164,7 @@ export default class addcomment extends Vue {
             "orderId": this.orderId,
             "token": this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].token,
             "userId": this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].userId
-            }
+            // }
       },
       res => {
         if (res == null) {
@@ -178,7 +179,7 @@ export default class addcomment extends Vue {
           Toast(res.data.message);
           return;
         }
-
+          this.$router.go(-1);        
 
 
         console.log(res.data)
