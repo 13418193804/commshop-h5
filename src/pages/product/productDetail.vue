@@ -84,8 +84,12 @@
               </div>
               <div style="color:#999999;">{{item.createTime}}</div>
               <div>{{item.commentContent}}</div>
-              <div v-if="item.commentImg" v-for="(itemimg,imgindex) in item.commentImg" :key="imgindex">
-                <img v-lazy="'1'" :style="handlePX('width',100)+handlePX('height',100)"/>
+              <div v-if="item.commentImg">
+                <img v-if="item.commentImg.split(',')[0]" v-lazy="item.commentImg.split(',')[0]" :style="handlePX('width',100)+handlePX('height',100)"/>
+                <img v-if="item.commentImg.split(',')[1]" v-lazy="item.commentImg.split(',')[1]" :style="handlePX('width',100)+handlePX('height',100)"/>
+                <img v-if="item.commentImg.split(',')[2]" v-lazy="item.commentImg.split(',')[2]" :style="handlePX('width',100)+handlePX('height',100)"/>
+                <img v-if="item.commentImg.split(',')[3]" v-lazy="item.commentImg.split(',')[3]" :style="handlePX('width',100)+handlePX('height',100)"/>
+                <img v-if="item.commentImg.split(',')[4]" v-lazy="item.commentImg.split(',')[4]" :style="handlePX('width',100)+handlePX('height',100)"/>
               </div>
             </div>
           </div>
