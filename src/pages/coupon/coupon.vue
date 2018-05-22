@@ -2,7 +2,7 @@
   <div class="tab-contents">
     <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="优惠卷" isRightIcon="true"  ></comhead>
 
-    <van-tabs>
+    <van-tabs >
       <van-tab v-for="(item,index) in tablist" :title="item" :key="index">
 
         <!-- 空空如也情况 -->
@@ -12,7 +12,7 @@
         </div> -->
 
         <!-- 有卷列表 -->
-        <div class="coupon_list">
+        <div class="coupon_list" >
           <!-- 未使用列表 -->          
           <div class="coupon_notused" :style="handlePX('width', 702)+handlePX('height', 248)+handlePX('margin-top', 20)">
             <div class="coupon_cardbox" :style="handlePX('padding-top', 30)">
@@ -96,8 +96,31 @@ export default class coupon extends Vue {
   handlePX(CssName, PxNumber) {
     return CssName +":" +this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth /750 * PxNumber +"px;";
   }
+  couponList=[]
+  getList(){
+      Vue.prototype.$reqFormPost("/coupon/user/linklist",{
+        userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].userId,
+        token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].token
+      },
+      res => {
+        if (res == null) {
+          console.log("网络请求错误！");
+          return;
+        }
+        if (res.data.status != 200) {
+          console.log(
+            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+          );
+                  Toast(res.data.message);
+          return;
+        }
+this.couponList = res.data.data.couponList
+        console.log('优惠券列表',res.data)
+      }
+    );
+  }
   mounted() {
-
+this.getList()
     console.log("优惠卷");
   }
 }

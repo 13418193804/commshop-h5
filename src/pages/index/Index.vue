@@ -1,7 +1,14 @@
 <template>
   <div class="tab-contents">
 <div class="searchbox" style="display:flex;">
+
+
+
+
   <van-search placeholder="搜索商品" v-model="value" style="flex:1;background-color: #fafafa;"/>
+
+
+  
 <div @click="goMessageList()">
   <div style="font-size:12px;text-alig:center;background-color: rgb(250, 250, 250);color:#666;padding:4px 10px;">
     <div style=" display: flex;justify-content: center;align-items: center;">

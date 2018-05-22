@@ -183,6 +183,7 @@ export default class User extends Vue {
       }
     });
   }
+
   queryuserinfo() {
     Vue.prototype.$reqFormPost(
       "/user/query",

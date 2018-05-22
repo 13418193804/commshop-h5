@@ -37,6 +37,8 @@ import Component from "vue-class-component";
 import mixin from "../../config/mixin";
 import { Action } from "vuex-class";
 import { Toast } from "vant";
+import axios from "axios";
+
 // import { recommendList } from '../../service/getData';
 
 // //MD5加密
@@ -88,8 +90,21 @@ export default class shopIndex extends Vue {
           Vue.prototype.MutationTreeType.TOKEN_INFO,
           JSON.stringify(res.data.data)
         );
+
+        if(this.isWeixinBrowser()){
+          // 跨域
+    // axios.get('https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx2e2d97a4e10ef2b6&redirect_uri=http://sr.cncloud.com/qichang/wechat/enter/bind?action=viewtest&response_type=code&scope=snsapi_base&state=UI5ad94ae15b065d55ac86ae0d#wechat_redirect')
+    //     .then(res => {
+        
+    //      console.log(res.data)
+    //     }
+    //     )
+    //     .catch(error => error);
+
+        }
         this.$router.push("/");
       }
+      
     );
   }
   gosign() {
@@ -111,8 +126,19 @@ export default class shopIndex extends Vue {
       "px;"
     );
   }
+
+    isWeixinBrowser() {
+  　var ua = navigator.userAgent.toLowerCase();
+　　var isWeixin = ua.indexOf('micromessenger') != -1;
+　　if (isWeixin) {
+   　　 return true;
+　　}else{
+   　　 return false;      
+　　}
+}
+
   mounted() {
-    
+
   }
 }
 </script>
