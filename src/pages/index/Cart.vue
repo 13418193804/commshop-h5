@@ -458,8 +458,8 @@ export default class Cart extends Vue {
   }
   .van-submit-bar__price-text{
     visibility: hidden;
-    
   }
+  
  .van-button--danger{
       background-color:#ffc630;
     border: 1px solid #ffc630;

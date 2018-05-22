@@ -166,10 +166,10 @@
 
         <div  style=' background-color:#fff;width:100%;' :class="keepModel ?'modiaBoxUp2' :'modiaBoxDown2'" @click.stop="()=>{return }">
  <div style='border-bottom:1px solid #e5e5e5;display:flex;margin-left:15px;justify-content: space-between'>
-      <div style='padding:6px;margin-top:-35px;border-radius:5px;background-color:#fff;border:1px solid #e5e5e5;margin-bottom:20px;display:flex;'>
+      <div style='padding:6px;border-radius:5px;background-color:#fff;border:1px solid #e5e5e5;display:flex;margin:10px;'>
         <img v-lazy="skuItem.skuImgUrl?skuItem.skuImgUrl :detatil['goodsImg'].split(',')[0]" style="width:80px;height:80px;"/>
       </div>
-      <div style='font-size:13px;flex:1;'>
+      <div style='font-size:13px;flex:1;    padding: 10px 0 0 0;'>
         <div style="font-size:16px;">{{detatil['goodsName']}}</div>
         <div  style="color:#666">{{detatil['jingle']}}</div>
         <div style='margin:10px  ;height:40px;overflow: hidden;font-size:14px;'>单价:
