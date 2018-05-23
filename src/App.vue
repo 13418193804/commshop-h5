@@ -57,6 +57,10 @@ export default class App extends Vue {
 .van-dialog__footer{
   display: flex;
 }
+.van-search{
+  padding:12px 15px;
+}
+
 .van-tabbar-item--active{
   color: #ffc630;
 }

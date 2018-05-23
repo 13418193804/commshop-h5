@@ -6,7 +6,8 @@
                   <i class="iconfont icon-setting1" style="font-size:25px;" @click="go_setting()"></i>
              </div>
    <div style="line-height:47px;">
-     <span style="padding: 10px;">
+
+     <span style="padding: 10px;" @click="goMessageList()">
 <i class="iconfont icon-icon-p_xinfeng" style="font-size:25px;"></i>
      </span>
                <span style="padding: 10px;">
@@ -175,6 +176,9 @@ export default class User extends Vue {
       url: ""
     }
   ];
+  goMessageList(){
+      this.$router.push('/messagelist')
+  }
   getOrderList(status) {
     this.$router.push({
       name: "orderlist",

@@ -5,14 +5,16 @@
 
 
 
-  <van-search placeholder="搜索商品" v-model="value" style="flex:1;background-color: #fafafa;"/>
+  <van-search placeholder="搜索商品" v-model="value" style="flex:1;background-color: #fafafa;" @click="filterProduct()"/>
 
 
   
 <div @click="goMessageList()">
   <div style="font-size:12px;text-alig:center;background-color: rgb(250, 250, 250);color:#666;padding:4px 10px;">
     <div style=" display: flex;justify-content: center;align-items: center;">
-      <i class="iconfont icon-xiaoxitianchong"  style="font-size:16px;margin:3px;"></i>
+
+      <i class="iconfont icon-lingdang"  style="font-size:16px;margin:3px;"></i>
+
       </div>
      <div style="line-height: 15px;">消息</div>
     </div>
@@ -20,11 +22,15 @@
 </div>
 
 <div style=" position: relative;">
-  <div class="AllClassification" v-show="isShow">
-    <div class="ClassificationTitle"><span>全部分类</span><img v-lazy="'1'" style="width:20px;height:20px;"  @click="toggle()"/></div>
+
+  <div style="background-color:rgba(0, 0, 0, 0.498039);" v-show="isShow" >
+  <div class="AllClassification" >
+    <div class="flex flex-pack-justify flex-align-center ClassificationTitle "><span>全部分类</span>
+      <i class="iconfont icon-iconset0422"  style="font-size:16px;margin:3px;"  @click="toggle()"></i>
+    </div>
     <div class="ClassificationName"><div v-for="(item,index) in indexList" :key="index"><div @click="changeTab(index)" :class="index==active?'ClassificationActive':''">{{item.pageName}}</div></div></div>
   </div>
-
+</div>
   <!-- swipeable -->
 <van-tabs :active="active" style="flex:1" @click="changeTab" class="index_tabs" >
 
@@ -201,6 +207,10 @@ export default class shopIndex extends Vue {
   active = 0;
   value = "";
   isShow = false;
+filterProduct(){
+  console.log(111)
+}
+
   goMessageList(){
       this.$router.push('/messagelist')
   }
@@ -515,8 +525,6 @@ export default class shopIndex extends Vue {
   width: 100%;
   background-color: #ffffff;
   .ClassificationTitle {
-    display: flex;
-    justify-content: space-between;
     padding: 0 15px;
     height: 40px;
     span {
@@ -572,7 +580,10 @@ export default class shopIndex extends Vue {
 }
 .searchbox .van-search__input-wrap {
   width: 100%;
+  display:flex;
+  align-items: center;
 }
+
 .searchbox .van-search__input-wrap input {
   width: 100%;
   border-radius: 30px;
@@ -594,6 +605,18 @@ export default class shopIndex extends Vue {
   width:100%;
   z-index:9999;
   height:100%;
+}
+::-webkit-input-placeholder { /* WebKit browsers */ 
+font-size:14px;
+} 
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */ 
+font-size:14px;
+} 
+::-moz-placeholder { /* Mozilla Firefox 19+ */ 
+font-size:14px;
+} 
+:-ms-input-placeholder { /* Internet Explorer 10+ */ 
+font-size:14px;
 }
 </style>
 
