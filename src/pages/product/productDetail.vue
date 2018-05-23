@@ -266,7 +266,7 @@ export default class ProductDetail extends Vue {
   goodsList = [];
   goodsId = "";
   commentnum=0;
-  praise=0;  
+  praise="0";  
   detatil = {
     commentList:[],
     //    costPrice
@@ -597,9 +597,9 @@ export default class ProductDetail extends Vue {
           for (let i = 0; i < res.data.data.commentList.length; i++) {
             total = res.data.data.commentList[i].star + total
           }
-          total=total/(res.data.data.commentList.length*5);
-          total.toFixed(2)
-          this.praise = total * 100;
+          total=total/(res.data.data.commentList.length*5)* 100;
+          const praisenum = total.toFixed(0)
+          this.praise = praisenum;
         }  
 
         this.tabgoodslist = res.data.data.likeList;
