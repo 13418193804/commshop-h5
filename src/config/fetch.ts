@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Vue from 'vue';
 import { Toast } from "vant";
+import { MutationTreeType } from '../store/mutation-types';
 
 const bizUrl = "http://sr.cncloud.com/qichang"
 // let base = 'http://119.23.44.223:8080/';
@@ -30,7 +31,7 @@ export const reqFormUpload = (url, form, callBack) => {
         headers: { 'Content-Type': 'multipart/form-data' }
     })
         .then(res => {
-            callBack(res)
+            callBack(res);
 
             if (res == null || res.data == null) {
                 console.error('网络请求失败');
@@ -56,9 +57,14 @@ export const reqFormPost = (url, data, callBack, headers) => {
             headers: headers
         })
         .then(res => {
-            if (res.data.status == 401 && res.data.message == "用户信息未找到") {
+            if (res.data.status == 400 && res.data.message == "账号已在其他设备登录") {
                 Toast(res.data.message);
-                window['myvue'].$router.push({ name: 'login' });
+                window['myvue'].$store.commit(MutationTreeType.TOKEN_INFO, {
+                    userId: "",
+                    token: ""
+                })
+                localStorage.removeItem(MutationTreeType.TOKEN_INFO);
+                // window['myvue'].$router.push({ name: 'login' });
                 return;
             }
             callBack(res);
@@ -78,9 +84,14 @@ export const reqFormPost = (url, data, callBack, headers) => {
 export const reqUrlGet = (url, data, callBack) => {
     axios.get(bizUrl + url + '?' + querystring.encode(data))
         .then(res => {
-            if (res.data.status == 401 && res.data.message == "用户信息未找到") {
+            if (res.data.status == 400 && res.data.message == "账号已在其他设备登录") {
                 Toast(res.data.message);
-                window['myvue'].$router.push({ name: 'login' });
+                window['myvue'].$store.commit(MutationTreeType.TOKEN_INFO, {
+                    userId: "",
+                    token: ""
+                })
+                localStorage.removeItem(MutationTreeType.TOKEN_INFO);
+                // window['myvue'].$router.push({ name: 'login' });
                 return;
             }
             callBack(res);
@@ -95,10 +106,19 @@ export const reqUrlGet = (url, data, callBack) => {
 
 };
 
+export const confirmLogin = (obj:any) => {
+   
+    if ((window['myvue'].$store.getters[MutationTreeType.TOKEN_INFO].userId || '') == '' || (window['myvue'].$store.getters[MutationTreeType.TOKEN_INFO].token || '') == '') {
+        obj = { name: 'login' };
+    }
+    window['myvue'].$router.push(obj);
+    
+};
 export default {
     install(Vue) {
         Vue.prototype.$reqUrlGet = reqUrlGet
         Vue.prototype.$reqFormPost = reqFormPost
+        Vue.prototype.$confirmLogin = confirmLogin
         Vue.prototype.$reqFormUpload = reqFormUpload
     }
     // reqUrlGet:reqUrlGet,

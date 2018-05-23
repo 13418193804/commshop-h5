@@ -7,8 +7,8 @@
   v-infinite-scroll="loadMore"
   :infinite-scroll-disabled="loading"
   infinite-scroll-distance="20" >
-  <van-tab v-for="(n,sindex) in orderTitleList"  :title="n.name" style="border-top:1px #e5e5e5 solid;">
-
+  <van-tab v-for="(n,sindex) in orderTitleList"  :title="n.name" style="">
+<!-- border-top:1px #e5e5e5 solid; -->
       <div  v-if="active == sindex">
   
         <li v-for="(item,index) in orderList[returnKey()].orderList" @click="goDetail(item)">

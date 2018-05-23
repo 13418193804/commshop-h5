@@ -7,8 +7,11 @@
              </div>
    <div style="line-height:47px;">
 
-     <span style="padding: 10px;" @click="goMessageList()">
+     <span style="padding: 10px;    position: relative;" @click="goMessageList()">
+       <!--  -->
 <i class="iconfont icon-icon-p_xinfeng" style="font-size:25px;"></i>
+      <div v-if="messageCount && messageCount!=0" class="messageFexid" style="    right: 25px;top: 5px;">{{messageCount}}</div>
+
      </span>
                <span style="padding: 10px;">
                   <i class="iconfont icon-erweima" style="font-size:25px;"></i>
@@ -18,10 +21,10 @@
 
             
 
-<div style="font-size:16px;" @click="go_essential()">
-    <img v-if="userIcon" v-lazy="userIcon" style="width:100px;height:100px;border-radius: 100px;"/>
-    <img v-else src="../../assets/image/userIcon.png" style="width:100px;height:100px;border-radius: 100px;"/>
-    <div>普通用户名称</div>
+<div style="font-size:16px;margin:5px 0;" @click="go_essential()">
+    <img v-if="userIcon" v-lazy="userIcon" style="width:80px;height:80px;border-radius: 80px;"/>
+    <img v-else src="../../assets/image/userIcon.png" style="width:80px;height:80px;border-radius: 80px;"/>
+    <div style="text-align:center;" v-if="user">{{user.nickName}}</div>
 </div>
       </div>
 
@@ -177,17 +180,43 @@ export default class User extends Vue {
     }
   ];
   goMessageList(){
-      this.$router.push('/messagelist')
+       Vue.prototype.$confirmLogin('/messagelist')
   }
   getOrderList(status) {
-    this.$router.push({
+     Vue.prototype.$confirmLogin({
       name: "orderlist",
       query: {
         orderStatus: status
       }
     });
   }
-
+  messageCount = 0;
+ getMessageCount(){
+      Vue.prototype.$reqFormPost(
+      "/message/unread/count",
+      {
+        userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .userId,
+        token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .token
+      },
+      res => {
+        if (res == null) {
+          console.log("网络请求错误！");
+          return;
+        }
+        if (res.data.status != 200) {
+          console.log(
+            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+          );
+                  Toast(res.data.message);
+          return;
+        }
+        this.messageCount =  res.data.data.count;
+        console.log("消息条数", res.data.data);
+      }
+    );
+  }
   queryuserinfo() {
     Vue.prototype.$reqFormPost(
       "/user/query",
@@ -215,39 +244,47 @@ export default class User extends Vue {
       }
     );
   }
+  
   tools(n) {
     if (n.name == "我的收藏") {
-      this.$router.push({ name: "collection" });
+       Vue.prototype.$confirmLogin({ name: "collection" });
     }
     if (n.name == "地址管理") {
-      this.$router.push({ name: "addresslist" });
+       Vue.prototype.$confirmLogin({ name: "addresslist" });
     }
     if (n.name == "优惠券") {
-      this.$router.push({ name: "coupon" });
+       Vue.prototype.$confirmLogin({ name: "coupon" });
     }
     if (n.name == "我的成员") {
-      this.$router.push({ name: "my_member" });
+       Vue.prototype.$confirmLogin({ name: "my_member" });
+      
     }
   }
+
+  
   go_setting() {
-    this.$router.push("/setting");
+    Vue.prototype.$confirmLogin("/setting");
   }
   go_essential() {
-    this.$router.push("/essential_information");
+    Vue.prototype.$confirmLogin("/essential_information");
   }
   mybankcard() {
-    this.$router.push("/my_bankcard");
+    Vue.prototype.$confirmLogin("/my_bankcard");
+    
   }
   myreward() {
-    this.$router.push("/my_reward");
+    Vue.prototype.$confirmLogin("/my_reward");
   }
+ 
   mounted() {
+
     this.setTabIndex(3);
     if (
       this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].userId !=
         "" &&
       this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].token != ""
     ) {
+      this.getMessageCount();
       this.queryuserinfo();
     }
     console.log("个人中心加载");
@@ -313,7 +350,6 @@ export default class User extends Vue {
     padding: 0 6px;
     text-align: center;
     white-space: nowrap;
-    border: 1px solid #fff;
         position: absolute;
     top: 0;
     right: 30px;

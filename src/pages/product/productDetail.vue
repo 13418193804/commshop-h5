@@ -21,9 +21,11 @@
                 </div>
             </div>
             <div class="comment" @click="go_comment()">
-              <div>用户评价</div>
+              <div style="font-size:15px;color:#666">用户评价</div>
               <div>
-                <img src="../../assets/image/评价.png" :style="handlePX('width',28)+handlePX('height',24)"/>
+<i class="iconfont icon-pingjia" style="color:#ffc630;font-size:22px;"></i>
+                <!-- <img src="../../assets/image/评价.png" :style="handlePX('width',28)+handlePX('height',24)"/> -->
+                
                 <span>{{commentnum}}</span>
               </div>
               
@@ -93,7 +95,7 @@
               </div>
             </div>
           </div>
-          <div v-if="detatil.commentList.length==0" style="text-align: center;padding: 15px;">暂无评论</div>
+          <div v-if="detatil.commentList.length==0" class=" flex  flex-align-center flex-pack-center" style="text-align: center;padding: 15px;min-height: 145px;font-size:16px;color:#666;"><span>暂无用户评价</span></div>
         </div>
 
         <div class="recommend"  style="background-color:#ffffff;margin-top:10px;z-index:2;">
@@ -119,8 +121,9 @@
             </van-tab>
           </van-tabs>
         </div>
+        <div style="height:10px"></div>
 
-        <div style="background-color:#ffffff;margin-top:10px;padding:10px 15px;">
+        <!-- <div style="background-color:#ffffff;margin-top:10px;padding:10px 15px;">
           <div style="display:flex;border-bottom:1px solid #ededed;">
             <div style="color:#a3a3a3;" :style="handlePX('width',150)">颜色</div>
             <div style="flex:1;padding-left:10px;">
@@ -148,13 +151,13 @@
           <div v-for="(item,index) in detatil.detail.imageList" :key="index">
             <img v-lazy="item" style="width:100%;"/>
           </div>
-        </div>
+        </div> -->
 
 
 <van-goods-action style="z-index:90;background-color: #ffffff;">
-  <van-goods-action-mini-btn icon="chat" text="客服" @click="onClickMiniBtn_service" style="display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 10px;"/>
-  <van-goods-action-mini-btn icon="cart" text="购物车" @click="onClickMiniBtn_cart" style="display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 10px;"/>
-  <van-goods-action-mini-btn icon="like" text="收藏" @click="onClickMiniBtn_collection" :class="{collection_color:isCollection}" style="display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 10px;"/>
+  <van-goods-action-mini-btn icon="chat"  @click="onClickMiniBtn_service" style="border-top:1px #e5e5e5 solid;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 10px;font-size:22px"/>
+  <van-goods-action-mini-btn icon="cart"  @click="onClickMiniBtn_cart" style="border-top:1px #e5e5e5 solid;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 10px;font-size:22px;"/>
+  <van-goods-action-mini-btn icon="like"  @click="onClickMiniBtn_collection" :class="{collection_color:isCollection}" style="border-top:1px #e5e5e5 solid;display:flex;flex-direction:column;justify-content:center;font-size:22px;align-items:center;padding:0 10px;"/>
   <van-goods-action-big-btn text="立即购买" @click="changeModel()" style="flex:1;"/>
   <van-goods-action-big-btn text="加入购物车" @click="changeModel()" primary style="flex:1;"/>
 </van-goods-action>
@@ -209,9 +212,9 @@
     </div>
   <div>
       <van-goods-action class="vangoods" style="z-index:90;background-color: #ffffff;">
-        <van-goods-action-mini-btn icon="chat" text="客服" @click="onClickMiniBtn_service" style="display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 10px;"/>
-        <van-goods-action-mini-btn icon="cart" text="购物车" @click="onClickMiniBtn_cart" style="display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 10px;"/>
-        <van-goods-action-mini-btn icon="like" text="收藏" @click="onClickMiniBtn_collection" :class="{collection_color:isCollection}" style="display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 10px;"/>
+        <van-goods-action-mini-btn icon="chat" @click="onClickMiniBtn_service" style="border-top:1px #e5e5e5 solid;font-size:22px;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 10px;"/>
+        <van-goods-action-mini-btn icon="cart"  @click="onClickMiniBtn_cart" style="border-top:1px #e5e5e5 solid;font-size:22px;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 10px;"/>
+        <van-goods-action-mini-btn icon="like" @click="onClickMiniBtn_collection" :class="{collection_color:isCollection}" style="border-top:1px #e5e5e5 solid;font-size:22px;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 10px;"/>
         <van-goods-action-big-btn text="立即购买" @click="addCar()" style="flex:1;"/>
         <van-goods-action-big-btn text="加入购物车" @click="addCart()" primary style="flex:1;"/>
       </van-goods-action>

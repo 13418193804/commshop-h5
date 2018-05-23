@@ -214,7 +214,12 @@ export default new Router({
             path: '/addcomment',
             name: 'addcomment',
             component: r => require.ensure([], () => r(require('../pages/comment/addcomment.vue')))
-        }
+        },
+        {
+            path: '/filterproduct',
+            name: 'filterproduct',
+            component: r => require.ensure([], () => r(require('../pages/index/FilterProduct.vue')))
+        },
         
     ]
 });

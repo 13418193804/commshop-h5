@@ -26,9 +26,15 @@
   <div style="background-color:rgba(0, 0, 0, 0.498039);" v-show="isShow" >
   <div class="AllClassification" >
     <div class="flex flex-pack-justify flex-align-center ClassificationTitle "><span>全部分类</span>
-      <i class="iconfont icon-iconset0422"  style="font-size:16px;margin:3px;"  @click="toggle()"></i>
+      <i class="iconfont icon-iconset0422"  style="font-size:20px;margin:3px;"  @click="toggle()"></i>
     </div>
-    <div class="ClassificationName"><div v-for="(item,index) in indexList" :key="index"><div @click="changeTab(index)" :class="index==active?'ClassificationActive':''">{{item.pageName}}</div></div></div>
+    <div class="ClassificationName flex flex-warp-justify">
+      <div v-for="(item,index) in indexList" :key="index" style="width:25%;">
+      <div @click="changeTab(index)" class="flex flex-pack-center flex-align-center Classification" :class="index==active?'ClassificationActive':'ClassificationItem'">
+        {{item.pageName}}
+        </div>
+        </div>
+        </div>
   </div>
 </div>
   <!-- swipeable -->
@@ -208,7 +214,7 @@ export default class shopIndex extends Vue {
   value = "";
   isShow = false;
 filterProduct(){
-  console.log(111)
+  this.$router.push('/filterproduct')
 }
 
   goMessageList(){
@@ -518,44 +524,34 @@ filterProduct(){
 .goodsItem {
   width: 50%;
 }
+.ClassificationTitle{
+  padding:5px 10px;
+
+}
 .AllClassification {
   position: absolute;
   top: 0;
   z-index: 11111;
   width: 100%;
   background-color: #ffffff;
-  .ClassificationTitle {
-    padding: 0 15px;
-    height: 40px;
-    span {
-      line-height: 40px;
-    }
-  }
-  .ClassificationName {
-    padding: 0 15px 30px;
-    display: flex;
-    flex-flow: row wrap;
-    align-content: flex-start;
-    div {
-      padding: 0 8px;
-      flex: 0 0 25%;
-      div {
-        margin-top: 17px;
-        height: 30px;
-        line-height: 28px;
-        text-align: center;
-        box-sizing: border-box;
-        border: 1px solid #9f9f9f;
-        color: #9f9f9f;
-        border-radius: 40%;
-        overflow: hidden;
-      }
-      .ClassificationActive {
-        border: 1px solid #ffc630;
-        color: #ffc630;
-      }
-    }
-  }
+  
+}
+
+.ClassificationActive{
+  border:1px #ffc630 solid;
+color:#ffc630;
+}
+.ClassificationName{
+  padding-bottom:10px;
+}
+.Classification{
+  padding:5px 0 ; 
+ margin:5px;
+ border-radius:30px;
+}
+.ClassificationItem{
+ 
+  border:1px #e5e5e5 solid;
 }
 </style>
 <style>

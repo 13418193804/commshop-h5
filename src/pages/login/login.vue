@@ -5,9 +5,8 @@
 
       <div style="text-align:center;">
         <img src="../../assets/image/LOGO.png" :style="handlePX('width',200)+handlePX('height',200)" style="margin-bottom:30px">
-        <van-field class="login-input" v-model="loginName" type="number" placeholder="请输入用户名" :style="handlePX('width',620)+handlePX('font-size',30)+handlePX('padding-left',30)+handlePX('height',90)" style="margin:0 0 16px;"/>
-
-        <van-field class="login-input" v-model="password" type="password"  placeholder="请输入密码" :style="handlePX('width',620)+handlePX('font-size',30)+handlePX('padding-left',30)+handlePX('height',90)"/>
+        <van-field class="login-input" v-model="loginName" type="number"   placeholder="请输入用户名" :style="handlePX('width',620)+handlePX('font-size',30)+handlePX('padding-left',30)+handlePX('height',90)" style="margin:0 0 16px;"/>
+        <van-field class="login-input" v-model="password" type="password"    placeholder="请输入密码" :style="handlePX('width',620)+handlePX('font-size',30)+handlePX('padding-left',30)+handlePX('height',90)"/>
 
         <van-button class="login-button" size="normal" :block="true"  :style="handlePX('width',620)+handlePX('line-height',88)+handlePX('font-size',34)+handlePX('height',90)" @click="doLogin()" style="margin:35px 0 15px;">登录</van-button>
         <van-button class="login-button-cancel" size="normal" :block="true"  :style="handlePX('width',620)+handlePX('line-height',88)+handlePX('font-size',34)+handlePX('height',90)" @click="goback()" style="margin:5px 0 15px;">取消</van-button>

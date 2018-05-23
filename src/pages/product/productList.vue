@@ -49,7 +49,7 @@
 <div style="    display: flex;
     align-items: center;
     justify-content: center;font-size:14px;padding:15px;">
-    <div v-if="loading">加载中...</div>
+    <div v-if="!loading">加载中...</div>
     <div v-else>-</div>
 </div>
   </div>

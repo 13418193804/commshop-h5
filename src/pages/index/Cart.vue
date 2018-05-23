@@ -1,6 +1,6 @@
 <template>
   <div class="tab-contents" >
-    <comhead ref="comhead" title="购物车" isRightIcon="true"  rightTitle="删除" @rightClick="deleteshopCart()"></comhead>
+    <comhead ref="comhead" title="购物车"   :rightTitle="isLogin() && cartList.length >0?'删除':false" @rightClick="deleteshopCart()"></comhead>
 <van-checkbox-group v-model="result" @change="checkchange()">
 
 <van-cell-swipe :right-width="130" v-for="(item,index) in cartList" :key="index">
@@ -33,16 +33,23 @@
     justify-content: center;
     align-items: center;" v-if="!cartList || cartList.length==0">
     <div>
+      <div v-if="$store.getters[MutationTreeType.TOKEN_INFO] && $store.getters[MutationTreeType.TOKEN_INFO].userId !=='' && $store.getters[MutationTreeType.TOKEN_INFO].token !==''">
   <img src="../../assets/cart/空购物车拷贝.png" :style="handleImageWidth1()"/>
   <div style="text-align:center;color:#ffc630;font-size:17px;" @click="goindex()">立即逛逛>></div>
+  </div>
+<div v-else>
+  <div style="margin:10px; color:#666">您还未登录</div>
+  <div  style="text-align:center;color:#ffc630;font-size:17px;" @click="$router.push({name:'login'})">登录</div>
+</div>
+
   </div>
 </div> 
 </van-checkbox-group>
 
 
-<div style="height:99px"></div>
+<div style="height:99px;background-color:#f7f7f7;"></div>
 
-<van-submit-bar  :price="totalPrice()" button-text="结算" @submit="onSubmit" style="margin-bottom:50px;">
+<van-submit-bar v-if="isLogin() &&  cartList.length >0"  :price="totalPrice()" button-text="结算" @submit="onSubmit" style="margin-bottom:50px;">
   <van-checkbox v-if="cartList.length>0" v-model="checked" @change="allSelect">全选</van-checkbox>
 </van-submit-bar>
 
@@ -295,6 +302,9 @@ export default class Cart extends Vue {
       }
     );
   }
+  isLogin(){
+    return this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO] && this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].userId !=='' && this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].token !=='' 
+  }
   minuscart(id,num){
     Vue.prototype.$reqFormPost(
       "/shop/cart/updatenum",
@@ -329,6 +339,7 @@ export default class Cart extends Vue {
   }
   mounted() {
     this.setTabIndex(2);
+
      if(this.$store.getters[
           Vue.prototype.MutationTreeType.TOKEN_INFO
         ].userId != '' && this.$store.getters[
