@@ -53,7 +53,7 @@ export default class goodscomment extends Vue {
   goodsId="";
   status=0;
   commentList=[];
-  praise=0;
+  praise="0";
   stars=[{
                             src: require('../../assets/image/灰色星星.png'),
                             active: false
@@ -118,9 +118,11 @@ export default class goodscomment extends Vue {
           }else{
             this.getstars(0);            
           }
+          total = total* 100;
           total.toFixed(2)
+          const praisenum = total.toFixed(0)
           if(res.data.data.commentList.length>0){
-            this.praise = total * 100;
+            this.praise = praisenum;
           }
         }
         }
