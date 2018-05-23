@@ -547,7 +547,7 @@ filterProduct(){
         box-sizing: border-box;
         border: 1px solid #9f9f9f;
         color: #9f9f9f;
-        border-radius: 40%;
+        border-radius: 40px;
         overflow: hidden;
       }
       .ClassificationActive {
