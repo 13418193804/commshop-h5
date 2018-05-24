@@ -60,7 +60,9 @@ export default class App extends Vue {
 .van-search{
   padding:12px 15px;
 }
-
+.van-tabbar{
+  z-index:999;
+}
 .van-tabbar-item--active{
   color: #ffc630;
 }

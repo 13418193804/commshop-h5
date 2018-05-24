@@ -25,7 +25,7 @@
     align-items: center;
     justify-content: center;font-size:14px;padding:15px;">
 
-    <div v-if="loading">加载中...</div>
+    <div v-if="!loading">加载中...</div>
     <div v-else>-</div>
   
 </div>
@@ -79,6 +79,7 @@ export default class my_member extends Vue {
           Toast(res.data.message)
           return;
         }
+
         console.log("请求完成", res.data.data.memberList);
         let memberList = this.memberList ? this.memberList : [];
         for (let i = 0; i < res.data.data.memberList.length; i++) {
@@ -129,10 +130,14 @@ export default class my_member extends Vue {
     this.loading = true;
     let self = this;
     setTimeout(() => {
+      if(!self.loading){
+
       self.pageindex = self.pageindex + 1;
       self.getMemberList();
       self.loading = false;
+      }
     }, 1000);
+
   }
 
   handlePX(CssName, PxNumber) {

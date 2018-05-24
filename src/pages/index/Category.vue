@@ -1,7 +1,7 @@
 <template>
   <div class="tab-contents">
 <div class="searchbox" style="display:flex;">
-  <van-search placeholder="搜索商品" v-model="value" style="flex:1;background-color: #fafafa;"/>
+  <van-search placeholder="搜索商品" v-model="value" style="flex:1;background-color: #fafafa;" @click="filterProduct()"/>
 </div>
 
 <div class="contentBody">
@@ -69,6 +69,9 @@ export default class Category extends Vue {
     console.log(this.$store.getters[Vue.prototype.MutationTreeType.TAB_INDEX]);
     this.getCatList();
     console.log("分类页加载");
+  }
+    filterProduct() {
+    this.$router.push("/filterproduct");
   }
   goProductList(catId,parentCatId,selectIndex) {
     

@@ -2,8 +2,8 @@
   <div class="tab-contents">
     <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="优惠卷" isRightIcon="true"  ></comhead>
 
-    <van-tabs >
-      <van-tab v-for="(item,index) in tablist" :title="item" :key="index">
+    <van-tabs v-model="active"  @click="changeTab" >
+      <van-tab v-for="(item,indexs) in tablist" :title="item" :key="indexs" >
 
         <!-- 空空如也情况 -->
         <!-- <div style="background-color:#F4F4F4;height:-webkit-fill-available;display:flex;flex-direction:column;align-items: center;">
@@ -12,9 +12,9 @@
         </div> -->
 
         <!-- 有卷列表 -->
-        <div class="coupon_list" >
+        <div class="coupon_list" v-for="(item,index) in couponList" v-if="indexs == active">
           <!-- 未使用列表 -->          
-          <div class="coupon_notused" :style="handlePX('width', 702)+handlePX('height', 248)+handlePX('margin-top', 20)">
+          <div class="coupon_notused" v-if="item.status == 'UNUSED'&& active == 0" :style="handlePX('width', 702)+handlePX('height', 248)+handlePX('margin-top', 20)">
             <div class="coupon_cardbox" :style="handlePX('padding-top', 30)">
               <div class="coupon_car_left" :style="handlePX('padding-left', 60)">
                 <div style="color:#fff;" :style="handlePX('font-size', 65)">100<span :style="handlePX('font-size', 42)">元</span></div>
@@ -29,7 +29,7 @@
           </div>
 
           <!-- 已使用列表 -->      
-          <div class="coupon_used" :style="handlePX('width', 702)+handlePX('height', 248)+handlePX('margin-top', 20)">
+          <div class="coupon_used" v-if="item.status == 'USED' && active == 1" :style="handlePX('width', 702)+handlePX('height', 248)+handlePX('margin-top', 20)">
             <div class="coupon_cardbox" :style="handlePX('padding-top', 30)">
               <div class="coupon_car_left" :style="handlePX('padding-left', 60)">
                 <div style="color:#fff;" :style="handlePX('font-size', 65)">100<span :style="handlePX('font-size', 42)">元</span></div>
@@ -43,8 +43,11 @@
             <div class="coupon_car_bottom" :style="handlePX('line-height', 52)+handlePX('font-size', 20)+handlePX('padding-left', 40)">全场通用；特价商品或其他优惠活动商品不可叠加使用</div>
           </div>
 
+
+
+
           <!-- 已过期列表 -->      
-          <div class="coupon_overdue" :style="handlePX('width', 702)+handlePX('height', 248)+handlePX('margin-top', 20)">
+          <div class="coupon_overdue" v-if="item.status == 'OVERDUE' && active == 2" :style="handlePX('width', 702)+handlePX('height', 248)+handlePX('margin-top', 20)">
             <div class="coupon_cardbox" :style="handlePX('padding-top', 30)">
               <div class="coupon_car_left" :style="handlePX('padding-left', 60)">
                 <div style="color:#fff;" :style="handlePX('font-size', 65)">100<span :style="handlePX('font-size', 42)">元</span></div>
@@ -60,13 +63,20 @@
 
         </div>
 
+
+
+
         <!--领卷按钮   -->
-        <div :style="handlePX('padding', 30)+handlePX('margin-top', 100)">
+        <div :style="handlePX('padding', 30)+handlePX('margin-top', 100)" v-if="indexs == active">
           <div @click="go_collar_center()" :style="handlePX('height', 90)" style="border:1px solid #ffce5b;border-radius: 8px;display: flex;justify-content: center;align-items: center;">
             <img src="../../assets/image/优惠卷.png" :style="handlePX('width', 45)+handlePX('height', 45)"/>
             <div style="color:#ffce5b;">去领卷中心逛逛</div>
           </div>
         </div>
+
+
+
+
 
       </van-tab>
     </van-tabs>
@@ -97,6 +107,10 @@ export default class coupon extends Vue {
     return CssName +":" +this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth /750 * PxNumber +"px;";
   }
   couponList=[]
+  active = 0;
+   changeTab(active) {
+    this.active = active;
+  }
   getList(){
       Vue.prototype.$reqFormPost("/coupon/user/linklist",{
         userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].userId,

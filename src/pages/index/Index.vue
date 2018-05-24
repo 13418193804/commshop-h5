@@ -61,7 +61,7 @@
             <!-- 标签栏 -->
           <div v-if="items.componentType === 'COMPONENT_TYPE_QUICK_BAR'">
             <div class="tab_box">
-                <div v-for=" (tab,tabIndex) in  items.items" style="width:25%;" :key="tabIndex">
+                <div v-for=" (tab,tabIndex) in  items.items" style="width:25%;" :key="tabIndex" @click="goActionType(tab.actionType,tab.actionValue)">
                    <div style="width:-webkit-fill-available;padding: 10px;">
                     <div>
                        <img v-lazy="tab.itemImgUrl" style="border-radius:50%;" :style="handlePX('width', 100)+handlePX('height', 100)"/>
@@ -112,8 +112,8 @@
                   <div v-for="(goods,goodsIndex) in items.items" @click="goProductDetail(goods.goodsId)" :key="goodsIndex" class="goodsItem">
                     <div style="  width:-webkit-fill-available;  ">
                       <div style="border: 1px #e5e5e5 solid;box-sizing: border-box;display:flex;align-items: center;justify-content:center;overflow:hidden;position:relative;margin:5px auto;" :style="handlePX('height', 410)+handlePX('width', 345)">
-                        <img src="../../assets/image/热.png" style="width:-webkit-fill-available;position: absolute;top: 0;left:0;" :style="handlePX('width', 43)+handlePX('height', 49)"/>
-                        <img v-lazy="goods.goodsImg.split(',')[0]" style="width:-webkit-fill-available;position: absolute;top: 0;z-index:-1;"/>
+                        <img src="../../assets/image/热.png" style="width:-webkit-fill-available;position: absolute;top: 0;left:0;z-index:50" :style="handlePX('width', 43)+handlePX('height', 49)"/>
+                        <img v-lazy="goods.goodsImg.split(',')[0]" style="width:-webkit-fill-available;position: absolute;top: 0;"/>
                         <div class="textLabel" style="position: absolute;bottom: 0;width: 100%;background-color:rgba(207,207,207,0.3);text-align:center;color:#A3A3A3" :style="handlePX('height', 70)+handlePX('line-height', 70)+handlePX('font-size', 28)">{{goods.jingle}}</div>
                       </div>
                       <div style="margin:5px auto;display:flex;justify-content: center;flex-direction: column;width:-webkit-fill-available;" :style="handlePX('width', 345)">
@@ -191,7 +191,7 @@ import Component from "vue-class-component";
 import mixin from "../../config/mixin";
 import { Action } from "vuex-class";
 import { Toast } from "vant";
-import { Watch } from 'vue-property-decorator';
+import { Watch } from "vue-property-decorator";
 
 // import { recommendList } from '../../service/getData';
 
@@ -203,22 +203,22 @@ export default class shopIndex extends Vue {
   @Action("setTabIndex") setTabIndex;
   @Action("setlabelActive") setlabelActive;
 
-  @Watch('')
+  @Watch("")
   watchCount(newVal, oldVal) {
-    console.log("newVal", newVal, "oldVal", oldVal)
+    console.log("newVal", newVal, "oldVal", oldVal);
   }
-  
+
   images = ["https://img.yzcdn.cn/1.jpg", "https://img.yzcdn.cn/2.jpg"];
   indexList = [];
   active = 0;
   value = "";
   isShow = false;
-filterProduct(){
-  this.$router.push('/filterproduct')
-}
+  filterProduct() {
+    this.$router.push("/filterproduct");
+  }
 
-  goMessageList(){
-      this.$router.push('/messagelist')
+  goMessageList() {
+    this.$router.push("/messagelist");
   }
   initIndex() {
     Vue.prototype.$reqUrlGet("/page/list", {}, res => {
@@ -266,7 +266,6 @@ filterProduct(){
 
           this.indexList.push();
           if (this.indexList[active].catId) {
-            
             Vue.prototype.$reqFormPost(
               "/user/goods/list",
               {
@@ -287,12 +286,9 @@ filterProduct(){
                   items: res.data.data.goodsList
                 });
 
-                
                 this.indexList.push();
-
               }
             );
-
           }
         }
       );
@@ -330,7 +326,7 @@ filterProduct(){
           console.log(
             "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
           );
-                  Toast(res.data.message);
+          Toast(res.data.message);
           return;
         }
         for (var i = 0; i < res.data.data.children.length; i++) {
@@ -391,20 +387,20 @@ filterProduct(){
       "px;"
     );
   }
+  
   mounted() {
-
-    if(this.$route.query.active){
+    if (this.$route.query.active) {
       this.active = parseInt(this.$route.query.active);
-      if(this.$route.query.availWidth&&this.$route.query.availHeight){
+      if (this.$route.query.availWidth && this.$route.query.availHeight) {
         this.setlabelActive({
           availWidth: this.$route.query.availWidth,
-        availHeight: this.$route.query.availHeight
-        })
+          availHeight: this.$route.query.availHeight
+        });
       }
     }
 
     this.setTabIndex(0);
-    
+
     this.initIndex();
   }
 }
@@ -524,9 +520,9 @@ filterProduct(){
 .goodsItem {
   width: 50%;
 }
-.ClassificationTitle{
-  padding:5px 10px;
 
+.ClassificationTitle {
+  padding: 5px 10px;
 }
 .AllClassification {
   position: absolute;
@@ -534,24 +530,22 @@ filterProduct(){
   z-index: 11111;
   width: 100%;
   background-color: #ffffff;
-  
 }
 
-.ClassificationActive{
-  border:1px #ffc630 solid;
-color:#ffc630;
+.ClassificationActive {
+  border: 1px #ffc630 solid;
+  color: #ffc630;
 }
-.ClassificationName{
-  padding-bottom:10px;
+.ClassificationName {
+  padding-bottom: 10px;
 }
-.Classification{
-  padding:5px 0 ; 
- margin:5px;
- border-radius:30px;
+.Classification {
+  padding: 5px 0;
+  margin: 5px;
+  border-radius: 30px;
 }
-.ClassificationItem{
- 
-  border:1px #e5e5e5 solid;
+.ClassificationItem {
+  border: 1px #e5e5e5 solid;
 }
 </style>
 <style>
@@ -566,6 +560,8 @@ color:#ffc630;
   width: 8px;
   height: 5px;
   background-color: #d0d0d0;
+  margin: 0 5px;
+  border-radius: 100px;
 }
 .index_tabs .van-swipe__indicators > .van-swipe__indicator--active {
   width: 15px;
@@ -576,7 +572,7 @@ color:#ffc630;
 }
 .searchbox .van-search__input-wrap {
   width: 100%;
-  display:flex;
+  display: flex;
   align-items: center;
 }
 
@@ -588,31 +584,35 @@ color:#ffc630;
   padding-left: 30px;
 }
 
-.bottomBigshit{
-  position:fixed;
-  bottom:0;
-  width:100%;
-  z-index:9999;
-  height:50px;
+.bottomBigshit {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 9999;
+  height: 50px;
 }
-.topBigshit{
-   position:absolute;
-  top:0;
-  width:100%;
-  z-index:9999;
-  height:100%;
+.topBigshit {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 9999;
+  height: 100%;
 }
-::-webkit-input-placeholder { /* WebKit browsers */ 
-font-size:14px;
-} 
-:-moz-placeholder { /* Mozilla Firefox 4 to 18 */ 
-font-size:14px;
-} 
-::-moz-placeholder { /* Mozilla Firefox 19+ */ 
-font-size:14px;
-} 
-:-ms-input-placeholder { /* Internet Explorer 10+ */ 
-font-size:14px;
+::-webkit-input-placeholder {
+  /* WebKit browsers */
+  font-size: 14px;
+}
+:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  font-size: 14px;
+}
+::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  font-size: 14px;
+}
+:-ms-input-placeholder {
+  /* Internet Explorer 10+ */
+  font-size: 14px;
 }
 </style>
 

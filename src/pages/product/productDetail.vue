@@ -77,15 +77,17 @@
               </template>
             </van-cell>
           </van-cell-group>
-          <div  v-for="(item,index) in detatil.commentList" :key="index">
+          <div  v-for="(item,index) in detatil.commentList" :key="index" v-if="index == 0">
             <div class="userComment" style="padding:10px 15px;">
               <div>
                 <img v-if="item.user.userIcon" v-lazy="item.user.userIcon" :style="handlePX('width',45)+handlePX('height',45)" style="vertical-align:middle;border-radius:50%;"/>                
                 <img v-else src="../../assets/image/userIcon.png" :style="handlePX('width',45)+handlePX('height',45)" style="vertical-align:middle;border-radius:50%;"/>
                 <span>{{item.user.nickName}}</span>
               </div>
-              <div style="color:#999999;">{{item.createTime}}</div>
-              <div>{{item.commentContent}}</div>
+                      <div style="color:#999999;font-size:14px;">{{item.createTime}}
+              <span v-for="n in JSON.parse(item.skuKeyValue)" style="margin:0 5px;">{{n.key}}：{{n.value}}</span>
+            </div>
+            <div style="padding:5px 0;">{{item.commentContent}}</div>
               <div v-if="item.commentImg">
                 <img v-if="item.commentImg.split(',')[0]" v-lazy="item.commentImg.split(',')[0]" :style="handlePX('width',100)+handlePX('height',100)"/>
                 <img v-if="item.commentImg.split(',')[1]" v-lazy="item.commentImg.split(',')[1]" :style="handlePX('width',100)+handlePX('height',100)"/>
@@ -174,7 +176,7 @@
         <div  style=' background-color:#fff;width:100%;' :class="keepModel ?'modiaBoxUp2' :'modiaBoxDown2'" @click.stop="()=>{return }">
  <div style='border-bottom:1px solid #e5e5e5;display:flex;margin-left:15px;justify-content: space-between'>
       <div style='padding:6px;border-radius:5px;background-color:#fff;border:1px solid #e5e5e5;display:flex;margin:10px;'>
-        <img v-lazy="skuItem.skuImgUrl?skuItem.skuImgUrl :detatil['goodsImg'].split(',')[0]" style="width:80px;height:80px;"/>
+        <img v-lazy="skuItem.skuImgUrl?skuItem.skuImgUrl :detatil['goodsImg'].split(',')[0]" style="width:80px;height:80px;" @click="imagePreview(skuItem.skuImgUrl?skuItem.skuImgUrl :detatil['goodsImg'].split(',')[0])"/>
       </div>
       <div style='font-size:13px;flex:1;    padding: 10px 0 0 0;'>
         <div style="font-size:16px;">{{detatil['goodsName']}}</div>
@@ -185,6 +187,10 @@
  
       </div>
       <div style='padding:10px;'>
+<i class="iconfont icon-shanchu3" style="    color: #000;
+    height: 17px;
+    line-height: 17px;"  @click.stop='changeModel()' ></i>
+
         <!-- <img src='../../image/tl-3@2x.png' style='width:20px;height:20px'  @click.stop='changeModel()'/> -->
       </div>
     </div>
@@ -242,7 +248,7 @@ import mixin from "../../config/mixin";
 import comhead from "../../components/Comhead.vue";
 import { Toast } from "vant";
 import { Action } from "vuex-class";
-import { Cell, CellGroup } from 'vant';
+import { Cell, CellGroup,ImagePreview } from 'vant';
 
 @Component({
   components: {
@@ -313,6 +319,11 @@ export default class ProductDetail extends Vue {
   }
   onClickMiniBtn_cart(){
     this.$router.push("/cart");
+  }
+  imagePreview(img){
+    ImagePreview([
+      img
+], 0);
   }
   onClickMiniBtn_collection(){
     if(this.isCollection==false){
@@ -654,17 +665,31 @@ export default class ProductDetail extends Vue {
     );
   }
   mounted() {
-    console.log(this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]);
+
       if(this.$route.query.availWidth&&this.$route.query.availHeight){
         this.setlabelActive({
           availWidth: this.$route.query.availWidth,
         availHeight: this.$route.query.availHeight
         })
+      }else{
+
+        if (
+      this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].userId ==
+        "" &&
+      this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].token == ""
+    ) {
+
+this.$router.push({name:'login'})
+return 
+    }
+
       }
+
+  
     this.goodsId = this.$route.query.goodsId;
     this.getProductDetail();
-    console.log("----------------------");
     this.collection_query();
+
   }
 }
 </script>

@@ -9,7 +9,7 @@
       </div>
       <span>{{praise}}%好评</span>
     </div>  
-    <div class="flex" style="padding-left: 15px;">
+    <div class="flex" style="padding:10px 15px;">
       <div @click="tab(0)" :class="status==0?'tabConactive':'tabCon'">全部</div>  
       <div @click="tab(1)" :class="status==1?'tabConactive':'tabCon'" style="margin-left:10px;">有图</div>  
     </div>  
@@ -21,8 +21,10 @@
               <img v-else src="../../assets/image/userIcon.png" :style="handlePX('width',65)+handlePX('height',65)" style="vertical-align:middle;border-radius:50%;"/>
               <span>{{item.user.nickName}}</span>
             </div>
-            <div style="color:#999999;">{{item.createTime}}</div>
-            <div>{{item.commentContent}}</div>
+            <div style="color:#999999;font-size:14px;">{{item.createTime}}
+              <span v-for="n in JSON.parse(item.skuKeyValue)" style="margin:0 5px;">{{n.key}}：{{n.value}}</span>
+            </div>
+            <div style="padding:5px 0;">{{item.commentContent}}</div>
             <div v-if="item.commentImg" >
               <img v-if="item.commentImg.split(',')[0]" v-lazy="item.commentImg.split(',')[0]" :style="handlePX('width',148)+handlePX('height',148)"/>
               <img v-if="item.commentImg.split(',')[1]" v-lazy="item.commentImg.split(',')[1]" :style="handlePX('width',148)+handlePX('height',148)"/>
