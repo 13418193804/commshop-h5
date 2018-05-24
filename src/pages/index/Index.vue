@@ -534,7 +534,6 @@ filterProduct(){
   z-index: 11111;
   width: 100%;
   background-color: #ffffff;
-<<<<<<< HEAD
   
 }
 
@@ -553,40 +552,6 @@ color:#ffc630;
 .ClassificationItem{
  
   border:1px #e5e5e5 solid;
-=======
-  .ClassificationTitle {
-    padding: 0 15px;
-    height: 40px;
-    span {
-      line-height: 40px;
-    }
-  }
-  .ClassificationName {
-    padding: 0 15px 30px;
-    display: flex;
-    flex-flow: row wrap;
-    align-content: flex-start;
-    div {
-      padding: 0 8px;
-      flex: 0 0 25%;
-      div {
-        margin-top: 17px;
-        height: 30px;
-        line-height: 28px;
-        text-align: center;
-        box-sizing: border-box;
-        border: 1px solid #9f9f9f;
-        color: #9f9f9f;
-        border-radius: 40px;
-        overflow: hidden;
-      }
-      .ClassificationActive {
-        border: 1px solid #ffc630;
-        color: #ffc630;
-      }
-    }
-  }
->>>>>>> 88a6bebd35673b4de9d0879d603c80f5934859fb
 }
 </style>
 <style>
