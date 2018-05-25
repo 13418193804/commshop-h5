@@ -1,6 +1,7 @@
 <template>
   <div class="tab-contents" style="height:-webkit-fill-available;background-color:#FFFFFF;">
-        <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @rightClick="toggle()" :rightTitle="!isShow?'编辑':'删除'" @leftClick="false"  title="我的收藏"  ></comhead>
+        <comhead v-if="goodsList.length>0" ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @rightClick="toggle()" :rightTitle="!isShow?'编辑':'取消'" @leftClick="false"  title="我的收藏"  ></comhead>
+        <comhead v-if="goodsList.length==0" ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="我的收藏"  ></comhead>
 
 
     <div v-for="(item, index) in goodsList" :key="index" style="display:flex;flex-direction:row;align-items:center;border-bottom:1px solid #e5e5e5;">
@@ -31,7 +32,10 @@
     <div v-if="goodsList.length==0" style="position: fixed;left: 50%;top: 50%;-webkit-transform: translate(-50%, -50%);transform: translate(-50%, -50%);}">
       暂无收藏
     </div>
-
+    <div v-if="goodsList.length>0&&isShow==true" style="position: fixed;z-index: 100;bottom: 0;display:flex;left:0;right:0;background-color: #fafafa;">
+      <div style="color:#a3a3a3;flex: 1;text-align: center;padding:10px 0;" @click="allchange()">{{goodsList.length==checkedGoods.length?'取消全选':'全选'}}</div>
+      <div style="color:#e05459;flex: 1;text-align: center;padding:10px 0;" @click="favdelete()">删除</div>
+    </div>
     
 
 
@@ -57,7 +61,9 @@ export default class collection extends Vue {
   isShow=false;
 
   toggle(){
-      if(this.isShow==true){
+    this.isShow = !this.isShow;
+  }
+  favdelete(){
         if(this.checkedGoods.length==0){
           Toast('没有选商品')
           return
@@ -88,10 +94,19 @@ export default class collection extends Vue {
           this.getProductList();
           }
           );
-        }
-      this.isShow = !this.isShow;
   }
-
+  allchange(){
+    if (this.goodsList.length==this.checkedGoods.length) {
+      this.checkedGoods=[];
+    }else{
+      let result = [];
+      this.goodsList.forEach((item, index) => {
+        console.log();
+        result.push(item.goodsId);
+      });
+      this.checkedGoods = result;
+    }
+  }
   getProductList() {
     Vue.prototype.$reqFormPost(
       "/fav/query",

@@ -19,7 +19,7 @@
         <li >
 
         <!-- 有卷列表 -->
-        <div class="coupon_list" v-for="(item,index) in couponList" v-if="indexs == active">
+        <div class="coupon_list" v-for="(item,index) in couponList" v-if="indexs == active" :key="index">
           <!-- 未使用列表 -->          
           <div class="coupon_notused" v-if="item.status == 'UNUSED'&& active == 0" :style="handlePX('width', 702)+handlePX('height', 248)+handlePX('margin-top', 20)">
             <div class="coupon_cardbox" :style="handlePX('padding-top', 30)">
@@ -144,13 +144,13 @@ export default class coupon extends Vue {
       if (!self.loading) {
         switch (self.active) {
           case 0:
-            self.usedindexPage += 20;
+            self.usedindexPage += 1;
             break;
           case 1:
-            self.unusedindexPage += 20;
+            self.unusedindexPage += 1;
             break;
           case 2:
-            self.overdueindexPage += 20;
+            self.overdueindexPage += 1;
             break;
         }
         self.getList();
@@ -159,9 +159,9 @@ export default class coupon extends Vue {
     }, 1000);
   }
 
-  usedindexPage = 20;
-  unusedindexPage = 20;
-  overdueindexPage = 20;
+  usedindexPage = 0;
+  unusedindexPage = 0;
+  overdueindexPage = 0;
 
   changeTab(active) {
     this.active = active;
@@ -170,19 +170,19 @@ export default class coupon extends Vue {
 
   getList() {
     let status = "";
-    let pageSize = 20;
+    let page = 0;
     switch (this.active) {
       case 0:
         status = "UNUSED";
-        pageSize = this.usedindexPage;
+        page = this.usedindexPage;
         break;
       case 1:
         status = "USED";
-        pageSize = this.unusedindexPage;
+        page = this.unusedindexPage;
         break;
       case 2:
         status = "OVERDUE";
-        pageSize = this.overdueindexPage;
+        page = this.overdueindexPage;
         break;
     }
     let data = {
@@ -191,8 +191,8 @@ export default class coupon extends Vue {
       token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
         .token,
       status: status,
-      page: 0,
-      pageSize: pageSize
+      page: page,
+      pageSize: 20
     };
 
     Vue.prototype.$reqFormPost("/coupon/user/linklist", data, res => {

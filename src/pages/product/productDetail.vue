@@ -42,13 +42,14 @@
                 <span v-else class="van-cell-text">请选择规格数量</span>
               </template>
             </van-cell>
-            <!-- <van-cell title="限制：特价商品不可与优惠卷叠加使用"/> -->
-            <!-- <van-cell is-link>
+            <van-cell v-if="couponList.length>0" title="限制：特价商品不可与优惠卷叠加使用"/>
+            <van-cell v-if="couponList.length>0" is-link @click="go_collar_center()">
               <template slot="title">
                 <span class="van-cell-text">领卷：</span>
-                <img v-lazy="'1'" :style="handlePX('width',112)+handlePX('height',26)"/>
+                <!-- <img v-lazy="'1'" :style="handlePX('width',112)+handlePX('height',26)"/> -->
+                <span v-for="(item,index) in couponList" :key="index" style="color:#FFC630;" >{{item.couponName}}</span>
               </template>
-            </van-cell> -->
+            </van-cell>
             <van-cell>
               <template slot="title">
                 <span class="van-cell-text">备注：</span>
@@ -269,6 +270,7 @@ export default class ProductDetail extends Vue {
   tabgoodslist=[];
   likeList=[];
   newList=[];
+  couponList=[];
   tabindex=0;
   isCollection=false;
 
@@ -620,6 +622,8 @@ export default class ProductDetail extends Vue {
         this.likeList = res.data.data.likeList;
         this.newList = res.data.data.newList;
 
+        this.couponList = res.data.data.couponList;
+
         this.detatil.skuKey.forEach((keyItem, keyIndex) => {
           keyItem.valueList.forEach((valueItem, valueIndex) => {
             let opt = { disable: true, chosen: false };
@@ -653,6 +657,9 @@ export default class ProductDetail extends Vue {
         goodsId: goodsId
       }
     });
+  }
+  go_collar_center() {
+    this.$router.push("/collar_center");
   }
   handlePX(CssName, PxNumber) {
     return (

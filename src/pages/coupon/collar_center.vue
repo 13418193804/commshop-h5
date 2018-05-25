@@ -1,21 +1,30 @@
 <template>
   <div class="tab-contents">
     <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="领卷中心" isRightIcon="true"  ></comhead>
+          <ul
+  v-infinite-scroll="loadMore"
+  :infinite-scroll-disabled="loading"
+  infinite-scroll-distance="20" >
 
+        <li >
         <!-- 有卷列表 -->
+<<<<<<< HEAD
         <div class="coupon_list">
 
+=======
+        <div class="coupon_list" v-for="(item,index) in couponList" :key="index">
+>>>>>>> 879854d80da080c6da6ebb9f8654bd8f220580a7
 
           <!-- collar列表 -->          
           <div v-for="(item,index) in couponList" class="coupon_collar" :style="handlePX('width', 702)+handlePX('height', 248)+handlePX('margin-top', 20)">
             <div class="coupon_cardbox" :style="handlePX('padding-top', 30)">
               <div class="coupon_car_left" :style="handlePX('padding-left', 60)">
-                <div style="color:#fff;" :style="handlePX('font-size', 65)">100<span :style="handlePX('font-size', 42)">元</span></div>
-                <div style="color:rgba(255,255,255,0.8);">满299减100</div>
+                <div style="color:#fff;" :style="handlePX('font-size', 65)">{{item.couponDenomination}}<span :style="handlePX('font-size', 42)">元</span></div>
+                <div style="color:rgba(255,255,255,0.8);">{{item.couponName}}</div>
               </div>
               <div class="coupon_car_right" :style="handlePX('padding-right', 42)+handlePX('padding-top', 30)">
-                <van-button size="mini" :style="handlePX('width', 135)+handlePX('height', 40)" style="border:0;background-color:rgba(255,255,255,0.5);color:#DAA000;">领卷</van-button>
-                <div style="color:rgba(255,255,255,0.8);" :style="handlePX('font-size', 26)">2018.03.24-2018.03.24</div>
+                <van-button size="mini" :style="handlePX('width', 135)+handlePX('height', 40)" style="border:0;background-color:rgba(255,255,255,0.5);color:#DAA000;" @click="addcoupon(item.id)">领卷</van-button>
+                <div style="color:rgba(255,255,255,0.8);" :style="handlePX('font-size', 26)">{{item.createTime.split(' ')[0]}}-{{item.endDate.split(' ')[0]}}</div>
               </div>
             </div>
             <div class="coupon_car_bottom" :style="handlePX('line-height', 52)+handlePX('font-size', 20)+handlePX('padding-left', 40)">全场通用；特价商品或其他优惠活动商品不可叠加使用</div>
@@ -26,7 +35,16 @@
 
 
         </div>
+    </li>
+ </ul>
+<div style="    display: flex;
+    align-items: center;
+    justify-content: center;font-size:14px;padding:15px;">
 
+    <div v-if="!loading">加载中...</div>
+    <div v-else>-</div>
+  
+</div>
 
   </div>
 </template>
