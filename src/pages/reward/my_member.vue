@@ -87,8 +87,6 @@ export default class my_member extends Vue {
         }
         if (res.data.data.memberList.length == 20) {
           this.loading = false;
-        } else {
-          // this.finished = true;
         }
         this.memberList = memberList;
         console.log(this.finished);
