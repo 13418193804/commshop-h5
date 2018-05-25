@@ -8,12 +8,8 @@
 
         <li >
         <!-- 有卷列表 -->
-<<<<<<< HEAD
         <div class="coupon_list">
 
-=======
-        <div class="coupon_list" v-for="(item,index) in couponList" :key="index">
->>>>>>> 879854d80da080c6da6ebb9f8654bd8f220580a7
 
           <!-- collar列表 -->          
           <div v-for="(item,index) in couponList" class="coupon_collar" :style="handlePX('width', 702)+handlePX('height', 248)+handlePX('margin-top', 20)">
