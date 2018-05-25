@@ -86,12 +86,17 @@ export const reqUrlGet = (url, data, callBack) => {
         .then(res => {
             if (res.data.status == 400 && res.data.message == "账号已在其他设备登录") {
                 Toast(res.data.message);
-                window['myvue'].$store.commit(MutationTreeType.TOKEN_INFO, {
-                    userId: "",
-                    token: ""
-                })
+
+                // window['myvue'].$store.commit(MutationTreeType.TOKEN_INFO, {
+                //     userId: "",
+                //     token: ""
+                // })
                 localStorage.removeItem(MutationTreeType.TOKEN_INFO);
-                // window['myvue'].$router.push({ name: 'login' });
+
+                if (window.confirm('账号已在其他设备登录,是否重新登陆?')) {
+                    window['myvue'].$router.push({ name: 'login' });
+                    return true;
+                }
                 return;
             }
             callBack(res);
@@ -106,13 +111,13 @@ export const reqUrlGet = (url, data, callBack) => {
 
 };
 
-export const confirmLogin = (obj:any) => {
-   
+export const confirmLogin = (obj: any) => {
+
     if ((window['myvue'].$store.getters[MutationTreeType.TOKEN_INFO].userId || '') == '' || (window['myvue'].$store.getters[MutationTreeType.TOKEN_INFO].token || '') == '') {
         obj = { name: 'login' };
     }
     window['myvue'].$router.push(obj);
-    
+
 };
 export default {
     install(Vue) {
