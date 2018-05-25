@@ -402,7 +402,7 @@ export default class ProductDetail extends Vue {
           return;
         }
         for (let i = 0; i < res.data.data.goodsList.length; i++) {
-          if(res.data.data.goodsList[i].goodsId.indexOf(this.goodsId)!== '-1'){
+          if(res.data.data.goodsList[i].goodsId.indexOf(this.goodsId)!== -1){
             this.isCollection=true;
             return;
           }

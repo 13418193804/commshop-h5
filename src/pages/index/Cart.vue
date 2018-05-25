@@ -103,7 +103,7 @@ export default class Cart extends Vue {
         result.push(item.id);
       });
       this.result = result;
-    }else{
+    }else if(this.cartList.length==this.result.length){
       this.result=[];
     }
   }
