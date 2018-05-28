@@ -21,11 +21,11 @@
         <!-- 有卷列表 -->
         <div class="coupon_list" v-for="(item,index) in couponList" v-if="indexs == active" :key="index">
           <!-- 未使用列表 -->          
-          <div class="coupon_notused" v-if="item.status == 'UNUSED'&& active == 0" :style="handlePX('width', 702)+handlePX('height', 248)+handlePX('margin-top', 20)">
+          <div class="coupon_notused" v-if="item.status == 'UNUSED'&& active == 0 &&item.coupon" :style="handlePX('width', 702)+handlePX('height', 248)+handlePX('margin-top', 20)">
             <div class="coupon_cardbox" :style="handlePX('padding-top', 30)">
               <div class="coupon_car_left" :style="handlePX('padding-left', 60)">
-                <div style="color:#fff;" :style="handlePX('font-size', 65)">{{item.coupon.couponDenomination}}<span :style="handlePX('font-size', 42)">元</span></div>
-                <div style="color:rgba(255,255,255,0.8);">{{item.coupon.couponName}}</div>
+                <div style="color:#fff;" :style="handlePX('font-size', 65)">{{item.coupon?item.coupon.couponDenomination:''}}<span :style="handlePX('font-size', 42)">元</span></div>
+                <div style="color:rgba(255,255,255,0.8);">{{item.coupon?item.coupon.couponName:''}}</div>
               </div>
               <div class="coupon_car_right" :style="handlePX('padding-right', 42)+handlePX('padding-top', 30)">
                 <van-button size="mini" :style="handlePX('width', 135)+handlePX('height', 40)" style="border:0;background-color:rgba(255,255,255,0.9);color:#fd5f61;">去使用</van-button>
@@ -36,11 +36,11 @@
           </div>
 
           <!-- 已使用列表 -->      
-          <div class="coupon_used" v-if="item.status == 'USED' && active == 1" :style="handlePX('width', 702)+handlePX('height', 248)+handlePX('margin-top', 20)">
+          <div class="coupon_used" v-if="item.status == 'USED' && active == 1 &&item.coupon" :style="handlePX('width', 702)+handlePX('height', 248)+handlePX('margin-top', 20)">
             <div class="coupon_cardbox" :style="handlePX('padding-top', 30)">
               <div class="coupon_car_left" :style="handlePX('padding-left', 60)">
-                <div style="color:#fff;" :style="handlePX('font-size', 65)">{{item.coupon.couponDenomination}}<span :style="handlePX('font-size', 42)">元</span></div>
-                <div style="color:rgba(255,255,255,0.8);">{{item.coupon.couponName}}</div>
+                <div style="color:#fff;" :style="handlePX('font-size', 65)">{{item.coupon?item.coupon.couponDenomination:''}}<span :style="handlePX('font-size', 42)">元</span></div>
+                <div style="color:rgba(255,255,255,0.8);">{{item.coupon?item.coupon.couponName:''}}</div>
               </div>
               <div class="coupon_car_right" :style="handlePX('padding-right', 42)+handlePX('padding-top', 30)">
                 <div :style="handlePX('width', 135)+handlePX('height', 40)" style="color:rgba(255,255,255,0.8);">已使用</div>
@@ -54,11 +54,11 @@
 
 
           <!-- 已过期列表 -->      
-          <div class="coupon_overdue" v-if="item.status == 'OVERDUE' && active == 2" :style="handlePX('width', 702)+handlePX('height', 248)+handlePX('margin-top', 20)">
+          <div class="coupon_overdue" v-if="item.status == 'OVERDUE' && active == 2 &&item.coupon" :style="handlePX('width', 702)+handlePX('height', 248)+handlePX('margin-top', 20)">
             <div class="coupon_cardbox" :style="handlePX('padding-top', 30)">
               <div class="coupon_car_left" :style="handlePX('padding-left', 60)">
-                <div style="color:#fff;" :style="handlePX('font-size', 65)">{{item.coupon.couponDenomination}}<span :style="handlePX('font-size', 42)">元</span></div>
-                <div style="color:rgba(255,255,255,0.8);">{{item.coupon.couponName}}</div>
+                <div style="color:#fff;" :style="handlePX('font-size', 65)">{{item.coupon?item.coupon.couponDenomination:''}}<span :style="handlePX('font-size', 42)">元</span></div>
+                <div style="color:rgba(255,255,255,0.8);">{{item.coupon?item.coupon.couponName:''}}</div>
               </div>
               <div class="coupon_car_right" style="align-self: flex-end;" :style="handlePX('padding-right', 42)+handlePX('padding-top', 30)">
                 <!-- <div style="color:rgba(255,255,255,0.8);" :style="handlePX('font-size', 26)">2018.03.24-2018.03.24</div> -->
@@ -144,10 +144,10 @@ export default class coupon extends Vue {
       if (!self.loading) {
         switch (self.active) {
           case 0:
-            self.usedindexPage += 1;
+            self.unusedindexPage += 1;
             break;
           case 1:
-            self.unusedindexPage += 1;
+            self.usedindexPage += 1;
             break;
           case 2:
             self.overdueindexPage += 1;
@@ -159,8 +159,8 @@ export default class coupon extends Vue {
     }, 1000);
   }
 
-  usedindexPage = 0;
   unusedindexPage = 0;
+  usedindexPage = 0;  
   overdueindexPage = 0;
 
   changeTab(active) {
@@ -174,11 +174,11 @@ export default class coupon extends Vue {
     switch (this.active) {
       case 0:
         status = "UNUSED";
-        page = this.usedindexPage;
+        page = this.unusedindexPage;
         break;
       case 1:
         status = "USED";
-        page = this.unusedindexPage;
+        page = this.usedindexPage;
         break;
       case 2:
         status = "OVERDUE";

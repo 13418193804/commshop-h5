@@ -9,14 +9,14 @@
         <li >
         <!-- 有卷列表 -->
         <div class="coupon_list">
-
+          <div v-for="(item,index) in couponList" :key="index">
 
           <!-- collar列表 -->          
-          <div v-for="(item,index) in couponList" class="coupon_collar" :style="handlePX('width', 702)+handlePX('height', 248)+handlePX('margin-top', 20)">
+          <div v-if="item.getStatus==false&&item.status==true" class="coupon_collar" :style="handlePX('width', 702)+handlePX('height', 248)+handlePX('margin-top', 20)" >
             <div class="coupon_cardbox" :style="handlePX('padding-top', 30)">
               <div class="coupon_car_left" :style="handlePX('padding-left', 60)">
                 <div style="color:#fff;" :style="handlePX('font-size', 65)">{{item.couponDenomination}}<span :style="handlePX('font-size', 42)">元</span></div>
-                <div style="color:rgba(255,255,255,0.8);">{{item.couponName}}</div>
+                <div style="color:rgba(255,255,255,0.8);">满{{item.fullDenomination}}减{{item.couponDenomination}}</div>
               </div>
               <div class="coupon_car_right" :style="handlePX('padding-right', 42)+handlePX('padding-top', 30)">
                 <van-button size="mini" :style="handlePX('width', 135)+handlePX('height', 40)" style="border:0;background-color:rgba(255,255,255,0.5);color:#DAA000;" @click="addcoupon(item.id)">领卷</van-button>
@@ -26,9 +26,39 @@
             <div class="coupon_car_bottom" :style="handlePX('line-height', 52)+handlePX('font-size', 20)+handlePX('padding-left', 40)">全场通用；特价商品或其他优惠活动商品不可叠加使用</div>
           </div>
 
+          <!-- 已领取 -->
+          <div class="coupon_notused" v-if="item.getStatus==true&&item.status==true" :style="handlePX('width', 702)+handlePX('height', 248)+handlePX('margin-top', 20)">
+            <div class="coupon_cardbox" :style="handlePX('padding-top', 30)">
+              <div class="coupon_car_left" :style="handlePX('padding-left', 60)">
+                <div style="color:#fff;" :style="handlePX('font-size', 65)">{{item.couponDenomination}}<span :style="handlePX('font-size', 42)">元</span></div>
+                <div style="color:rgba(255,255,255,0.8);">满{{item.fullDenomination}}减{{item.couponDenomination}}</div>
+              </div>
+              <div class="coupon_car_right" :style="handlePX('padding-right', 42)+handlePX('padding-top', 30)">
+                <van-button size="mini" :style="handlePX('width', 135)+handlePX('height', 40)" style="border:0;background-color:rgba(255,255,255,0.9);color:#fd5f61;">已领取</van-button>
+                <div style="color:rgba(255,255,255,0.8);" :style="handlePX('font-size', 26)">{{item.endDate}}</div>
+              </div>
+            </div>
+            <div class="coupon_car_bottom" :style="handlePX('line-height', 52)+handlePX('font-size', 20)+handlePX('padding-left', 40)">全场通用；特价商品或其他优惠活动商品不可叠加使用</div>
+          </div>
 
-<!-- coupon_overdue -->
+          <!-- 已过期 -->      
+          <div class="coupon_overdue" v-if="item.status==false" :style="handlePX('width', 702)+handlePX('height', 248)+handlePX('margin-top', 20)">
+            <div class="coupon_cardbox" :style="handlePX('padding-top', 30)">
+              <div class="coupon_car_left" :style="handlePX('padding-left', 60)">
+                <div style="color:#fff;" :style="handlePX('font-size', 65)">{{item.couponDenomination}}<span :style="handlePX('font-size', 42)">元</span></div>
+                <div style="color:rgba(255,255,255,0.8);">满{{item.fullDenomination}}减{{item.couponDenomination}}</div>
+              </div>
+              <div class="coupon_car_right" style="align-self: flex-end;" :style="handlePX('padding-right', 42)+handlePX('padding-top', 30)">
+                <div style="color:rgba(255,255,255,0.8);" :style="handlePX('font-size', 26)">{{item.endDate}}</div>
+              </div>
+            </div>
+            <div class="coupon_car_bottom" :style="handlePX('line-height', 52)+handlePX('font-size', 20)+handlePX('padding-left', 40)">全场通用；特价商品或其他优惠活动商品不可叠加使用</div>
+          </div>
 
+          </div>
+
+
+          
 
         </div>
     </li>
@@ -73,6 +103,18 @@ export default class collar_center extends Vue {
   loading=false
   pageSize = 20;
   couponList=[];
+  page=0;
+  loadMore(){
+    let self = this;
+    self.loading=true;    
+    setTimeout(() => {
+      if(!self.loading){
+        self.page+=1;
+        self.getList();
+        self.loading = false;
+      }
+    }, 1000);
+  }
   getList() {
  Vue.prototype.$reqFormPost("/coupon/center/list", {
    
@@ -80,8 +122,8 @@ export default class collar_center extends Vue {
         .userId,
       token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
         .token,
-      page: 0,
-      pageSize: this.pageSize
+      page: this.page,
+      pageSize: 20
  }, res => {
       if (res == null) {
         console.log("网络请求错误！");
@@ -103,6 +145,29 @@ export default class collar_center extends Vue {
 
 
   }
+  addcoupon(couponId){
+    Vue.prototype.$reqFormPost("/coupon/user/linkadd", {
+      userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+        .userId,
+      token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+        .token,
+        couponId:couponId
+    }, res => {
+      if (res == null) {
+        console.log("网络请求错误！");
+        return;
+      }
+      if (res.data.status != 200) {
+        console.log(
+          "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+        );
+        Toast(res.data.message);
+        return;
+      }
+        Toast("领卷成功");
+      this.getList();
+    });
+  }
   mounted() {
     this.getList();
     console.log("领卷中心");
@@ -122,7 +187,11 @@ export default class collar_center extends Vue {
     background-size: 100% 100%;
     position: relative;
   }
-  
+  .coupon_notused {
+    background-image: url("../../assets/image/未使用优惠卷.png");
+    background-size: 100% 100%;
+    position: relative;
+  }
   .coupon_overdue {
     background-image: url("../../assets/image/已过期优惠卷.png");
     background-size: 100% 100%;
