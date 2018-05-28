@@ -20,7 +20,7 @@
                     <img src="../../assets/image/新品特价.png" :style="handlePX('width',92)+handlePX('height',30)" style="vertical-align: middle;"/>
                     <div class="textLabel" style="color:#000000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" :style="handlePX('font-size',28)+handlePX('width',320)">{{item.goodsName}}</div>
                   </div>
-                  <div class="textLabel"  style="color:#A3A3A3;" :style="handlePX('font-size',28)+handlePX('line-height',44)">{{item.jingle}}</div>
+                  <div class="textLabel"  style="color:#A3A3A3;" :style="handlePX('font-size',28)+handlePX('line-height',44)+handlePX('width',!isShow?'460':'370')">{{item.jingle}}</div>
                   <div style="padding-top:5px;">
                     <span style="color:#E05459" :style="handlePX('font-size',34)">￥{{item.marketPrice}}</span>
                     <span style="color:#C5C4C4;text-decoration:line-through;margin-left:5px;" :style="handlePX('font-size',24)">原价:{{item.labelPrice}}</span>

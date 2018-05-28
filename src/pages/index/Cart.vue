@@ -25,7 +25,7 @@
   <div slot="right" @click="collect(index)" class="collect" style="background-color: #f90;width: 100%;
     height: 100%; display: flex;
     align-items: center;
-    justify-content: center;">收藏</div>
+    justify-content: center;">移至收藏夹</div>
     <div style="background-color:#f7f7f7;height:10px;"></div>
 </van-cell-swipe>
 
@@ -163,7 +163,7 @@ export default class Cart extends Vue {
       }
     );
   }
-  deleteCart(index) {
+  deleteCart(index,collect) {
     Vue.prototype.$reqFormPost(
       "/shop/cart/delete",
       {
@@ -185,7 +185,9 @@ export default class Cart extends Vue {
           Toast(res.data.message);
           return;
         }
-        Toast("已删除");
+        if(!collect){
+          Toast("已删除");
+        }
         this.getCartList();
       }
     );
@@ -243,8 +245,8 @@ export default class Cart extends Vue {
           Toast(res.data.message);
           return;
         }
-        Toast("收藏成功");
-        this.deleteCart(index);
+        this.deleteCart(index,true);
+        Toast("已移至收藏夹");
       }
     );
   }
