@@ -114,7 +114,7 @@
     padding: 10px;
     font-size: 14px;">
     <div>服务时间：9:00 - 22:00</div>
-    <van-button size="small">联系客服</van-button>
+    <van-button size="small" onclick="showMeiQia()">联系客服</van-button>
 
 </div>
 

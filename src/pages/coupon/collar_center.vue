@@ -5,12 +5,9 @@
   v-infinite-scroll="loadMore"
   :infinite-scroll-disabled="loading"
   infinite-scroll-distance="20" >
-
         <li >
         <!-- 有卷列表 -->
         <div class="coupon_list">
-
-
           <!-- collar列表 -->          
           <div v-for="(item,index) in couponList" class="coupon_collar" :style="handlePX('width', 702)+handlePX('height', 248)+handlePX('margin-top', 20)">
             <div class="coupon_cardbox" :style="handlePX('padding-top', 30)">
@@ -25,11 +22,7 @@
             </div>
             <div class="coupon_car_bottom" :style="handlePX('line-height', 52)+handlePX('font-size', 20)+handlePX('padding-left', 40)">全场通用；特价商品或其他优惠活动商品不可叠加使用</div>
           </div>
-
-
 <!-- coupon_overdue -->
-
-
         </div>
     </li>
  </ul>

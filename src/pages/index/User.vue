@@ -97,7 +97,7 @@
 </div>
 
 
-<div style="text-align:center;padding:10px;width:25%;" >
+<div style="text-align:center;padding:10px;width:25%;" onclick="showMeiQia()">
     <div>
       <img src="../../assets/image/联系客服.png" alt="" class="moreIcon" >
 </div>
@@ -133,7 +133,7 @@ export default class User extends Vue {
   // ORDER_END_GOODS
   // ORDER_FINISH
   userIcon = "";
-  user={};
+  user = {};
   orderList = [
     {
       name: "待付款",
@@ -179,11 +179,11 @@ export default class User extends Vue {
       url: ""
     }
   ];
-  goMessageList(){
-       Vue.prototype.$confirmLogin('/messagelist')
+  goMessageList() {
+    Vue.prototype.$confirmLogin("/messagelist");
   }
   getOrderList(status) {
-     Vue.prototype.$confirmLogin({
+    Vue.prototype.$confirmLogin({
       name: "orderlist",
       query: {
         orderStatus: status
@@ -191,8 +191,8 @@ export default class User extends Vue {
     });
   }
   messageCount = 0;
- getMessageCount(){
-      Vue.prototype.$reqFormPost(
+  getMessageCount() {
+    Vue.prototype.$reqFormPost(
       "/message/unread/count",
       {
         userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
@@ -209,10 +209,10 @@ export default class User extends Vue {
           console.log(
             "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
           );
-                  Toast(res.data.message);
+          Toast(res.data.message);
           return;
         }
-        this.messageCount =  res.data.data.count;
+        this.messageCount = res.data.data.count;
         console.log("消息条数", res.data.data);
       }
     );
@@ -235,33 +235,35 @@ export default class User extends Vue {
           console.log(
             "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
           );
-                  Toast(res.data.message);
+          Toast(res.data.message);
           return;
         }
-        this.user=res.data.data;
+        this.user = res.data.data;
         this.userIcon = res.data.data.userIcon;
+        // localStorage.userIcon = res.data.data.userIcon
+        //   ? res.data.data.userIcon
+        //   : "";
+
         console.log("userIcon", res.data.data.userIcon);
       }
     );
   }
-  
+
   tools(n) {
     if (n.name == "我的收藏") {
-       Vue.prototype.$confirmLogin({ name: "collection" });
+      Vue.prototype.$confirmLogin({ name: "collection" });
     }
     if (n.name == "地址管理") {
-       Vue.prototype.$confirmLogin({ name: "addresslist" });
+      Vue.prototype.$confirmLogin({ name: "addresslist" });
     }
     if (n.name == "优惠券") {
-       Vue.prototype.$confirmLogin({ name: "coupon" });
+      Vue.prototype.$confirmLogin({ name: "coupon" });
     }
     if (n.name == "我的成员") {
-       Vue.prototype.$confirmLogin({ name: "my_member" });
-      
+      Vue.prototype.$confirmLogin({ name: "my_member" });
     }
   }
 
-  
   go_setting() {
     Vue.prototype.$confirmLogin("/setting");
   }
@@ -270,14 +272,12 @@ export default class User extends Vue {
   }
   mybankcard() {
     Vue.prototype.$confirmLogin("/my_bankcard");
-    
   }
   myreward() {
     Vue.prototype.$confirmLogin("/my_reward");
   }
- 
-  mounted() {
 
+  mounted() {
     this.setTabIndex(3);
     if (
       this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].userId !=
@@ -339,20 +339,20 @@ export default class User extends Vue {
   width: 25px;
   height: 25px;
 }
-.messageFexid{
-      background-color: #fe4747;
-    border-radius: 10px;
-    color: #fff;
-    display: inline-block;
-    font-size: 12px;
-    height: 18px;
-    line-height: 18px;
-    padding: 0 6px;
-    text-align: center;
-    white-space: nowrap;
-        position: absolute;
-    top: 0;
-    right: 30px;
-    transform: translateY(-50%) translateX(100%);
+.messageFexid {
+  background-color: #fe4747;
+  border-radius: 10px;
+  color: #fff;
+  display: inline-block;
+  font-size: 12px;
+  height: 18px;
+  line-height: 18px;
+  padding: 0 6px;
+  text-align: center;
+  white-space: nowrap;
+  position: absolute;
+  top: 0;
+  right: 30px;
+  transform: translateY(-50%) translateX(100%);
 }
 </style>
