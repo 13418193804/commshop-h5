@@ -5,7 +5,6 @@
   v-infinite-scroll="loadMore"
   :infinite-scroll-disabled="loading"
   infinite-scroll-distance="20" >
-
         <li >
         <!-- 有卷列表 -->
         <div class="coupon_list">
