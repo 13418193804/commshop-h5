@@ -218,7 +218,7 @@ export default class shopIndex extends Vue {
   }
 
   goMessageList() {
-    this.$router.push("/messagelist");
+    Vue.prototype.$confirmLogin("/messagelist");
   }
   initIndex() {
     Vue.prototype.$reqUrlGet("/page/list", {}, res => {
