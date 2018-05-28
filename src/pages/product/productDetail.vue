@@ -105,7 +105,7 @@
           <van-tabs @click="selecttablist">
             <van-tab v-for="(item,index) in tablist" :title="item" :key="index" >
               <div style="display:flex;overflow: auto;" v-if="index==tabindex">
-                <div v-for="(items,index) in tabgoodslist" :key="index" @click="goProductDetail(item.goodsId)" :style="handlePX('padding-bottom',65)+handlePX('padding-top',20)+handlePX('padding-left',30)">
+                <div v-for="(items,index) in tabgoodslist" :key="index" @click="goProductDetail(items.goodsId)" :style="handlePX('padding-bottom',65)+handlePX('padding-top',20)+handlePX('padding-left',30)">
                   <div style="border: 1px #e5e5e5 solid;box-sizing: border-box;display:flex;align-items: center;justify-content:center;overflow:hidden;position:relative;" :style="handlePX('height', 410)+handlePX('width', 345)">
                       <img src="../../assets/image/热.png" style="width:-webkit-fill-available;position: absolute;top: 0;left:0;z-index:2;" :style="handlePX('width', 43)+handlePX('height', 49)"/>
                       <img v-lazy="items.goodsImg.split(',')[0]" style="width:-webkit-fill-available;position: absolute;top: 0;"/>
@@ -651,7 +651,7 @@ export default class ProductDetail extends Vue {
     }
   }
   goProductDetail(goodsId){
-    this.$router.push({
+      this.$router.push({
       path: "/productdetail",
       query: {
         goodsId: goodsId
