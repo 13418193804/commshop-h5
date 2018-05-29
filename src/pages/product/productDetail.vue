@@ -146,13 +146,13 @@
               <div :style="handlePX('line-height',50)">外枕套：60%聚酯纤维，40%莱赛尔纤维</div>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <div style="background-color:#ffffff;margin-top:10px;">
           <div v-for="(item,index) in detatil.detail.imageList" :key="index">
             <img v-lazy="item" style="width:100%;"/>
           </div>
-        </div> -->
+        </div>
 
 
 <van-goods-action style="z-index:90;background-color: #ffffff;">

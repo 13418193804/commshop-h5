@@ -13,7 +13,7 @@
       <div v-if="messageCount && messageCount!=0" class="messageFexid" style="    right: 25px;top: 5px;">{{messageCount}}</div>
 
      </span>
-               <span style="padding: 10px;">
+               <span style="padding: 10px;" @click="goshare()">
                   <i class="iconfont icon-erweima" style="font-size:25px;"></i>
      </span>    
              </div>
@@ -181,6 +181,9 @@ export default class User extends Vue {
   ];
   goMessageList() {
     Vue.prototype.$confirmLogin("/messagelist");
+  }
+  goshare(){
+    Vue.prototype.$confirmLogin("/share_code");    
   }
   getOrderList(status) {
     Vue.prototype.$confirmLogin({
