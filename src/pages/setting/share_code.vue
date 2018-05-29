@@ -65,8 +65,6 @@ export default class share_code extends Vue {
         }
         this.user = res.data.data;
         this.userIcon = res.data.data.userIcon;
-        console.log("userIcon", res.data.data.userIcon);
-        console.log("111", res.data.data);
       }
     );
   }
