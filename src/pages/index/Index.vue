@@ -48,10 +48,9 @@
 
             <!-- actionType -->
 
-
             <!-- 轮播图 -->
             <div v-if="items.componentType === 'COMPONENT_TYPE_SCROLL_HEADER'">
-               <van-swipe :autoplay="3000" style="height:200px;z-index:999;" >
+               <van-swipe :autoplay="3000" style="z-index:999;" :style="'height:'+$store.getters[MutationTreeType.SYSTEM].availWidth/2+'px'" >
                   <van-swipe-item v-for="(image, imageIndex) in items.items" :key="imageIndex">
                        <img v-lazy="image.itemImgUrl" style="width:100%;" @click="goActionType(image.actionType,image.actionValue)"/>
                   </van-swipe-item>
@@ -387,7 +386,7 @@ export default class shopIndex extends Vue {
       "px;"
     );
   }
-  
+
   mounted() {
     if (this.$route.query.active) {
       this.active = parseInt(this.$route.query.active);
@@ -553,18 +552,15 @@ export default class shopIndex extends Vue {
   margin-right: 36px;
 }
 .index_tabs .van-swipe__indicators {
-  left: auto;
-  right: 5%;
 }
 .index_tabs .van-swipe__indicators > i {
   width: 8px;
-  height: 5px;
+  height: 8px;
   background-color: #d0d0d0;
   margin: 0 5px;
   border-radius: 100px;
 }
 .index_tabs .van-swipe__indicators > .van-swipe__indicator--active {
-  width: 15px;
   background-color: #ffc630;
 }
 .van-tabs__wrap {

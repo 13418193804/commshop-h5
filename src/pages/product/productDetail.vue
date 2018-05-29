@@ -4,13 +4,13 @@
     overflow: auto;
     height: 100vh;">
     <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"   :contextIndex="true" isRightIcon="true"  ></comhead>
-
-        <van-swipe :autoplay="3000">
-          <van-swipe-item v-for="(image, index) in detatil['goodsImg'].split(',')"  :key="index" >
+<div>
+        <van-swipe :autoplay="3000"  :style="'height:'+$store.getters[MutationTreeType.SYSTEM].availWidth+'px'">
+          <van-swipe-item v-for="(image, index) in detatil['goodsImg'].split(',')"  :key="index" class="flex">
             <img v-lazy="image" style="width:100%;" />
           </van-swipe-item>
         </van-swipe>
-        
+        </div>
         <div class="goodsTitle">
             <div class="goodstitle">
                 <div>{{detatil.goodsName}}</div>
@@ -25,10 +25,8 @@
               <div>
 <i class="iconfont icon-pingjia" style="color:#ffc630;font-size:22px;"></i>
                 <!-- <img src="../../assets/image/评价.png" :style="handlePX('width',28)+handlePX('height',24)"/> -->
-                
                 <span>{{commentnum}}</span>
               </div>
-              
             </div>
         </div>
   
