@@ -4,13 +4,11 @@
     overflow: auto;
     height: 100vh;">
     <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"   :contextIndex="true" isRightIcon="true"  ></comhead>
-<div>
         <van-swipe :autoplay="3000"  :style="'height:'+$store.getters[MutationTreeType.SYSTEM].availWidth+'px'">
           <van-swipe-item v-for="(image, index) in detatil['goodsImg'].split(',')"  :key="index" class="flex">
             <img v-lazy="image" style="width:100%;" />
           </van-swipe-item>
         </van-swipe>
-        </div>
         <div class="goodsTitle">
             <div class="goodstitle">
                 <div>{{detatil.goodsName}}</div>
@@ -242,7 +240,6 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import Swipe from "../../components/Swipe.vue";
 import mixin from "../../config/mixin";
 import comhead from "../../components/Comhead.vue";
 import { Toast } from "vant";
@@ -251,7 +248,6 @@ import { Cell, CellGroup,ImagePreview } from 'vant';
 
 @Component({
   components: {
-    Swipe,
     comhead
   },
   mixins: [mixin]
@@ -908,4 +904,3 @@ return
   padding: 20px;
 }
 </style>
-
