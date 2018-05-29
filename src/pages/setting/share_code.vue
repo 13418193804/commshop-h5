@@ -14,7 +14,7 @@
     </div>
 
     <div style="display:flex;flex-direction:column;align-items:center;">
-        <img  v-lazy="'1'" :style="handlePX('width',270)+handlePX('height',270)"/>
+        <img  v-lazy="user.qrCode" :style="handlePX('width',270)+handlePX('height',270)"/>
     </div>
 
     <div style="display:flex;flex-direction:column;align-items:center;">
@@ -66,6 +66,7 @@ export default class share_code extends Vue {
         this.user = res.data.data;
         this.userIcon = res.data.data.userIcon;
         console.log("userIcon", res.data.data.userIcon);
+        console.log("111", res.data.data);
       }
     );
   }
