@@ -13,19 +13,21 @@
             <div class="goodstitle">
                 <div>{{detatil.goodsName}}</div>
                 <div style="font-size:14px;color:#666">{{detatil.jingle}}</div>
-                <div >
-                  <span class="marketPrice">  ￥{{detatil.marketPrice}}</span>
-<span class="labelPrice" style="margin:0 10px;font-size:14px;">原价:{{detatil.labelPrice}}</span>
+                <div class="pricebox">
+                  <div>
+                    <span class="marketPrice">  ￥{{detatil.marketPrice}}</span>
+                    <span class="labelPrice" style="margin:0 10px;font-size:14px;">原价:{{detatil.labelPrice}}</span>
+                  </div>
+                  <div class="comment" @click="go_comment()">
+                    <div style="font-size:15px;color:#666">用户评价</div>
+                    <div>
+                      <i class="iconfont icon-pingjia" style="color:#ffc630;font-size:22px;"></i>
+                      <span>{{commentnum}}</span>
+                    </div>
+                  </div>
                 </div>
             </div>
-            <div class="comment" @click="go_comment()">
-              <div style="font-size:15px;color:#666">用户评价</div>
-              <div>
-<i class="iconfont icon-pingjia" style="color:#ffc630;font-size:22px;"></i>
-                <!-- <img src="../../assets/image/评价.png" :style="handlePX('width',28)+handlePX('height',24)"/> -->
-                <span>{{commentnum}}</span>
-              </div>
-            </div>
+            
         </div>
   
         <div class="functionList" style="margin-top:10px;">
@@ -711,6 +713,11 @@ return
   .goodstitle {
     flex: 1;
     line-height: 25px;
+  }
+  .pricebox{
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
   }
   .comment{
     display: flex;
