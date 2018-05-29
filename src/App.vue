@@ -170,3 +170,23 @@ color:#f44!important;
 
 
 </style>
+
+<style>
+.index_tabs .van-tabs__wrap {
+  margin-right: 36px;
+}
+
+.index_tabs .van-swipe__indicators > i {
+  width: 8px;
+  height: 8px;
+  background-color: #d0d0d0;
+  margin: 0 5px;
+  border-radius: 100px;
+}
+.index_tabs .van-swipe__indicators > .van-swipe__indicator--active {
+  background-color: #ffc630;
+}
+.van-tabs__wrap {
+  overflow-x: auto;
+}
+</style>

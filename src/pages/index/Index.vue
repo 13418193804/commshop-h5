@@ -547,12 +547,12 @@ export default class shopIndex extends Vue {
   border: 1px #e5e5e5 solid;
 }
 </style>
+
 <style>
-.index_tabs .van-tabs__wrap {
+/* .index_tabs .van-tabs__wrap {
   margin-right: 36px;
 }
-.index_tabs .van-swipe__indicators {
-}
+
 .index_tabs .van-swipe__indicators > i {
   width: 8px;
   height: 8px;
@@ -565,7 +565,7 @@ export default class shopIndex extends Vue {
 }
 .van-tabs__wrap {
   overflow-x: auto;
-}
+} */
 .searchbox .van-search__input-wrap {
   width: 100%;
   display: flex;
