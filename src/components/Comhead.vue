@@ -86,11 +86,13 @@ export default class Comhead extends Vue {
   }
   changecontextIndex(contextIndex) {
     if (contextIndex == 1) {
-      // location.hash="#top";
+      //  document.getElementById('d1').scrollTop=0;
       this.textindex = 1;
     }
     if (contextIndex == 2) {
+      console.log(this.$el.querySelector('tab1'))
       // location.hash="#detail";
+      //  document.getElementById('d1').scrollTop=100;
       this.textindex = 2;
     }
   }

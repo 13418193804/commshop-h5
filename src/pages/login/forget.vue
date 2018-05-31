@@ -80,7 +80,7 @@ export default class forget extends Vue {
             }
             
             //getCode
-          Vue.prototype.$reqFormPost("/auth/getsmscode",{mobile:this.loginName	},res => {
+          Vue.prototype.$reqFormPost("/auth/getsmscode",{mobile:this.loginName	,type:'FINDPASSWORD'},res => {
         if (res == null) {
           console.log("网络请求错误！");
           return;

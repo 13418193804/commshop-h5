@@ -2,7 +2,7 @@
   <div class="tab-contents" style=" width: 100%;
     background-color: #e4e4e4;
     overflow: auto;
-    height: 100vh;">
+    height: 100vh;" ref="logo" v-on:scroll.passive="onScroll">
     <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"   :contextIndex="true" isRightIcon="true"  ></comhead>
         <van-swipe :autoplay="3000"  :style="'height:'+$store.getters[MutationTreeType.SYSTEM].availWidth+'px'">
           <van-swipe-item v-for="(image, index) in detatil['goodsImg'].split(',')"  :key="index" class="flex">
@@ -100,7 +100,7 @@
         </div>
 
         <div class="recommend"  style="background-color:#ffffff;margin-top:10px;z-index:2;">
-          <van-tabs @click="selecttablist">
+          <van-tabs @click="selecttablist" id="tab1">
             <van-tab v-for="(item,index) in tablist" :title="item" :key="index" >
               <div style="display:flex;overflow: auto;" v-if="index==tabindex">
                 <div v-for="(items,index) in tabgoodslist" :key="index" @click="goProductDetail(items.goodsId)" :style="handlePX('padding-bottom',65)+handlePX('padding-top',20)+handlePX('padding-left',30)">
@@ -174,15 +174,21 @@
 
         <div  style=' background-color:#fff;width:100%;' :class="keepModel ?'modiaBoxUp2' :'modiaBoxDown2'" @click.stop="()=>{return }">
  <div style='border-bottom:1px solid #e5e5e5;display:flex;margin-left:15px;justify-content: space-between'>
-      <div style='padding:6px;border-radius:5px;background-color:#fff;border:1px solid #e5e5e5;display:flex;margin:10px;'>
+      <div style='border-radius:2px;background-color:#fff;display:flex;margin:10px;'>
         <img v-lazy="skuItem.skuImgUrl?skuItem.skuImgUrl :detatil['goodsImg'].split(',')[0]" style="width:80px;height:80px;" @click="imagePreview(skuItem.skuImgUrl?skuItem.skuImgUrl :detatil['goodsImg'].split(',')[0])"/>
       </div>
       <div style='font-size:13px;flex:1;    padding: 10px 0 0 0;'>
         <div style="font-size:16px;">{{detatil['goodsName']}}</div>
         <div  style="color:#666">{{detatil['jingle']}}</div>
-        <div style='margin:10px  ;height:40px;overflow: hidden;font-size:14px;'>单价:
+        <div style='overflow: hidden;'>
           <span style='font-size:18px;color:rgb(229, 28, 35)'>￥{{skuItem.marketPrice?skuItem.marketPrice:detatil.marketPrice}}</span>
+          <span class="labelPrice">￥{{detatil['labelPrice']}}</span>
         </div>
+ <div style="font-size:14px;">
+   <span v-if="chosensku.length>0" class="van-cell-text">已选择:
+                  <span v-for="(item,index) in chosensku" :key="index"><span v-if="index!==0"></span>{{item}}</span>
+                </span>
+ </div>
  
       </div>
       <div style='padding:10px;'>
@@ -246,7 +252,7 @@ import mixin from "../../config/mixin";
 import comhead from "../../components/Comhead.vue";
 import { Toast } from "vant";
 import { Action } from "vuex-class";
-import { Cell, CellGroup,ImagePreview } from 'vant';
+import { Cell, CellGroup, ImagePreview } from "vant";
 
 @Component({
   components: {
@@ -260,26 +266,26 @@ import { Cell, CellGroup,ImagePreview } from 'vant';
 //     }
 export default class ProductDetail extends Vue {
   @Action("setPrepareId") setPrepareId;
-    @Action("setlabelActive") setlabelActive;
+  @Action("setlabelActive") setlabelActive;
 
-  tablist=['大家还看了','新品推荐'];
-  tabgoodslist=[];
-  likeList=[];
-  newList=[];
-  couponList=[];
-  tabindex=0;
-  isCollection=false;
+  tablist = ["大家还看了", "新品推荐"];
+  tabgoodslist = [];
+  likeList = [];
+  newList = [];
+  couponList = [];
+  tabindex = 0;
+  isCollection = false;
 
   goodsList = [];
   goodsId = "";
-  commentnum=0;
-  praise="0";  
+  commentnum = 0;
+  praise = "0";
   detatil = {
-    commentList:[],
+    commentList: [],
     //    costPrice
     // createTime
-    detail:{
-      imageList:[],
+    detail: {
+      imageList: []
     },
     // favNum
     // favStatus
@@ -302,9 +308,12 @@ export default class ProductDetail extends Vue {
   keepModel = false;
   skuattr = [];
   chosenList = [];
-  chosensku=[];
+  chosensku = [];
   skuItem = {};
-  go_comment(){
+  onScroll(e) {
+    console.log(this.$refs);
+  }
+  go_comment() {
     this.$router.push({
       path: "/goodscomment",
       query: {
@@ -313,125 +322,30 @@ export default class ProductDetail extends Vue {
     });
   }
   onClickMiniBtn_service() {
-    Toast('跳转到客服');
+    Toast("跳转到客服");
   }
-  onClickMiniBtn_cart(){
+  onClickMiniBtn_cart() {
     this.$router.push("/cart");
   }
-  imagePreview(img){
-    ImagePreview([
-      img
-], 0);
+  imagePreview(img) {
+    ImagePreview([img], 0);
   }
-  onClickMiniBtn_collection(){
-    if(this.isCollection==false){
+  onClickMiniBtn_collection() {
+    if (this.isCollection == false) {
       Vue.prototype.$reqFormPost(
-      "/fav/add",
-      {
-        userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
-          .userId,
-        token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
-          .token,
-        goodsId: this.goodsId,
-      },
-      res => {
-        if (res == null) {
-          console.log("网络请求错误！");
-          return;
-        }
-        if (res.data.status != 200) {
-          console.log(
-            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
-          );
-          Toast(res.data.message)
-          return;
-        }
-        Toast('已收藏');
-        this.collection_query();
-        }
-      );  
-    }else if(this.isCollection==true){
-      Vue.prototype.$reqFormPost(
-      "/fav/delete",
-      {
-        userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
-          .userId,
-        token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
-          .token,
-        goodsIds: this.goodsId,
-      },
-      res => {
-        if (res == null) {
-          console.log("网络请求错误！");
-          return;
-        }
-        if (res.data.status != 200) {
-          console.log(
-            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
-          );
-          Toast(res.data.message)
-          return;
-        }
-        Toast('已取消');
-        this.collection_query();
-        }
-      );  
-    }
-  }
-  collection_query(){
-    Vue.prototype.$reqFormPost(
-      "/fav/query",
-      {
-        userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
-          .userId,
-        token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
-          .token,
-      },
-      res => {
-        if (res == null) {
-          console.log("网络请求错误！");
-          return;
-        }
-        if (res.data.status != 200) {
-          console.log(
-            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
-          );
-          Toast(res.data.message)
-          return;
-        }
-        for (let i = 0; i < res.data.data.goodsList.length; i++) {
-          if(res.data.data.goodsList[i].goodsId.indexOf(this.goodsId)!== -1){
-            this.isCollection=true;
-            return;
-          }
-        }
-            this.isCollection=false;        
-        }
-      );
-  }
-  addCar() {
-    if (!this.skuItem["skuId"]) {
-      Toast('请选择规格属性');
-      return;
-    }
-      Vue.prototype.$reqFormPost(
-        "/prepare/order/direct",
+        "/fav/add",
         {
           userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
             .userId,
           token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
             .token,
-          goodsId: this.goodsId,
-          skuId: this.skuItem["skuId"],
-          num: this.num
+          goodsId: this.goodsId
         },
         res => {
           if (res == null) {
             console.log("网络请求错误！");
             return;
           }
-          console.log(res);
-
           if (res.data.status != 200) {
             console.log(
               "需控制错误码" +
@@ -442,13 +356,109 @@ export default class ProductDetail extends Vue {
             Toast(res.data.message);
             return;
           }
-          this.setPrepareId(res.data.data.prepareId);
-          this.$router.push({
-            path: "/settle"
-          });
-          console.log("预支付订单ID", res.data.data.prepareId);
+          Toast("已收藏");
+          this.collection_query();
         }
       );
+    } else if (this.isCollection == true) {
+      Vue.prototype.$reqFormPost(
+        "/fav/delete",
+        {
+          userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+            .userId,
+          token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+            .token,
+          goodsIds: this.goodsId
+        },
+        res => {
+          if (res == null) {
+            console.log("网络请求错误！");
+            return;
+          }
+          if (res.data.status != 200) {
+            console.log(
+              "需控制错误码" +
+                res.data.status +
+                ",错误信息：" +
+                res.data.message
+            );
+            Toast(res.data.message);
+            return;
+          }
+          Toast("已取消");
+          this.collection_query();
+        }
+      );
+    }
+  }
+  collection_query() {
+    Vue.prototype.$reqFormPost(
+      "/fav/query",
+      {
+        userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .userId,
+        token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .token
+      },
+      res => {
+        if (res == null) {
+          console.log("网络请求错误！");
+          return;
+        }
+        if (res.data.status != 200) {
+          console.log(
+            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+          );
+          Toast(res.data.message);
+          return;
+        }
+        for (let i = 0; i < res.data.data.goodsList.length; i++) {
+          if (res.data.data.goodsList[i].goodsId.indexOf(this.goodsId) !== -1) {
+            this.isCollection = true;
+            return;
+          }
+        }
+        this.isCollection = false;
+      }
+    );
+  }
+  addCar() {
+    if (!this.skuItem["skuId"]) {
+      Toast("请选择规格属性");
+      return;
+    }
+    Vue.prototype.$reqFormPost(
+      "/prepare/order/direct",
+      {
+        userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .userId,
+        token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .token,
+        goodsId: this.goodsId,
+        skuId: this.skuItem["skuId"],
+        num: this.num
+      },
+      res => {
+        if (res == null) {
+          console.log("网络请求错误！");
+          return;
+        }
+        console.log(res);
+
+        if (res.data.status != 200) {
+          console.log(
+            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+          );
+          Toast(res.data.message);
+          return;
+        }
+        this.setPrepareId(res.data.data.prepareId);
+        this.$router.push({
+          path: "/settle"
+        });
+        console.log("预支付订单ID", res.data.data.prepareId);
+      }
+    );
     // console.log(this.skuItem.skuId);
   }
   changeModel() {
@@ -466,10 +476,10 @@ export default class ProductDetail extends Vue {
     ) {
       this.chosenList[indextop] = "";
       this.chosensku[indextop] = "";
-      this.chosensku.splice(0,this.chosensku.length);
+      this.chosensku.splice(0, this.chosensku.length);
     } else {
       this.chosenList[indextop] = main.skuValueId;
-      this.chosensku[indextop] = main.skuValueName;      
+      this.chosensku[indextop] = main.skuValueName;
     }
 
     this.chosenList = this.chosenList;
@@ -539,10 +549,10 @@ export default class ProductDetail extends Vue {
     this.chosenList.push();
     this.chosensku.push();
   }
- 
+
   addCart() {
     if (!this.skuItem["skuId"]) {
-      Toast('请选择规格属性');
+      Toast("请选择规格属性");
       return;
     }
     Vue.prototype.$reqFormPost(
@@ -553,7 +563,7 @@ export default class ProductDetail extends Vue {
         token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
           .token,
         goodsId: this.goodsId,
-        skuId: this.skuItem['skuId']
+        skuId: this.skuItem["skuId"]
       },
       res => {
         if (res == null) {
@@ -564,11 +574,11 @@ export default class ProductDetail extends Vue {
           console.log(
             "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
           );
-          Toast(res.data.message)
+          Toast(res.data.message);
           return;
         }
-        Toast('加入成功')
-        this.keepModel=false;
+        Toast("加入成功");
+        this.keepModel = false;
         console.log("加入购物车", res.data);
       }
     );
@@ -592,27 +602,27 @@ export default class ProductDetail extends Vue {
           console.log(
             "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
           );
-          Toast(res.data.message)
+          Toast(res.data.message);
           return;
         }
-        console.log('res.data',res.data)
+        console.log("res.data", res.data);
         if (res.data.data.singleStatus) {
           this.skuItem = res.data.data.sku[0];
         }
         this.detatil = res.data.data;
 
         // 评论数量
-        this.commentnum=res.data.data.commentList.length;
+        this.commentnum = res.data.data.commentList.length;
         // 好评计算
-        if(res.data.data.commentList.length>0){
+        if (res.data.data.commentList.length > 0) {
           let total = 0;
           for (let i = 0; i < res.data.data.commentList.length; i++) {
-            total = res.data.data.commentList[i].star + total
+            total = res.data.data.commentList[i].star + total;
           }
-          total=total/(res.data.data.commentList.length*5)* 100;
-          const praisenum = total.toFixed(0)
+          total = total / (res.data.data.commentList.length * 5) * 100;
+          const praisenum = total.toFixed(0);
           this.praise = praisenum;
-        }  
+        }
 
         this.tabgoodslist = res.data.data.likeList;
         this.likeList = res.data.data.likeList;
@@ -635,19 +645,19 @@ export default class ProductDetail extends Vue {
       }
     );
   }
-  selecttablist(index){
-    this.tabgoodslist=[];
-    if(index==0){
-      this.tabgoodslist=this.likeList;
-      this.tabindex=0
+  selecttablist(index) {
+    this.tabgoodslist = [];
+    if (index == 0) {
+      this.tabgoodslist = this.likeList;
+      this.tabindex = 0;
     }
-    if(index==1){
-      this.tabgoodslist=this.newList;
-      this.tabindex=1
+    if (index == 1) {
+      this.tabgoodslist = this.newList;
+      this.tabindex = 1;
     }
   }
-  goProductDetail(goodsId){
-      this.$router.push({
+  goProductDetail(goodsId) {
+    this.$router.push({
       path: "/productdetail",
       query: {
         goodsId: goodsId
@@ -668,31 +678,26 @@ export default class ProductDetail extends Vue {
     );
   }
   mounted() {
-
-      if(this.$route.query.availWidth&&this.$route.query.availHeight){
-        this.setlabelActive({
-          availWidth: this.$route.query.availWidth,
+    if (this.$route.query.availWidth && this.$route.query.availHeight) {
+      this.setlabelActive({
+        availWidth: this.$route.query.availWidth,
         availHeight: this.$route.query.availHeight
-        })
-      }else{
-
-        if (
-      this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].userId ==
-        "" &&
-      this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].token == ""
-    ) {
-
-this.$router.push({name:'login'})
-return 
+      });
+    } else {
+      if (
+        this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].userId ==
+          "" &&
+        this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].token ==
+          ""
+      ) {
+        this.$router.push({ name: "login" });
+        return;
+      }
     }
 
-      }
-
-  
     this.goodsId = this.$route.query.goodsId;
     this.getProductDetail();
     this.collection_query();
-
   }
 }
 </script>
@@ -714,25 +719,24 @@ return
     flex: 1;
     line-height: 25px;
   }
-  .pricebox{
+  .pricebox {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
   }
-  .comment{
+  .comment {
     display: flex;
     align-items: flex-end;
-    div{
+    div {
       display: flex;
       flex-direction: column;
       align-items: center;
-      span{
-        color:#ffc200;
+      span {
+        color: #ffc200;
       }
     }
   }
 }
-
 
 .bodyLabel {
   width: 100%;
@@ -786,11 +790,11 @@ return
   animation: myfirst0001 0.5s;
 }
 
-.collection_color{
-  color:red;
+.collection_color {
+  color: red;
 }
 
-.vangoods{
+.vangoods {
   position: inherit;
 }
 

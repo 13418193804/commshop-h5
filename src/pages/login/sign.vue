@@ -93,7 +93,7 @@ export default class Sign extends Vue {
     //getCode
     Vue.prototype.$reqFormPost(
       "/auth/getsmscode",
-      { mobile: this.loginName },
+      { mobile: this.loginName,type:'REGISTER' },
       res => {
         if (res == null) {
           console.log("网络请求错误！");

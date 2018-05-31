@@ -46,8 +46,9 @@
 </div> 
 </van-checkbox-group>
 
+<div style="height:50px; background-color:#f7f7f7"></div>
 
-<div style="height:99px;"></div>
+<div style="height:49px;"></div>
 
 <van-submit-bar v-if="isLogin() &&  cartList.length >0"  :price="totalPrice()" button-text="结算" @submit="onSubmit" style="margin-bottom:50px;">
   <van-checkbox v-if="cartList.length>0" v-model="checked" @change="allSelect">全选</van-checkbox>

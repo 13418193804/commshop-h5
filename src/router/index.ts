@@ -226,4 +226,5 @@ export default new Router({
             component: r => require.ensure([], () => r(require('../pages/setting/share_code.vue')))
         },
     ]
-});
+}
+);

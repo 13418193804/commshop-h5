@@ -2,13 +2,16 @@
   <div class="tab-contents" style="height:-webkit-fill-available;">
             <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="订单详情" isRightIcon="true"  ></comhead>
             <div style="background-color:#f7f7f7;display: flex;justify-content: space-between;padding: 10px;font-size: 16px;align-items: center;">
-                <div style="font-size:16px">订单金额（含运费）：￥{{detail.orderTotalPrice.toFixed(2)}}</div>
+                <div style="font-size:16px">订单状态</div>
                
                 <!-- <div :style="formatStatusColor(detail.orderStatus)">{{formatStatus(detail.orderStatus)}}</div> -->
-              <span v-if="detail.detailList[0].refundStatus == 'APPLY_REFUND' ||detail.detailList[0].refundStatus ==  'WAIT_GOODS_BACK'|| detail.detailList[0].refundStatus ==   'WAIT_RECVGOODS'" style="color:red">退款中</span>
+              <span v-if="detail.detailList[0].refundStatus == 'APPLY_REFUND'" style="color:red">退款中</span>
                 <span v-if="detail.detailList[0].refundStatus == 'WITHOUT_REFUND'" :style="formatStatusColor(detail.orderStatus)">{{formatStatus(detail.orderStatus)}}</span>
                 <span v-if="detail.detailList[0].refundStatus == 'SUCCEED_REFUND'" style="color:#ffc630;">已退款</span>
-                  
+                <span v-if="detail.detailList[0].refundStatus == 'FAIL_REFUND'" style="color:#ffc630;">已拒绝</span>
+                             <span v-if="detail.detailList[0].refundStatus == 'WAIT_GOODS_BACK'" style="color:#ffc630;">待寄回</span>
+   <span v-if="detail.detailList[0].refundStatus == 'WAIT_RECVGOODS'" style="color:#ffc630;">退货中</span>
+
             </div>
      <div style="    display: flex;height: 5px;">
          <img src="../../assets/jiange.png" style="width:100%;"/>
@@ -74,13 +77,63 @@
       <van-button size="small" style="margin-right:10px;" :style="formatButtonColor()" @click="payOrder()">支付订单</van-button>
     </div>
 
-      <van-button v-if="detail.detailList[0].refundStatus == 'WITHOUT_REFUND' &&detail.orderStatus !== 'ORDER_CANCEL_PAY' " size="small" style="margin-right:10px;" :style="formatButtonColor()" @click="doRefund()">申请退款</van-button>
 
-                  <van-button v-if="detail.detailList[0].refundStatus == 'APPLY_REFUND'" size="small" style="margin-right:10px;"  :style="formatButtonColor()" @click="cancelRefund()">取消退款</van-button>
+      <div class="settingBody" v-if="detail.orderStatus === 'ORDER_WAIT_SENDGOODS'">
+      <van-button v-if="detail.detailList[0].refundStatus == 'APPLY_REFUND'" size="small" style="margin-right:10px;" :style="formatButtonColor()" @click="cancelRefund()">取消退款</van-button>
+      <van-button v-if="detail.detailList[0].refundStatus == 'WITHOUT_REFUND'" size="small" style="margin-right:10px;" :style="formatButtonColor()" @click="doRefund()">申请退款</van-button>
+    </div>
+
+      <!-- <van-button v-if="detail.detailList[0].refundStatus == 'WITHOUT_REFUND' && detail.orderStatus !== 'ORDER_CANCEL_PAY' " size="small" style="margin-right:10px;" :style="formatButtonColor()" @click="doRefund()">申请退款</van-button> -->
+     <!-- <van-button v-if="detail.detailList[0].refundStatus == 'APPLY_REFUND'" size="small" style="margin-right:10px;"  :style="formatButtonColor()" @click="cancelRefund()">取消退款</van-button> -->
+
+     <div class="settingBody" v-if="detail.orderStatus === 'ORDER_WAIT_RECVGOODS'">
+        <div  v-if="detail.detailList[0].refundStatus == 'WITHOUT_REFUND'  ">
+      <van-button size="small" style="margin-right:10px;" @click.stop="getShip()">查看物流</van-button>
+      <van-button size="small" style="margin-right:10px;" @click.stop="doRefund(iem)">退货/退款</van-button>
+      <van-button size="small" style="margin-right:10px;"  :style="formatButtonColor()" @click.stop="recvgoods()">确认收货</van-button>
+        </div>
+        
+        <div v-if="detail.detailList[0].refundStatus == 'APPLY_REFUND'">
+      <van-button v-if="detail.detailList[0].refundStatus == 'APPLY_REFUND'" size="small" style="margin-right:10px;" :style="formatButtonColor()" @click="cancelRefund()">取消退款</van-button>
+          </div>   
+  <van-button v-if="detail.detailList[0].refundStatus == 'FAIL_REFUND'"  size="small" style="margin-right:10px;"  @click.stop="doRefund(item)">重新申请</van-button>
+      <van-button v-if="detail.detailList[0].refundStatus == 'FAIL_REFUND'" size="small" style="margin-right:10px;" :style="formatButtonColor()" @click="cancelRefund()">取消退款</van-button>
+    </div>
+
+
 
  <div class="settingBody" v-if="detail.orderStatus === 'ORDER_CANCEL_PAY'">
       <van-button size="small" style="margin-right:10px;" :style="formatButtonColor()" @click="buyAgain()">再次购买</van-button>
     </div>
+
+    
+
+     <div class="settingBody" v-if="detail.orderStatus === 'ORDER_WAIT_REVIEW' ||detail.orderStatus === 'ORDER_FINISH'">
+        <div  v-if="detail.detailList[0].refundStatus == 'WITHOUT_REFUND'  ">
+      <van-button size="small" style="margin-right:10px;" :style="formatButtonColor()" @click.stop="buyAgain(detail.orderId)">再次购买</van-button>
+      <van-button size="small" style="margin-right:10px;" v-if="detail.orderStatus === 'ORDER_WAIT_REVIEW' " @click.stop="doRefund()">退换/售后</van-button>
+      <van-button size="small" style="margin-right:10px;" v-if="detail.orderStatus === 'ORDER_WAIT_REVIEW'" :style="formatButtonColor()" @click.stop="gocomment()">评价商品</van-button>
+    </div>
+
+        <div v-if="detail.detailList[0].refundStatus == 'APPLY_REFUND'">
+      <van-button v-if="detail.detailList[0].refundStatus == 'APPLY_REFUND'" size="small" style="margin-right:10px;" :style="formatButtonColor()" @click="cancelRefund()">取消退款</van-button>
+          </div>
+          
+    </div>
+
+     <div class="settingBody" v-if="detail.orderStatus === 'ORDER_END_GOODS' ">
+        <div  v-if="detail.detailList[0].refundStatus == 'WITHOUT_REFUND'  ">
+      <van-button size="small" style="margin-right:10px;" @click.stop="doRefund()">退换/售后</van-button>
+        <van-button size="small" style="margin-right:10px;" @click.stop="getShip()" :style="formatButtonColor()">查看物流</van-button>
+    </div>
+
+        <div v-if="detail.detailList[0].refundStatus == 'APPLY_REFUND'">
+      <van-button v-if="detail.detailList[0].refundStatus == 'APPLY_REFUND'" size="small" style="margin-right:10px;" :style="formatButtonColor()" @click="cancelRefund()">取消退款</van-button>
+          </div>
+          
+    </div>
+
+
         </div>
 
 
@@ -89,7 +142,7 @@
 
         <div style="height:10px;background-color:#f7f7f7;"></div>
 
-<div style="padding:10px;    line-height: 24px;color:#999">
+<div style="padding:10px;    line-height: 24px;color:#999;font-size:14px;">
     
   <div v-if="detail.orderId">
         订单编号：{{detail.orderId}}
@@ -106,8 +159,21 @@
  <div v-if="detail.detailList[0].refundOrderList[0]">
         申请退款时间：{{detail.detailList[0].refundOrderList[0].createTime}}
     </div>
+    
 </div>
+
+        <div style="height:10px;background-color:#f7f7f7;" v-if="detail.detailList[0].refundStatus == 'FAIL_REFUND'"></div>
+
+      <div style="margin:0 0 0 10px;padding:10px;" v-if="detail.detailList[0].refundStatus == 'FAIL_REFUND'">
+      <div>
+        退回原因
+      </div>
+      <p style="color:#999;">
+        {{detail.detailList[0].refundOrderList[0].merchantRemark}}
+      </p>
+      </div>
         <div style="height:10px;background-color:#f7f7f7;"></div>
+        
 <div style="    display: flex;
     align-items: center;
     justify-content: space-between;
@@ -126,11 +192,9 @@
         </div>
 
       <div style="margin:0 0 0 10px;padding:10px;" >
-        
       <div>
         售后原因
       </div>
-      
       <p style="color:#999;">
         {{detail.detailList[0].refundOrderList[0].refundReason}}
       </p>
@@ -148,13 +212,13 @@
 
 <div v-if="detail.detailList[0].refundStatus == 'WAIT_GOODS_BACK' ||detail.detailList[0].refundStatus ==  'WAIT_RECVGOODS'">
         <div style="height:10px;background-color:#f7f7f7;"></div>
-   <div style="margin:0 0 0 10px;display:flex;justify-content: space-between;padding:10px;border-bottom:1px #e5e5e5 solid;">
+   <div style="font-size:14px;margin:0 0 0 10px;display:flex;justify-content: space-between;padding:10px;border-bottom:1px #e5e5e5 solid;">
                 <div>请在七天内将商品寄回一下地址并填写物流单号：</div>
         </div>
        <div style="margin:0 0 0 10px;display:flex;justify-content: space-between;padding:10px;">
                 
- <span>{{detail.detailList[0].refundOrderList[0].contactName}}</span>
-      <span style="margin-right:10px;">{{detail.detailList[0].refundOrderList[0].contactMobile}}</span>
+ <span class="textLabel" >{{detail.detailList[0].refundOrderList[0].contactName}}</span>
+      <span style="margin-right:10px;" class="textLabel">{{detail.detailList[0].refundOrderList[0].contactMobile}}</span>
     </div>
       <div style="display:flex; margin:0 0 0 10px;   align-items: center;padding: 5px;     font-size: 14px;border-bottom:1px #e5e5e5 solid; " >
                   <div>
@@ -206,20 +270,27 @@ import comhead from "../../components/Comhead.vue";
 })
 export default class orderdetail extends Vue {
   orderId = "";
-  detail = "";
+  detail = {};
 
-  inputTransNo(){
-   console.log('填写单号')
-   this.$router.push({
-     name:'refundbackgoods',
-     query:{
-       refundId:this.detail['detailList'][0].refundOrderList[0].refundId
-     }
-   });
-
+  inputTransNo() {
+    console.log("填写单号");
+    this.$router.push({
+      name: "refundbackgoods",
+      query: {
+        refundId: this.detail["detailList"][0].refundOrderList[0].refundId
+      }
+    });
   }
   formatButtonColor() {
     return "border-color:#ffc630;color:#ffc630";
+  }
+  gocomment() {
+    this.$router.push({
+      name: "addcomment",
+      query: {
+        orderId: this.detail["orderId"]
+      }
+    });
   }
   buyAgain() {
     Vue.prototype.$reqFormPost(
@@ -240,12 +311,57 @@ export default class orderdetail extends Vue {
           console.log(
             "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
           );
-Toast(res.data.message)
+          Toast(res.data.message);
           return;
         }
         this.$router.push({ name: "cart" });
       }
     );
+  }
+  recvgoods(orderId) {
+    Dialog.confirm({
+      title: "提示",
+      message: "确认收货?"
+    })
+      .then(() => {
+        Vue.prototype.$reqFormPost(
+          "/order/recvgoods",
+          {
+            userId: this.$store.getters[
+              Vue.prototype.MutationTreeType.TOKEN_INFO
+            ].userId,
+            token: this.$store.getters[
+              Vue.prototype.MutationTreeType.TOKEN_INFO
+            ].token,
+            orderId: orderId
+          },
+          res => {
+            if (res == null) {
+              console.log("网络请求错误！");
+              return;
+            }
+            if (res.data.status != 200) {
+              console.log(
+                "需控制错误码" +
+                  res.data.status +
+                  ",错误信息：" +
+                  res.data.message
+              );
+              Toast(res.data.message);
+              return;
+            }
+
+            this.queryDetail();
+          }
+        );
+        // on confirm
+      })
+      .catch(() => {
+        // on cancel
+      });
+  }
+  getShip() {
+    this.$router.push({ name: "ship", query: this.detail });
   }
   formatStatus(status) {
     // ORDER_WAIT_PAY
@@ -265,9 +381,30 @@ Toast(res.data.message)
       case "ORDER_WAIT_RECVGOODS":
         return "未收货";
       case "ORDER_END_GOODS":
-        return "交易结束";
-      case "ORDER_WAIT_REVIEW" || "ORDER_FINISH":
+        return "已评论";
+      case "ORDER_WAIT_REVIEW":
+        return "待评价";
+      case "ORDER_FINISH":
         return "交易完成";
+    }
+  }
+  formatStatusColor(status) {
+    switch (status) {
+      case "ORDER_WAIT_SENDGOODS":
+        return "color:red";
+      case "ORDER_WAIT_RECVGOODS":
+        return "color:red";
+      case "ORDER_CANCEL_PAY":
+        return "color:red";
+      case "ORDER_WAIT_PAY":
+        return "color:red";
+      case "ORDER_END_GOODS":
+        return "color:#ffc630";
+
+      case "ORDER_WAIT_REVIEW":
+        return "color:#ffc630";
+      case "ORDER_FINISH":
+        return "color:#ffc630;";
     }
   }
   doCancel() {
@@ -384,22 +521,7 @@ Toast(res.data.message)
       }
     );
   }
-  formatStatusColor(status) {
-    switch (status) {
-      case "ORDER_WAIT_SENDGOODS":
-        return "color:red";
-      case "ORDER_WAIT_RECVGOODS":
-        return "color:red";
-      case "ORDER_CANCEL_PAY":
-        return "color:red";
-      case "ORDER_WAIT_PAY":
-        return "color:red";
-      case "ORDER_WAIT_REVIEW":
-        return "color:#ffc630";
-      case "ORDER_FINISH":
-        return "color:#ffc630;";
-    }
-  }
+
   doRefund() {
     console.log("申请退款");
     this.$router.push({
@@ -409,12 +531,16 @@ Toast(res.data.message)
       }
     });
   }
-  
-  payOrder(){
-      this.$router.push({
-          name: "pay",
-          query:{body:this.detail['orderTitle'],payId:this.detail['payNo'],payTotal:this.detail['payTotal']}
-        });
+
+  payOrder() {
+    this.$router.push({
+      name: "pay",
+      query: {
+        body: this.detail["orderTitle"],
+        payId: this.detail["payNo"],
+        payTotal: this.detail["payTotal"]
+      }
+    });
   }
   mounted() {
     this.orderId = this.$route.query.orderId;
