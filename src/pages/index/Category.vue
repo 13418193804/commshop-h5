@@ -1,7 +1,7 @@
 <template>
   <div class="tab-contents">
 <div class="searchbox flex">
-  <van-search placeholder="搜索商品" v-model="value" style="flex:1;background-color: #fafafa;" @click="filterProduct()"/>
+  <van-search placeholder="搜索商品" v-model="value" class="flex-1" style="background-color: #fafafa;" @click="filterProduct()"/>
 </div>
 
 <div class="contentBody">

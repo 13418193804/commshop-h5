@@ -12,7 +12,7 @@
 
 <img v-lazy="item.goodsImg.split(',')[0]" style="width:90px;height:90px;"/>
 
-<div style="flex:1;padding:0 10px;">
+<div class="flex-1" style="flex:1;padding:0 10px;">
 <div>{{item.goodsName}}</div>
 <div style="font-size:14px;color:#666">{{item.goodsName}}</div>
                 <div style="color:red">￥{{item.price}}</div>

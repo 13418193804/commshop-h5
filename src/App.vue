@@ -152,7 +152,12 @@ color:#f44!important;
   -ms-flex-pack: justify;
   justify-content: space-around;
 }
-
+.flex-end-justify {
+  -webkit-box-pack: flex-end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: flex-end;
+  justify-content: flex-end;
+}
 .flex-warp-justify {
   -webkit-flex-wrap: wrap;
   -moz-flex-wrap: wrap;

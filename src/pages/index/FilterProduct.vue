@@ -2,7 +2,7 @@
   <div class="tab-contents">
 <div class="searchbox1">
   <form action="/">
-     <van-search placeholder="搜索商品" v-model="value"  @search="onSearch" show-action  @cancel="onCancel" style="flex:1;background-color: #fafafa;" @click="doChange()"/>
+     <van-search placeholder="搜索商品" v-model="value"  @search="onSearch" show-action  @cancel="onCancel" class="flex-1" style="background-color: #fafafa;" @click="doChange()"/>
 </form>
 </div>
 

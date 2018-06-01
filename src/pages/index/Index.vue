@@ -5,7 +5,7 @@
 
 
 
-  <van-search placeholder="搜索商品" v-model="value" style="flex:1;background-color: #fafafa;" @click="filterProduct()"/>
+  <van-search placeholder="搜索商品" v-model="value" class="flex-1" style="background-color: #fafafa;" @click="filterProduct()"/>
 
 
   
@@ -38,7 +38,7 @@
   </div>
 </div>
   <!-- swipeable -->
-<van-tabs :active="active" style="flex:1" @click="changeTab" class="index_tabs" >
+<van-tabs :active="active" @click="changeTab" class="index_tabs flex-1" >
 
 
 <!-- :style="$route.query.active?'margin-top:-45px':''" -->
@@ -91,7 +91,7 @@
                       <div class="flex flex-pack-center flex-align-center" style="overflow:hidden;" :style="handlePX('height', 270)+handlePX('width', 270)">
                         <img v-lazy="goods.goodsImg.split(',')[0]" style="width:100%"/>
                       </div>
-                      <div style="padding-left:10px;flex:1;" class="textLabel" :style="handlePX('line-height', 48)">
+                      <div style="padding-left:10px;" class="textLabel flex-1" :style="handlePX('line-height', 48)">
                         <div>
                           <img src="../../assets/image/新品特价.png" v-if="goods.isBargain"  :style="handlePX('width',92)+handlePX('height',30)"  style="vertical-align: middle;"/>
                           <span class="textLabel" style="color:#000000;" :style="handlePX('font-size',28)">{{goods.goodsName}}</span>
