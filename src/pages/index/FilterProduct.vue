@@ -79,12 +79,12 @@
      <div v-for="(goods,goodsIndex) in goodsList" @click="goProductDetail(goods.goodsId)" :key="goodsIndex" class="goodsItem">
                     <div style="  width:-webkit-fill-available; padding:5px 0; " class="flex   flex-pack-center">
                       <div style="">
-                      <div style="border: 1px #e5e5e5 solid;box-sizing: border-box;display:flex;align-items: center;justify-content:center;overflow:hidden;position:relative;" :style="handlePX('height', 410)+handlePX('width', 345)">
+                      <div class="flex flex-pack-center flex-align-center" style="border: 1px #e5e5e5 solid;box-sizing: border-box;overflow:hidden;position:relative;" :style="handlePX('height', 410)+handlePX('width', 345)">
                         <img src="../../assets/image/热.png" style="width:-webkit-fill-available;position: absolute;top: 0;left:0;z-index:99" :style="handlePX('width', 43)+handlePX('height', 49)"/>
                         <img v-lazy="goods.goodsImg.split(',')[0]" style="width:-webkit-fill-available;position: absolute;top: 0;"/>
                         <div class="textLabel" style="position: absolute;bottom: 0;width: 100%;background-color:rgba(207,207,207,0.3);text-align:center;color:#A3A3A3" :style="handlePX('height', 70)+handlePX('line-height', 70)+handlePX('font-size', 28)">{{goods.jingle}}</div>
                       </div>
-                      <div style="margin:5px auto;display:flex;justify-content: center;flex-direction: column;width:-webkit-fill-available;" :style="handlePX('width', 345)">
+                      <div class="flex flex-pack-center flex-v" style="margin:5px auto;width:-webkit-fill-available;" :style="handlePX('width', 345)">
                         <div>
                           <img src="../../assets/image/满减.png" :style="handlePX('width',52)+handlePX('height',25)"/>
                           <img src="../../assets/image/特价.png" :style="handlePX('width',52)+handlePX('height',25)"/>
@@ -102,9 +102,7 @@
         </ul>
    
 
-<div style="    display: flex;
-    align-items: center;
-    justify-content: center;font-size:14px;padding:15px;">
+<div class="flex flex-pack-center flex-align-center" style="font-size:14px;padding:15px;">
 
     <div v-if="!loading">加载中...</div>
     <div v-else>-</div>
@@ -116,7 +114,7 @@
 
 </div>
 
-</div>
+
 
 
 

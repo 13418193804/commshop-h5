@@ -115,7 +115,7 @@
                         <img v-lazy="goods.goodsImg.split(',')[0]" style="width:-webkit-fill-available;position: absolute;top: 0;"/>
                         <div class="textLabel" style="position: absolute;bottom: 0;width: 100%;background-color:rgba(207,207,207,0.3);text-align:center;color:#A3A3A3" :style="handlePX('height', 70)+handlePX('line-height', 70)+handlePX('font-size', 28)">{{goods.jingle}}</div>
                       </div>
-                      <div class="flex flex-pack-center" style="margin:5px auto;flex-direction: column;width:-webkit-fill-available;" :style="handlePX('width', 345)">
+                      <div class="flex flex-pack-center flex-v" style="margin:5px auto;width:-webkit-fill-available;" :style="handlePX('width', 345)">
                         <div>
                           <img src="../../assets/image/满减.png" v-if="goods.couponList" :style="handlePX('width',52)+handlePX('height',25)"/>
                           <img src="../../assets/image/特价.png" v-if="goods.isBargain" :style="handlePX('width',52)+handlePX('height',25)"/>
@@ -136,7 +136,7 @@
                         <img v-lazy="goods.goodsImg.split(',')[0]" style="width:-webkit-fill-available;position: absolute;top: 0;z-index:-1;"/>
                         <div class="textLabel" style="position: absolute;bottom: 0;width: 100%;background-color:rgba(207,207,207,0.3);text-align:center;color:#A3A3A3" :style="handlePX('height', 70)+handlePX('line-height', 70)+handlePX('font-size', 28)">{{goods.jingle}}</div>
                       </div>
-                      <div class="flex flex-pack-center" style="margin:5px auto;flex-direction: column;width:-webkit-fill-available;" :style="handlePX('width', 345)">
+                      <div class="flex flex-pack-center flex-v" style="margin:5px auto;width:-webkit-fill-available;" :style="handlePX('width', 345)">
                         <div>
                           <img src="../../assets/image/满减.png" :style="handlePX('width',52)+handlePX('height',25)"/>
                           <img src="../../assets/image/特价.png" :style="handlePX('width',52)+handlePX('height',25)"/>

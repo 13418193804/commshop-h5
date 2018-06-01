@@ -7,7 +7,7 @@
   :infinite-scroll-disabled="loading"
   infinite-scroll-distance="20" >
         <li v-for="(item,index) in messagelist" :key="index">
-          <div style="display:flex;justify-content: space-between;border-bottom:1px solid #f4f4f4;background-color: #fff;" :style="handlePX('padding',20)">
+          <div class="flex flex-pack-justify" style="border-bottom:1px solid #f4f4f4;background-color: #fff;" :style="handlePX('padding',20)">
             <div style="font-size:12px;color:#a9a9a9;">{{item.content}}</div>
             <div style="font-size:12px;color:#a9a9a9;text-align: right;vertical-align: middle;" :style="handlePX('width',300)">{{item.updateTime}}</div> 
           </div>
