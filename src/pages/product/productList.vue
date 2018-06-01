@@ -20,9 +20,9 @@
 
       <van-row  >
         <van-col span="12" v-for="(item,goodsListindex) in goodsList" :key="goodsListindex">
-          <div class="bodyItem" :style="handlePX('margin-bottom',50)" style="display:flex;justify-content:center;" @click="goProductDetail(item.goodsId)">
+          <div class="bodyItem flex flex-pack-center" :style="handlePX('margin-bottom',50)" @click="goProductDetail(item.goodsId)">
           <div style="overflow: hidden;">
-            <div style="border: 1px #e5e5e5 solid;box-sizing: border-box;display:flex;align-items: center;justify-content:center;overflow:hidden;position:relative;margin:5px auto;" :style="handlePX('height', 410)+handlePX('width', 345)">
+            <div class="flex flex-pack-center flex-align-center" style="border: 1px #e5e5e5 solid;box-sizing: border-box;overflow:hidden;position:relative;margin:5px auto;" :style="handlePX('height', 410)+handlePX('width', 345)">
               <img src="../../assets/image/热.png" style="width:-webkit-fill-available;position: absolute;top: 0;left:0;" :style="handlePX('width', 43)+handlePX('height', 49)"/>
               <img v-lazy="item.goodsImg.split(',')[0]" style="width:-webkit-fill-available;position: absolute;top: 0;z-index:-1;"/>
               <div class="textLabel" style="position: absolute;bottom: 0;width: 100%;background-color:rgba(207,207,207,0.3);text-align:center;color:#A3A3A3" :style="handlePX('height', 70)+handlePX('line-height', 70)+handlePX('font-size', 28)">{{item.jingle}}</div>
@@ -46,9 +46,7 @@
 </div>
   </van-tab>
 </van-tabs>
-<div style="    display: flex;
-    align-items: center;
-    justify-content: center;font-size:14px;padding:15px;">
+<div class="flex flex-pack-center flex-align-center" style="font-size:14px;padding:15px;">
     <div v-if="!loading">加载中...</div>
     <div v-else>-</div>
 </div>

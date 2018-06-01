@@ -7,18 +7,18 @@
   v-infinite-scroll="loadMore"
   :infinite-scroll-disabled="loading"
   infinite-scroll-distance="20" >
-  <van-tab v-for="(n,sindex) in orderTitleList"  :title="n.name" style="">
+  <van-tab v-for="(n,sindex) in orderTitleList"  :title="n.name" style="" :key="sindex">
 <!-- border-top:1px #e5e5e5 solid; -->
       <div  v-if="active == sindex">
   
-        <li v-for="(item,index) in orderList[returnKey()].orderList" @click="goDetail(item)">
+        <li v-for="(item,index) in orderList[returnKey()].orderList" @click="goDetail(item)" :key="index">
 
   <div>
           <div class="orderTitle textLabel">  
               <div style="padding-left:10px;">
                 订单号:{{item.orderId}}
               </div>
-              <div  style="display: flex;    align-items: center;" >
+              <div  class="flex flex-align-center" >
                 <span v-if="item.detailList[0].refundStatus == 'APPLY_REFUND' " style="color:red">退款中</span>
                 <span v-if="item.detailList[0].refundStatus == 'WITHOUT_REFUND'" :style="formatStatusColor(item.orderStatus)">{{formatStatus(item.orderStatus)}}</span>
                 <span v-if="item.detailList[0].refundStatus == 'SUCCEED_REFUND'" style="color:#ffc630;">已退款</span>
@@ -36,10 +36,10 @@
     <div class="detailBody">
         <div v-for="items in  item.detailList">
     <div class="product1">
-       <div style='display:flex;align-items:center'>
+       <div class="flex flex-align-center">
         <img v-lazy='items.goodsImg' style='height:80px;width:80px'/>
       </div>
-      <div style='font-size:12px;flex:1;overflow:hidden;padding:0 10px;'>
+      <div class="flex-1" style='font-size:12px;overflow:hidden;padding:0 10px;'>
         <div class='lineTwoType'>{{items.goodsName}}</div>
         <div style='  overflow: hidden;text-overflow: ellipsis;white-space: nowrap;color:#999'>
           <div> {{items.jingle}}</div>
@@ -138,9 +138,7 @@
 
 
   </van-tab>
- <div style="    display: flex;
-    align-items: center;
-    justify-content: center;font-size:14px;padding:15px;">
+ <div class="flex flex-align-center flex-pack-center"  style="font-size:14px;padding:15px;">
     <div v-if="orderList[returnKey()].loading">加载中...</div>
     <div v-else>-</div>
   

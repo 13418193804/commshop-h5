@@ -1,7 +1,7 @@
 <template>
   <div class="tab-contents" style="height:-webkit-fill-available;">
             <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="订单详情" isRightIcon="true"  ></comhead>
-            <div style="background-color:#f7f7f7;display: flex;justify-content: space-between;padding: 10px;font-size: 16px;align-items: center;">
+            <div class="flex flex-pack-justify flex-align-center" style="background-color:#f7f7f7;padding: 10px;font-size: 16px;">
                 <div style="font-size:16px">订单状态</div>
                
                 <!-- <div :style="formatStatusColor(detail.orderStatus)">{{formatStatus(detail.orderStatus)}}</div> -->
@@ -13,16 +13,16 @@
    <span v-if="detail.detailList[0].refundStatus == 'WAIT_RECVGOODS'" style="color:#ffc630;">退货中</span>
 
             </div>
-     <div style="    display: flex;height: 5px;">
+     <div class="flex" style="height: 5px;">
          <img src="../../assets/jiange.png" style="width:100%;"/>
      </div>
-        <div  style="display:flex;align-items: center;padding:10px;">
+        <div class="flex flex-align-center" style="padding:10px;">
          <div  style="flex:1;">
-    <div style="    font-size: 16px;   display: flex;justify-content: space-between;">
+    <div class="flex flex-pack-justify" style="font-size: 16px;">
       <span>收货人：{{detail.contactName}}</span>
       <span style="margin-right:10px;">{{detail.contactPhone}}</span>
     </div>
-      <div style="display:flex;    align-items: center;padding: 5px;     font-size: 14px; " >
+      <div class="flex flex-align-center" style="padding: 5px;font-size: 14px; " >
                   <div>
                     <i class="iconfont icon-location" style="margin-right:10px;font-size:22px;"></i>
                   </div>
@@ -34,13 +34,13 @@
               </div>
            </div>
         <div style="height:10px;background-color:#f7f7f7;"></div>
-    <div style="">
-        <div v-for="(item,index) in detail.detailList">
+    <div>
+        <div v-for="(item,index) in detail.detailList" :key="index">
                 <div  class="product">
-                     <div style='display:flex;align-items:center'>
+                     <div class="flex flex-align-center">
         <img v-lazy='item.goodsImg' style='height:70px;width:70px'/>
       </div>
-      <div style='font-size:16px;flex:1;overflow:hidden;padding:0 10px;'>
+      <div class="flex-1" style='font-size:16px;overflow:hidden;padding:0 10px;'>
        <div style=" height:100%;">
         <div class='lineTwoType'>{{item.goodsName}}</div>
             <div style='  overflow: hidden;text-overflow: ellipsis;white-space: nowrap;color:#999'>
@@ -58,19 +58,19 @@
         </div>
  </div>
 
- <div style="">
-        <div style="margin-left:10px;border-bottom:1px #e5e5e5 solid;display:flex;justify-content: space-between;padding:10px;">
+ <div>
+        <div class="flex flex-pack-justify" style="margin-left:10px;border-bottom:1px #e5e5e5 solid;padding:10px;">
                 <div>运费</div>
                 <div style="margin-right:10px;">￥{{detail.transportPrice.toFixed(2)}}</div>
         </div>
 
-      <div style="margin:0 0 0 10px;display:flex;justify-content: space-between;padding:10px;border-bottom:1px #e5e5e5 solid;">
+      <div class="flex flex-pack-justify" style="margin:0 0 0 10px;padding:10px;border-bottom:1px #e5e5e5 solid;">
                 <div>订单总价</div>
                 <div style="margin-right:10px;" class="marketPrice">￥{{detail.orderTotalPrice.toFixed(2)}}</div>
         </div>
 
 
-<div style="margin:0 0 0 10px;display:flex;justify-content:flex-end;padding:10px;">
+<div class="flex flex-pack-justify flex-end-justify" style="margin:0 0 0 10px;padding:10px;">
 
             <div class="settingBody" v-if="detail.orderStatus === 'ORDER_WAIT_PAY'">
       <van-button size="small" style="margin-right:10px;" @click="doCancel()">取消订单</van-button>
@@ -174,11 +174,7 @@
       </div>
         <div style="height:10px;background-color:#f7f7f7;"></div>
         
-<div style="    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px;
-    font-size: 14px;">
+<div class="flex flex-pack-justify flex-align-center" style="padding: 10px;font-size: 14px;">
     <div>服务时间：9:00 - 22:00</div>
     <van-button size="small" onclick="showMeiQia()">联系客服</van-button>
 
@@ -186,7 +182,7 @@
 
 <div v-if="detail.detailList[0].refundOrderList[0]">
         <div style="height:10px;background-color:#f7f7f7;"></div>
-      <div style="margin:0 0 0 10px;display:flex;justify-content: space-between;padding:10px;border-bottom:1px #e5e5e5 solid;">
+      <div class="flex flex-pack-justify" style="margin:0 0 0 10px;padding:10px;border-bottom:1px #e5e5e5 solid;">
                 <div>售后类型</div>
                 <div style="margin-right:10px;">{{detail.detailList[0].refundOrderList[0].refundType=='REFUND'?'退款':'退货/退款'}} </div>
         </div>
@@ -201,7 +197,7 @@
       </div>
 
 
-<div style="display:flex;">
+<div class="flex">
 
   <div v-for="n in  detail.detailList[0].refundOrderList[0].refundImg?detail.detailList[0].refundOrderList[0].refundImg.split(','):[]">
           <img :src="n" style="width: 80px;height: 80px;padding:10px;"/>
@@ -212,15 +208,15 @@
 
 <div v-if="detail.detailList[0].refundStatus == 'WAIT_GOODS_BACK' ||detail.detailList[0].refundStatus ==  'WAIT_RECVGOODS'">
         <div style="height:10px;background-color:#f7f7f7;"></div>
-   <div style="font-size:14px;margin:0 0 0 10px;display:flex;justify-content: space-between;padding:10px;border-bottom:1px #e5e5e5 solid;">
+   <div class="flex flex-pack-justify" style="font-size:14px;margin:0 0 0 10px;padding:10px;border-bottom:1px #e5e5e5 solid;">
                 <div>请在七天内将商品寄回一下地址并填写物流单号：</div>
         </div>
-       <div style="margin:0 0 0 10px;display:flex;justify-content: space-between;padding:10px;">
+       <div class="flex flex-pack-justify" style="margin:0 0 0 10px;padding:10px;">
                 
  <span class="textLabel" >{{detail.detailList[0].refundOrderList[0].contactName}}</span>
       <span style="margin-right:10px;" class="textLabel">{{detail.detailList[0].refundOrderList[0].contactMobile}}</span>
     </div>
-      <div style="display:flex; margin:0 0 0 10px;   align-items: center;padding: 5px;     font-size: 14px;border-bottom:1px #e5e5e5 solid; " >
+      <div class="flex flex-align-center" style="margin:0 0 0 10px;padding: 5px;font-size: 14px;border-bottom:1px #e5e5e5 solid; " >
                   <div>
                     <i class="iconfont icon-location" style="margin-right:10px;font-size:22px;"></i>
                   </div>
@@ -232,7 +228,7 @@
 
 
 
- <div  v-if="detail.detailList[0].refundStatus == 'WAIT_GOODS_BACK'||detail.detailList[0].refundStatus ==  'WAIT_RECVGOODS'" style="margin:0 0 0 10px;display:flex;justify-content: space-between;padding:10px;border-bottom:1px #e5e5e5 solid;">
+ <div  v-if="detail.detailList[0].refundStatus == 'WAIT_GOODS_BACK'||detail.detailList[0].refundStatus ==  'WAIT_RECVGOODS'" class="flex flex-pack-justify" style="margin:0 0 0 10px;padding:10px;border-bottom:1px #e5e5e5 solid;">
                 <div>物流单号:<span style="color:#999" v-if="detail.detailList[0].refundOrderList[0].transNo">{{detail.detailList[0].refundOrderList[0].transNo}}</span><span v-else>未填写</span></div>
               <van-button size="small" :style="formatButtonColor()" @click="inputTransNo()" v-if="!detail.detailList[0].refundOrderList[0].transNo">填写</van-button>
                 
@@ -244,14 +240,7 @@
         </div>
 
 
-</div>
 
-
-
-
-</div>
-
-  </div>
 </template>
 
 <script lang="ts">

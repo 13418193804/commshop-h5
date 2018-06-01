@@ -102,14 +102,14 @@
         <div class="recommend"  style="background-color:#ffffff;margin-top:10px;z-index:2;">
           <van-tabs @click="selecttablist" id="tab1">
             <van-tab v-for="(item,index) in tablist" :title="item" :key="index" >
-              <div style="display:flex;overflow: auto;" v-if="index==tabindex">
+              <div class="flex" style="overflow: auto;" v-if="index==tabindex">
                 <div v-for="(items,index) in tabgoodslist" :key="index" @click="goProductDetail(items.goodsId)" :style="handlePX('padding-bottom',65)+handlePX('padding-top',20)+handlePX('padding-left',30)">
-                  <div style="border: 1px #e5e5e5 solid;box-sizing: border-box;display:flex;align-items: center;justify-content:center;overflow:hidden;position:relative;" :style="handlePX('height', 410)+handlePX('width', 345)">
+                  <div class="flex flex-pack-center flex-align-center" style="border: 1px #e5e5e5 solid;box-sizing: border-box;overflow:hidden;position:relative;" :style="handlePX('height', 410)+handlePX('width', 345)">
                       <img src="../../assets/image/热.png" style="width:-webkit-fill-available;position: absolute;top: 0;left:0;z-index:2;" :style="handlePX('width', 43)+handlePX('height', 49)"/>
                       <img v-lazy="items.goodsImg.split(',')[0]" style="width:-webkit-fill-available;position: absolute;top: 0;"/>
                       <div class="textLabel" style="position: absolute;bottom: 0;width: 100%;background-color:rgba(207,207,207,0.3);text-align:center;color:#A3A3A3" :style="handlePX('height', 70)+handlePX('line-height', 70)+handlePX('font-size', 28)">{{items.jingle}}</div>
                     </div>
-                    <div style="display:flex;justify-content: center;flex-direction: column;width:-webkit-fill-available;" :style="handlePX('width', 345)">
+                    <div class="flex flex-pack-center flex-v" style="width:-webkit-fill-available;" :style="handlePX('width', 345)">
                       <div>
                         <img src="../../assets/image/满减.png" :style="handlePX('width',52)+handlePX('height',25)"/>
                         <img src="../../assets/image/特价.png" :style="handlePX('width',52)+handlePX('height',25)"/>
@@ -156,11 +156,11 @@
 
 
 <van-goods-action style="z-index:90;background-color: #ffffff;">
-  <van-goods-action-mini-btn icon="chat"  @click="onClickMiniBtn_service" style="border-top:1px #e5e5e5 solid;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 10px;font-size:22px"/>
-  <van-goods-action-mini-btn icon="cart"  @click="onClickMiniBtn_cart" style="border-top:1px #e5e5e5 solid;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 10px;font-size:22px;"/>
-  <van-goods-action-mini-btn icon="like"  @click="onClickMiniBtn_collection" :class="{collection_color:isCollection}" style="border-top:1px #e5e5e5 solid;display:flex;flex-direction:column;justify-content:center;font-size:22px;align-items:center;padding:0 10px;"/>
-  <van-goods-action-big-btn text="立即购买" @click="changeModel()" style="flex:1;"/>
-  <van-goods-action-big-btn text="加入购物车" @click="changeModel()" primary style="flex:1;"/>
+  <van-goods-action-mini-btn icon="chat"  @click="onClickMiniBtn_service" class="flex flex-pack-center flex-align-center flex-v" style="border-top:1px #e5e5e5 solid;padding:0 10px;font-size:22px"/>
+  <van-goods-action-mini-btn icon="cart"  @click="onClickMiniBtn_cart" class="flex flex-pack-center flex-align-center flex-v" style="border-top:1px #e5e5e5 solid;padding:0 10px;font-size:22px;"/>
+  <van-goods-action-mini-btn icon="like"  @click="onClickMiniBtn_collection" :class="{collection_color:isCollection}" class="flex flex-pack-center flex-align-center flex-v" style="border-top:1px #e5e5e5 solid;font-size:22px;padding:0 10px;"/>
+  <van-goods-action-big-btn text="立即购买" @click="changeModel()" class="flex-1"/>
+  <van-goods-action-big-btn text="加入购物车" @click="changeModel()" primary class="flex-1"/>
 </van-goods-action>
 
 
@@ -173,11 +173,11 @@
  <div style="position: relative;width:100%;height:100%;">
 
         <div  style=' background-color:#fff;width:100%;' :class="keepModel ?'modiaBoxUp2' :'modiaBoxDown2'" @click.stop="()=>{return }">
- <div style='border-bottom:1px solid #e5e5e5;display:flex;margin-left:15px;justify-content: space-between'>
-      <div style='border-radius:2px;background-color:#fff;display:flex;margin:10px;'>
+ <div class="flex flex-pack-justify" style='border-bottom:1px solid #e5e5e5;margin-left:15px;'>
+      <div class="flex" style='border-radius:2px;background-color:#fff;margin:10px;'>
         <img v-lazy="skuItem.skuImgUrl?skuItem.skuImgUrl :detatil['goodsImg'].split(',')[0]" style="width:80px;height:80px;" @click="imagePreview(skuItem.skuImgUrl?skuItem.skuImgUrl :detatil['goodsImg'].split(',')[0])"/>
       </div>
-      <div style='font-size:13px;flex:1;    padding: 10px 0 0 0;'>
+      <div class="flex-1" style='font-size:13px;padding: 10px 0 0 0;'>
         <div style="font-size:16px;">{{detatil['goodsName']}}</div>
         <div  style="color:#666">{{detatil['jingle']}}</div>
         <div style='overflow: hidden;'>
@@ -217,24 +217,23 @@
 
 
     <div class='num_box'>
-      <div style='display:flex;align-items:center'>数量：</div>
+      <div class="flex flex-align-center">数量：</div>
 
     <van-stepper v-model="num" style="    float: right;"/>
     </div>
   <div>
       <van-goods-action class="vangoods" style="z-index:90;background-color: #ffffff;">
-        <van-goods-action-mini-btn icon="chat" @click="onClickMiniBtn_service" style="border-top:1px #e5e5e5 solid;font-size:22px;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 10px;"/>
-        <van-goods-action-mini-btn icon="cart"  @click="onClickMiniBtn_cart" style="border-top:1px #e5e5e5 solid;font-size:22px;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 10px;"/>
-        <van-goods-action-mini-btn icon="like" @click="onClickMiniBtn_collection" :class="{collection_color:isCollection}" style="border-top:1px #e5e5e5 solid;font-size:22px;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 10px;"/>
-        <van-goods-action-big-btn text="立即购买" @click="addCar()" style="flex:1;"/>
-        <van-goods-action-big-btn text="加入购物车" @click="addCart()" primary style="flex:1;"/>
+        <van-goods-action-mini-btn icon="chat" @click="onClickMiniBtn_service" class="flex flex-pack-center flex-align-center flex-v" style="border-top:1px #e5e5e5 solid;font-size:22px;padding:0 10px;"/>
+        <van-goods-action-mini-btn icon="cart"  @click="onClickMiniBtn_cart" class="flex flex-pack-center flex-align-center flex-v" style="border-top:1px #e5e5e5 solid;font-size:22px;padding:0 10px;"/>
+        <van-goods-action-mini-btn icon="like" @click="onClickMiniBtn_collection" :class="{collection_color:isCollection}" class="flex flex-pack-center flex-align-center flex-v" style="border-top:1px #e5e5e5 solid;font-size:22px;padding:0 10px;"/>
+        <van-goods-action-big-btn text="立即购买" @click="addCar()" class="flex-1"/>
+        <van-goods-action-big-btn text="加入购物车" @click="addCart()" primary class="flex-1"/>
       </van-goods-action>
     </div>
       </div>
 </div>
       </div>
-<div style="    display: flex;
-    flex-wrap: wrap;">
+<div class="flex flex-warp-justify">
 <div v-for="(item,index) in detatil.imageList" :key="index" style="line-height: 0;">
 <img  v-lazy="item"  style="width:100%;"/>
 </div>

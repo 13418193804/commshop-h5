@@ -3,16 +3,16 @@
             <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="申请售后" isRightIcon="true"  ></comhead>
      
 
-     <div style="    display: flex;height: 5px;">
+     <div class="flex" style="height: 5px;">
          <img src="../../assets/jiange.png" style="width:100%;"/>
      </div>
-        <div  style="display:flex;align-items: center;padding:10px;">
+        <div class="flex flex-align-center" style="padding:10px;">
          <div  style="flex:1;">
-    <div style="    font-size: 16px;   display: flex;justify-content: space-between;">
+    <div class="flex flex-pack-justify" style="font-size: 16px;">
       <span>收货人：{{detail.contactName}}</span>
       <span style="margin-right:10px;">{{detail.contactPhone}}</span>
     </div>
-      <div style="display:flex;    align-items: center;padding: 5px;     font-size: 14px; " >
+      <div class="flex flex-align-center" style="padding: 5px;font-size: 14px; " >
                   <div>
                     <i class="iconfont icon-location" style="margin-right:10px;font-size:22px;"></i>
                   </div>
@@ -25,12 +25,12 @@
            </div>
         <div style="height:10px;background-color:#f7f7f7;"></div>
     <div style="">
-        <div v-for="(item,index) in detail.detailList">
+        <div v-for="(item,index) in detail.detailList" :key="index">
                 <div  class="product">
-                     <div style='display:flex;align-items:center'>
+                     <div class="flex flex-align-center">
         <img v-lazy='item.goodsImg' style='height:70px;width:70px'/>
       </div>
-      <div style='font-size:16px;flex:1;overflow:hidden;padding:0 10px;'>
+      <div class="flex-1" style='font-size:16px;overflow:hidden;padding:0 10px;'>
        <div style=" height:100%;">
         <div class='lineTwoType'>{{item.goodsName}}</div>
             <div style='  overflow: hidden;text-overflow: ellipsis;white-space: nowrap;color:#999'>
@@ -49,12 +49,12 @@
  </div>
 
  <div style="">
-        <div style="margin-left:10px;border-bottom:1px #e5e5e5 solid;display:flex;justify-content: space-between;padding:10px;">
+        <div class="flex flex-pack-justify" style="margin-left:10px;border-bottom:1px #e5e5e5 solid;padding:10px;">
                 <div>运费</div>
                 <div style="margin-right:10px;">￥{{detail.transportPrice.toFixed(2)}}</div>
         </div>
 
-      <div style="margin:0 0 0 10px;display:flex;justify-content: space-between;padding:10px;">
+      <div class="flex flex-pack-justify" style="margin:0 0 0 10px;padding:10px;">
                 <div>订单总价</div>
                 <div style="margin-right:10px;" class="marketPrice">￥{{detail.orderTotalPrice.toFixed(2)}}</div>
         </div>
@@ -89,11 +89,7 @@
       </p>
       </div>
         <div style="height:10px;background-color:#f7f7f7;"></div>
-<div style="    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px;
-    font-size: 14px;">
+<div class="flex flex-pack-justify flex-align-center" style="padding: 10px;font-size: 14px;">
     <div>服务时间：9:00 - 22:00</div>
 
     <van-button size="small" onclick="showMeiQia()">联系客服</van-button>
@@ -102,7 +98,7 @@
 
 
         <div style="height:10px;background-color:#f7f7f7;"></div>
-<div style="    display: flex;      justify-content: space-between;align-items: center;padding: 10px;">
+<div class="flex flex-pack-justify flex-align-center" style="padding: 10px;">
   <div>售后类型</div>
   <div class="selectBox" :class="refundObj.refundType == 'REFUND' ?'selectType':''"  @click="changerefundType('REFUND')">
 未收到货，只退款
@@ -119,14 +115,14 @@
           <textarea placeholder="请填写申请理由" v-model="refundObj.reason" type="text" name="content"  rows="9" style="vertical-align:top;width: 100%;border:none;"   ></textarea>
       </div>
 </div>
-<div style="margin:10px;display:flex;">
+<div class="flex" style="margin:10px;">
 <div class="el-upload--picture-card">
-<van-uploader :after-read="onRead" style="width: 100%;height: 100%;display: flex;justify-content: center;align-items: center;" accept="image/jpg,image/png, image/jpeg" >
+<van-uploader :after-read="onRead" class="flex flex-pack-center flex-align-center" style="width: 100%;height: 100%;" accept="image/jpg,image/png, image/jpeg" >
   <van-icon name="photograph" />
 </van-uploader>
 </div>
 
-<div class="el-upload--picture-card" style="position: relative;"  v-for="(item,index) in refundObj.refundImgs">
+<div class="el-upload--picture-card" style="position: relative;"  v-for="(item,index) in refundObj.refundImgs" :key="index">
   <img  :src="item" style="width:100%;"/>
 <i class="iconfont icon-shanchu3" style="    color: #000;
     position: absolute;

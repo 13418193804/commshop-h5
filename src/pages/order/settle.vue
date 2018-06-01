@@ -2,16 +2,16 @@
   <div class="tab-contents" style="height:-webkit-fill-available;">
             <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="确认订单" isRightIcon="true"  ></comhead>
         <div class="addressbox" @click="goSelectAddress()">
-        <div  style="display:flex;align-items: center;padding:10px;">
-  <div v-if="!address"  style="flex:1;">
+        <div class="flex flex-align-center"  style="padding:10px;">
+  <div v-if="!address"  class="flex-1">
               请选择一个收货地址
             </div>
-              <div v-else style="flex:1;">
-    <div style="    font-size: 16px;    display: flex;justify-content: space-between;">
+              <div v-else class="flex-1">
+    <div class="flex flex-pack-justify" style="font-size: 16px;">
       <span>收货人:{{address.contactname}}</span>
       <span style="margin-right:10px;">{{address.contactmobile}}</span>
     </div>
-      <div style="display:flex;    align-items: center;padding: 5px; " >
+      <div class="flex flex-align-center" style="padding: 5px; " >
                   <div>
                     <i class="iconfont icon-location" style="margin-right:10px;font-size:22px;"></i>
                   </div>
@@ -24,20 +24,20 @@
          <i class="iconfont icon-youjiantou" style="font-size:20px;"></i>
            </div>
         </div>
-            <div style="    display: flex;height: 5px;">
+            <div class="flex" style="height: 5px;">
          <img src="../../assets/jiange.png" style="width:100%;"/>
      </div>
 <div style="background-color:#fff;margin-bottom:10px;">
 <div v-for="(item,index) in shopCartList" :key="index">
    
     <div class="product">
-       <div style='display:flex;align-items:center'>
+       <div class="flex flex-align-center">
         <img v-lazy='item.goodsImg' style='height:70px;width:70px'/>
       </div>
-      <div style='flex:1;padding:0 10px;'>
+      <div class="flex-1" style='padding:0 10px;'>
 
-        <div class='lineTwoType' style="flex:1;">{{item.goodsName}}</div>
-        <div class='lineTwoType' style="flex:1;color:#666;font-size:14px;" >{{item.jingle}}</div>
+        <div class='lineTwoType flex-1'>{{item.goodsName}}</div>
+        <div class='lineTwoType flex-1' style="color:#666;font-size:14px;" >{{item.jingle}}</div>
         <div >
             <span class="marketPrice">￥{{item.price}}</span> 
             <span class="labelPrice" style="font-size:12px;">￥{{item.labelPrice}}</span>

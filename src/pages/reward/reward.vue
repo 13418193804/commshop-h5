@@ -1,7 +1,7 @@
 <template>
   <div class="tab-contents">
     <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="奖励金提现" isRightIcon="true" rightTitle="明细" @rightClick="gorewarddetail()"></comhead>
-    <div :style="handlePX('height', 400)" style="border-bottom:15px solid #f5f5f5;display:flex;justify-content:center;align-items:center;flex-direction:column;">
+    <div :style="handlePX('height', 400)" class="flex flex-pack-center flex-align-center flex-v" style="border-bottom:15px solid #f5f5f5;">
         <img src="../../assets/image/金币.png" :style="handlePX('width', 110)+handlePX('height', 110)" style="vertical-align: middle;"/>
         <div :style="handlePX('margin-top', 20)" style="font-size:16px;">可提取金额</div>
         <div :style="handlePX('margin-top', 20)" style="font-size:24px;">￥{{award.awardBalance}}</div>
@@ -17,9 +17,9 @@
     <van-cell-group style="border-bottom:15px solid #f5f5f5;">
         <van-cell is-link  @click="goselectcard()">
             <template slot="title" v-if="cardId">
-                <div style="display:flex;align-items:center;">
+                <div class="flex flex-align-center">
                     <img src="../../assets/image/招商银行.png" :style="handlePX('height', 70)+handlePX('widht', 70)+handlePX('margin-left', 20)" style="border-radius:50%;"/>
-                    <div :style="handlePX('margin-left', 20)" style="flex:1;">
+                    <div :style="handlePX('margin-left', 20)" class="flex-1">
                         <div>{{bankcard.bankName}}<span style="font-size:12px;">(信用卡)</span></div>
                         <div>{{bankcard.cardId}}</div>
                     </div>
