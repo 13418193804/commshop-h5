@@ -22,16 +22,12 @@
     
   </van-cell-group>
   <span slot="right" class="van-cell-swipe__right" @click="deleteCart(index)" >删除</span>
-  <div slot="right" @click="collect(index)" class="collect" style="background-color: #f90;width: 100%;
-    height: 100%; display: flex;
-    align-items: center;
-    justify-content: center;">移至收藏夹</div>
+  <div class="collect flex flex-pack-center flex-align-center" slot="right" @click="collect(index)" style="background-color: #f90;width: 100%;
+    height: 100%;">移至收藏夹</div>
     <div style="background-color:#f7f7f7;height:10px;"></div>
 </van-cell-swipe>
 
-<div :style="maxHeightdiv()" style="width:100%;background-color:#f7f7f7;    display: flex;
-    justify-content: center;
-    align-items: center;" v-if="!cartList || cartList.length==0">
+<div class="flex flex-pack-center flex-align-center" :style="maxHeightdiv()" style="width:100%;background-color:#f7f7f7;" v-if="!cartList || cartList.length==0">
     <div>
       <div v-if="$store.getters[MutationTreeType.TOKEN_INFO] && $store.getters[MutationTreeType.TOKEN_INFO].userId !=='' && $store.getters[MutationTreeType.TOKEN_INFO].token !==''">
   <img src="../../assets/cart/空购物车拷贝.png" :style="handleImageWidth1()"/>
