@@ -1,17 +1,17 @@
 <template>
   <div class="tab-contents">
-<div class="searchbox" style="display:flex;">
+<div class="searchbox flex">
 
 
 
 
-  <van-search placeholder="搜索商品" v-model="value" style="flex:1;background-color: #fafafa;" @click="filterProduct()"/>
+  <van-search placeholder="搜索商品" v-model="value" class="flex-1" style="background-color: #fafafa;" @click="filterProduct()"/>
 
 
   
 <div @click="goMessageList()">
   <div style="font-size:12px;text-alig:center;background-color: rgb(250, 250, 250);color:#666;padding:4px 10px;">
-    <div style=" display: flex;justify-content: center;align-items: center;">
+    <div class="flex flex-align-center flex-pack-center">
 
       <i class="iconfont icon-lingdang"  style="font-size:16px;margin:3px;"></i>
 
@@ -38,7 +38,7 @@
   </div>
 </div>
   <!-- swipeable -->
-<van-tabs :active="active" style="flex:1" @click="changeTab" class="index_tabs" >
+<van-tabs :active="active" @click="changeTab" class="index_tabs flex-1" >
 
 
 <!-- :style="$route.query.active?'margin-top:-45px':''" -->
@@ -87,11 +87,11 @@
               </div>
                 <div class="goodsBody" v-if="items.columnNum ===1" >
                   <div v-for="(goods,goodsIndex) in items.items" @click="goProductDetail(goods.goodsId)" :key="goodsIndex" class="goodsItem" style="width:-webkit-fill-available;border-top: 1px solid #e5e5e5;">
-                    <div style="width:-webkit-fill-available;padding:10px;display:flex;">
-                      <div style="display:flex;align-items:center;justify-content:center;overflow:hidden;" :style="handlePX('height', 270)+handlePX('width', 270)">
+                    <div class="flex" style="width:-webkit-fill-available;padding:10px;">
+                      <div class="flex flex-pack-center flex-align-center" style="overflow:hidden;" :style="handlePX('height', 270)+handlePX('width', 270)">
                         <img v-lazy="goods.goodsImg.split(',')[0]" style="width:100%"/>
                       </div>
-                      <div style="padding-left:10px;flex:1;" class="textLabel" :style="handlePX('line-height', 48)">
+                      <div style="padding-left:10px;" class="textLabel flex-1" :style="handlePX('line-height', 48)">
                         <div>
                           <img src="../../assets/image/新品特价.png" v-if="goods.isBargain"  :style="handlePX('width',92)+handlePX('height',30)"  style="vertical-align: middle;"/>
                           <span class="textLabel" style="color:#000000;" :style="handlePX('font-size',28)">{{goods.goodsName}}</span>
@@ -110,12 +110,12 @@
                 <div class="goodsBody" v-if="items.columnNum === 2" style="  padding:10px 0;border-top:1px #e5e5e5 solid;">
                   <div v-for="(goods,goodsIndex) in items.items" @click="goProductDetail(goods.goodsId)" :key="goodsIndex" class="goodsItem">
                     <div style="  width:-webkit-fill-available;  ">
-                      <div style="border: 1px #e5e5e5 solid;box-sizing: border-box;display:flex;align-items: center;justify-content:center;overflow:hidden;position:relative;margin:5px auto;" :style="handlePX('height', 410)+handlePX('width', 345)">
+                      <div class="flex flex-pack-center flex-align-center" style="border: 1px #e5e5e5 solid;box-sizing: border-box;overflow:hidden;position:relative;margin:5px auto;" :style="handlePX('height', 410)+handlePX('width', 345)">
                         <img src="../../assets/image/热.png" style="width:-webkit-fill-available;position: absolute;top: 0;left:0;z-index:50" :style="handlePX('width', 43)+handlePX('height', 49)"/>
                         <img v-lazy="goods.goodsImg.split(',')[0]" style="width:-webkit-fill-available;position: absolute;top: 0;"/>
                         <div class="textLabel" style="position: absolute;bottom: 0;width: 100%;background-color:rgba(207,207,207,0.3);text-align:center;color:#A3A3A3" :style="handlePX('height', 70)+handlePX('line-height', 70)+handlePX('font-size', 28)">{{goods.jingle}}</div>
                       </div>
-                      <div style="margin:5px auto;display:flex;justify-content: center;flex-direction: column;width:-webkit-fill-available;" :style="handlePX('width', 345)">
+                      <div class="flex flex-pack-center flex-v" style="margin:5px auto;width:-webkit-fill-available;" :style="handlePX('width', 345)">
                         <div>
                           <img src="../../assets/image/满减.png" v-if="goods.couponList" :style="handlePX('width',52)+handlePX('height',25)"/>
                           <img src="../../assets/image/特价.png" v-if="goods.isBargain" :style="handlePX('width',52)+handlePX('height',25)"/>
@@ -131,12 +131,12 @@
                 <div class="goodsBody" v-if="items.columnNum === 3" style="  padding:10px 0;border-top:1px #e5e5e5 solid;">
                   <div v-for="(goods,goodsIndex) in items.items" @click="goProductDetail(goods.goodsId)" :key="goodsIndex" class="goodsItem">
                     <div style="  width:-webkit-fill-available;  ">
-                      <div style="border: 1px #e5e5e5 solid;box-sizing: border-box;display:flex;align-items: center;justify-content:center;overflow:hidden;position:relative;margin:5px auto;" :style="handlePX('height', 410)+handlePX('width', 345)">
+                      <div class="flex flex-pack-center flex-align-center" style="border: 1px #e5e5e5 solid;box-sizing: border-box;overflow:hidden;position:relative;margin:5px auto;" :style="handlePX('height', 410)+handlePX('width', 345)">
                         <img src="../../assets/image/热.png" style="width:-webkit-fill-available;position: absolute;top: 0;left:0;" :style="handlePX('width', 43)+handlePX('height', 49)"/>
                         <img v-lazy="goods.goodsImg.split(',')[0]" style="width:-webkit-fill-available;position: absolute;top: 0;z-index:-1;"/>
                         <div class="textLabel" style="position: absolute;bottom: 0;width: 100%;background-color:rgba(207,207,207,0.3);text-align:center;color:#A3A3A3" :style="handlePX('height', 70)+handlePX('line-height', 70)+handlePX('font-size', 28)">{{goods.jingle}}</div>
                       </div>
-                      <div style="margin:5px auto;display:flex;justify-content: center;flex-direction: column;width:-webkit-fill-available;" :style="handlePX('width', 345)">
+                      <div class="flex flex-pack-center flex-v" style="margin:5px auto;width:-webkit-fill-available;" :style="handlePX('width', 345)">
                         <div>
                           <img src="../../assets/image/满减.png" :style="handlePX('width',52)+handlePX('height',25)"/>
                           <img src="../../assets/image/特价.png" :style="handlePX('width',52)+handlePX('height',25)"/>

@@ -5,10 +5,10 @@
       <div class="detailBody">
         <div v-for="items in  $route.query.detailList">
     <div class="product1">
-       <div style='display:flex;align-items:center'>
+       <div class="flex flex-align-center">
         <img v-lazy='items.goodsImg' style='height:80px;width:80px'/>
       </div>
-      <div style='font-size:12px;flex:1;overflow:hidden;padding:0 10px;'>
+      <div class="flex-1" style='font-size:12px;overflow:hidden;padding:0 10px;'>
         <div class='lineTwoType'>{{items.goodsName}}</div>
         <div style='  overflow: hidden;text-overflow: ellipsis;white-space: nowrap;color:#999'>
           <div> {{items.jingle}}</div>
@@ -29,7 +29,7 @@
     <div>物流单号：{{ $route.query.transportNo}} </div>
 </div>
 <div>
-<div v-for="(item,index) in shipInfoList" class="contentBox" :style="index != 0 ?'color:#999':''">
+<div v-for="(item,index) in shipInfoList" class="contentBox" :style="index != 0 ?'color:#999':''" :key="index">
   <div>{{item.time}}</div>
   <div>{{item.context}}</div>
 </div>

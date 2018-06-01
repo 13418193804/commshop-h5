@@ -2,7 +2,7 @@
   <div class="tab-contents" style="height:-webkit-fill-available;background-color:#fafafa;">
         <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left"  @leftClick="false"  title="评价"  ></comhead>
   <div style="margin-bottom:10px;background-color:#ffffff;">
-    <div :style="handlePX('margin-top',30)+handlePX('margin-left',30)" style="display:flex;">
+    <div :style="handlePX('margin-top',30)+handlePX('margin-left',30)" class="flex">
         <div>
             <img v-lazy="detailList.goodsImg" :style="handlePX('width',150)+handlePX('height',150)"/>
         </div>
@@ -22,7 +22,7 @@
         <van-field :style="handlePX('margin',30)" style="width:auto;border:1px solid #c5c4c4;border-radius:4px;" v-model="commentContent" type="textarea" placeholder="填写评价，即可参加抽奖哦~" rows="5" autosize />
     </van-cell-group>
     
-    <div :style="handlePX('padding',30)" style="display:flex;flex-wrap:wrap;">
+    <div :style="handlePX('padding',30)" class="flex flex-warp-justify">
         <div v-for="(imgname,index) in filename" :key="index" :style="handlePX('margin-right',20)" style="position: relative;">
             <img  v-lazy="imgname" :style="handlePX('width',150)+handlePX('height',150)"/>
             <img  src="../../assets/image/关闭按钮.png" :style="handlePX('width',40)+handlePX('height',40)" style="position: absolute;top:0;right:0;" @click="delimg(index)"/>
@@ -32,7 +32,7 @@
         </van-uploader>
     </div>
 
-    <div :style="handlePX('padding',30)" style="display: flex;justify-content: flex-end;border-top:1px solid #f3f3f3;">
+    <div :style="handlePX('padding',30)" class="flex flex-end-justify" style="border-top:1px solid #f3f3f3;">
         <van-button :style="handlePX('width',170)" style="border:1px solid #797979;border-radius:6px;" @click="subcomment()">提交</van-button>
     </div>
   </div>

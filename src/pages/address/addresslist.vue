@@ -6,29 +6,29 @@
 
     <div v-for="(item,index) in addressList" :key="index" style="background-color:#ffffff;margin-bottom:15px;">
       <div :style="handlePX('padding', 30)" style="border-bottom:1px solid #efefef;">
-        <div style="display:flex;justify-content:space-between;">
+        <div class="flex flex-pack-justify">
           <div>收货人：{{item.contactname}}</div>
           <div>{{item.tel}}</div>  
         </div>
-        <div :style="handlePX('padding-top', 20)" style="display:flex;">
+        <div :style="handlePX('padding-top', 20)" class="flex">
           <img src="../../assets/image/收货地址.png" :style="handlePX('width', 34)+handlePX('height', 42)"/>
           <div style="padding-left:5px;">{{item.address}}</div>
         </div>
       </div>
-      <div :style="handlePX('height', 80)+handlePX('padding-left', 30)+handlePX('padding-right', 30)" style="display:flex;justify-content:space-between;align-items:center;">
-        <div style="display:flex;">
+      <div :style="handlePX('height', 80)+handlePX('padding-left', 30)+handlePX('padding-right', 30)" class="flex flex-pack-justify flex-align-center">
+        <div class="flex">
           <van-radio-group v-model="chosenAddressId" @click="selectDefault(item)">
             <van-radio :name="item.id">{{chosenAddressId==item.id?'默认地址':'设置默认'}}</van-radio>
           </van-radio-group>
           <!-- <img v-lazy="'1'" :style="handlePX('width', 40)+handlePX('height',40)"/>
           <div>默认地址</div> -->
         </div>
-        <div style="display:flex;">
-          <div style="display:flex;" @click="onEdit(item,index)">
+        <div class="flex">
+          <div class="flex" @click="onEdit(item,index)">
             <img src="../../assets/image/编辑.png" :style="handlePX('width', 40)+handlePX('height',40)"/>
             <div style="color:#949494;">编辑</div>
           </div>
-          <div style="display:flex;margin-left:10px;" @click="onDelete(item)">
+          <div class="flex" style="margin-left:10px;" @click="onDelete(item)">
             <img src="../../assets/image/删除.png" :style="handlePX('width', 40)+handlePX('height',40)"/>
             <div style="color:#949494;">删除</div>
           </div>

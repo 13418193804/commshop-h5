@@ -3,9 +3,9 @@
     <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="选择银行" isRightIcon="true"  ></comhead>
   
   <div v-for="(item, index) in cardlist" :key="index" :style="handlePX('padding', 30)+handlePX('padding-top', 0)+handlePX('padding-bottom', 0)">
-    <div :style="handlePX('height', 160)" style="border-bottom:1px solid #dedede;box-sizing:border-box;display:flex;align-items:center;">
+    <div :style="handlePX('height', 160)" class="flex flex-align-center" style="border-bottom:1px solid #dedede;box-sizing:border-box;">
       <img src="../../assets/image/招商银行.png" :style="handlePX('height', 70)+handlePX('widht', 70)+handlePX('margin-left', 20)" style="border-radius:50%;"/>
-      <div :style="handlePX('margin-left', 20)" style="flex:1;">
+      <div :style="handlePX('margin-left', 20)" class="flex-1">
         <div>{{item.bankName}}<span style="font-size:12px;">(信用卡)</span></div>
         <div>{{item.cardId}}</div>
       </div>
@@ -16,7 +16,7 @@
   </div>
 
   <div :style="handlePX('padding', 30)+handlePX('padding-top', 60)">
-    <div @click="addbangcard()" :style="handlePX('height', 140)" style="color:#959595;border:1px solid #d9d9d9;box-sizing:border-box;display:flex;align-items:center;justify-content:center;">
+    <div @click="addbangcard()" :style="handlePX('height', 140)" class="flex flex-pack-center flex-align-center" style="color:#959595;border:1px solid #d9d9d9;box-sizing:border-box;">
       +添加银行卡
     </div>
   </div>

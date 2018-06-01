@@ -1,8 +1,8 @@
 <template>
   <div class="tab-contents" style="height:-webkit-fill-available;background-color:#f5f5f5;">
     <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="我的奖励" isRightIcon="true"  ></comhead>
-    <div style="display:flex;align-items:center;background-color:#ffffff;">
-        <div :style="handlePX('height', 300)" style="display:flex;justify-content:center;align-items:center;flex:1;flex-direction:column;">
+    <div class="flex flex-align-center" style="background-color:#ffffff;">
+        <div :style="handlePX('height', 300)" class="flex flex-pack-center flex-align-center flex-1 flex-v">
             <div>
                 <img src="../../assets/image/金币.png" :style="handlePX('width', 55)+handlePX('height', 55)" style="vertical-align: middle;"/>
                 <span>奖励金</span>
@@ -11,7 +11,7 @@
             <div style="color:#ababab;" @click="gogetreward()">提现>></div>
             <van-button :style="handlePX('width', 220)+handlePX('height', 60)+handlePX('line-height', 60)+handlePX('margin-top', 20)" @click="gomember()">我的成员</van-button>
         </div>
-        <div :style="handlePX('height', 300)" style="display:flex;justify-content:center;align-items:center;flex:1;flex-direction:column;">
+        <div :style="handlePX('height', 300)" class="flex flex-pack-center flex-align-center flex-1 flex-v">
             <div>
                 <img src="../../assets/image/金币.png" :style="handlePX('width', 55)+handlePX('height', 55)" style="vertical-align: middle;"/>
                 <span>累积奖励金</span>
@@ -27,7 +27,7 @@
         <ul v-infinite-scroll="loadMore" :infinite-scroll-disabled="loading" infinite-scroll-distance="20" >
           <li v-for="(item, index) in awardList" :key="index" :style="handlePX('line-height', 88)" style="border-bottom:1px solid #e7e7e7;font-size:14px;">{{item.member.nickName}}在{{item.createTime}}消费{{item.payTotal}}元，你获得{{item.awardAmount}}元奖励</li>
         </ul>
-        <div style="display: flex;align-items: center;justify-content: center;font-size:14px;padding:15px;">
+        <div class="flex flex-pack-center flex-align-center" style="font-size:14px;padding:15px;">
           <div v-if="loading">加载中...</div>
           <div v-else>暂无记录</div>
         </div>

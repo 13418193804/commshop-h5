@@ -1,13 +1,13 @@
 <template>
   <div class="tab-contents">
-<div class="searchbox" style="display:flex;">
-  <van-search placeholder="搜索商品" v-model="value" style="flex:1;background-color: #fafafa;" @click="filterProduct()"/>
+<div class="searchbox flex">
+  <van-search placeholder="搜索商品" v-model="value" class="flex-1" style="background-color: #fafafa;" @click="filterProduct()"/>
 </div>
 
 <div class="contentBody">
 <div class="leftTitle">
         <div v-for="(item,index) in catList" :key="index" class="left-box-item" :class="index == selectIndex?'active':'fontcolor'" @click="selectCategoyItem(index)">
-         <div style="display:flex;    position: relative;    justify-content: center;align-items: center;">
+         <div class="flex flex-pack-center flex-align-center" style="position: relative;">
            <div class="activeItem"></div>
             {{item.label}}</div>
         </div>

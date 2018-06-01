@@ -4,7 +4,7 @@
      
 <div style="margin:20px ;text-align:center;">
 <select v-model="form.item">
-    <option v-for="(item,index) in tranSportList" :value="item" :label="item.transportName"></option>
+    <option v-for="(item,index) in tranSportList" :value="item" :label="item.transportName" :key="index"></option>
 </select>
 </div>
  <van-field class="login-input" v-model="form.transNo"  placeholder="请输入物流单号" :style="handlePX('width',620)+handlePX('font-size',30)+handlePX('padding-left',30)+handlePX('height',90)" style="margin:0 auto;"/>

@@ -4,19 +4,19 @@
         <comhead v-if="goodsList.length==0" ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="我的收藏"  ></comhead>
 
 
-    <div v-for="(item, index) in goodsList" :key="index" style="display:flex;flex-direction:row;align-items:center;border-bottom:1px solid #e5e5e5;">
+    <div v-for="(item, index) in goodsList" :key="index" class="flex flex-align-center" style="flex-direction:row;border-bottom:1px solid #e5e5e5;">
         <div>
           <van-checkbox-group v-model="checkedGoods">
             <van-checkbox  :name="item.goodsId" v-show="isShow" style="margin-left:5px;"></van-checkbox>
           </van-checkbox-group>
         </div>
-        <div :for="item.goodsId" :style="handlePX('width', 720)" style="display:flex;" @click="goProductDetail(item.goodsId)">
-            <div style="padding:10px;display:flex;flex:1;">
-                <div style="display:flex;align-items:center;justify-content:center;overflow:hidden;" :style="handlePX('height', 200)+handlePX('width', 200)">
+        <div :for="item.goodsId" :style="handlePX('width', 720)" class="flex" @click="goProductDetail(item.goodsId)">
+            <div class="flex flex-1" style="padding:10px;">
+                <div class="flex flex-pack-center flex-align-center" style="overflow:hidden;" :style="handlePX('height', 200)+handlePX('width', 200)">
                   <img v-lazy="item.goodsImg.split(',')[0]" style="width:100%"/>
                 </div>
-                <div style="padding-left:10px;flex:1;" class="textLabel" :style="handlePX('line-height', 48)">
-                  <div style="max-width:calc;display: flex;align-items: center;">
+                <div style="padding-left:10px;" class="textLabel flex-1" :style="handlePX('line-height', 48)">
+                  <div class="flex flex-align-center" style="max-width:calc;">
                     <img src="../../assets/image/新品特价.png" :style="handlePX('width',92)+handlePX('height',30)" style="vertical-align: middle;"/>
                     <div class="textLabel" style="color:#000000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" :style="handlePX('font-size',28)+handlePX('width',320)">{{item.goodsName}}</div>
                   </div>
@@ -32,9 +32,9 @@
     <div v-if="goodsList.length==0" style="position: fixed;left: 50%;top: 50%;-webkit-transform: translate(-50%, -50%);transform: translate(-50%, -50%);}">
       暂无收藏
     </div>
-    <div v-if="goodsList.length>0&&isShow==true" style="position: fixed;z-index: 100;bottom: 0;display:flex;left:0;right:0;background-color: #fafafa;">
-      <div style="color:#a3a3a3;flex: 1;text-align: center;padding:10px 0;" @click="allchange()">{{goodsList.length==checkedGoods.length?'取消全选':'全选'}}</div>
-      <div style="color:#e05459;flex: 1;text-align: center;padding:10px 0;" @click="favdelete()">删除</div>
+    <div v-if="goodsList.length>0&&isShow==true" class="flex" style="position: fixed;z-index: 100;bottom: 0;left:0;right:0;background-color: #fafafa;">
+      <div class="flex-1" style="color:#a3a3a3;text-align: center;padding:10px 0;" @click="allchange()">{{goodsList.length==checkedGoods.length?'取消全选':'全选'}}</div>
+      <div class="flex-1" style="color:#e05459;text-align: center;padding:10px 0;" @click="favdelete()">删除</div>
     </div>
     
 

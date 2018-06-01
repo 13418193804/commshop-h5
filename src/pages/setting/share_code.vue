@@ -2,22 +2,22 @@
   <div class="tab-contents" style="height:-webkit-fill-available;background-color:#fff;">
     <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="邀请伙伴" ></comhead>
     
-    <div style="font-size:16px;display:flex;flex-direction:column;align-items:center;" @click="go_essential()">
+    <div class="flex flex-align-center flex-v" style="font-size:16px;" @click="go_essential()">
         <img v-if="userIcon" v-lazy="userIcon" style="width:80px;height:80px;border-radius: 80px;"/>
         <img v-else src="../../assets/image/userIcon.png" style="width:80px;height:80px;border-radius: 80px;"/>
         <div v-if="user">{{user.nickName}}</div>
     </div>
 
-    <div :style="handlePX('margin-top',60)+handlePX('margin-bottom',46)" style="display:flex;flex-direction:column;align-items:center;">
+    <div :style="handlePX('margin-top',60)+handlePX('margin-bottom',46)" class="flex flex-align-center flex-v">
         <div :style="handlePX('font-size',36)+handlePX('margin-bottom',25)">邀请你去"中宜商城"</div>
         <div :style="handlePX('font-size',26)" style="color:#a3a3a3;">在这里，有你和我都想要的东西，<span style="color:#dd4949;">优惠多多哦！</span></div>
     </div>
 
-    <div style="display:flex;flex-direction:column;align-items:center;">
+    <div class="flex flex-align-center flex-v">
         <img  v-lazy="user.qrCode" :style="handlePX('width',270)+handlePX('height',270)"/>
     </div>
 
-    <div style="display:flex;flex-direction:column;align-items:center;">
+    <div class="flex flex-align-center flex-v">
         <div :style="handlePX('width',580)+handlePX('height',90)+handlePX('line-height',90)+handlePX('margin-top',80)" style="text-align:center;color:#fff;border-radius:8px;background-color:#f4c542;">分享</div>
     </div>
 
