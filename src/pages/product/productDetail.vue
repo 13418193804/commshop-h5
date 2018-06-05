@@ -173,42 +173,40 @@
  <div style="position: relative;width:100%;height:100%;">
 
         <div  style=' background-color:#fff;width:100%;' :class="keepModel ?'modiaBoxUp2' :'modiaBoxDown2'" @click.stop="()=>{return }">
- <div class="flex flex-pack-justify" style='border-bottom:1px solid #e5e5e5;margin-left:15px;'>
-      <div class="flex" style='border-radius:2px;background-color:#fff;margin:10px;'>
+ <div class="flex flex-pack-justify">
+      <div class="flex" style='border-radius:2px;background-color:#fff;margin:10px 10px 10px 20px;'>
         <img v-lazy="skuItem.skuImgUrl?skuItem.skuImgUrl :detatil['goodsImg'].split(',')[0]" style="width:80px;height:80px;" @click="imagePreview(skuItem.skuImgUrl?skuItem.skuImgUrl :detatil['goodsImg'].split(',')[0])"/>
       </div>
       <div class="flex-1" style='font-size:13px;padding: 10px 0 0 0;'>
         <div style="font-size:16px;">{{detatil['goodsName']}}</div>
-        <!-- <div  style="color:#666">{{detatil['jingle']}}</div> -->
-        <div style='overflow: hidden;'>
+        <div style='overflow: hidden;' :style="handlePX('margin-top',20)">
           <span style='font-size:18px;color:rgb(229, 28, 35)'>￥{{skuItem.marketPrice?skuItem.marketPrice:detatil.marketPrice}}</span>
           <span class="labelPrice">￥{{detatil['labelPrice']}}</span>
         </div>
- <div style="font-size:14px;">
+ <div style="font-size:14px;" :style="handlePX('margin-top',10)">
    <span v-if="chosensku.length>0" class="van-cell-text">已选择:
                   <span v-for="(item,index) in chosensku" :key="index"><span v-if="index!==0"></span>{{item}}</span>
                 </span>
+    <span v-else class="van-cell-text" style="color:#585858;">请选择规格属性</span>
  </div>
  
       </div>
-      <div style='padding:10px;'>
+      <!-- <div style='padding:10px;'>
 <i class="iconfont icon-shanchu3" style="    color: #000;
     height: 17px;
     line-height: 17px;"  @click.stop='changeModel()' ></i>
-
-        <!-- <img src='../../image/tl-3@2x.png' style='width:20px;height:20px'  @click.stop='changeModel()'/> -->
-      </div>
+      </div> -->
     </div>
 
 
 
     <div style='font-size:14px;max-height:300px;overflow:auto;'>
       <div v-for='(item,indextop) in detatil.skuKey' :key="indextop">
-      <div style='padding:5px 20px 0;'>{{item.skuKeyIdName}}</div>
+      <div style='padding:5px 20px 0;color:#585858;'>{{item.skuKeyIdName}}</div>
       <div class='skuKeyBox'>
       <div v-for="(items,index) in  item.valueList" :key="index">
         <div  :class="chosenList[indextop] === items ?'sku_box_select':'sku_box' " 
-        :style="items.disable?'color:#ccc;':''+ chosenList[indextop] === items.skuValueId?'background-color:#E41C24;color:#fff':'' " @click.stop='selectSku(indextop,items)'  >{{items.skuValueName}}</div>
+        :style="items.disable?'color:#ccc;':''+ chosenList[indextop] === items.skuValueId?'border-color:#f4c542;color:#f4c542':'' " @click.stop='selectSku(indextop,items)'  >{{items.skuValueName}}</div>
       </div>
       </div>
      
@@ -217,9 +215,9 @@
 
 
     <div class='num_box'>
-      <div class="flex flex-align-center">数量：</div>
+      <div class="flex flex-align-center" style="color:#585858;">数量</div>
 
-    <van-stepper v-model="num" style="    float: right;"/>
+    <van-stepper v-model="num" :style="handlePX('margin-top',20)"/>
     </div>
   <div>
       <van-goods-action class="vangoods" style="z-index:90;background-color: #ffffff;">
@@ -753,8 +751,8 @@ export default class ProductDetail extends Vue {
 }
 .num_box {
   font-size: 16px;
-  display: flex;
-  justify-content: space-between;
+  // display: flex;
+  // justify-content: space-between;
   padding: 20px;
 }
 
@@ -897,20 +895,15 @@ export default class ProductDetail extends Vue {
 }
 
 .sku_box {
-  margin: 10px 15px;
+  margin: 10px 0px 0px 20px;
   padding: 3px 10px;
-  border-radius: 5px;
-  background-color: #e5e4e4;
+  border-radius: 4px;
+  border: 1px solid #7f7f7f;
+  background-color: #ffffff;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   max-width: 100px;
 }
 
-.num_box {
-  font-size: 16px;
-  display: flex;
-  justify-content: space-between;
-  padding: 20px;
-}
 </style>
