@@ -23,10 +23,10 @@ Vue.use(MintUI);
 Vue.use(Vuex);
 Vue.use(Api);
 Vue.use(Vant);
-router.beforeEach((to, from, next) => {
-    console.log(to, from, next);
-    next();
-});
+// router.beforeEach((to, from, next) => {
+//     console.log(to, from, next);
+//     next();
+// });
 Vue.config.productionTip = false;
 const init = new Vue({
     router,

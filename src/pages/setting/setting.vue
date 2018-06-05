@@ -57,7 +57,7 @@ export default class setting extends Vue {
                 this.setTokenInfo({   userId: "",
         token: ""});
     localStorage.removeItem(Vue.prototype.MutationTreeType.TOKEN_INFO);
-    this.$router.push("/login");
+    this.$router.replace("/login");
 
      })
       .catch(() => {
