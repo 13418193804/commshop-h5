@@ -1,9 +1,9 @@
 <template>
   <div class="tab-contents" style="height:-webkit-fill-available;background-color:#f7f7f7;">
-            <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="3" isRightIcon="true"  ></comhead>
+            <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="" isRightIcon="true"  ></comhead>
      
 
-        支付成功{{$route.query}}
+        <!-- 支付成功{{$route.query}} -->
 
   </div>
 </template>
@@ -25,6 +25,13 @@ export default class shopIndex extends Vue {
  
   mounted() {
       console.log("支付成功",this.$route.query)
+      Vue.prototype.$confirmLogin({
+      name: "orderlist",
+      query: {
+        orderStatus: "ORDER_WAIT_SENDGOODS"
+      }
+    });
+
   }
 }
 </script>

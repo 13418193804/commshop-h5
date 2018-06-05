@@ -23,7 +23,7 @@
 
 <div style=" position: relative;">
 
-  <div style="background-color:rgba(0, 0, 0, 0.498039);" v-show="isShow" >
+  <div style="background-color:rgba(0, 0, 0, 0.498039);    z-index: 99999;position: fixed;width: 100%;height: 100vh;top:0;" v-show="isShow" >
   <div class="AllClassification" >
     <div class="flex flex-pack-justify flex-align-center ClassificationTitle "><span>全部分类</span>
       <i class="iconfont icon-iconset0422"  style="font-size:20px;margin:3px;"  @click="toggle()"></i>
@@ -76,11 +76,11 @@
           <div v-if="items.componentType === 'COMPONENT_TYPE_GOODS_TAG'">
               <div class="goodsTitleTab">
                   <div style="">
-                    <span style="color:#ffc630;margin:0 3px">C</span>
+                    <!-- <span style="color:#ffc630;margin:0 3px">C</span> -->
                     <span>{{items.name}}</span>
-                     <div style="font-size: 12px;color: #999;">
+                     <!-- <div style="font-size: 12px;color: #999;">
                     CUSTOM RECOMMENDATION
-                  </div>
+                  </div> -->
                   </div>
                  
                   
@@ -525,7 +525,7 @@ export default class shopIndex extends Vue {
 }
 .AllClassification {
   position: absolute;
-  top: 0;
+  top: 47px;
   z-index: 11111;
   width: 100%;
   background-color: #ffffff;
@@ -570,6 +570,7 @@ export default class shopIndex extends Vue {
   width: 100%;
   display: flex;
   align-items: center;
+  z-index:1000;
 }
 
 .searchbox .van-search__input-wrap input {
