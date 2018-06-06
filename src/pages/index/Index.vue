@@ -63,9 +63,9 @@
                 <div v-for=" (tab,tabIndex) in  items.items" style="width:25%;" :key="tabIndex" @click="goActionType(tab.actionType,tab.actionValue)">
                    <div style="width:-webkit-fill-available;padding: 10px;">
                     <div>
-                       <img v-lazy="tab.itemImgUrl" style="border-radius:50%;" :style="handlePX('width', 100)+handlePX('height', 100)"/>
+                       <img v-lazy="tab.itemImgUrl" style="border-radius:50px;background-color: #000;" :style="handlePX('width', 100)+handlePX('height', 100)"/>
                     </div>
-                    <div>{{tab.itemName}}</div>
+                    <div style="color: #7f7f7f;">{{tab.itemName}}</div>
                     </div>
                 </div>
             </div>

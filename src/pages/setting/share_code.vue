@@ -1,5 +1,5 @@
  <template>
-  <div class="tab-contents" style="height:-webkit-fill-available;background-color:#fff;">
+  <div class="tab-contents" style="height:-webkit-fill-available;background-color:#fff;position: relative;">
     <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="邀请伙伴" ></comhead>
     
     <div class="flex flex-align-center flex-v" style="font-size:16px;" @click="go_essential()">
@@ -18,9 +18,27 @@
     </div>
 
     <div class="flex flex-align-center flex-v">
-        <div :style="handlePX('width',580)+handlePX('height',90)+handlePX('line-height',90)+handlePX('margin-top',80)" style="text-align:center;color:#fff;border-radius:8px;background-color:#f4c542;">分享</div>
+        <div :style="handlePX('width',580)+handlePX('height',90)+handlePX('line-height',90)+handlePX('margin-top',80)" style="text-align:center;color:#fff;border-radius:8px;background-color:#f4c542;" @click="toggle()">分享</div>
     </div>
 
+    <div style="background-color:rgba(0, 0, 0, 0.5);z-index: 999;position: fixed;width: 100%;height: 100vh;top:0;" v-show="isShow">
+      <div style="bottom: 0px;position: fixed;width: 100%;">
+        <div style="background-color:#E9EFF2;">
+          <div style="text-align: center;color:#717476;" :style="handlePX('padding-top',50)">选择要分享到的平台</div>
+          <div class="flex flex-around-justify" style="padding:10px 0;" :style="handlePX('padding-top',50)+handlePX('padding-bottom',50)">
+            <div class="flex flex-v flex-align-center">
+              <img src="../../assets/image/分享微信.png" style="border-radius:8px;" :style="handlePX('width', 100)+handlePX('height', 100)"/>
+              <div style="color: #7f7f7f;">微信</div>
+            </div>
+            <div class="flex flex-v flex-align-center">
+              <img src="../../assets/image/分享微信朋友圈.png" style="border-radius:8px;" :style="handlePX('width', 100)+handlePX('height', 100)"/>
+              <div style="color: #7f7f7f;">微信朋友圈</div>
+            </div>
+          </div>
+        </div>
+        <div style="background-color:#fff;color:#717476;text-align: center;" :style="handlePX('height',100)+handlePX('line-height',100)" @click="toggle()">取消分享</div>
+      </div>
+    </div>
 
   </div>
 </template>
@@ -42,6 +60,7 @@ export default class share_code extends Vue {
   @Action("setTokenInfo") setTokenInfo;
   userIcon = "";
   user = {};
+  isShow=false;
   queryuserinfo() {
     Vue.prototype.$reqFormPost(
       "/user/query",
@@ -67,6 +86,9 @@ export default class share_code extends Vue {
         this.userIcon = res.data.data.userIcon;
       }
     );
+  }
+  toggle(){
+    this.isShow = !this.isShow;
   }
   handlePX(CssName, PxNumber) {
     return CssName +":" +this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth /750 * PxNumber +"px;";
