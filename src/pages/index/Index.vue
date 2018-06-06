@@ -387,6 +387,46 @@ export default class shopIndex extends Vue {
     );
   }
 
+  getCartList() {
+    Vue.prototype.$reqFormPost(
+      "/shop/cart/query",
+      {
+        userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .userId,
+        token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .token
+      },
+      res => {
+        if (res == null) {
+          console.log("网络请求错误！");
+          return;
+        }
+        if (res.data.status != 200) {
+          console.log(
+            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+          );
+          Toast(res.data.message);
+          return;
+        }
+        var div = document.getElementById("cartLen");
+        if (!document.getElementById("cartLen")) {
+          div = document.createElement("div");
+          div.setAttribute("id", "cartLen");
+          div.className = "messageFexid";
+          div.style.right = "11px";
+          var diva = document.getElementsByClassName(
+            "van-tabbar-item__text"
+          )[2];
+          diva.appendChild(div);
+        }
+        if (res.data.data.carts.length > 0) {
+          div.innerHTML = res.data.data.carts.length;
+        } else {
+          div.style.display = "none";
+        }
+      }
+    );
+  }
   mounted() {
     if (this.$route.query.active) {
       this.active = parseInt(this.$route.query.active);
@@ -399,8 +439,14 @@ export default class shopIndex extends Vue {
     }
 
     this.setTabIndex(0);
-
     this.initIndex();
+    if (
+      this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].userId !=
+        "" &&
+      this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].token != ""
+    ) {
+      this.getCartList();
+    }
   }
 }
 </script>
@@ -570,7 +616,7 @@ export default class shopIndex extends Vue {
   width: 100%;
   display: flex;
   align-items: center;
-  z-index:1000;
+  z-index: 1000;
 }
 
 .searchbox .van-search__input-wrap input {

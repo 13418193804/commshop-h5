@@ -10,7 +10,7 @@
      <span style="padding: 10px;    position: relative;" @click="goMessageList()">
        <!--  -->
 <i class="iconfont icon-icon-p_xinfeng" style="font-size:25px;"></i>
-      <div v-if="messageCount && messageCount!=0" class="messageFexid" style="    right: 25px;top: 5px;">{{messageCount}}</div>
+      <div v-if="messageCount && messageCount!=0" class="messageFexid" style="right: 25px;top: 5px;">{{messageCount}}</div>
 
      </span>
                <span style="padding: 10px;" @click="goshare()">
@@ -279,7 +279,46 @@ export default class User extends Vue {
   myreward() {
     Vue.prototype.$confirmLogin("/my_reward");
   }
-
+ getCartList() {
+    Vue.prototype.$reqFormPost(
+      "/shop/cart/query",
+      {
+        userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .userId,
+        token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .token
+      },
+      res => {
+        if (res == null) {
+          console.log("网络请求错误！");
+          return;
+        }
+        if (res.data.status != 200) {
+          console.log(
+            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+          );
+          Toast(res.data.message);
+          return;
+        }
+        var div = document.getElementById("cartLen");
+        if (!document.getElementById("cartLen")) {
+          div = document.createElement("div");
+          div.setAttribute("id", "cartLen");
+          div.className = "messageFexid";
+          div.style.right = "11px";
+          var diva = document.getElementsByClassName(
+            "van-tabbar-item__text"
+          )[2];
+          diva.appendChild(div);
+        }
+        if (res.data.data.carts.length > 0) {
+          div.innerHTML = res.data.data.carts.length;
+        } else {
+          div.style.display = "none";
+        }
+      }
+    );
+  }
   mounted() {
     this.setTabIndex(3);
     if (
@@ -289,6 +328,7 @@ export default class User extends Vue {
     ) {
       this.getMessageCount();
       this.queryuserinfo();
+      this.getCartList()
     }
     console.log("个人中心加载");
   }
@@ -342,20 +382,5 @@ export default class User extends Vue {
   width: 25px;
   height: 25px;
 }
-.messageFexid {
-  background-color: #fe4747;
-  border-radius: 10px;
-  color: #fff;
-  display: inline-block;
-  font-size: 12px;
-  height: 18px;
-  line-height: 18px;
-  padding: 0 6px;
-  text-align: center;
-  white-space: nowrap;
-  position: absolute;
-  top: 0;
-  right: 30px;
-  transform: translateY(-50%) translateX(100%);
-}
+
 </style>

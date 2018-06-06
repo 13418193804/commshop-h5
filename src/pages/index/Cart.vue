@@ -268,7 +268,25 @@ export default class Cart extends Vue {
           return;
         }
         console.log("查询购物车", res.data);
+
         this.cartList = res.data.data.carts;
+     var div = document.getElementById("cartLen");
+        if (!document.getElementById("cartLen")) {
+          div = document.createElement("div");
+          div.setAttribute("id", "cartLen");
+          div.className = "messageFexid";
+          div.style.right = "11px";
+          var diva = document.getElementsByClassName(
+            "van-tabbar-item__text"
+          )[2];
+          diva.appendChild(div);
+        }
+        if (res.data.data.carts.length > 0) {
+          div.innerHTML = res.data.data.carts.length;
+        } else {
+          div.style.display = "none";
+        }
+
       }
     );
   }

@@ -20,7 +20,6 @@ export default class App extends Vue {
 
 
 
-
 }
 </script>
 
@@ -51,9 +50,27 @@ export default class App extends Vue {
 .noscroll {
     overflow: hidden;
 }
-
+.messageFexid {
+  background-color: #fe4747;
+  border-radius: 10px;
+  color: #fff;
+  display: inline-block;
+  font-size: 12px;
+  height: 18px;
+  line-height: 18px;
+  padding: 0 6px;
+  text-align: center;
+  white-space: nowrap;
+  position: absolute;
+  top: 0;
+  right: 30px;
+  transform: translateY(-50%) translateX(100%);
+}
 </style>
 <style>
+.van-tabbar-item__text{
+  position: relative;
+}
 .van-dialog__footer{
   display: flex;
 }

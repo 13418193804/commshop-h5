@@ -11,7 +11,8 @@ import Vant from 'vant';
 import Api from './config/fetch';
 import MutationTreeType from './store/mutation-types';
 import MintUI from 'mint-ui';
-
+import VueScrollTo from 'vue-scrollto';
+Vue.use(VueScrollTo);
 Vue.use(MutationTreeType);
 Vue.use(VueLazyload, {
     preLoad: 1.3,

@@ -68,7 +68,54 @@ export default class Category extends Vue {
 
     console.log(this.$store.getters[Vue.prototype.MutationTreeType.TAB_INDEX]);
     this.getCatList();
+        if (
+      this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].userId !=
+        "" &&
+      this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].token != ""
+    ) {
+      this.getCartList()
+    }
     console.log("分类页加载");
+  }
+  getCartList() {
+    Vue.prototype.$reqFormPost(
+      "/shop/cart/query",
+      {
+        userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .userId,
+        token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .token
+      },
+      res => {
+        if (res == null) {
+          console.log("网络请求错误！");
+          return;
+        }
+        if (res.data.status != 200) {
+          console.log(
+            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+          );
+          Toast(res.data.message);
+          return;
+        }
+        var div = document.getElementById("cartLen");
+        if (!document.getElementById("cartLen")) {
+          div = document.createElement("div");
+          div.setAttribute("id", "cartLen");
+          div.className = "messageFexid";
+          div.style.right = "11px";
+          var diva = document.getElementsByClassName(
+            "van-tabbar-item__text"
+          )[2];
+          diva.appendChild(div);
+        }
+        if (res.data.data.carts.length > 0) {
+          div.innerHTML = res.data.data.carts.length;
+        } else {
+          div.style.display = "none";
+        }
+      }
+    );
   }
     filterProduct() {
     this.$router.push("/filterproduct");

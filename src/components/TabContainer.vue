@@ -32,6 +32,7 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import { Action } from "vuex-class";
+import { Toast } from "vant";
 
 export default class TabContainer extends Vue {
   get active() {
@@ -51,8 +52,12 @@ export default class TabContainer extends Vue {
       this.$router.push("/user");
     }
   }
+
+
+  
+   
+
   mounted() {
-    console.log(111);
   }
 }
 </script>

@@ -3,7 +3,12 @@
     background-color: #e4e4e4;
     overflow: auto;
     height: 100vh;" ref="logo" v-on:scroll.passive="onScroll">
-    <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"   :contextIndex="true" isRightIcon="true"  ></comhead>
+    <comhead ref="comhead" isLeftIcon="icon-zuo"   leftIconName="angle-left" @leftClick="false"   :contextIndex="true" isRightIcon="true"  ></comhead>
+    <!-- <button style=" margin-bottom: 1000px;" v-scroll-to="'#element'">
+    Scroll to #element
+</button>
+
+<h1 id="element">Hi. I'm element</h1> -->
         <van-swipe :autoplay="3000"  :style="'height:'+$store.getters[MutationTreeType.SYSTEM].availWidth+'px'">
           <van-swipe-item v-for="(image, index) in detatil['goodsImg'].split(',')"  :key="index" class="flex">
             <img v-lazy="image" style="width:100%;" />
@@ -249,6 +254,7 @@ import mixin from "../../config/mixin";
 import comhead from "../../components/Comhead.vue";
 import { Toast } from "vant";
 import { Action } from "vuex-class";
+import * as VueScrollTo from "vue-scrollto";
 import { Cell, CellGroup, ImagePreview } from "vant";
 
 @Component({
@@ -308,7 +314,7 @@ export default class ProductDetail extends Vue {
   chosensku = [];
   skuItem = {};
   onScroll(e) {
-    console.log(this.$refs);
+    // console.log(this.$refs);
   }
   go_comment() {
     this.$router.push({
@@ -675,6 +681,8 @@ export default class ProductDetail extends Vue {
     );
   }
   mounted() {
+   
+
     if (this.$route.query.availWidth && this.$route.query.availHeight) {
       this.setlabelActive({
         availWidth: this.$route.query.availWidth,
