@@ -36,7 +36,7 @@ export default class feedback extends Vue {
       return
     }
     Vue.prototype.$reqFormPost(
-      "/user/feedback",
+      "/feedback/add",
       {
         userId: this.$store.getters[
             Vue.prototype.MutationTreeType.TOKEN_INFO

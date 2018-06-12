@@ -1,14 +1,9 @@
 <template>
-  <div class="tab-contents" style=" width: 100%;
+  <div class="tab-contents"   style=" width: 100%;
     background-color: #e4e4e4;
     overflow: auto;
     height: 100vh;" ref="logo" v-on:scroll.passive="onScroll">
     <comhead ref="comhead" isLeftIcon="icon-zuo"   leftIconName="angle-left" @leftClick="false"   :contextIndex="true" isRightIcon="true"  ></comhead>
-    <!-- <button style=" margin-bottom: 1000px;" v-scroll-to="'#element'">
-    Scroll to #element
-</button>
-
-<h1 id="element">Hi. I'm element</h1> -->
         <van-swipe :autoplay="3000"  :style="'height:'+$store.getters[MutationTreeType.SYSTEM].availWidth+'px'">
           <van-swipe-item v-for="(image, index) in detatil['goodsImg'].split(',')"  :key="index" class="flex">
             <img v-lazy="image" style="width:100%;" />
@@ -254,7 +249,8 @@ import mixin from "../../config/mixin";
 import comhead from "../../components/Comhead.vue";
 import { Toast } from "vant";
 import { Action } from "vuex-class";
-import * as VueScrollTo from "vue-scrollto";
+import vueScrollwatch from "vue-scrollwatch"
+
 import { Cell, CellGroup, ImagePreview } from "vant";
 
 @Component({
@@ -313,9 +309,11 @@ export default class ProductDetail extends Vue {
   chosenList = [];
   chosensku = [];
   skuItem = {};
+  activeMenu=1
   onScroll(e) {
-    // console.log(this.$refs);
+    // console.log(this.$refs); 
   }
+     
   go_comment() {
     this.$router.push({
       path: "/goodscomment",
@@ -323,6 +321,10 @@ export default class ProductDetail extends Vue {
         goodsId: this.goodsId
       }
     });
+  }
+    onItemChanged(event, currentItem, lastActiveItem) {
+    // your logic
+    console.log(event, currentItem, lastActiveItem)
   }
   onClickMiniBtn_service() {
     Toast("跳转到客服");
@@ -613,7 +615,6 @@ export default class ProductDetail extends Vue {
           this.skuItem = res.data.data.sku[0];
         }
         this.detatil = res.data.data;
-
         // 评论数量
         this.commentnum = res.data.data.commentList.length;
         // 好评计算
@@ -680,9 +681,11 @@ export default class ProductDetail extends Vue {
       "px;"
     );
   }
+  created(){
+  }
   mounted() {
-   
-
+ vueScrollwatch.setContainer("#scrollDom")
+ 
     if (this.$route.query.availWidth && this.$route.query.availHeight) {
       this.setlabelActive({
         availWidth: this.$route.query.availWidth,
@@ -759,8 +762,6 @@ export default class ProductDetail extends Vue {
 }
 .num_box {
   font-size: 16px;
-  // display: flex;
-  // justify-content: space-between;
   padding: 20px;
 }
 
@@ -913,5 +914,6 @@ export default class ProductDetail extends Vue {
   white-space: nowrap;
   max-width: 100px;
 }
+
 
 </style>

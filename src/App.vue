@@ -78,7 +78,7 @@ export default class App extends Vue {
   padding:12px 15px;
 }
 .van-tabbar{
-  z-index:999;
+  z-index:200;
 }
 .van-tabbar-item--active{
   color: #ffc630;

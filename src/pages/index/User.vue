@@ -182,8 +182,8 @@ export default class User extends Vue {
   goMessageList() {
     Vue.prototype.$confirmLogin("/messagelist");
   }
-  goshare(){
-    Vue.prototype.$confirmLogin("/share_code");    
+  goshare() {
+    Vue.prototype.$confirmLogin("/share_code");
   }
   getOrderList(status) {
     Vue.prototype.$confirmLogin({
@@ -279,7 +279,14 @@ export default class User extends Vue {
   myreward() {
     Vue.prototype.$confirmLogin("/my_reward");
   }
- getCartList() {
+  getNumber(cartList = []) {
+    let num = 0;
+    cartList.forEach((item, index) => {
+      num += item.num;
+    });
+    return num.toString();
+  }
+  getCartList() {
     Vue.prototype.$reqFormPost(
       "/shop/cart/query",
       {
@@ -312,7 +319,7 @@ export default class User extends Vue {
           diva.appendChild(div);
         }
         if (res.data.data.carts.length > 0) {
-          div.innerHTML = res.data.data.carts.length;
+          div.innerHTML = this.getNumber(res.data.data.carts);
         } else {
           div.style.display = "none";
         }
@@ -328,7 +335,7 @@ export default class User extends Vue {
     ) {
       this.getMessageCount();
       this.queryuserinfo();
-      this.getCartList()
+      this.getCartList();
     }
     console.log("个人中心加载");
   }
@@ -382,5 +389,4 @@ export default class User extends Vue {
   width: 25px;
   height: 25px;
 }
-
 </style>

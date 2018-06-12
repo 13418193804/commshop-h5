@@ -77,6 +77,13 @@ export default class Category extends Vue {
     }
     console.log("分类页加载");
   }
+   getNumber(cartList = []) {
+    let num = 0;
+    cartList.forEach((item, index) => {
+      num += item.num;
+    });
+    return num.toString();
+  }
   getCartList() {
     Vue.prototype.$reqFormPost(
       "/shop/cart/query",
@@ -110,7 +117,7 @@ export default class Category extends Vue {
           diva.appendChild(div);
         }
         if (res.data.data.carts.length > 0) {
-          div.innerHTML = res.data.data.carts.length;
+          div.innerHTML = this.getNumber(res.data.data.carts);
         } else {
           div.style.display = "none";
         }

@@ -131,6 +131,9 @@ export default class collar_center extends Vue {
           "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
         );
         Toast(res.data.message);
+this.$router.push({name:'login'})
+
+
         return;
       }
   console.log(res)

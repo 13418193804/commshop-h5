@@ -76,11 +76,16 @@ export default class Cart extends Vue {
   result = [];
   checked = false;
   cartList = [];
-  totalMoney = 0.00; //总金额
-  maxHeightdiv(){
-    return "height:" +(this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availHeight-152 )+"px;"
+  totalMoney = 0.0; //总金额
+  maxHeightdiv() {
+    return (
+      "height:" +
+      (this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availHeight -
+        152) +
+      "px;"
+    );
   }
- handleImageWidth1() {
+  handleImageWidth1() {
     return (
       "width:" +
       this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth *
@@ -91,7 +96,7 @@ export default class Cart extends Vue {
       "px;"
     );
   }
-  allSelect() {   
+  allSelect() {
     if (this.checked) {
       let result = [];
       this.cartList.forEach((item, index) => {
@@ -99,32 +104,31 @@ export default class Cart extends Vue {
         result.push(item.id);
       });
       this.result = result;
-    }else if(this.cartList.length==this.result.length){
-      this.result=[];
+    } else if (this.cartList.length == this.result.length) {
+      this.result = [];
     }
   }
   totalPrice() {
     var totalMoney = 0;
     for (var i = 0; i < this.cartList.length; i++) {
-      if (this.result.indexOf(this.cartList[i].id)!== -1) {
-        totalMoney = totalMoney+(this.cartList[i].price * this.cartList[i].num);
-      } 
+      if (this.result.indexOf(this.cartList[i].id) !== -1) {
+        totalMoney = totalMoney + this.cartList[i].price * this.cartList[i].num;
+      }
     }
-    totalMoney=totalMoney*100;
+    totalMoney = totalMoney * 100;
     totalMoney.toString();
-   return totalMoney;
+    return totalMoney;
   }
-  checkchange(){
-    if(this.result.length == this.cartList.length){
+  checkchange() {
+    if (this.result.length == this.cartList.length) {
       this.checked = true;
-    }else{
+    } else {
       this.checked = false;
     }
- 
   }
   onSubmit() {
     if (this.result.length <= 0) {
-      Toast('您还没选择商品');
+      Toast("您还没选择商品");
       return;
     }
 
@@ -159,7 +163,7 @@ export default class Cart extends Vue {
       }
     );
   }
-  deleteCart(index,collect) {
+  deleteCart(index, collect) {
     Vue.prototype.$reqFormPost(
       "/shop/cart/delete",
       {
@@ -181,7 +185,7 @@ export default class Cart extends Vue {
           Toast(res.data.message);
           return;
         }
-        if(!collect){
+        if (!collect) {
           Toast("已删除");
         }
         this.getCartList();
@@ -190,7 +194,7 @@ export default class Cart extends Vue {
   }
   deleteshopCart() {
     if (this.result.length <= 0) {
-      Toast('您还没选择商品');
+      Toast("您还没选择商品");
       return;
     }
     Vue.prototype.$reqFormPost(
@@ -241,11 +245,12 @@ export default class Cart extends Vue {
           Toast(res.data.message);
           return;
         }
-        this.deleteCart(index,true);
+        this.deleteCart(index, true);
         Toast("已移至收藏夹");
       }
     );
   }
+
   getCartList() {
     Vue.prototype.$reqFormPost(
       "/shop/cart/query",
@@ -270,7 +275,7 @@ export default class Cart extends Vue {
         console.log("查询购物车", res.data);
 
         this.cartList = res.data.data.carts;
-     var div = document.getElementById("cartLen");
+        var div = document.getElementById("cartLen");
         if (!document.getElementById("cartLen")) {
           div = document.createElement("div");
           div.setAttribute("id", "cartLen");
@@ -282,15 +287,14 @@ export default class Cart extends Vue {
           diva.appendChild(div);
         }
         if (res.data.data.carts.length > 0) {
-          div.innerHTML = res.data.data.carts.length;
+          div.innerHTML = this.getNumber(this.cartList);
         } else {
           div.style.display = "none";
         }
-
       }
     );
   }
-  pluscart(id,num){
+  pluscart(id, num) {
     Vue.prototype.$reqFormPost(
       "/shop/cart/updatenum",
       {
@@ -298,8 +302,8 @@ export default class Cart extends Vue {
           .userId,
         token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
           .token,
-        cartId:id,  
-        num:num,
+        cartId: id,
+        num: num
       },
       res => {
         if (res == null) {
@@ -314,14 +318,20 @@ export default class Cart extends Vue {
           return;
         }
         console.log("加1", res.data);
-        this.cartList = res.data.data.carts;
+        this.getCartList();
       }
     );
   }
-  isLogin(){
-    return this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO] && this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].userId !=='' && this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].token !=='' 
+  isLogin() {
+    return (
+      this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO] &&
+      this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].userId !==
+        "" &&
+      this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].token !==
+        ""
+    );
   }
-  minuscart(id,num){
+  minuscart(id, num) {
     Vue.prototype.$reqFormPost(
       "/shop/cart/updatenum",
       {
@@ -329,8 +339,8 @@ export default class Cart extends Vue {
           .userId,
         token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
           .token,
-        cartId:id,  
-        num:num,
+        cartId: id,
+        num: num
       },
       res => {
         if (res == null) {
@@ -345,24 +355,31 @@ export default class Cart extends Vue {
           return;
         }
         console.log("减1", res.data);
-        this.cartList = res.data.data.carts;
+        this.getCartList();
       }
     );
   }
 
-  goindex(){
+  goindex() {
     this.$router.push("/");
+  }
+  getNumber(cartList = []) {
+    let num = 0;
+    cartList.forEach((item, index) => {
+      num += item.num;
+    });
+    return num.toString();
   }
   mounted() {
     this.setTabIndex(2);
 
-     if(this.$store.getters[
-          Vue.prototype.MutationTreeType.TOKEN_INFO
-        ].userId != '' && this.$store.getters[
-          Vue.prototype.MutationTreeType.TOKEN_INFO
-        ].token!= ''){
-    this.getCartList();
-        }
+    if (
+      this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].userId !=
+        "" &&
+      this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].token != ""
+    ) {
+      this.getCartList();
+    }
   }
 }
 </script>
@@ -479,21 +496,20 @@ export default class Cart extends Vue {
 .van-checkbox {
   padding: 0 10px;
 }
-.van-submit-bar__bar{
-  border-top:1px solid #e5e5e5; 
+.van-submit-bar__bar {
+  border-top: 1px solid #e5e5e5;
   box-sizing: border-box;
-  }
-  .van-submit-bar__price-text{
-    visibility: hidden;
-  }
-  
- .van-button--danger{
-      background-color:#ffc630;
-    border: 1px solid #ffc630;
 }
-.van-checkbox--checked{
-      border-color: #f44;
-    background-color: #f44;
+.van-submit-bar__price-text {
+  visibility: hidden;
 }
-  
+
+.van-button--danger {
+  background-color: #ffc630;
+  border: 1px solid #ffc630;
+}
+.van-checkbox--checked {
+  border-color: #f44;
+  background-color: #f44;
+}
 </style>
