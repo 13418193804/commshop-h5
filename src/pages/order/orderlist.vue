@@ -19,15 +19,19 @@
                 订单号:{{item.orderId}}
               </div>
               <div  class="flex flex-align-center" >
-
-                <span :style="formatStatusColor(item.orderStatus)">{{formatStatus(item.orderStatus)}}</span>
+                <span :style="formatStatusColor(item.orderStatus)" v-if="active != '5'">{{formatStatus(item.orderStatus)}}</span>
                 <!-- v-if="item.detailList[0].refundStatus == 'WITHOUT_REFUND'"  -->
-                <!-- <span v-if="item.detailList[0].refundStatus == 'APPLY_REFUND' " style="color:red">退款中</span>
-                <span v-if="item.detailList[0].refundStatus == 'SUCCEED_REFUND'" style="color:#ffc630;">已退款</span>
-                <span v-if="item.detailList[0].refundStatus == 'FAIL_REFUND'" style="color:#ffc630;">已拒绝</span>
+
+                <span v-if="active == '5'">
+                  <span v-if="item.detailList[0].refundStatus == 'APPLY_REFUND' " style="color:red">退款中</span>
+                  <span v-if="item.detailList[0].refundStatus == 'SUCCEED_REFUND' " style="color:red">退款完成</span>
+                  <span v-if="item.detailList[0].refundStatus == 'WAIT_GOODS_BACK' " style="color:red">退款中</span>
+                  <span v-if="item.detailList[0].refundStatus == 'WAIT_RECVGOODS' " style="color:red">退款中</span>
+                <!-- <span v-if="item.detailList[0].refundStatus == 'SUCCEED_REFUND'" style="color:#ffc630;">已退款</span>
                 <span v-if="item.detailList[0].refundStatus == 'WAIT_GOODS_BACK'" style="color:#ffc630;">待寄回</span>
                 <span v-if="item.detailList[0].refundStatus == 'WAIT_RECVGOODS'" style="color:#ffc630;">退货中</span> -->
-
+                <span v-if="item.detailList[0].refundStatus == 'FAIL_REFUND'" style="color:red;">已拒绝</span>
+                </span>
                      <div style="padding:0 15px;position: relative;"  @click.stop="doDeleteOrder(item.orderId)"  v-if="(item.orderStatus === 'ORDER_WAIT_REVIEW'||item.orderStatus === 'ORDER_END_GOODS'  ||item.orderStatus === 'ORDER_FINISH')&&item.detailList[0].refundStatus == 'WITHOUT_REFUND'">
                        <div class="deleteBorder"> </div>
                 <i class="iconfont icon-iconfontshanchu3" style="" ></i>
@@ -43,7 +47,7 @@
       </div>
       <div class="flex-1" style='font-size:12px;overflow:hidden;padding:0 10px;'>
         <div class='lineTwoType'>{{items.goodsName}}</div>
-        <div style='  overflow: hidden;text-overflow: ellipsis;white-space: nowrap;color:#999'>
+        <div style='  overflow: hidden;text-overflow: ellipsis;color:#999'>
           <div> {{items.jingle}}</div>
           <!-- <span v-for=" item.skuKeyValue" wx:for-item="i" style='margin-right:5px'>{{i.key}}:{{i.value}}</span> -->
         </div>

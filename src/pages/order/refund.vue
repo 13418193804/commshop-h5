@@ -67,7 +67,7 @@
   
               <div class='lineTwoType'>{{item.goodsName}}</div>
   
-              <div style='  overflow: hidden;text-overflow: ellipsis;white-space: nowrap;color:#999'>
+              <div style='  overflow: hidden;text-overflow: ellipsis;color:#999'>
   
                 <div style="font-size:14px;color:#666">{{item.jingle}}</div>
   
@@ -118,7 +118,19 @@
       </div>
   
   
-  
+ <div class="flex flex-pack-justify" style="margin:0 0 0 10px;padding:10px;border-top:1px #e5e5e5 solid;">
+                <div>退款情况</div>
+                <div style="margin-right:10px;" class="marketPrice">
+              <span >
+                <span v-if="detail.detailList[0].refundStatus == 'APPLY_REFUND' " style="color:red">退款中</span>
+                <span v-if="detail.detailList[0].refundStatus == 'SUCCEED_REFUND'" style="color:#ffc630;">退款完成</span>
+                <span v-if="detail.detailList[0].refundStatus == 'WAIT_GOODS_BACK'" style="color:#ffc630;">退款中</span>
+                <span v-if="detail.detailList[0].refundStatus == 'WAIT_RECVGOODS'" style="color:#ffc630;">退款中</span>
+                <span v-if="detail.detailList[0].refundStatus == 'FAIL_REFUND'" style="color:red;">已拒绝</span>
+                </span>
+                </div>
+        </div>
+
     </div>
   
   
@@ -127,7 +139,7 @@
   
   
   
-    <div style="padding:10px;    line-height: 24px;">
+    <div style="padding:10px;    line-height: 24px;font-size:13px">
   
   
   
@@ -138,23 +150,25 @@
       </div>
   
       <div>
-  
         创建时间：{{detail.createTime}}
-  
       </div>
   
       <div>
-  
         支付时间：{{detail.payTime}}
-  
       </div>
-  
-      <!-- <div>
-  
-          收货时间：{{detail.payTime}}
-  
-      </div> -->
-  
+  <div v-if="detail.shipTime">
+        发货时间：{{detail.shipTime}}
+    </div>
+
+
+ <div v-if="detail.detailList[0].refundOrderList[0]">
+        申请退款时间：{{detail.detailList[0].refundOrderList[0].createTime}}
+    </div>
+    
+  <div v-if=" detail.detailList[0].refundStatus === 'FAIL_REFUND'">
+        拒绝退款时间：{{detail.detailList[0].refundOrderList[0].updateTime}}
+    
+  </div>
     </div>
   
     <div style="height:10px;background-color:#f7f7f7;" v-if="detail.detailList[0].refundStatus == 'FAIL_REFUND'"></div>
