@@ -615,8 +615,9 @@ export default class ProductDetail extends Vue {
           this.skuItem = res.data.data.sku[0];
         }
         this.detatil = res.data.data;
+        console.log('-----------')
         // 评论数量
-        this.commentnum = res.data.data.commentList.length;
+        this.commentnum = res.data.data.commentNum;
         // 好评计算
         if (res.data.data.commentList.length > 0) {
           let total = 0;

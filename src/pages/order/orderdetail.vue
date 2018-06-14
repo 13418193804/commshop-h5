@@ -169,15 +169,14 @@
  <div v-if="detail.shipTime">
         发货时间：{{detail.shipTime}}
     </div>
-            收货时间：{{detail.recvGoodsTime}}
-
+          <div v-if="detail.recvGoodsTime">
+        收货时间：{{detail.recvGoodsTime}}
+    </div>   
  <div v-if="detail.detailList[0].refundOrderList[0]">
         申请退款时间：{{detail.detailList[0].refundOrderList[0].createTime}}
     </div>
-    
-  <div v-if=" detail.detailList[0].refundStatus === 'FAIL_REFUND'">
-        拒绝退款时间：{{detail.detailList[0].refundOrderList[0].updateTime}}
-    
+ <div v-if=" detail.detailList[0].refundStatus === 'FAIL_REFUND'|| detail.detailList[0].refundStatus === 'SUCCEED_REFUND'">
+       {{detail.detailList[0].refundStatus === 'FAIL_REFUND' ?'拒绝退款':''}}{{detail.detailList[0].refundStatus === 'SUCCEED_REFUND' ?'退款完成':''}}时间：{{detail.detailList[0].refundOrderList[0].updateTime}}
   </div>
 </div>
 

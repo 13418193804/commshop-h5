@@ -179,7 +179,7 @@ export default class Category extends Vue {
   top: 0;
 }
 .leftTitle {
-  padding-top: 42px;
+  padding-top: 47px;
   text-align: center;
   width: 80px;
   height: 100vh;

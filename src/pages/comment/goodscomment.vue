@@ -7,14 +7,19 @@
       <div class="star-box" style="margin:0 10px;">
         <img v-for="(star,index) in stars" :key="index" :src="star.src" :style="handlePX('width',43)+handlePX('height',43)"/>
       </div>
-      <span>{{praise}}%好评</span>
+      <span>{{scale}}%好评</span>
     </div>  
     <div class="flex" style="padding:10px 15px;">
       <div @click="tab(0)" :class="status==0?'tabConactive':'tabCon'">全部</div>  
       <div @click="tab(1)" :class="status==1?'tabConactive':'tabCon'" style="margin-left:10px;">有图</div>  
     </div>  
   </div>
-  <div v-for="(item,index) in commentList" :key="index">
+    <ul
+  v-infinite-scroll="loadMore"
+  :infinite-scroll-disabled="loading"
+  infinite-scroll-distance="20" >
+
+  <li v-for="(item,index) in commentList" :key="index">
     <div style="padding:10px 15px;background-color:#ffffff;border-bottom:1px solid #fafafa;">
             <div>
               <img v-if="item.user.userIcon" v-lazy="item.user.userIcon" :style="handlePX('width',65)+handlePX('height',65)" style="vertical-align:middle;border-radius:50%;"/>              
@@ -33,7 +38,14 @@
               <img v-if="item.commentImg.split(',')[4]" v-lazy="item.commentImg.split(',')[4]" :style="handlePX('width',148)+handlePX('height',148)"/>
             </div>
           </div>
-    </div>
+     </li>
+        </ul>
+<div class="flex flex-pack-center flex-align-center" style="font-size:14px;padding:15px;">
+
+    <div v-if="!loading">加载中...</div>
+    <div v-else>-</div>
+  
+</div>
 
   </div>
 </template>
@@ -46,45 +58,90 @@ import { Action } from "vuex-class";
 import { Toast } from "vant";
 import comhead from "../../components/Comhead.vue";
 
-
 @Component({
   components: { comhead },
   mixins: [mixin]
 })
 export default class goodscomment extends Vue {
-  goodsId="";
-  status=0;
-  commentList=[];
-  praise="0";
-  stars=[{
-                            src: require('../../assets/image/灰色星星.png'),
-                            active: false
-                        }, {
-                            src: require('../../assets/image/灰色星星.png'),
-                            active: false
-                        }, {
-                            src: require('../../assets/image/灰色星星.png'),
-                            active: false
-                        },
-                        {
-                            src: require('../../assets/image/灰色星星.png'),
-                            active: false
-                        }, {
-                            src: require('../../assets/image/灰色星星.png'),
-                            active: false
-                        }
-                    ];
-  
-  tab(index){
-    this.status=index;
+  goodsId = "";
+  status = 0;
+  commentList = [];
+
+  stars = [
+    {
+      src: require("../../assets/image/灰色星星.png"),
+      active: false
+    },
+    {
+      src: require("../../assets/image/灰色星星.png"),
+      active: false
+    },
+    {
+      src: require("../../assets/image/灰色星星.png"),
+      active: false
+    },
+    {
+      src: require("../../assets/image/灰色星星.png"),
+      active: false
+    },
+    {
+      src: require("../../assets/image/灰色星星.png"),
+      active: false
+    }
+  ];
+
+  tab(index) {
+    this.status = index;
     this.getcommentlist();
   }
-  getcommentlist(){
+  scale = 0;
+  pageindex = 10;
+  loading = false;
+  getProductDetail() {
+    Vue.prototype.$reqFormPost(
+      "/goods/front/detail",
+      {
+        userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .userId,
+        token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .token,
+        goodsId: this.goodsId
+      },
+      res => {
+        if (res == null) {
+          console.log("网络请求错误！");
+          return;
+        }
+        if (res.data.status != 200) {
+          console.log(
+            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+          );
+          Toast(res.data.message);
+          return;
+        }
+        console.log("---------", res.data);
+
+        this.scale = res.data.data.scale;
+        this.getstars(res.data.data.commentStar);
+      }
+    );
+  }
+  loadMore() {
+    this.loading = true;
+    let self = this;
+    setTimeout(() => {
+      this.pageindex += 10;
+      this.getcommentlist();
+    }, 1000);
+  }
+  getcommentlist() {
     Vue.prototype.$reqFormPost(
       "/comment/list",
       {
         goodsId: this.goodsId,
-        status:this.status
+        status: this.status,
+        page: 0,
+        pageSize: this.pageindex
       },
       res => {
         if (res == null) {
@@ -100,75 +157,57 @@ export default class goodscomment extends Vue {
           return;
         }
         this.commentList = res.data.data.commentList;
-        
-        if(this.status==0){
-          var total = 0;
-          for (let i = 0; i < res.data.data.commentList.length; i++) {
-            total = res.data.data.commentList[i].star + total
-          }
-          total=total/(res.data.data.commentList.length*5);
-          if(total==1){
-            this.getstars(5);
-          }else if(0.8<=total&&total<1){
-            this.getstars(4);
-          }else if(0.6<=total&&total<0.8){
-            this.getstars(3);
-          }else if(0.4<=total&&total<0.6){
-            this.getstars(2);
-          }else if(0.2<=total&&total<0.4){
-            this.getstars(1);
-          }else{
-            this.getstars(0);            
-          }
-          total = total* 100;
-          total.toFixed(2)
-          const praisenum = total.toFixed(0)
-          if(res.data.data.commentList.length>0){
-            this.praise = praisenum;
-          }
+        if (res.data.data.commentList.length != this.pageindex) {
+          this.loading = false;
         }
-        }
-      ); 
+      }
+    );
   }
-  getstars(num){
-    for(var i = 0; i < num; i++) {
-      this.stars[i].src = require('../../assets/image/星星.png');
+  getstars(num) {
+    for (var i = 0; i < num; i++) {
+      this.stars[i].src = require("../../assets/image/星星.png");
       this.stars[i].active = true;
     }
   }
 
   handlePX(CssName, PxNumber) {
-    return CssName +":" +this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth /750 * PxNumber +"px;";
+    return (
+      CssName +
+      ":" +
+      this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth /
+        750 *
+        PxNumber +
+      "px;"
+    );
   }
-
 
   mounted() {
     this.goodsId = this.$route.query.goodsId;
     this.getcommentlist();
-      console.log("商品评论页")
+    console.log("商品评论页");
+    this.getProductDetail();
   }
-
 }
 </script>
 
 <style lang="scss" scoped>
 @import "../../style/utils.scss";
-.tabConactive{
-  border:1px solid #f4c542;
-  color:#f4c542;
-  width:100px;
-  height:30px;
-  line-height:30px;
-  text-align:center;
+.tabConactive {
+  border: 1px solid #f4c542;
+  color: #f4c542;
+  width: 100px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
   border-radius: 6px;
 }
-.tabCon{
-  border:1px solid #000000;
-  color:#000000;
-  width:100px;
-  height:30px;
-  line-height:30px;
-  text-align:center;
+.tabCon {
+  border: 1px solid #000000;
+  color: #000000;
+  width: 100px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
   border-radius: 6px;
 }
 </style>

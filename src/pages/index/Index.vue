@@ -9,8 +9,8 @@
 
 
   
-<div @click="goMessageList()">
-  <div style="font-size:12px;text-alig:center;background-color: rgb(250, 250, 250);color:#666;padding:4px 10px;">
+<div @click="goMessageList()" >
+  <div style="height:47px;font-size:12px;text-alig:center;background-color: rgb(250, 250, 250);color:#666;padding:4px 10px;">
     <div class="flex flex-align-center flex-pack-center">
 
       <i class="iconfont icon-lingdang"  style="font-size:16px;margin:3px;"></i>
