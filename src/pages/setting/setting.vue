@@ -51,7 +51,7 @@ export default class setting extends Vue {
   exit_logon(){
       Dialog.confirm({
       title: "提示",
-      message: "是否退出登陆?"
+      message: "确定要退出登录吗？"
     })
       .then(() => {
                 this.setTokenInfo({   userId: "",

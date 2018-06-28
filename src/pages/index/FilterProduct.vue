@@ -1,10 +1,15 @@
 <template>
   <div class="tab-contents">
-<div class="searchbox1">
+    
   <form action="/">
-     <van-search placeholder="搜索商品" v-model="value"  @search="onSearch" show-action  @cancel="onCancel" class="flex-1" style="background-color: #fafafa;" @click="doChange()"/>
-</form>
+<div class="searchbox1 flex   flex-align-center" >
+      <div style=" margin-top:6px;" @click="onCancel">
+          <i   class="iconfont icon-zuo"  style="color:#101010;margin:10px"></i>
+      </div>
+     <van-search placeholder="搜索商品" v-model="value"  @search="onSearch"   class="flex-1" style="background-color: #fafafa;" @click="doChange()"/>
 </div>
+</form>
+   
 
 <div class="box">
 <div style="height:60px;"></div>
@@ -23,10 +28,10 @@
   </div>
 </div>
 
-<div v-if="model">
-<div class="filterHeader flex  ">
+<div v-if="model " >
+<div class="filterHeader flex  " v-if="goodsList.length>0">
 
-<div class="filterItem flex flex-align-center flex-pack-center" @click="doPriceFitler()">
+<div class="filterItem flex flex-align-center flex-pack-center" @click="doPriceFitler()" >
 <div>价格</div>
 <div style="line-height:10px;" >
 <div>
@@ -100,9 +105,14 @@
 
      </li>
         </ul>
-   
+ 
 
-<div class="flex flex-pack-center flex-align-center" style="font-size:14px;padding:15px;">
+<div v-if="goodsList.length==0" class="flex  flex-align-center  flex-pack-center" style="height:100vh; height: 100vh;position: fixed;width: 100%;
+    top: 0;color:#999;"><div>你寻找的商品还未上架</div></div>
+
+
+
+<div class="flex flex-pack-center flex-align-center" style="font-size:14px;padding:15px;" v-if="goodsList.length>0">
 
     <div v-if="!loading">加载中...</div>
     <div v-else>-</div>
@@ -345,6 +355,7 @@ export default class shopIndex extends Vue {
   display: flex;
   align-items: center;
   position: relative;
+  padding-right:15px
 }
 .searchbox1 .van-search__action-text {
   white-space: nowrap;
@@ -357,10 +368,19 @@ export default class shopIndex extends Vue {
   border: 0;
   background-color: #f0f0f0;
   padding-left: 30px;
+  padding-top: 5px;
+  padding-bottom:5px;
+  
+}
+.searchbox1 .van-search .van-icon-clear{
+  right:23px
+}
+.searchbox1 .van-search{
+  padding:6px 0 0 0;
 }
 .searchbox1 {
   border-bottom: 1px #e5e5e5 solid;
-  position: fixed;
+  position: fixed;    background-color: #fafafa;
   top: 0;
   width: 100%;
   z-index: 999;

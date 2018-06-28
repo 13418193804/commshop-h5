@@ -3,8 +3,8 @@ import Vue from 'vue';
 import { Toast } from "vant";
 import { MutationTreeType } from '../store/mutation-types';
 
-const bizUrl = "http://sr.cncloud.com/qichang"
-// let base = 'http://119.23.44.223:8080/';
+const bizUrl = "http://sr.cncloud.com/qichang";
+// const bizUrl = "https://m.yourhr.com.cn/zhongyi";
 
 //this.axios.post("http://119.23.44.223:8080/game/ssq/bet?token=3883e10d01054a6996e9b601dc4d368f&userid=cyl45dbcb75d39b4e47aaccf77d1bde22ef",
 
@@ -93,7 +93,7 @@ export const reqUrlGet = (url, data, callBack) => {
                 // })
                 localStorage.removeItem(MutationTreeType.TOKEN_INFO);
 
-                if (window.confirm('账号已在其他设备登录,是否重新登陆?')) {
+                if (window.confirm('账号已在其他设备登录,是否重新登录?')) {
                     window['myvue'].$router.push({ name: 'login' });
                     return true;
                 }

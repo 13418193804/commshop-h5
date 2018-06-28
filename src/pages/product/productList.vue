@@ -18,8 +18,8 @@
   <li  >
 
 
-      <van-row  >
-        <van-col span="12" v-for="(item,goodsListindex) in goodsList" :key="goodsListindex">
+      <div  class="flex flex-warp-justify">
+        <div style="width:50%;" v-for="(item,goodsListindex) in goodsList" :key="goodsListindex">
           <div class="bodyItem flex flex-pack-center" :style="handlePX('margin-bottom',50)" @click="goProductDetail(item.goodsId)">
           <div style="overflow: hidden;">
             <div class="flex flex-pack-center flex-align-center" style="border: 1px #e5e5e5 solid;box-sizing: border-box;overflow:hidden;position:relative;margin:5px auto;" :style="handlePX('height', 410)+handlePX('width', 345)">
@@ -39,8 +39,8 @@
             </div>
           </div>
         </div>
-        </van-col>
-        </van-row>
+        </div>
+        </div>
    </li>
 </ul>
 </div>

@@ -35,7 +35,9 @@
         </div>
       </div>
     </div>
-
+<div v-if="addressList.length==0" class="flex  flex-align-center  flex-pack-center" style="height:100vh; height: 100vh;position: fixed;width: 100%;
+    top: 0;
+"><div>暂无地址</div></div>
     <div @click="onAdd()" :style="handlePX('line-height', 100)+handlePX('height',100)" style="width:100%;position:fixed;bottom:0;background-color:#fff;text-align:center;border-top:1px solid #dadada;color:#707070;">新增收货地址</div>
 <!-- <van-address-list
   v-model="chosenAddressId"

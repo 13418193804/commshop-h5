@@ -60,8 +60,13 @@ export default class shopIndex extends Vue {
     console.log(111);
   }
   doLogin() {
-    if (this.loginName == "" || this.password == "") {
+    if (this.loginName == "" ) {
+      Toast('请输入手机号码')
       return;
+    }
+    if( this.password == ""){
+      Toast('请输入密码')
+      return
     }
     Vue.prototype.$reqFormPost(
       "/auth/user/login",

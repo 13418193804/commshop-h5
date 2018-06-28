@@ -40,7 +40,7 @@
 
   <script type='text/javascript'>
     function showMeiQia() {
-      //对登陆做限制
+      //对登录做限制
       if ((window['myvue'].$store.getters['set_token_info'].userId || '') == '' || (window['myvue'].$store.getters['set_token_info'].token || '') == '') {
         window['myvue'].$router.push({ name: 'login' });
         return

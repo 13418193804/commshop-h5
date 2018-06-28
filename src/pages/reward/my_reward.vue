@@ -18,7 +18,7 @@
             </div>
             <div :style="handlePX('margin-top', 20)" style="color:#ffc600;">￥{{award.awardAmount}}</div>
             <div style="color:#ababab;" @click="gorewarddetail()">明细>></div>
-            <van-button :style="handlePX('width', 220)+handlePX('height', 60)+handlePX('line-height', 60)+handlePX('margin-top', 20)">奖励规则</van-button>
+            <van-button :style="handlePX('width', 220)+handlePX('height', 60)+handlePX('line-height', 60)+handlePX('margin-top', 20)" @click="$router.push('/rewardtext')">奖励规则</van-button>
         </div>
     </div>
 

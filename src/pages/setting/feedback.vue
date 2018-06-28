@@ -4,6 +4,7 @@
 
     <van-cell-group>
       <van-field v-model="content" type="textarea" placeholder="请输入反馈意见" rows="7" autosize :style="handlePX('padding',30)"/>
+      <div style="text-align:right;    padding: 10px;color: #666;"><span :style="content.length>500?'color:red':''">{{content.length}}</span>/500</div>
     </van-cell-group>
     
     <div style="margin-top:20px;">
@@ -33,6 +34,10 @@ export default class feedback extends Vue {
   feedback() {
     if(this.content==""){
       Toast('请输入反馈内容');
+      return
+    }
+    if(this.content.length>500){
+          Toast('反馈内容不可大于500字');
       return
     }
     Vue.prototype.$reqFormPost(
@@ -81,4 +86,9 @@ export default class feedback extends Vue {
 
 <style lang="scss" scoped>
 @import "../../style/utils.scss";
+
+[class*=van-hairline]::after{
+  border:none;
+
+}
 </style>

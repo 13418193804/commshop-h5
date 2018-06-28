@@ -15,7 +15,7 @@
             <span >{{item.nickName}}</span>
           </div>
           <div style="">
-            <span :style="handlePX('line-height', 85)">{{item.mobile}}</span>
+            <span :style="handlePX('line-height', 85)"> {{item.mobile.substring(0,3)}}****{{ item.mobile.substring(7,13)}} </span>
             </div>
 </div>
         </li>
@@ -48,6 +48,7 @@ import comhead from "../../components/Comhead.vue";
   mixins: [mixin]
 })
 export default class my_member extends Vue {
+  a='13418193804'
   pageindex = 0;
   memberList = [];
   isLoading = false;

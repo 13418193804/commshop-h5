@@ -51,15 +51,13 @@
             <van-cell>
               <template slot="title">
                 <span class="van-cell-text">备注：</span>
-                <span style="color:#ff6d72;">【新货促销，1周内发货】</span>
+                <span style="color:#ff6d72;">{{detatil.remark}}</span>
               </template>
             </van-cell>
             <van-cell>
               <template slot="title">
                 <span class="van-cell-text">服务：</span>
-                <span>7天无忧退换货</span>
-                <span>24小时快速退款</span>
-                <span>中宜自营严选</span>
+                <span style="" v-for="(item,index) in detatil.slogan.split(';')" style="margin:0 15px;"><span style="color: #ffc630;    font-weight: 600;margin:0 5px;">·</span>{{item}}</span>
               </template>
             </van-cell>          
           </van-cell-group>

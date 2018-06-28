@@ -76,14 +76,13 @@
           <div v-if="items.componentType === 'COMPONENT_TYPE_GOODS_TAG'">
               <div class="goodsTitleTab">
                   <div style="">
-                    <!-- <span style="color:#ffc630;margin:0 3px">C</span> -->
+                    <span style="color:#ffc630;margin:0 3px">{{items.letter}}</span>
                     <span>{{items.name}}</span>
-                     <!-- <div style="font-size: 12px;color: #999;">
-                    CUSTOM RECOMMENDATION
-                  </div> -->
+                     <div style="font-size: 12px;color: #999;">
+                   {{items.nameEn}}
+                  </div>
                   </div>
                  
-                  
               </div>
                 <div class="goodsBody" v-if="items.columnNum ===1" >
                   <div v-for="(goods,goodsIndex) in items.items" @click="goProductDetail(goods.goodsId)" :key="goodsIndex" class="goodsItem" style="width:-webkit-fill-available;border-top: 1px solid #e5e5e5;">
@@ -233,27 +232,6 @@
       </div>
 </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <div style="position: absolute;top: 0;right: 0;height:44px;line-height:44px;padding:0 10px;">
   <i class="iconfont icon-icon-arrow-bottom2" @click="toggle()"></i>

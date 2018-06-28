@@ -14,8 +14,8 @@
 
 <div class="flex-1" style="flex:1;padding:0 10px;">
 <div>{{item.goodsName}}</div>
-<div style="font-size:14px;color:#666">{{item.goodsName}}</div>
-                <div style="color:red">￥{{item.price}}</div>
+<div style="font-size:14px;color:#666">{{item.jingle}}</div>
+                <div style="color:red;margin-top">￥{{item.price.toFixed(2)}}</div>
 <van-stepper v-model="item.num" @plus="pluscart(item.id,item.num)" @minus="minuscart(item.id,item.num)" style="float: right;"/>
 </div>
 </div>
@@ -30,8 +30,9 @@
 <div class="flex flex-pack-center flex-align-center" :style="maxHeightdiv()" style="width:100%;background-color:#f7f7f7;" v-if="!cartList || cartList.length==0">
     <div>
       <div v-if="$store.getters[MutationTreeType.TOKEN_INFO] && $store.getters[MutationTreeType.TOKEN_INFO].userId !=='' && $store.getters[MutationTreeType.TOKEN_INFO].token !==''">
-  <img src="../../assets/cart/空购物车拷贝.png" :style="handleImageWidth1()"/>
-  <div style="text-align:center;color:#ffc630;font-size:17px;" @click="goindex()">立即逛逛>></div>
+  <img src="../../assets/cart/空购物车拷贝.png"  :style="handleImageWidth1()"/>
+  <div style="font-size:14px;color:#666;">您购物车内还没有商品</div>
+  <div style="text-align:center;color:#ffc630;font-size:17px;margin-top:10px;" @click="goindex()">立即逛逛>></div>
   </div>
 <div v-else>
   <div style="margin:10px; color:#666">您还未登录</div>
@@ -60,7 +61,7 @@ import Swipe from "../../components/Swipe.vue";
 import mixin from "../../config/mixin";
 import { Action } from "vuex-class";
 import comhead from "../../components/Comhead.vue";
-import { Toast } from "vant";
+import { Toast,Dialog } from "vant";
 
 @Component({
   components: {
@@ -89,10 +90,10 @@ export default class Cart extends Vue {
     return (
       "width:" +
       this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth *
-        0.45 +
+        0.35+
       "px;height:" +
       this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth *
-        0.45 +
+        0.35 +
       "px;"
     );
   }
@@ -164,7 +165,13 @@ export default class Cart extends Vue {
     );
   }
   deleteCart(index, collect) {
-    Vue.prototype.$reqFormPost(
+      Dialog.confirm({
+      title: "提示",
+      message: "你确定将这些商品从购物车中移除吗?"
+    })
+      .then(() => {
+      
+ Vue.prototype.$reqFormPost(
       "/shop/cart/delete",
       {
         userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
@@ -191,6 +198,15 @@ export default class Cart extends Vue {
         this.getCartList();
       }
     );
+
+     })
+      .catch(() => {
+        // on cancel
+      });
+
+
+
+   
   }
   deleteshopCart() {
     if (this.result.length <= 0) {
@@ -499,9 +515,6 @@ export default class Cart extends Vue {
 .van-submit-bar__bar {
   border-top: 1px solid #e5e5e5;
   box-sizing: border-box;
-}
-.van-submit-bar__price-text {
-  visibility: hidden;
 }
 
 .van-button--danger {

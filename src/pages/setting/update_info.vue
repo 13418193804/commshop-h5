@@ -53,12 +53,17 @@ export default class update_info extends Vue {
       Toast('请输入原密码');
       return;
     }
+
     if (this.newPassword == "") {
       Toast('新密码不能为空');
       return;
     }
     if (this.newPassword !== this.againnewPassword ) {
       Toast('两次输入密码不一致');      
+      return;
+    }
+       if (this.newPassword.length<6) {
+      Toast('新密码长度不能小于6位');
       return;
     }
     Vue.prototype.$reqFormPost(

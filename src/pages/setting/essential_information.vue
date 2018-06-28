@@ -16,7 +16,7 @@
         </van-uploader>
         <van-cell title="用户名" is-link :value="nickName" @click="go_updatenickName()"/>
         <van-cell title="性别" is-link :value="sex" @click="go_updatesex()"/>
-        <van-cell title="手机" is-link :value="loginName"/>
+        <van-cell title="手机"  :value="loginName" />
     </van-cell-group>
 
 

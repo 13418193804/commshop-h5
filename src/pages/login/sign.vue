@@ -1,6 +1,6 @@
 <template>
   <div class="tab-contents">
-<comhead ref="comhead" isLeftIcon="icon-zuo"  @leftClick="false"  title="用户注册" rightTitle="编辑"   ></comhead>
+<comhead ref="comhead" isLeftIcon="icon-zuo"  @leftClick="false"  title="用户注册"   ></comhead>
         <div class="bodyLabel" :style="handlePX('padding-top',80)">
 
 <div style="text-align:center;">
@@ -22,16 +22,13 @@
 <van-button class="sign-mini-button" slot="button" size="small" type="primary" @click="getVistyCode()" :style="handlePX('width',295)+handlePX('height',90)">{{vistyText()}}</van-button>
 </div>
 
-<van-field class="sign-input" v-model="password" type="password" placeholder="输入6-12位密码" :style="handlePX('width',620)+handlePX('margin-top',36)+handlePX('height',90)"/>
+<van-field class="sign-input" v-model="password" type="password" placeholder="请输入6位以上密码" :style="handlePX('width',620)+handlePX('margin-top',36)+handlePX('height',90)"/>
 <van-field class="sign-input" v-model="repassword" type="password" placeholder="请确认密码" :style="handlePX('width',620)+handlePX('margin-top',36)+handlePX('height',90)"/>
 
 <van-button class="sign-button" size="normal" :block="true" style="margin:20px 0;" @click="doSign()" :style="handlePX('width',620)+handlePX('margin-top',390)+handlePX('height',90)">立即注册</van-button>
-<div><p style="color:#d2d2d2;">注册表示您同意<a href="#" style="color:#f4c542;">《用户协议》</a></p></div>  
-
-</div>  
-
+<div><p style="color:#d2d2d2;">注册表示您同意<a href="#" style="color:#f4c542;" @click="$router.push('/signtext')">《用户协议》</a></p></div>  
+</div>
         </div>
-
   </div>
 </template>
 
@@ -60,7 +57,7 @@ export default class Sign extends Vue {
   isGetverify = true; //当前允许发送验证码
   timerNum = 60;
   timer = 60;
-  recommontId='';
+  recommontId = "";
   timelop() {
     let self = this;
 
@@ -85,6 +82,14 @@ export default class Sign extends Vue {
 
   getVistyCode() {
     //验证手机号码
+    if ((this.loginName || "") == "") {
+      Toast("请输入手机号码");
+      return;
+    }
+    if (this.loginName.length != 11) {
+      Toast("手机号码格式不对");
+      return;
+    }
 
     if (!this.isGetverify) {
       return;
@@ -93,7 +98,7 @@ export default class Sign extends Vue {
     //getCode
     Vue.prototype.$reqFormPost(
       "/auth/getsmscode",
-      { mobile: this.loginName,type:'REGISTER' },
+      { mobile: this.loginName, type: "REGISTER" },
       res => {
         if (res == null) {
           console.log("网络请求错误！");
@@ -122,13 +127,35 @@ export default class Sign extends Vue {
     }
   }
   doSign() {
+   if ((this.loginName || "") == "") {
+      Toast("请输入手机号码");
+      return;
+    }
+       if ((this.code || "") == "") {
+      Toast("请输入验证码");
+      return;
+    }
+       if ((this.code || "") == "") {
+      Toast("请输入密码");
+      return;
+    }
     //验证
-
+    if (this.password.length < 6) {
+      Toast("请输入最少6位的密码");
+      return;
+    }
+    if(this.password != this.repassword){
+      Toast('两次输入密码不一致 ')
+      return
+    }
     Vue.prototype.$reqFormPost(
       "/auth/register",
       {
         loginName: this.loginName,
-        password: require('crypto').createHash('md5').update(this.loginName+this.password).digest('hex'),
+        password: require("crypto")
+          .createHash("md5")
+          .update(this.loginName + this.password)
+          .digest("hex"),
         code: this.code,
         recommontId: this.recommontId //推荐者ID
       },
@@ -158,7 +185,9 @@ export default class Sign extends Vue {
     );
   }
   mounted() {
-    this.recommontId =  this.$route.query.recommontId?this.$route.query.recommontId:''
+    this.recommontId = this.$route.query.recommontId
+      ? this.$route.query.recommontId
+      : "";
     if (this.$store.getters[Vue.prototype.MutationTreeType.VERCODE] < 60) {
       this.timerNum = this.$store.getters[
         Vue.prototype.MutationTreeType.VERCODE

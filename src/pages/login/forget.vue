@@ -111,15 +111,32 @@ Toast(res.data.message)
         }
  doforget(){
     //验证
-    console.log('点击保存按钮')
-    if (this.password == "" || this.repassword == "") {
-        console.log('密码为空')
-        
+   
+   if(this.loginName ==''){
+     Toast('请输入手机号码');
+     return
+   }
+   if(this.smsCode ==''){
+     Toast('请输入验证码')
+     return
+   }
+
+   if(this.repassword==''){
+     Toast('请输入确认密码')
+     return
+   }
+
+   if(this.password==''){
+     Toast('请输入新密码');
+     return 
+   }
+    if (this.password.length<6|| this.repassword.length<6) {
+        Toast('最低字符为6位')
       return;
     }
-    if(this.password != this.repassword){
-        console.log('两次密码不正确')
-        return;        
+     if(this.password != this.repassword){
+      Toast('两次输入密码不一致 ')
+      return
     }
     Vue.prototype.$reqFormPost("/user/password/find",{
        mobile:this.loginName,

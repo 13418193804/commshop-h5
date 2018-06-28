@@ -19,7 +19,9 @@
                 订单号:{{item.orderId}}
               </div>
               <div  class="flex flex-align-center" >
-                <span :style="formatStatusColor(item.orderStatus)" v-if="active != '5'">{{formatStatus(item.orderStatus)}}</span>
+                
+                  <span v-if="active == '0' && item.detailList[0].refundStatus == 'SUCCEED_REFUND' " style="color:red">退款完成</span>
+                <span :style="formatStatusColor(item.orderStatus)" v-else-if="active != '5' ">{{formatStatus(item.orderStatus)}}</span>
                 <!-- v-if="item.detailList[0].refundStatus == 'WITHOUT_REFUND'"  -->
 
                 <span v-if="active == '5'">
@@ -32,7 +34,7 @@
                 <span v-if="item.detailList[0].refundStatus == 'WAIT_RECVGOODS'" style="color:#ffc630;">退货中</span> -->
                 <span v-if="item.detailList[0].refundStatus == 'FAIL_REFUND'" style="color:red;">已拒绝</span>
                 </span>
-                     <div style="padding:0 15px;position: relative;"  @click.stop="doDeleteOrder(item.orderId)"  v-if="(item.orderStatus === 'ORDER_WAIT_REVIEW'||item.orderStatus === 'ORDER_END_GOODS'  ||item.orderStatus === 'ORDER_FINISH')&&item.detailList[0].refundStatus == 'WITHOUT_REFUND'">
+                     <div style="padding:0 15px;position: relative;"  @click.stop="doDeleteOrder(item.orderId)"  v-if=" active == '0' && item.orderStatus === 'ORDER_FINISH'&&(item.detailList[0].refundStatus == 'WITHOUT_REFUND' ||item.detailList[0].refundStatus == 'SUCCEED_REFUND') ">
                        <div class="deleteBorder"> </div>
                 <i class="iconfont icon-iconfontshanchu3" style="" ></i>
               </div>
