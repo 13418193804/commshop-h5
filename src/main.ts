@@ -23,7 +23,7 @@ Vue.use(MintUI);
 Vue.use(Vuex);
 Vue.use(Api);
 Vue.use(Vant);
-
+/* 
 router.beforeEach((to, from, next) => {
 
 
@@ -34,7 +34,7 @@ router.beforeEach((to, from, next) => {
     }
 
 
-});
+}); */
 
 Vue.config.productionTip = false;
 const init = new Vue({

@@ -1,8 +1,10 @@
 <template>
+
   <div class="tab-contents"   style=" width: 100%;
     background-color: #e4e4e4;
     overflow: auto;" ref="logo" v-on:scroll.passive="onScroll">
     <div v-if="$route.query.availWidth && $route.query.availHeight"  class="dialog"></div>
+    
     <comhead ref="comhead" isLeftIcon="icon-zuo"   leftIconName="angle-left" @leftClick="false"   :contextIndex="true" isRightIcon="true"  ></comhead>
         <van-swipe :autoplay="3000"  :style="'height:'+$store.getters[MutationTreeType.SYSTEM].availWidth+'px'">
           <van-swipe-item v-for="(image, index) in detatil['goodsImg'].split(',')"  :key="index" class="flex">
@@ -96,7 +98,7 @@
           </div>
           <div v-if="detatil.commentList.length==0" class=" flex  flex-align-center flex-pack-center" style="text-align: center;padding: 15px;min-height: 145px;font-size:16px;color:#666;"><span>暂无用户评价</span></div>
         </div>
-
+        
         <div class="recommend"  style="background-color:#ffffff;margin-top:10px;z-index:2;">
           <van-tabs @click="selecttablist" id="tab1">
             <van-tab v-for="(item,index) in tablist" :title="item" :key="index" >
@@ -119,6 +121,12 @@
               </div>
             </van-tab>
           </van-tabs>
+        </div>
+        <div class="xq_video">
+          <video id="video" autoplay="autoplay" style="width:100%;height:300px; background-color: #000;"controls="controls" :src="detatil.videoUrl">
+              <source src="https://rtmp.myappcc.com/factoryintroduction0510.m4" type="video/mp4" />
+            Your browser does not support the video tag.
+            </video>
         </div>
         <div style="height:10px"></div>
 
@@ -226,7 +234,7 @@
         <van-goods-action-big-btn text="加入购物车" @click="addCart()" primary class="flex-1"/>
       </van-goods-action>
     </div>
-      </div>
+  </div>
 </div>
       </div>
 <div class="flex flex-warp-justify">
