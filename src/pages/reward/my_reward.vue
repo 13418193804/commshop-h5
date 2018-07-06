@@ -1,37 +1,37 @@
 <template>
-  <div class="tab-contents" style="height:-webkit-fill-available;background-color:#f5f5f5;">
-    <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="我的奖励" isRightIcon="true"  ></comhead>
+  <div class="tab-contents" style="overflow: auto;height:-webkit-fill-available;background-color:#f5f5f5;">
+    <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="我的积分" isRightIcon="true"  ></comhead>
     <div class="flex flex-align-center" style="background-color:#ffffff;">
         <div :style="handlePX('height', 300)" class="flex flex-pack-center flex-align-center flex-1 flex-v">
             <div>
                 <img src="../../assets/image/金币.png" :style="handlePX('width', 55)+handlePX('height', 55)" style="vertical-align: middle;"/>
-                <span>奖励金</span>
+                <span>积分</span>
             </div>
             <div :style="handlePX('margin-top', 20)" style="color:#ffc600;">￥{{award.awardBalance}}</div>
-            <div style="color:#ababab;" @click="gogetreward()">提现>></div>
+            <div style="color:#ababab; visibility: hidden;" @click="gogetreward()" >提现>></div>
             <van-button :style="handlePX('width', 220)+handlePX('height', 60)+handlePX('line-height', 60)+handlePX('margin-top', 20)" @click="gomember()">我的成员</van-button>
         </div>
         <div :style="handlePX('height', 300)" class="flex flex-pack-center flex-align-center flex-1 flex-v">
             <div>
                 <img src="../../assets/image/金币.png" :style="handlePX('width', 55)+handlePX('height', 55)" style="vertical-align: middle;"/>
-                <span>累积奖励金</span>
+                <span >累计积分</span>
             </div>
             <div :style="handlePX('margin-top', 20)" style="color:#ffc600;">￥{{award.awardAmount}}</div>
-            <div style="color:#ababab;" @click="gorewarddetail()">明细>></div>
-            <van-button :style="handlePX('width', 220)+handlePX('height', 60)+handlePX('line-height', 60)+handlePX('margin-top', 20)" @click="$router.push('/rewardtext')">奖励规则</van-button>
+            <div style="color:#ababab;visibility: hidden;" @click="gorewarddetail()" >明细>></div>
+            <van-button :style="handlePX('width', 220)+handlePX('height', 60)+handlePX('line-height', 60)+handlePX('margin-top', 20)" @click="$router.push('/rewardtext')">积分规则</van-button>
         </div>
     </div>
 
     <div :style="handlePX('padding', 30)">
         <div style="color:#959595;">最新消息</div>
         <ul v-infinite-scroll="loadMore" :infinite-scroll-disabled="loading" infinite-scroll-distance="20" >
-          <li v-for="(item, index) in awardList" :key="index" :style="handlePX('line-height', 88)" style="border-bottom:1px solid #e7e7e7;font-size:14px;">{{item.member.nickName}}在{{item.createTime}}消费{{item.payTotal}}元，你获得{{item.awardAmount}}元奖励</li>
+          <li v-for="(item, index) in awardList" :key="index" :style="handlePX('line-height', 88)" style="border-bottom:1px solid #e7e7e7;font-size:14px;">{{item.member.nickName}}在{{item.createTime}}消费{{item.payTotal}}元，你获得{{item.awardAmount}}积分</li>
         </ul>
         <div class="flex flex-pack-center flex-align-center" style="font-size:14px;padding:15px;">
           <div v-if="loading">加载中...</div>
           <div v-else>暂无记录</div>
         </div>
-        
+      
     </div>
 
   </div>

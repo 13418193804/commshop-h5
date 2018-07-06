@@ -85,16 +85,16 @@
     <div>
       <img src="../../assets/image/我的奖励.png" alt="" class="moreIcon" >
 </div>
-    <div>我的奖励</div>
+    <div>我的积分</div>
 </div>
 
 
-<div style="text-align:center;padding:10px;width:25%;" @click="mybankcard()">
+<!-- <div style="text-align:center;padding:10px;width:25%;" @click="mybankcard()">
     <div>
       <img src="../../assets/image/我的银行卡.png" alt="" class="moreIcon" >
 </div>
     <div>我的银行卡</div>
-</div>
+</div> -->
 
 
 <div style="text-align:center;padding:10px;width:25%;" onclick="showMeiQia()">

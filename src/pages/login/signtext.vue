@@ -2,13 +2,14 @@
   <div class="tab-contents">
 <comhead ref="comhead" isLeftIcon="icon-zuo"  @leftClick="false"  title="用户协议"   ></comhead>
  
-<div v-for="(item,index) in messageList" style="margin:5px ">{{item}}</div>
+<div v-for="(item,index) in messageList" style="margin:5px " :style="index==2  ?'font-weight:bold;text-decoration:underline':''">{{item}}</div>
  
 
   </div>
 </template>
 
 <script lang="ts">
+
 import Vue from "vue";
 import Component from "vue-class-component";
 import mixin from "../../config/mixin";
@@ -31,8 +32,7 @@ messageList= [
 
 识的条款，因为这些条款可能会明确您应履行的义务或对您的权利有所限制。如您对协议有任何疑问，可
 
-向中宜严选平台客服咨询。`,
-`本协议是您与中宜严选平台（网址：m.yourhr.com.cn 网站及其客户端）所有者（以下简称为"中宜严
+向中宜严选平台客服咨询。本协议是您与中宜严选平台（网址：m.yourhr.com.cn 网站及其客户端）所有者（以下简称为"中宜严
 
 选"）之间就中宜严选平台服务等相关事宜所订立的契约，请您仔细阅读本注册协议，您点击"同意并继续
 

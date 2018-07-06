@@ -50,7 +50,7 @@
 
             <!-- 轮播图 -->
             <div v-if="items.componentType === 'COMPONENT_TYPE_SCROLL_HEADER'">
-               <van-swipe :autoplay="3000" style="z-index:999;" :style="'height:'+$store.getters[MutationTreeType.SYSTEM].availWidth/2+'px'" >
+               <van-swipe :autoplay="3000" style="z-index:199;" :style="'height:'+$store.getters[MutationTreeType.SYSTEM].availWidth/2+'px'" >
                   <van-swipe-item v-for="(image, imageIndex) in items.items" :key="imageIndex">
                        <img v-lazy="image.itemImgUrl" style="width:100%;" @click="goActionType(image.actionType,image.actionValue)"/>
                   </van-swipe-item>
@@ -366,8 +366,10 @@ export default class shopIndex extends Vue {
   goMessageList() {
     Vue.prototype.$confirmLogin("/messagelist");
   }
-  initIndex() {
-    Vue.prototype.$reqUrlGet("/page/list", {}, res => {
+  initIndex(status) {
+    Vue.prototype.$reqUrlGet("/page/list", {
+      status:status
+    }, res => {
       if (res == null) {
         console.log("网络请求错误！");
         return;
@@ -742,7 +744,9 @@ export default class shopIndex extends Vue {
     );
   }
   mounted() {
+    let status = false
     if (this.$route.query.active) {
+      status = true
       this.active = parseInt(this.$route.query.active);
       if (this.$route.query.availWidth && this.$route.query.availHeight) {
         this.setlabelActive({
@@ -753,7 +757,7 @@ export default class shopIndex extends Vue {
     }
 
     this.setTabIndex(0);
-    this.initIndex();
+    this.initIndex(status);
     if (
       this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].userId !=
         "" &&

@@ -48,7 +48,7 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import mixin from "../../config/mixin";
 import { Action } from "vuex-class";
-import { Toast } from "vant";
+import { Toast,Dialog } from "vant";
 import comhead from "../../components/Comhead.vue";
 
 @Component({
@@ -68,6 +68,11 @@ export default class collection extends Vue {
           Toast('没有选商品')
           return
         }
+         Dialog.confirm({
+      title: "提示",
+      message: "确定要退出登录吗？"
+    })
+      .then(() => {
         Vue.prototype.$reqFormPost(
         "/fav/delete",
         {
@@ -90,10 +95,15 @@ export default class collection extends Vue {
             );
             Toast(res.data.message);
             return;
-          }        
+          }
           this.getProductList();
           }
           );
+          
+            })
+      .catch(() => {
+        // on cancel
+      });
   }
   allchange(){
     if (this.goodsList.length==this.checkedGoods.length) {

@@ -1,8 +1,8 @@
 <template>
   <div class="tab-contents"   style=" width: 100%;
     background-color: #e4e4e4;
-    overflow: auto;
-    height: 100vh;" ref="logo" v-on:scroll.passive="onScroll">
+    overflow: auto;" ref="logo" v-on:scroll.passive="onScroll">
+    <div v-if="$route.query.availWidth && $route.query.availHeight"  class="dialog"></div>
     <comhead ref="comhead" isLeftIcon="icon-zuo"   leftIconName="angle-left" @leftClick="false"   :contextIndex="true" isRightIcon="true"  ></comhead>
         <van-swipe :autoplay="3000"  :style="'height:'+$store.getters[MutationTreeType.SYSTEM].availWidth+'px'">
           <van-swipe-item v-for="(image, index) in detatil['goodsImg'].split(',')"  :key="index" class="flex">
@@ -412,7 +412,7 @@ export default class ProductDetail extends Vue {
           console.log(
             "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
           );
-          Toast(res.data.message);
+          // Toast(res.data.message);
           return;
         }
         for (let i = 0; i < res.data.data.goodsList.length; i++) {
@@ -605,7 +605,7 @@ export default class ProductDetail extends Vue {
           console.log(
             "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
           );
-          Toast(res.data.message);
+          // Toast(res.data.message);
           return;
         }
         console.log("res.data", res.data);
@@ -683,6 +683,7 @@ export default class ProductDetail extends Vue {
   created(){
   }
   mounted() {
+
  vueScrollwatch.setContainer("#scrollDom")
  
     if (this.$route.query.availWidth && this.$route.query.availHeight) {
@@ -690,6 +691,8 @@ export default class ProductDetail extends Vue {
         availWidth: this.$route.query.availWidth,
         availHeight: this.$route.query.availHeight
       });
+
+
     } else {
       if (
         this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].userId ==
@@ -901,7 +904,13 @@ export default class ProductDetail extends Vue {
   display: flex;
   flex-wrap: wrap;
 }
-
+.dialog{
+  position: fixed;
+  top:0;
+  height:100%;
+  width:100%;
+  z-index:999;
+}
 .sku_box {
   margin: 10px 0px 0px 20px;
   padding: 3px 10px;

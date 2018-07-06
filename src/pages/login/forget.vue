@@ -74,7 +74,12 @@ export default class forget extends Vue {
     
   getVistyCode() {
 //验证手机号码
-
+ 
+   if(this.loginName ==''){
+     Toast('请输入手机号码');
+     return
+   }
+   
             if (!this.isGetverify) {
               return 
             }

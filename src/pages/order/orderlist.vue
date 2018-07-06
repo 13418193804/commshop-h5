@@ -68,7 +68,7 @@
           {{item.orderGoodsNum}}
         </span>件商品</span>
         <span>合计：<span>￥{{item.orderTotalPrice.toFixed(2)}}</span>
-        <span>(含运费{{item.transportPrice.toFixed(2)}})</span>
+        <span v-if="item.orderStatus == 'ORDER_WAIT_PAY'" >(含运费{{item.transportPrice.toFixed(2)}})</span>
         </span>
 </div>
 

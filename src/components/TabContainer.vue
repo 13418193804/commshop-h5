@@ -23,7 +23,7 @@
   <div style="text-align:center">
       <i class="iconfont icon-iconuser" style="font-size:22px;"></i>
     </div>
-    个人</van-tabbar-item>
+    我的</van-tabbar-item>
 </van-tabbar>
   </div>
 </template>

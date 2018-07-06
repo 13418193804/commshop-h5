@@ -7,15 +7,48 @@
   <link rel="stylesheet" href="https://unpkg.com/vant/lib/vant-css/index.css">
   <script src="https://gw.alipayobjects.com/as/g/h5-lib/alipayjsapi/3.1.0/alipayjsapi.min.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/mint-ui/lib/style.css">
+  <script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
   <title>中宜商城</title>
 </head>
 
-<body>
+<body  >
   <div id="app"></div>
   
   <!-- built files will be auto injected -->
   <!-- 这是美洽的嵌入代码 -->
   <script type='text/javascript'>
+// onload="configWechatSDK()"
+
+// function  configWechatSDK (){
+//   wx.config({
+//         debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+//         appId: 'wx2e2d97a4e10ef2b6', // 必填，公众号的唯一标识
+//         timestamp: localStorage.timeStamp, // 必填，生成签名的时间戳
+//         nonceStr: localStorage.nonceStr, // 必填，生成签名的随机串
+//         signature: localStorage.package,// 必填，签名
+//         jsApiList: ['chooseWXPay','onMenuShareTimeline','onMenuShareAppMessage'] // 必填，需要使用的JS接口列表
+//       });
+
+//       wx.ready(function () {
+//       wx.onMenuShareTimeline({
+//     title: '标题', // 分享标题
+//     link: 'www.baidu.com', // 分享链接
+//     imgUrl: 'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1623643302,1867723597&fm=96&app=25&f=JPEG?w=121&h=75&s=4AA23A6240E472BCFD3159070100A0E0', // 分享图标
+//     success: function () {
+//     alert('分享成功')
+//         // 用户确认分享后执行的回调函数
+//     },
+//     cancel: function () {
+//     alert('分享取消')
+      
+//         // 用户取消分享后执行的回调函数
+//     }
+// });
+//       });
+
+
+// }
+
     (function (m, ei, q, i, a, j, s) {
       m[i] = m[i] || function () {
         (m[i].a = m[i].a || []).push(arguments)
@@ -27,7 +60,7 @@
       j.src = 'https://static.meiqia.com/dist/meiqia.js?_=t';
       s.parentNode.insertBefore(j, s);
     })(window, document, 'script', '_MEIQIA');
-    _MEIQIA('entId', '109080');
+    _MEIQIA('entId', '105686');
 
     // 在这里开启无按钮模式（常规情况下，需要紧跟在美洽嵌入代码之后）
   </script>
@@ -49,7 +82,6 @@
     }
   </script>
 </body>
-
 
 
 <style>

@@ -60,7 +60,7 @@
  </div>
 
  <div>
-        <div class="flex flex-pack-justify" style="margin-left:10px;border-bottom:1px #e5e5e5 solid;padding:10px;">
+        <div v-if="detail.orderStatus == 'ORDER_WAIT_PAY'"  class="flex flex-pack-justify" style="margin-left:10px;border-bottom:1px #e5e5e5 solid;padding:10px;">
                 <div>运费</div>
                 <div style="margin-right:10px;">￥{{detail.transportPrice.toFixed(2)}}</div>
         </div>
