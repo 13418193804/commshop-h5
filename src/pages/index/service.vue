@@ -16,9 +16,9 @@
     <div class="sev_box">
         <h5>热点问题</h5>
          <ul class="sev_list">
-           <li><div class="li_icon"><i class="iconfont icon-youjiantou"></i></div>1.什么时候发货?</li>
-           <li><div class="li_icon"><i class="iconfont icon-youjiantou"></i></div>2.我获得了商品，还需要支付其他费用吗?</li>
-           <li><div class="li_icon"><i class="iconfont icon-youjiantou"></i></div>3.当我获得商品之后我该做什么？</li>
+           <li onclick="showMeiQiasoMessage('什么时候发货?')"><div class="li_icon" ><i class="iconfont icon-youjiantou"></i></div>1.什么时候发货?</li>
+           <li onclick="showMeiQiasoMessage('我获得了商品，还需要支付其他费用吗?')"><div class="li_icon"  ><i class="iconfont icon-youjiantou"></i></div>2.我获得了商品，还需要支付其他费用吗?</li>
+           <li onclick="showMeiQiasoMessage('当我获得商品之后我该做什么？')"><div class="li_icon" ><i class="iconfont icon-youjiantou"></i></div>3.当我获得商品之后我该做什么？</li>
          </ul>
           <div class="sev_phone">
             <h5>联系方式</h5>
@@ -37,8 +37,8 @@
           </div>
     </div>
    <div class="van-hairline--top-bottom van-tabbar van-tabbar--fixed" style="z-index: 2;">
-     <div class="van-tabbar-item">意见反馈</div>
-     <div class="van-tabbar-item">在线客服</div>
+     <div class="van-tabbar-item" @click="go_feedback()">意见反馈</div>
+     <div class="van-tabbar-item"  onclick="showMeiQiasoMessage('')">在线客服</div>
    </div>
 
    
@@ -72,6 +72,9 @@ export default class shopIndex extends Vue {
   pageSize = 20;
   messagelist=[];
   page=0;
+    go_feedback(){
+    this.$router.push("/feedback");
+  }
   loadMore(){
     let self = this;
     self.loading=true;    
@@ -143,14 +146,17 @@ export default class shopIndex extends Vue {
     font-size: 14px;padding-left:10px;margin:0;line-height: 40px;color: #808080;font-weight: normal;
   }
   ul.sev_list{
-    background: #fff;padding-left:10px;
+    background: #fff;
     li{
       height: 45px;line-height:45px;border-bottom: 1px solid #f5f5f5;font-size: 13px;align-items: center;
-      color: #808080;position: relative;
+      color: #808080;position: relative;padding-left:10px;
       .li_icon{
         position: absolute;right: 10px;color: #fdca17;
       }
     }
+      li:active{
+         background-color:#f7f7f7
+      }
   }
   .sev_phone{
     background: #fff;padding-left:10px;padding-bottom:10px;color:#808080;

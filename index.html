@@ -73,12 +73,24 @@
 
   <script type='text/javascript'>
     function showMeiQia() {
-      //对登录做限制
-      if ((window['myvue'].$store.getters['set_token_info'].userId || '') == '' || (window['myvue'].$store.getters['set_token_info'].token || '') == '') {
+     //对登录做限制
+     if ((window['myvue'].$store.getters['set_token_info'].userId || '') == '' || (window['myvue'].$store.getters['set_token_info'].token || '') == '') {
         window['myvue'].$router.push({ name: 'login' });
         return
       }
-      _MEIQIA('showPanel')
+      window['myvue'].$router.push('/service');
+      
+    }
+    function showMeiQiasoMessage(message){
+      console.log(message)
+      console.log('-----------------')
+      if(message==''){
+        _MEIQIA('showPanel')
+      }else{
+        console.log(message)
+        _MEIQIA('showPanel', {greeting:message})
+      }
+
     }
   </script>
 </body>
