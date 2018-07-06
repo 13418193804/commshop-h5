@@ -75,24 +75,29 @@
     <div class="settingBody" v-if="item.orderStatus === 'ORDER_WAIT_PAY'">
       <van-button size="small" style="margin-right:10px;" @click.stop="doCancel(item)">取消订单</van-button>
       <van-button size="small" style="margin-right:10px;" :style="formatButtonColor()"  @click.stop="payOrder(item)">支付订单</van-button>
+   
     </div>
 
       <div class="settingBody" v-if="item.orderStatus === 'ORDER_WAIT_SENDGOODS'">
-
       <van-button v-if="item.detailList[0].refundStatus == 'APPLY_REFUND' && item.detailList[0].refundStatus !== 'FAIL_REFUND'" size="small" style="margin-right:10px;" :style="formatButtonColor()" @click.stop="goDetail(item)">取消退款</van-button>
-
       <van-button v-if="item.detailList[0].refundStatus == 'WITHOUT_REFUND' || item.detailList[0].refundStatus == 'FAIL_REFUND' " size="small" style="margin-right:10px;" :style="formatButtonColor()" @click.stop="doRefund(item)">申请退款</van-button>
+     <van-button v-if="item.detailList[0].refundStatus == 'WAIT_GOODS_BACK'" size="small" style="margin-right:10px;" :style="formatButtonColor()" @click.stop="goBackGoods(item)">商品寄回</van-button>
     </div>
 
+
+
+
       <div class="settingBody" v-if="item.orderStatus === 'ORDER_WAIT_RECVGOODS'">
-        <div  v-if="item.detailList[0].refundStatus == 'WITHOUT_REFUND' || item.detailList[0].refundStatus == 'FAIL_REFUND' ">
+
+
+       <div  v-if="item.detailList[0].refundStatus == 'WITHOUT_REFUND' || item.detailList[0].refundStatus == 'FAIL_REFUND' ">
       <van-button size="small" style="margin-right:10px;" @click.stop="getShip(item)">查看物流</van-button>
       <van-button size="small" style="margin-right:10px;" @click.stop="doRefund(item)">退货/退款</van-button>
       <van-button size="small" style="margin-right:10px;"  :style="formatButtonColor()" @click.stop="recvgoods(item.orderId)">确认收货</van-button>
         </div>
 
         <div v-if="item.detailList[0].refundStatus == 'APPLY_REFUND' && item.detailList[0].refundStatus !== 'FAIL_REFUND'">
-      <van-button v-if="item.detailList[0].refundStatus !== 'WITHOUT_REFUND' && item.detailList[0].refundStatus !== 'FAIL_REFUND'" size="small" style="margin-right:10px;" :style="formatButtonColor()" @click.stop="goDetail(item)">取消退款</van-button>
+     <van-button v-if="item.detailList[0].refundStatus !== 'WITHOUT_REFUND' && item.detailList[0].refundStatus !== 'FAIL_REFUND'" size="small" style="margin-right:10px;" :style="formatButtonColor()" @click.stop="goDetail(item)">取消退款</van-button>
           </div>   
   <!-- <van-button v-if="item.detailList[0].refundStatus == 'FAIL_REFUND'"  size="small" style="margin-right:10px;"  @click.stop="doRefund(item)">重新申请</van-button> -->
       <!-- <van-button v-if="item.detailList[0].refundStatus == 'APPLY_REFUND'" size="small" style="margin-right:10px;" :style="formatButtonColor()" @click.stop="goDetail(item)">取消退款</van-button> -->
@@ -216,6 +221,10 @@ export default class orderList extends Vue {
       status: "REFUND"
     }
   ];
+
+  goBackGoods(){
+    
+  }
 doDeleteOrder(orderId){
 
  Dialog.confirm({

@@ -83,6 +83,7 @@ export default class shopIndex extends Vue {
     //    this.obj["payTotal"]
     if (this.payActive == "ali") {
       console.log('支付宝支付')
+      
       Vue.prototype.$reqFormPost(
         "/ali/pay/wap",
         {
@@ -93,7 +94,7 @@ export default class shopIndex extends Vue {
             clientType:'H5',
           body: this.obj["body"],
           outTradeNo: this.obj["payId"],
-          totalFee: 0.01
+          totalFee: this.obj['payTotal']
         },
         res => {
           if (res == null) {

@@ -1,20 +1,11 @@
 <template>
   <div class="tab-contents">
 <div class="searchbox flex">
-
-
-
-
   <van-search placeholder="搜索商品" v-model="value" class="flex-1" style="background-color: #fafafa;" @click="filterProduct()"/>
-
-
-  
 <div @click="goMessageList()" >
   <div style="height:47px;font-size:12px;text-alig:center;background-color: rgb(250, 250, 250);color:#666;padding:4px 10px;">
     <div class="flex flex-align-center flex-pack-center">
-
       <i class="iconfont icon-lingdang"  style="font-size:16px;margin:3px;"></i>
-
       </div>
      <div style="line-height: 15px;">消息</div>
     </div>
@@ -125,8 +116,6 @@
                     </div>
                   </div>
                 </div>
-
-
                 <div class="goodsBody" v-if="items.columnNum === 3" style="  padding:10px 0;border-top:1px #e5e5e5 solid;">
                   <div v-for="(goods,goodsIndex) in items.items" @click="goProductDetail(goods.goodsId)" :key="goodsIndex" class="goodsItem">
                     <div style="  width:-webkit-fill-available;  ">
@@ -159,20 +148,6 @@
 <div style="height:50px;"></div> 
   
 </van-tabs>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 <!-- 选择规格 -->

@@ -145,7 +145,7 @@
             </div>
           </div>
         </div> -->
-
+    
         <div style="background-color:#ffffff;margin-top:10px;">
           <div v-for="(item,index) in detatil.detail.imageList" :key="index">
             <img v-lazy="item" style="width:100%;"/>
