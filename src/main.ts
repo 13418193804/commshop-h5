@@ -23,8 +23,8 @@ Vue.use(MintUI);
 Vue.use(Vuex);
 Vue.use(Api);
 Vue.use(Vant);
-
-// router.beforeEach((to, from, next) => {
+/* 
+router.beforeEach((to, from, next) => {
 
 
 //     if (!localStorage.openId || !localStorage.timeStamp || !localStorage.nonceStr || !localStorage.package) {
@@ -34,7 +34,7 @@ Vue.use(Vant);
 //     }
 
 
-// });
+}); */
 
 Vue.config.productionTip = false;
 const init = new Vue({

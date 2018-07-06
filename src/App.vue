@@ -69,6 +69,12 @@ export default class App extends Vue {
 }
 </style>
 <style>
+  p,h5,h6{
+    margin: 0;
+  }
+</style>
+
+<style>
 .van-tabbar-item__text{
   position: relative;
 }

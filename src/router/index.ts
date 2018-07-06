@@ -6,11 +6,11 @@ import App from '../App.vue';
 import recommend from '../pages/recommend/recommend.vue';
 
 // ts 按需加载需要@types/webpack-env 这个包
-const search = r => require.ensure([], () => r(require('../pages/search/search')), 'search');
-const test = r => require.ensure([], () => r(require('../pages/test/test')), 'test');
-const index = r => require.ensure([], () => r(require('../pages/index/Index')), 'Index');
+const search = r => require.ensure([], () => r(require('../pages/search/search')));
+const test = r => require.ensure([], () => r(require('../pages/test/test')));
+const index = r => require.ensure([], () => r(require('../pages/index/Index')));
 
-const TabContainer = r => require.ensure([], () => r(require('../components/TabContainer')), 'tabContainer');
+const TabContainer = r => require.ensure([], () => r(require('../components/TabContainer')));
 
 Vue.use(Router);
 
@@ -30,7 +30,7 @@ export default new Router({
                 },
                 {
                     path: '/category',
-                    component: r => require.ensure([], () => r(require('../pages/index/category')), 'category')
+                    component: r => require.ensure([], () => r(require('../pages/index/category')))
                     ,
                     meta: {
                         keepAlive: false // 不需要被缓存
@@ -39,7 +39,7 @@ export default new Router({
                 {
                     path: '/cart',
                     name: 'cart',
-                    component: r => require.ensure([], () => r(require('../pages/index/Cart')), 'cart')
+                    component: r => require.ensure([], () => r(require('../pages/index/Cart')))
                     ,
                     meta: {
                         keepAlive: false // 不需要被缓存
@@ -47,18 +47,26 @@ export default new Router({
                 },
                 {
                     path: '/user',
-                    component: r => require.ensure([], () => r(require('../pages/index/User')), 'user')
+                    component: r => require.ensure([], () => r(require('../pages/index/User')))
                     ,
                     meta: {
                         keepAlive: false // 不需要被缓存
                     }
-                }
+                },
             ]
+        },
+        {
+            path: '/service',
+            component: r => require.ensure([], () => r(require('../pages/index/service')))
+            ,
+            meta: {
+                keepAlive: false // 不需要被缓存
+            }
         },
         {
             path: '/signtext',
             name: 'signtext',
-            component: r => require.ensure([], () => r(require('../pages/login/signtext')), 'signtext')
+            component: r => require.ensure([], () => r(require('../pages/login/signtext')))
             ,
             meta: {
                 keepAlive: false // 不需要被缓存
@@ -67,7 +75,7 @@ export default new Router({
         {
             path: '/rewardtext',
             name: 'rewardtext',
-            component: r => require.ensure([], () => r(require('../pages/reward/rewardtext')), 'rewardtext')
+            component: r => require.ensure([], () => r(require('../pages/reward/rewardtext')))
             ,
             meta: {
                 keepAlive: false // 不需要被缓存
@@ -76,7 +84,7 @@ export default new Router({
         {
             path: '/productlist',
             name: 'productlist',
-            component: r => require.ensure([], () => r(require('../pages/product/productList')), 'user')
+            component: r => require.ensure([], () => r(require('../pages/product/productList')))
             ,
             meta: {
                 keepAlive: false // 不需要被缓存
@@ -85,7 +93,7 @@ export default new Router({
         {
             path: '/productlist',
             name: 'productlist',
-            component: r => require.ensure([], () => r(require('../pages/product/productList')), 'user')
+            component: r => require.ensure([], () => r(require('../pages/product/productList')))
             ,
             meta: {
                 keepAlive: false // 不需要被缓存
@@ -94,7 +102,7 @@ export default new Router({
         {
             path: '/login',
             name: 'login',
-            component: r => require.ensure([], () => r(require('../pages/login/login')), 'login')
+            component: r => require.ensure([], () => r(require('../pages/login/login')))
             ,
             meta: {
                 keepAlive: false // 不需要被缓存
@@ -103,7 +111,7 @@ export default new Router({
         {
             path: '/sign',
             name: 'sign',
-            component: r => require.ensure([], () => r(require('../pages/login/sign')), 'user')
+            component: r => require.ensure([], () => r(require('../pages/login/sign')))
             ,
             meta: {
                 keepAlive: false // 不需要被缓存
@@ -112,7 +120,7 @@ export default new Router({
         {
             path: '/productdetail',
             name: 'productdetail',
-            component: r => require.ensure([], () => r(require('../pages/product/productDetail')), 'productdetail')
+            component: r => require.ensure([], () => r(require('../pages/product/productDetail')))
             ,
             meta: {
                 keepAlive: false // 不需要被缓存
@@ -121,7 +129,7 @@ export default new Router({
         {
             path: '/settle',
             name: 'settle',
-            component: r => require.ensure([], () => r(require('../pages/order/settle')), 'settle')
+            component: r => require.ensure([], () => r(require('../pages/order/settle')))
             ,
             meta: {
                 keepAlive: false // 不需要被缓存
@@ -130,7 +138,7 @@ export default new Router({
         {
             path: '/addresslist',
             name: 'addresslist',
-            component: r => require.ensure([], () => r(require('../pages/address/addresslist')), 'addresslist')
+            component: r => require.ensure([], () => r(require('../pages/address/addresslist')))
             ,
             meta: {
                 keepAlive: false // 不需要被缓存
@@ -139,7 +147,7 @@ export default new Router({
         {
             path: '/address',
             name: 'address',
-            component: r => require.ensure([], () => r(require('../pages/address/address')), 'address')
+            component: r => require.ensure([], () => r(require('../pages/address/address')))
             ,
             meta: {
                 keepAlive: false // 不需要被缓存
@@ -148,7 +156,7 @@ export default new Router({
         {
             path: '/selectaddress',
             name: 'selectaddress',
-            component: r => require.ensure([], () => r(require('../pages/address/selectaddress')), 'selectaddress')
+            component: r => require.ensure([], () => r(require('../pages/address/selectaddress')))
             ,
             meta: {
                 keepAlive: false // 不需要被缓存
@@ -157,7 +165,7 @@ export default new Router({
         {
             path: '/orderlist',
             name: 'orderlist',
-            component: r => require.ensure([], () => r(require('../pages/order/orderlist')), 'orderlist')
+            component: r => require.ensure([], () => r(require('../pages/order/orderlist')))
             ,
             meta: {
                 keepAlive: false // 不需要被缓存
@@ -166,7 +174,7 @@ export default new Router({
         {
             path: '/pay',
             name: 'pay',
-            component: r => require.ensure([], () => r(require('../pages/order/pay')), 'pay')
+            component: r => require.ensure([], () => r(require('../pages/order/pay')))
             ,
             meta: {
                 keepAlive: false // 不需要被缓存
@@ -175,7 +183,7 @@ export default new Router({
         {
             path: '/paysuccess',
             name: 'paysuccess',
-            component: r => require.ensure([], () => r(require('../pages/order/paysuccess')), 'paysuccess')
+            component: r => require.ensure([], () => r(require('../pages/order/paysuccess')))
             ,
             meta: {
                 keepAlive: false // 不需要被缓存
@@ -184,7 +192,7 @@ export default new Router({
         {
             path: '/orderdetail',
             name: 'orderdetail',
-            component: r => require.ensure([], () => r(require('../pages/order/orderdetail')), 'orderdetail')
+            component: r => require.ensure([], () => r(require('../pages/order/orderdetail')))
             ,
             meta: {
                 keepAlive: false // 不需要被缓存
@@ -193,7 +201,7 @@ export default new Router({
         {
             path: '/ship',
             name: 'ship',
-            component: r => require.ensure([], () => r(require('../pages/order/ship')), 'ship')
+            component: r => require.ensure([], () => r(require('../pages/order/ship')))
             ,
             meta: {
                 keepAlive: false // 不需要被缓存
@@ -202,7 +210,7 @@ export default new Router({
         {
             path: '/forget',
             name: 'forget',
-            component: r => require.ensure([], () => r(require('../pages/login/forget')), 'forget')
+            component: r => require.ensure([], () => r(require('../pages/login/forget')))
             ,
             meta: {
                 keepAlive: false // 不需要被缓存
@@ -211,7 +219,7 @@ export default new Router({
         {
             path: '/refund',
             name: 'refund',
-            component: r => require.ensure([], () => r(require('../pages/order/refund')), 'refund')
+            component: r => require.ensure([], () => r(require('../pages/order/refund')))
             ,
             meta: {
                 keepAlive: false // 不需要被缓存
@@ -220,7 +228,7 @@ export default new Router({
         {
             path: '/collection',
             name: 'collection',
-            component: r => require.ensure([], () => r(require('../pages/collection/collection')), 'collection')
+            component: r => require.ensure([], () => r(require('../pages/collection/collection')))
             ,
             meta: {
                 keepAlive: false // 不需要被缓存
@@ -229,7 +237,7 @@ export default new Router({
         {
             path: '/add_bank_card',
             name: 'add_bank_card',
-            component: r => require.ensure([], () => r(require('../pages/bank_card/add_bank_card')), 'add_bank_card')
+            component: r => require.ensure([], () => r(require('../pages/bank_card/add_bank_card')))
             ,
             meta: {
                 keepAlive: false // 不需要被缓存
@@ -238,7 +246,7 @@ export default new Router({
         {
             path: '/my_bankcard',
             name: 'my_bankcard',
-            component: r => require.ensure([], () => r(require('../pages/bank_card/my_bankcard')), 'my_bankcard')
+            component: r => require.ensure([], () => r(require('../pages/bank_card/my_bankcard')))
             ,
             meta: {
                 keepAlive: false // 不需要被缓存
@@ -247,7 +255,7 @@ export default new Router({
         {
             path: '/about_us',
             name: 'about_us',
-            component: r => require.ensure([], () => r(require('../pages/setting/about_us')), 'about_us')
+            component: r => require.ensure([], () => r(require('../pages/setting/about_us')))
             ,
             meta: {
                 keepAlive: false // 不需要被缓存
@@ -256,7 +264,7 @@ export default new Router({
         {
             path: '/essential_information',
             name: 'essential_information',
-            component: r => require.ensure([], () => r(require('../pages/setting/essential_information')), 'essential_information')
+            component: r => require.ensure([], () => r(require('../pages/setting/essential_information')))
             ,
             meta: {
                 keepAlive: false // 不需要被缓存
@@ -265,7 +273,7 @@ export default new Router({
         {
             path: '/feedback',
             name: 'feedback',
-            component: r => require.ensure([], () => r(require('../pages/setting/feedback')), 'feedback')
+            component: r => require.ensure([], () => r(require('../pages/setting/feedback')))
             ,
             meta: {
                 keepAlive: false // 不需要被缓存
@@ -274,7 +282,7 @@ export default new Router({
         {
             path: '/update_info',
             name: 'update_info',
-            component: r => require.ensure([], () => r(require('../pages/setting/update_info')), 'update_info')
+            component: r => require.ensure([], () => r(require('../pages/setting/update_info')))
             ,
             meta: {
                 keepAlive: false // 不需要被缓存
@@ -283,7 +291,7 @@ export default new Router({
         {
             path: '/setting',
             name: 'setting',
-            component: r => require.ensure([], () => r(require('../pages/setting/setting')), 'setting')
+            component: r => require.ensure([], () => r(require('../pages/setting/setting')))
             ,
             meta: {
                 keepAlive: false // 不需要被缓存
@@ -292,7 +300,7 @@ export default new Router({
         {
             path: '/reward',
             name: 'reward',
-            component: r => require.ensure([], () => r(require('../pages/reward/reward')), 'reward')
+            component: r => require.ensure([], () => r(require('../pages/reward/reward')))
             ,
             meta: {
                 keepAlive: false // 不需要被缓存
@@ -301,7 +309,7 @@ export default new Router({
         {
             path: '/my_member',
             name: 'my_member',
-            component: r => require.ensure([], () => r(require('../pages/reward/my_member')), 'my_member')
+            component: r => require.ensure([], () => r(require('../pages/reward/my_member')))
             ,
             meta: {
                 keepAlive: false // 不需要被缓存
@@ -310,7 +318,7 @@ export default new Router({
         {
             path: '/my_reward',
             name: 'my_reward',
-            component: r => require.ensure([], () => r(require('../pages/reward/my_reward')), 'my_reward')
+            component: r => require.ensure([], () => r(require('../pages/reward/my_reward')))
             ,
             meta: {
                 keepAlive: false // 不需要被缓存
@@ -319,7 +327,7 @@ export default new Router({
         {
             path: '/present_record',
             name: 'present_record',
-            component: r => require.ensure([], () => r(require('../pages/reward/present_record')), 'present_record')
+            component: r => require.ensure([], () => r(require('../pages/reward/present_record')))
             ,
             meta: {
                 keepAlive: false // 不需要被缓存
@@ -328,7 +336,7 @@ export default new Router({
         {
             path: '/select_bankcard',
             name: 'select_bankcard',
-            component: r => require.ensure([], () => r(require('../pages/reward/select_bankcard')), 'select_bankcard')
+            component: r => require.ensure([], () => r(require('../pages/reward/select_bankcard')))
             ,
             meta: {
                 keepAlive: false // 不需要被缓存
@@ -337,7 +345,7 @@ export default new Router({
         {
             path: '/coupon',
             name: 'coupon',
-            component: r => require.ensure([], () => r(require('../pages/coupon/coupon')), 'coupon')
+            component: r => require.ensure([], () => r(require('../pages/coupon/coupon')))
             ,
             meta: {
                 keepAlive: false // 不需要被缓存
@@ -346,7 +354,7 @@ export default new Router({
         {
             path: '/collar_center',
             name: 'collar_center',
-            component: r => require.ensure([], () => r(require('../pages/coupon/collar_center')), 'collar_center')
+            component: r => require.ensure([], () => r(require('../pages/coupon/collar_center')))
             ,
             meta: {
                 keepAlive: false // 不需要被缓存
