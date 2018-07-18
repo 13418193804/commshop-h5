@@ -74,17 +74,14 @@ export default class forget extends Vue {
     
   getVistyCode() {
 //验证手机号码
- 
    if(this.loginName ==''){
      Toast('请输入手机号码');
      return
    }
-   
             if (!this.isGetverify) {
               return 
             }
             
-            //getCode
           Vue.prototype.$reqFormPost("/auth/getsmscode",{mobile:this.loginName	,type:'FINDPASSWORD'},res => {
         if (res == null) {
           console.log("网络请求错误！");
@@ -145,7 +142,7 @@ Toast(res.data.message)
     }
     Vue.prototype.$reqFormPost("/user/password/find",{
        mobile:this.loginName,
-       password:require('crypto').createHash('md5').update(this.loginName+this.password).digest('hex'),
+       password:require('crypto').createHash('md5').update(this.password).digest('hex'),
        smsCode:this.smsCode,
        },res => {
         if (res == null) {

@@ -12,8 +12,8 @@
   </div>
 </div>
 
-<div style=" position: relative;">
 
+<div style=" position: relative;">
   <div style="background-color:rgba(0, 0, 0, 0.498039);    z-index: 99999;position: fixed;width: 100%;height: 100vh;top:0;" v-show="isShow" >
   <div class="AllClassification" >
     <div class="flex flex-pack-justify flex-align-center ClassificationTitle "><span>全部分类</span>
@@ -30,20 +30,19 @@
 </div>
   <!-- swipeable -->
 <van-tabs :active="active" @click="changeTab" class="index_tabs flex-1" >
-
-
 <!-- :style="$route.query.active?'margin-top:-45px':''" -->
   <van-tab v-for="(item,index) in indexList" :title="item.pageName" :key="index" >
 <div v-if="active == index">
+
         <div v-for="(items,childrenIndex) in item.children" :key="childrenIndex" >
 
             <!-- actionType -->
 
             <!-- 轮播图 -->
             <div v-if="items.componentType === 'COMPONENT_TYPE_SCROLL_HEADER'">
-               <van-swipe :autoplay="3000" style="z-index:199;" :style="'height:'+$store.getters[MutationTreeType.SYSTEM].availWidth/2+'px'" >
+               <van-swipe :autoplay="3000" style="z-index:199;" :style="'height:'+$store.getters[MutationTreeType.SYSTEM].availWidth/2.2+'px'" >
                   <van-swipe-item v-for="(image, imageIndex) in items.items" :key="imageIndex">
-                       <img v-lazy="image.itemImgUrl" style="width:100%;" @click="goActionType(image.actionType,image.actionValue)"/>
+                       <img v-lazy="image.itemImgUrl" style="width:100%;height:100%;" @click="goActionType(image.actionType,image.actionValue)"/>
                   </van-swipe-item>
                 </van-swipe>
             </div>
@@ -116,6 +115,8 @@
                     </div>
                   </div>
                 </div>
+<!-- 没有3 -->
+<!-- 
                 <div class="goodsBody" v-if="items.columnNum === 3" style="  padding:10px 0;border-top:1px #e5e5e5 solid;">
                   <div v-for="(goods,goodsIndex) in items.items" @click="goProductDetail(goods.goodsId)" :key="goodsIndex" class="goodsItem">
                     <div style="  width:-webkit-fill-available;  ">
@@ -134,7 +135,7 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> -->
 <div style="height:10px; background-color:#f7f7f7;"></div>
             </div>
         </div>
@@ -364,6 +365,8 @@ export default class shopIndex extends Vue {
       }
     });
   }
+
+
   changeTab(active) {
     this.active = active;
     this.isShow = false;
@@ -382,17 +385,23 @@ export default class shopIndex extends Vue {
             Toast(res.data.message);
             return;
           }
-          console.log("---------");
+
           (<any>Object).assign(this.indexList[active], {
             children: res.data.data
           });
 
           this.indexList.push();
+
+
+    console.log('this.indexList[active].children',this.indexList[active].children)
+          
           if (this.indexList[active].catId) {
-            Vue.prototype.$reqFormPost(
+
+          Vue.prototype.$reqFormPost(
               "/user/goods/list",
               {
-                catId: this.indexList[active].catId
+                catId: this.indexList[active].catId,
+
               },
               res => {
                 if (res == null) {
@@ -403,15 +412,21 @@ export default class shopIndex extends Vue {
                   Toast(res.data.message);
                   return;
                 }
+                console.log("分类查商品",res.data)
                 this.indexList[active].children.push({
                   componentType: "COMPONENT_TYPE_GOODS_TAG",
-                  columnNum: 1,
+                name:'商品列表',
+                letter:'G',
+                nameEn:'GOODLIST',
+               columnNum: 2,
                   items: res.data.data.goodsList
                 });
 
                 this.indexList.push();
               }
             );
+
+
           }
         }
       );

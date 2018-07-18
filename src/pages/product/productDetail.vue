@@ -160,7 +160,7 @@
           </div>
         </div>
 
-
+        
 <van-goods-action style="z-index:90;background-color: #ffffff;">
   <van-goods-action-mini-btn icon="chat"  onclick="showMeiQia()" class="flex flex-pack-center flex-align-center flex-v" style="border-top:1px #e5e5e5 solid;padding:0 10px;font-size:22px"/>
   <van-goods-action-mini-btn icon="cart"  @click="onClickMiniBtn_cart" class="flex flex-pack-center flex-align-center flex-v" style="border-top:1px #e5e5e5 solid;padding:0 10px;font-size:22px;"/>
@@ -168,16 +168,8 @@
   <van-goods-action-big-btn text="立即购买" @click="changeModel()" class="flex-1"/>
   <van-goods-action-big-btn text="加入购物车" @click="changeModel()" primary class="flex-1"/>
 </van-goods-action>
-
-
-
-
-
-
 <div :class="keepModel ?'bg_shop1' :'bg_shop_none1'" style='background-color: rgba(0, 0, 0, 0.498039);height: 100%;width: 100%;' @click='changeModel()'>
- 
  <div style="position: relative;width:100%;height:100%;">
-
         <div  style=' background-color:#fff;width:100%;' :class="keepModel ?'modiaBoxUp2' :'modiaBoxDown2'" @click.stop="()=>{return }">
  <div class="flex flex-pack-justify">
       <div class="flex" style='border-radius:2px;background-color:#fff;margin:10px 10px 10px 20px;'>
@@ -204,8 +196,6 @@
       </div> -->
     </div>
 
-
-
     <div style='font-size:14px;max-height:300px;overflow:auto;'>
       <div v-for='(item,indextop) in detatil.skuKey' :key="indextop">
       <div style='padding:5px 20px 0;color:#585858;'>{{item.skuKeyIdName}}</div>
@@ -215,14 +205,10 @@
         :style="items.disable?'color:#ccc;':''+ chosenList[indextop] === items.skuValueId?'border-color:#f4c542;color:#f4c542':'' " @click.stop='selectSku(indextop,items)'  >{{items.skuValueName}}</div>
       </div>
       </div>
-     
       </div>
     </div>
-
-
     <div class='num_box'>
       <div class="flex flex-align-center" style="color:#585858;">数量</div>
-
     <van-stepper v-model="num" :style="handlePX('margin-top',20)"/>
     </div>
   <div>

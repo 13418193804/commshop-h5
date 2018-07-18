@@ -23,18 +23,20 @@ Vue.use(MintUI);
 Vue.use(Vuex);
 Vue.use(Api);
 Vue.use(Vant);
-/* 
+
+
 router.beforeEach((to, from, next) => {
+    if (localStorage.master !== 'true') {
+        if (!localStorage.openId || !localStorage.timeStamp || !localStorage.nonceStr || !localStorage.package) {
+            window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx2e2d97a4e10ef2b6&redirect_uri=https://m.yourhr.com.cn/zhongyi/wechat/enter/bind?action=viewtest&response_type=code&scope=snsapi_userinfo&state=${window.location.href}#wechat_redirect`
+        } else {
+            next();
+        }
+    } else {
+        next();
 
-
-//     if (!localStorage.openId || !localStorage.timeStamp || !localStorage.nonceStr || !localStorage.package) {
-//         window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx2e2d97a4e10ef2b6&redirect_uri=http://sr.cncloud.com/qichang/wechat/enter/bind?action=viewtest&response_type=code&scope=snsapi_userinfo&state=http://sr.cncloud.com/custom/#/#wechat_redirect`
-//     } else {
-//         next();
-//     }
-
-
-}); */
+    }
+});
 
 Vue.config.productionTip = false;
 const init = new Vue({

@@ -33,7 +33,7 @@
             
             <div>微信公众号：zhongyiglt</div>
 
-            <h6>(客服时间是看看会发生想念那时候 i 懂)</h6>
+            <h6>(客服工作时间为每天10:00-22:00,剩余时间咨询请将问题反馈至微信公众号，我们及时回复您。)</h6>
           </div>
     </div>
    <div class="van-hairline--top-bottom van-tabbar van-tabbar--fixed" style="z-index: 2;">

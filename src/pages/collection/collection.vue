@@ -70,7 +70,7 @@ export default class collection extends Vue {
         }
          Dialog.confirm({
       title: "提示",
-      message: "确定要退出登录吗？"
+      message: "确定要取消收藏吗？"
     })
       .then(() => {
         Vue.prototype.$reqFormPost(

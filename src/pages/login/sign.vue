@@ -154,7 +154,7 @@ export default class Sign extends Vue {
         loginName: this.loginName,
         password: require("crypto")
           .createHash("md5")
-          .update(this.loginName + this.password)
+          .update(this.password)
           .digest("hex"),
         code: this.code,
         recommontId: this.recommontId //推荐者ID

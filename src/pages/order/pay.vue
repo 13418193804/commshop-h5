@@ -119,10 +119,8 @@ export default class shopIndex extends Vue {
     }else{
 //  console.log("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx2e2d97a4e10ef2b6&redirect_uri=http://sr.cncloud.com/qichang/wechat/enter/call?action=viewtest&response_type=code&scope=snsapi_userinfo&state="+
 //        this.obj["payId"] +"#wechat_redirect")
-        window.location.href ="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx2e2d97a4e10ef2b6&redirect_uri=http://sr.cncloud.com/qichang/wechat/enter/call?action=viewtest&response_type=code&scope=snsapi_userinfo&state="+
+        window.location.href ="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx2e2d97a4e10ef2b6&redirect_uri=https://m.yourhr.com.cn/zhongyi/wechat/enter/call?action=viewtest&response_type=code&scope=snsapi_userinfo&state="+
        this.obj["payId"] +"#wechat_redirect"
-     
-      console.log('微信支付')
     }
   }
   handlePX(CssName, PxNumber) {

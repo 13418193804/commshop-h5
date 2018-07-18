@@ -1,34 +1,35 @@
-<!DOCTYPE html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link rel=stylesheet href=https://unpkg.com/vant/lib/vant-css/index.css><script src=https://gw.alipayobjects.com/as/g/h5-lib/alipayjsapi/3.1.0/alipayjsapi.min.js></script><link rel=stylesheet href=https://unpkg.com/mint-ui/lib/style.css><script src=https://res.wx.qq.com/open/js/jweixin-1.2.0.js></script><title>中宜商城</title><link href=./static/css/app.4b8ab91a3f9caba6f05f3f5784c0ec41.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript>// onload="configWechatSDK()"
+<!DOCTYPE html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link rel=stylesheet href=https://unpkg.com/vant/lib/vant-css/index.css><script src=https://gw.alipayobjects.com/as/g/h5-lib/alipayjsapi/3.1.0/alipayjsapi.min.js></script><link rel=stylesheet href=https://unpkg.com/mint-ui/lib/style.css><script src=https://res.wx.qq.com/open/js/jweixin-1.2.0.js></script><title>中宜商城</title><link href=./static/css/app.ca976fe7bc2fb20dbdf0a12d752f5d25.css rel=stylesheet></head><body onload=configWechatSDK()><div id=app></div><script type=text/javascript>// onload="configWechatSDK()"
 
-// function  configWechatSDK (){
-//   wx.config({
-//         debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-//         appId: 'wx2e2d97a4e10ef2b6', // 必填，公众号的唯一标识
-//         timestamp: localStorage.timeStamp, // 必填，生成签名的时间戳
-//         nonceStr: localStorage.nonceStr, // 必填，生成签名的随机串
-//         signature: localStorage.package,// 必填，签名
-//         jsApiList: ['chooseWXPay','onMenuShareTimeline','onMenuShareAppMessage'] // 必填，需要使用的JS接口列表
-//       });
+function  configWechatSDK (){
+  wx.config({
+        // debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+        appId: 'wx2e2d97a4e10ef2b6', // 必填，公众号的唯一标识
+        timestamp: localStorage.timeStamp, // 必填，生成签名的时间戳
+        nonceStr: localStorage.nonceStr, // 必填，生成签名的随机串
+        signature: localStorage.package,// 必填，签名
+        jsApiList: ['chooseWXPay','onMenuShareTimeline','onMenuShareAppMessage'] // 必填，需要使用的JS接口列表
+      });
 
-//       wx.ready(function () {
-//       wx.onMenuShareTimeline({
-//     title: '标题', // 分享标题
-//     link: 'www.baidu.com', // 分享链接
-//     imgUrl: 'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1623643302,1867723597&fm=96&app=25&f=JPEG?w=121&h=75&s=4AA23A6240E472BCFD3159070100A0E0', // 分享图标
-//     success: function () {
-//     alert('分享成功')
-//         // 用户确认分享后执行的回调函数
-//     },
-//     cancel: function () {
-//     alert('分享取消')
+      wx.ready(function () {
+
+      wx.onMenuShareTimeline({
+    title: '标题', // 分享标题
+    link: 'www.baidu.com', // 分享链接
+    imgUrl: 'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1623643302,1867723597&fm=96&app=25&f=JPEG?w=121&h=75&s=4AA23A6240E472BCFD3159070100A0E0', // 分享图标
+    success: function () {
+    alert('分享成功')
+        // 用户确认分享后执行的回调函数
+    },
+    cancel: function () {
+    alert('分享取消')
       
-//         // 用户取消分享后执行的回调函数
-//     }
-// });
-//       });
+        // 用户取消分享后执行的回调函数
+    }
+});
+      });
 
 
-// }
+}
 
     (function (m, ei, q, i, a, j, s) {
       m[i] = m[i] || function () {
@@ -56,8 +57,6 @@
       
     }
     function showMeiQiasoMessage(message){
-      console.log(message)
-      console.log('-----------------')
       if(message==''){
         _MEIQIA('showPanel')
       }else{
@@ -65,7 +64,7 @@
         _MEIQIA('showPanel', {greeting:message})
       }
 
-    }</script><script type=text/javascript src=./static/js/manifest.2255351e8d69e8df3458.js></script><script type=text/javascript src=./static/js/vendor.25b77de016ee6d2855a8.js></script><script type=text/javascript src=./static/js/app.d2273c9f44ea00d7adca.js></script></body><style>@font-face {
+    }</script><script type=text/javascript src=./static/js/manifest.1d9de06807e8dc7d9b84.js></script><script type=text/javascript src=./static/js/vendor.25b77de016ee6d2855a8.js></script><script type=text/javascript src=./static/js/app.a1b7cd2250fe7efdf591.js></script></body><style>@font-face {
     font-family: "iconfont";
     src: url('iconfont.eot?t=1527147826115');
     /* IE9*/
