@@ -24,7 +24,9 @@
 <div class="flex flex-pack-center flex-align-center" style="font-size:14px;padding:15px;">
 
     <div v-if="!loading">加载中...</div>
-    <div v-else>-</div>
+    <div v-else>
+      <p style="padding-top:120px;color: #818181;" >暂无成员</p>
+    </div>
   
 </div>
 

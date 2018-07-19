@@ -1,6 +1,6 @@
 <template>
   <div class="tab-contents">
-    <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="优惠卷" isRightIcon="true"  ></comhead>
+    <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="优惠券" isRightIcon="true"  ></comhead>
 
     <van-tabs v-model="active"  @click="changeTab" >
       <van-tab v-for="(item,indexs) in tablist" :title="item" :key="indexs" >
@@ -28,7 +28,8 @@
                 <div style="color:rgba(255,255,255,0.8);">{{item.coupon?item.coupon.couponName:''}}</div>
               </div>
               <div class="coupon_car_right" :style="handlePX('padding-right', 42)+handlePX('padding-top', 30)">
-                <van-button size="mini" :style="handlePX('width', 135)+handlePX('height', 40)" style="border:0;background-color:rgba(255,255,255,0.9);color:#fd5f61;">去使用</van-button>
+                <van-button size="mini" :style="handlePX('width', 135)+handlePX('height', 40)" @click="goIndex()"
+                style="border:0;background-color:rgba(255,255,255,0.9);color:#fd5f61;">去使用</van-button>
                 <!-- <div style="color:rgba(255,255,255,0.8);" :style="handlePX('font-size', 26)">2018.03.24-2018.03.24</div> -->
               </div>
             </div>
@@ -77,7 +78,7 @@
         <div :style="handlePX('padding', 30)+handlePX('margin-top', 100)" v-if="indexs == active">
           <div @click="go_collar_center()" :style="handlePX('height', 90)" style="border:1px solid #ffce5b;border-radius: 8px;display: flex;justify-content: center;align-items: center;">
             <img src="../../assets/image/优惠卷.png" :style="handlePX('width', 45)+handlePX('height', 45)"/>
-            <div style="color:#ffce5b;">去领卷中心逛逛</div>
+            <div style="color:#ffce5b;">去领券中心逛逛</div>
           </div>
           
         </div>
@@ -165,7 +166,10 @@ export default class coupon extends Vue {
     this.active = active;
     this.getList();
   }
-
+//使用跳转首页
+goIndex(){
+  this.$router.push("/");
+}
   getList() {
     let status = "";
     let page = 0;
@@ -214,7 +218,7 @@ export default class coupon extends Vue {
   }
   mounted() {
     this.getList();
-    console.log("优惠卷");
+    console.log("优惠券");
   }
 }
 </script>
