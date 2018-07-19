@@ -150,7 +150,10 @@
   </van-tab>
  <div class="flex flex-align-center flex-pack-center"  style="font-size:14px;padding:15px;">
     <div v-if="orderList[returnKey()].loading">加载中...</div>
-    <div v-else>-</div>
+    <div v-else>
+      
+      <p>还没有相关的订单哦！</p>
+    </div>
   
 </div>
 

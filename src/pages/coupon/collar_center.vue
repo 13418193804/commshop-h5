@@ -1,6 +1,6 @@
 <template>
   <div class="tab-contents">
-    <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="领卷中心" isRightIcon="true"  ></comhead>
+    <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="领券中心" isRightIcon="true"  ></comhead>
           <ul
   v-infinite-scroll="loadMore"
   :infinite-scroll-disabled="loading"
@@ -18,7 +18,7 @@
                 <div style="color:rgba(255,255,255,0.8);">满{{item.fullDenomination}}减{{item.couponDenomination}}</div>
               </div>
               <div class="coupon_car_right" :style="handlePX('padding-right', 42)+handlePX('padding-top', 30)">
-                <van-button size="mini" :style="handlePX('width', 135)+handlePX('height', 40)" style="border:0;background-color:rgba(255,255,255,0.5);color:#DAA000;" @click="addcoupon(item.id)">领卷</van-button>
+                <van-button size="mini" :style="handlePX('width', 135)+handlePX('height', 40)" style="border:0;background-color:rgba(255,255,255,0.5);color:#DAA000;" @click="addcoupon(item.id)">领券</van-button>
                 <div style="color:rgba(255,255,255,0.8);" :style="handlePX('font-size', 26)">{{item.createTime.split(' ')[0]}}-{{item.endDate.split(' ')[0]}}</div>
               </div>
             </div>

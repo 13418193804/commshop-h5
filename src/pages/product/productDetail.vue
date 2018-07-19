@@ -26,8 +26,8 @@
                 <div style="font-size:14px;color:#666">{{detatil.jingle}}</div>
                 <div class="pricebox">
                   <div>
-                    <span class="marketPrice">  ￥{{detatil.marketPrice}}</span>
-                    <span class="labelPrice" style="margin:0 10px;font-size:14px;">原价:{{detatil.labelPrice}}</span>
+                    <span class="marketPrice">  ￥{{detatil.marketPrice.toFixed(2)}}</span>
+                    <span class="labelPrice" style="margin:0 10px;font-size:14px;">原价:{{detatil.labelPrice.toFixed(2)}}</span>
                   </div>
                   <div class="comment" @click="go_comment()">
                     <div style="font-size:15px;color:#666">用户评价</div>
@@ -37,8 +37,7 @@
                     </div>
                   </div>
                 </div>
-            </div>
-            
+            </div>   
         </div>
   
         <div class="functionList" style="margin-top:10px;">
@@ -51,12 +50,14 @@
                 <span v-else class="van-cell-text">请选择规格数量</span>
               </template>
             </van-cell>
-            <van-cell v-if="couponList.length>0" title="限制：特价商品不可与优惠卷叠加使用"/>
+            <van-cell v-if="couponListOne.bargainStatus" title="限制：特价商品不可与优惠卷叠加使用"/>
             <van-cell v-if="couponList.length>0" is-link @click="go_collar_center()">
               <template slot="title">
-                <span class="van-cell-text">领卷：</span>
                 <!-- <img v-lazy="'1'" :style="handlePX('width',112)+handlePX('height',26)"/> -->
-                <span v-for="(item,index) in couponList" :key="index" style="color:#FFC630;" >{{item.couponName}}</span>
+                <span class="van-cell-text" v-if="couponListOne.couponList && couponListOne.couponList.length>0">领券:</span>
+                <span class="full_bg" v-if="couponListOne.couponList&& couponListOne.couponList.length>0">
+                  {{couponListOne.couponList[0].couponName}} 
+                </span>
               </template>
             </van-cell>
             <van-cell>
@@ -284,6 +285,7 @@ export default class ProductDetail extends Vue {
   likeList = [];
   newList = [];
   couponList = [];
+  couponListOne = [];
   tabindex = 0;
   isCollection = false;
 
@@ -645,6 +647,9 @@ export default class ProductDetail extends Vue {
         this.likeList = res.data.data.likeList;
         this.newList = res.data.data.newList;
 
+        this.couponListOne = res.data.data;
+        console.log('商品信息',this.couponListOne);
+        console.log(this.goodsId);
         this.couponList = res.data.data.couponList;
 
         this.detatil.skuKey.forEach((keyItem, keyIndex) => {
@@ -935,6 +940,9 @@ export default class ProductDetail extends Vue {
   white-space: nowrap;
   max-width: 100px;
 }
-
+ .full_bg{
+   background: url(../../assets/image/满减背景.png) no-repeat;padding: 0 18px;background-size: 100% 100%;height: 24px;
+   line-height: 24px;color: #ffc630;margin-right:5px;font-size: 10px;
+ }
 
 </style>

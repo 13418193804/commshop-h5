@@ -100,7 +100,7 @@
                   <div v-for="(goods,goodsIndex) in items.items" @click="goProductDetail(goods.goodsId)" :key="goodsIndex" class="goodsItem">
                     <div style="  width:-webkit-fill-available;  ">
                       <div class="flex flex-pack-center flex-align-center" style="border: 1px #e5e5e5 solid;box-sizing: border-box;overflow:hidden;position:relative;margin:5px auto;" :style="handlePX('height', 410)+handlePX('width', 345)">
-                        <img src="../../assets/image/热.png" style="width:-webkit-fill-available;position: absolute;top: 0;left:0;z-index:50" :style="handlePX('width', 43)+handlePX('height', 49)"/>
+                        <img src="../../assets/image/热.png" v-if="goods.hotStatus" style="width:-webkit-fill-available;position: absolute;top: 0;left:0;z-index:50" :style="handlePX('width', 43)+handlePX('height', 49)"/>
                         <img v-lazy="goods.goodsImg.split(',')[0]" style="width:-webkit-fill-available;position: absolute;top: 0;"/>
                         <div class="textLabel" style="position: absolute;bottom: 0;width: 100%;background-color:rgba(207,207,207,0.3);text-align:center;color:#A3A3A3" :style="handlePX('height', 70)+handlePX('line-height', 70)+handlePX('font-size', 28)">{{goods.jingle}}</div>
                       </div>
