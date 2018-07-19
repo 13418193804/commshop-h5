@@ -165,106 +165,110 @@ export default class Cart extends Vue {
     );
   }
   deleteCart(index, collect) {
-      Dialog.confirm({
-      title: "提示",
-      message: "你确定将这些商品从购物车中移除吗?"
+    Dialog.confirm({
+        title: "提示",
+        message: "你确定将这些商品从购物车中移除吗?"
     })
       .then(() => {
-      
- Vue.prototype.$reqFormPost(
-      "/shop/cart/delete",
-      {
-        userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
-          .userId,
-        token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
-          .token,
-        cartIds: this.cartList[index].id
-      },
-      res => {
-        if (res == null) {
-          console.log("网络请求错误！");
-          return;
-        }
-        if (res.data.status != 200) {
-          console.log(
-            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
-          );
-          Toast(res.data.message);
-          return;
-        }
-        if (!collect) {
-          Toast("已删除");
-        }
-        this.getCartList();
-      }
-    );
+        Vue.prototype.$reqFormPost(
+              "/shop/cart/delete",
+              {
+                userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+                  .userId,
+                token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+                  .token,
+                cartIds: this.cartList[index].id
+              },
+              res => {
+                if (res == null) {
+                  console.log("网络请求错误！");
+                  return;
+                }
+                if (res.data.status != 200) {
+                  console.log(
+                    "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+                  );
+                  Toast(res.data.message);
+                  return;
+                }
+                if (!collect) {
+                  Toast("已删除");
+                }
+                this.getCartList();
+              }
+            );
 
      })
       .catch(() => {
         // on cancel
       });
-
-
-
-   
   }
+  //删除购物车商品
   deleteshopCart() {
     if (this.result.length <= 0) {
       Toast("您还没选择商品");
       return;
     }
-    Vue.prototype.$reqFormPost(
-      "/shop/cart/delete",
-      {
-        userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
-          .userId,
-        token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
-          .token,
-        cartIds: this.result.join(",")
-      },
-      res => {
-        if (res == null) {
-          console.log("网络请求错误！");
-          return;
-        }
-        if (res.data.status != 200) {
-          console.log(
-            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
-          );
-          Toast(res.data.message);
-          return;
-        }
-        Toast("已删除");
-        this.getCartList();
+    Dialog.confirm({
+        title: "提示",
+        message: "你确定将这些商品从购物车中移除吗?"
+    })
+     .then(() => {
+        Vue.prototype.$reqFormPost(
+          "/shop/cart/delete",
+          {
+            userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+              .userId,
+            token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+              .token,
+            cartIds: this.result.join(",")
+          },
+          res => {
+            if (res == null) {
+              console.log("网络请求错误！");
+              return;
+            }
+            if (res.data.status != 200) {
+              console.log(
+                "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+              );
+              Toast(res.data.message);
+              return;
+            }
+            Toast("已删除");
+            this.getCartList();
+          }
+        );
+        }).catch(() => {
+            // on cancel
+          });
       }
-    );
-  }
-  collect(index) {
-    Vue.prototype.$reqFormPost(
-      "/fav/add",
-      {
-        userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
-          .userId,
-        token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
-          .token,
-        goodsId: this.cartList[index].goodsId
-      },
-      res => {
-        if (res == null) {
-          console.log("网络请求错误！");
-          return;
-        }
-        if (res.data.status != 200) {
-          console.log(
-            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
-          );
-          Toast(res.data.message);
-          return;
-        }
-        this.deleteCart(index, true);
-        Toast("已移至收藏夹");
-      }
-    );
+      collect(index) {
+        Vue.prototype.$reqFormPost(
+          "/fav/add",
+          {
+            userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+              .userId,
+            token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+              .token,
+            goodsId: this.cartList[index].goodsId
+          },
+          res => {
+            if (res == null) {
+              console.log("网络请求错误！");
+              return;
+            }
+            if (res.data.status != 200) {
+              console.log(
+                "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+              );
+              Toast(res.data.message);
+              return;
+            }
+            this.deleteCart(index, true);
+            Toast("已移至收藏夹");
+          }
+        );
   }
 
   getCartList() {

@@ -11,11 +11,10 @@
           <div :style="handlePX('font-size', 30)" style="color:#7E7E7E;">空空如也~~</div>
         </div> -->
 
-     <ul
-  v-infinite-scroll="loadMore"
-  :infinite-scroll-disabled="loading"
-  infinite-scroll-distance="20" >
-
+     <ul v-if="couponList.length>0"
+          v-infinite-scroll="loadMore"
+          :infinite-scroll-disabled="loading"
+          infinite-scroll-distance="20" >
         <li >
 
         <!-- 有卷列表 -->
@@ -35,7 +34,6 @@
             </div>
             <div class="coupon_car_bottom" :style="handlePX('line-height', 52)+handlePX('font-size', 20)+handlePX('padding-left', 40)">全场通用；特价商品或其他优惠活动商品不可叠加使用</div>
           </div>
-
           <!-- 已使用列表 -->      
           <div class="coupon_used" v-if="item.status == 'USED' && active == 1 &&item.coupon" :style="handlePX('width', 702)+handlePX('height', 248)+handlePX('margin-top', 20)">
             <div class="coupon_cardbox" :style="handlePX('padding-top', 30)">
@@ -51,9 +49,6 @@
             <div class="coupon_car_bottom" :style="handlePX('line-height', 52)+handlePX('font-size', 20)+handlePX('padding-left', 40)">全场通用；特价商品或其他优惠活动商品不可叠加使用</div>
           </div>
 
-
-
-
           <!-- 已过期列表 -->      
           <div class="coupon_overdue" v-if="item.status == 'OVERDUE' && active == 2 &&item.coupon" :style="handlePX('width', 702)+handlePX('height', 248)+handlePX('margin-top', 20)">
             <div class="coupon_cardbox" :style="handlePX('padding-top', 30)">
@@ -67,8 +62,6 @@
             </div>
             <div class="coupon_car_bottom" :style="handlePX('line-height', 52)+handlePX('font-size', 20)+handlePX('padding-left', 40)">全场通用；特价商品或其他优惠活动商品不可叠加使用</div>
           </div>
-
-
         </div>
 
 
@@ -84,21 +77,20 @@
         </div>
 
 
-     </li>
-        </ul>
-
+        </li>
+      </ul>
+      <div style="font-size:14px;padding:15px;text-align: center;" v-else>
+          <div v-if="!loading">加载中...</div>
+          <img src="../../assets/WechatIMG683.png" />
+          <p style="font-size:14px;color:#a3a3a3;">空空如也～</p>
+      </div>
 
       </van-tab>
     </van-tabs>
 
 
    
-<div class="flex flex-pack-center flex-align-center" style="font-size:14px;padding:15px;">
 
-    <div v-if="!loading">加载中...</div>
-    <div v-else>-</div>
-  
-</div>
   </div>
 </template>
 
