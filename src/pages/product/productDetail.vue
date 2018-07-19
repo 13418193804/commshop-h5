@@ -6,6 +6,15 @@
     <div v-if="$route.query.availWidth && $route.query.availHeight"  class="dialog"></div>
     
     <comhead ref="comhead" isLeftIcon="icon-zuo"   leftIconName="angle-left" @leftClick="false"   :contextIndex="true" isRightIcon="true"  ></comhead>
+     <!-- <ul>
+    <li @click="scrollTo('a')">section 1</li>
+    <li @click="scrollTo('b')">section 2</li>
+    <li @click="scrollTo('c')">section 3</li>
+    <li @click="scrollTo('d')">section 4</li>
+</ul>
+
+     <div style="margin-top:1000px;" v-scrollWatch="{name:'a',offset:0,callback:spyDomChange}">111</div>
+      -->
         <van-swipe :autoplay="3000"  :style="'height:'+$store.getters[MutationTreeType.SYSTEM].availWidth+'px'">
           <van-swipe-item v-for="(image, index) in detatil['goodsImg'].split(',')"  :key="index" class="flex">
             <img v-lazy="image" style="width:100%;" />
@@ -123,7 +132,7 @@
           </van-tabs>
         </div>
         <div class="xq_video">
-          <video id="video" autoplay="autoplay" style="width:100%;height:300px; background-color: #000;"controls="controls" :src="detatil.videoUrl">
+          <video id="video" autoplay="autoplay" style="width:100%;height:300px; background-color: #000;" controls="controls" :src="detatil.videoUrl">
               <source src="https://rtmp.myappcc.com/factoryintroduction0510.m4" type="video/mp4" />
             Your browser does not support the video tag.
             </video>
@@ -241,7 +250,7 @@ import mixin from "../../config/mixin";
 import comhead from "../../components/Comhead.vue";
 import { Toast } from "vant";
 import { Action } from "vuex-class";
-import vueScrollwatch from "vue-scrollwatch"
+import scrollwatch from "vue-scrollwatch"
 
 import { Cell, CellGroup, ImagePreview } from "vant";
 
@@ -258,6 +267,17 @@ import { Cell, CellGroup, ImagePreview } from "vant";
 export default class ProductDetail extends Vue {
   @Action("setPrepareId") setPrepareId;
   @Action("setlabelActive") setlabelActive;
+
+  //  spyDomChange(node) {
+  //           if (this.activeMenu != node.name)
+  //               this.activeMenu = node.name
+  //       }
+  //       scrollTo(name){
+  //           scrollwatch.scrollTo(name)
+  //       }
+
+
+
 
   tablist = ["大家还看了", "新品推荐"];
   tabgoodslist = [];
@@ -678,7 +698,6 @@ export default class ProductDetail extends Vue {
   }
   mounted() {
 
- vueScrollwatch.setContainer("#scrollDom")
  
     if (this.$route.query.availWidth && this.$route.query.availHeight) {
       this.setlabelActive({
