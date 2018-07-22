@@ -232,7 +232,6 @@ export default class orderList extends Vue {
     });
   }
 doDeleteOrder(orderId){
-
  Dialog.confirm({
       title: "提示",
       message: "删除订单?"
