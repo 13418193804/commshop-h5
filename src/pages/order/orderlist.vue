@@ -34,7 +34,7 @@
                 <span v-if="item.detailList[0].refundStatus == 'WAIT_RECVGOODS'" style="color:#ffc630;">退货中</span> -->
                 <span v-if="item.detailList[0].refundStatus == 'FAIL_REFUND'" style="color:red;">已拒绝</span>
                 </span>
-                     <div style="padding:0 15px;position: relative;"  @click.stop="doDeleteOrder(item.orderId)"  v-if=" active == '0' && item.orderStatus === 'ORDER_FINISH'&&(item.detailList[0].refundStatus == 'WITHOUT_REFUND' ||item.detailList[0].refundStatus == 'SUCCEED_REFUND') ">
+                     <div style="padding:0 15px;position: relative;"  @click.stop="doDeleteOrder(item.orderId)"  v-if=" active == '0' && ( item.orderStatus === 'ORDER_FINISH' || item.orderStatus =='ORDER_CANCEL_PAY')&&(item.detailList[0].refundStatus == 'WITHOUT_REFUND' ||item.detailList[0].refundStatus == 'SUCCEED_REFUND') ">
                        <div class="deleteBorder"> </div>
                 <i class="iconfont icon-iconfontshanchu3" style="" ></i>
               </div>
