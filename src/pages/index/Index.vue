@@ -12,7 +12,6 @@
   </div>
 </div>
 
-
 <div style=" position: relative;">
   <div style="background-color:rgba(0, 0, 0, 0.498039);    z-index: 99999;position: fixed;width: 100%;height: 100vh;top:0;" v-show="isShow" >
   <div class="AllClassification" >
@@ -28,6 +27,7 @@
         </div>
   </div>
 </div>
+
   <!-- swipeable -->
 <van-tabs :active="active" @click="changeTab" class="index_tabs flex-1" >
 <!-- :style="$route.query.active?'margin-top:-45px':''" -->
