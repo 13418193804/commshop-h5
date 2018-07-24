@@ -103,8 +103,8 @@
      <div class="settingBody" v-if="detail.orderStatus === 'ORDER_WAIT_RECVGOODS'">
         <div  v-if="detail.detailList[0].refundStatus == 'WITHOUT_REFUND'  || detail.detailList[0].refundStatus == 'FAIL_REFUND' ">
       <van-button size="small" style="margin-right:10px;" @click.stop="getShip()">查看物流</van-button>
-      <van-button size="small" style="margin-right:10px;" @click.stop="doRefund(iem)">退货/退款</van-button>
-      <van-button size="small" style="margin-right:10px;"  :style="formatButtonColor()" @click.stop="recvgoods()">确认收货</van-button>
+      <van-button size="small" style="margin-right:10px;" @click.stop="doRefund()">退货/退款</van-button>
+      <van-button size="small" style="margin-right:10px;"  :style="formatButtonColor()" @click.stop="recvgoods(detail.orderId)">确认收货</van-button>
         </div>
         <div v-if="detail.detailList[0].refundStatus == 'APPLY_REFUND'&& detail.detailList[0].refundStatus !== 'FAIL_REFUND'">
       <van-button v-if="detail.detailList[0].refundStatus == 'APPLY_REFUND' && detail.detailList[0].refundStatus !== 'FAIL_REFUND'" size="small" style="margin-right:10px;" :style="formatButtonColor()" @click="cancelRefund()">取消退款</van-button>
@@ -139,24 +139,14 @@
       <van-button size="small" style="margin-right:10px;" @click.stop="doRefund()">退换/售后</van-button>
         <van-button size="small" style="margin-right:10px;" @click.stop="getShip()" :style="formatButtonColor()">查看物流</van-button>
     </div>
-
         <div v-if="detail.detailList[0].refundStatus == 'APPLY_REFUND' && detail.detailList[0].refundStatus !== 'FAIL_REFUND'">
       <van-button v-if="detail.detailList[0].refundStatus == 'APPLY_REFUND'&& detail.detailList[0].refundStatus !== 'FAIL_REFUND'" size="small" style="margin-right:10px;" :style="formatButtonColor()" @click="cancelRefund()">取消退款</van-button>
           </div>
-          
     </div>
-
-
         </div>
-
-
-
     </div>
-
         <div style="height:10px;background-color:#f7f7f7;"></div>
-
 <div style="padding:10px;    line-height: 24px;color:#999;font-size:13px;">
-    
   <div v-if="detail.orderId">
         订单编号：{{detail.orderId}}
     </div>
@@ -530,7 +520,7 @@ export default class orderdetail extends Vue {
   }
 
   doRefund() {
-    console.log("申请退款");
+
     this.$router.push({
       name: "refund",
       query: {
