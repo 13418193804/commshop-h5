@@ -23,15 +23,15 @@
           <div class="bodyItem flex flex-pack-center" :style="handlePX('margin-bottom',50)" @click="goProductDetail(item.goodsId)">
           <div style="overflow: hidden;">
             <div class="flex flex-pack-center flex-align-center" style="border: 1px #e5e5e5 solid;box-sizing: border-box;overflow:hidden;position:relative;margin:5px auto;" :style="handlePX('height', 410)+handlePX('width', 345)">
-              <img src="../../assets/image/热.png" style="width:-webkit-fill-available;position: absolute;top: 0;left:0;" :style="handlePX('width', 43)+handlePX('height', 49)"/>
+              <img src="../../assets/image/热.png" v-if="item.hotStatus" style="width:-webkit-fill-available;position: absolute;top: 0;left:0;" :style="handlePX('width', 43)+handlePX('height', 49)"/>
               <img v-lazy="item.goodsImg.split(',')[0]" style="width:-webkit-fill-available;position: absolute;top: 0;z-index:-1;"/>
               <div class="textLabel" style="position: absolute;bottom: 0;width: 100%;background-color:rgba(207,207,207,0.3);text-align:center;color:#A3A3A3" :style="handlePX('height', 70)+handlePX('line-height', 70)+handlePX('font-size', 28)">{{item.jingle}}</div>
             </div>
             <div style="margin:0 5px;">
               
             <div>
-              <img src="../../assets/image/满减.png" :style="handlePX('width',52)+handlePX('height',25)"/>
-              <img src="../../assets/image/特价.png" :style="handlePX('width',52)+handlePX('height',25)"/>
+              <img src="../../assets/image/满减.png" v-if="item.bargainStatus" :style="handlePX('width',52)+handlePX('height',25)"/>
+              <img src="../../assets/image/特价.png" v-if="item.isBargain" :style="handlePX('width',52)+handlePX('height',25)"/>
             </div>
            
             <div class="textLabel" :style="handlePX('font-size',28)" style="color:#000000;">{{item.goodsName}}</div>

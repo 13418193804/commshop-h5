@@ -27,12 +27,7 @@
         <div class="default" @click="isdef()">
           <span :style="isDefault==1?'background-color:#FF0506;border:1px solid #FF0506;':''"></span>设为默认</div>
 
-          <div class="save" @click="onSave">保存</div>
-
-          <!-- <div>
-            <mt-picker :slots="myAddressSlots" @change="onMyAddressChange"></mt-picker>
-            <p>地址3级联动：{{myAddressProvince}} {{myAddressCity}} {{myAddresscounty}}</p>
-          </div> -->
+          <div class="save" @click="onSave()">保存</div>
     </div>  
 <!-- <van-address-edit
   :area-list="areaList" 
@@ -54,23 +49,16 @@ import Component from "vue-class-component";
 import mixin from "../../config/mixin";
 import { Action } from "vuex-class";
 import { Toast, AddressList } from "vant";
-import { Picker } from 'mint-ui';
-// import myaddress from 'address3.js';
-Vue.component(Picker.name, Picker);
-
 // import { recommendList } from '../../service/getData';
 import comhead from "../../components/Comhead.vue";
 import areaList from "./addressUtils";
 
 @Component({
   components: {
-    comhead,
-    'mt-picker': Picker
+    comhead
   },
   mixins: [mixin]
 })
-
-
 export default class Address  extends Vue  {
   get addressModel() {
     return this.$route.query.addressModel;

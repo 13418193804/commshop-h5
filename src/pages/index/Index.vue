@@ -106,7 +106,7 @@
                       </div>
                       <div class="flex flex-pack-center flex-v" style="margin:5px auto;width:-webkit-fill-available;" :style="handlePX('width', 345)">
                         <div>
-                          <img src="../../assets/image/满减.png" v-if="goods.couponList" :style="handlePX('width',52)+handlePX('height',25)"/>
+                          <img src="../../assets/image/满减.png" v-if="goods.bargainStatus" :style="handlePX('width',52)+handlePX('height',25)"/>
                           <img src="../../assets/image/特价.png" v-if="goods.isBargain" :style="handlePX('width',52)+handlePX('height',25)"/>
                         </div>
                         <div class="textLabel" :style="handlePX('font-size',28)+handlePX('line-height',40)">{{goods.goodsName}}</div>

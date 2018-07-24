@@ -25,7 +25,7 @@
 
     <div v-if="!loading">加载中...</div>
     <div v-else>
-      <p style="padding-top:120px;color: #818181;" >暂无成员</p>
+      <p style="padding-top:120px;color: #818181;" v-if="memberList.length==0" >暂无成员</p>
     </div>
   
 </div>

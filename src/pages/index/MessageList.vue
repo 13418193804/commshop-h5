@@ -6,7 +6,14 @@
   v-infinite-scroll="loadMore"
   :infinite-scroll-disabled="loading"
   infinite-scroll-distance="20" >
-        <li v-for="(item,index) in messagelist" :key="index">
+        <li v-for="(item,index) in messagelist" :key="index" v-if="item.type=='ORDER_MSG'"  @click="goOrderDetail(item)">
+          <div class="flex flex-pack-justify" style="border-bottom:1px solid #f4f4f4;background-color: #fff;" :style="handlePX('padding',20)">
+            <div style="font-size:12px;color:#a9a9a9;">{{item.content}}</div>
+            <div style="font-size:12px;color:#a9a9a9;text-align: right;vertical-align: middle;" :style="handlePX('width',300)">{{item.updateTime}}</div> 
+          </div>
+        </li>
+        <!-- 积分消息 -->
+        <li v-for="(item,index) in messagelist" :key="index" v-if="item.type=='AWARD_MSG'"  @click="goReward()">
           <div class="flex flex-pack-justify" style="border-bottom:1px solid #f4f4f4;background-color: #fff;" :style="handlePX('padding',20)">
             <div style="font-size:12px;color:#a9a9a9;">{{item.content}}</div>
             <div style="font-size:12px;color:#a9a9a9;text-align: right;vertical-align: middle;" :style="handlePX('width',300)">{{item.updateTime}}</div> 
@@ -39,6 +46,7 @@ import comhead from "../../components/Comhead.vue";
   mixins: [mixin]
 })
 export default class shopIndex extends Vue {
+  orderId="";
   loading=false
   pageSize = 20;
   messagelist=[];
@@ -53,6 +61,23 @@ export default class shopIndex extends Vue {
         self.loading = false;
       }
     }, 1000);
+  }
+  // 消息订单详情
+   goOrderDetail(item) {
+   console.log('查看详情')
+    this.$router.push({
+      name: "orderdetail",
+      query: {
+        orderId: item.actionValue
+      }
+    });
+  }
+  //消息积分详情
+    goReward(){
+    console.log('积分详情')
+    this.$router.push({
+      name:"my_reward"
+    })
   }
   getList() {
  Vue.prototype.$reqFormPost("/message/list", {
@@ -75,7 +100,7 @@ export default class shopIndex extends Vue {
         Toast(res.data.message);
         return;
       }
-    console.log(res)
+    console.log('消息',res.data.data.messageList)
     this.messagelist = res.data.data.messageList;
        if (res.data.data.messageList.length == 20) {
           this.loading = false;

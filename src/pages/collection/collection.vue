@@ -17,7 +17,7 @@
                 </div>
                 <div style="padding-left:10px;" class="textLabel flex-1" :style="handlePX('line-height', 48)">
                   <div class="flex flex-align-center" style="max-width:calc;">
-                    <img src="../../assets/image/新品特价.png" :style="handlePX('width',92)+handlePX('height',30)" style="vertical-align: middle;"/>
+                    <img src="../../assets/image/新品特价.png" v-if="item.isBargain" :style="handlePX('width',92)+handlePX('height',30)" style="vertical-align: middle;"/>
                     <div class="textLabel" style="color:#000000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" :style="handlePX('font-size',28)+handlePX('width',320)">{{item.goodsName}}</div>
                   </div>
                   <div class="textLabel"  style="color:#A3A3A3;" :style="handlePX('font-size',28)+handlePX('line-height',44)+handlePX('width',!isShow?'460':'370')">{{item.jingle}}</div>
