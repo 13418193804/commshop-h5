@@ -2,16 +2,24 @@
   <div class="tab-contents">
     <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="我的订单" isRightIcon="true"  ></comhead>
      
-        <van-tabs :active="active" :sticky="true" @click="changePage">
+        <van-tabs :active="active" :sticky="true" @click="changePage" > 
            <ul
   v-infinite-scroll="loadMore"
   :infinite-scroll-disabled="loading"
-  infinite-scroll-distance="20" >
-  <van-tab v-for="(n,sindex) in orderTitleList"  :title="n.name" style="" :key="sindex">
+  infinite-scroll-distance="20"
+   >
+  <van-tab v-for="(n,sindex) in orderTitleList"  :title="n.name" style="" :key="sindex" 
+ >
 <!-- border-top:1px #e5e5e5 solid; -->
+<<<<<<< HEAD
       <div  v-if="active == sindex">
   <div v-if="orderList[returnKey()].orderList.length>0">
         <li  v-for="(item,index) in orderList[returnKey()].orderList" @click="goDetail(item)" :key="index">
+=======
+      <div  v-if="active == sindex&&orderList[returnKey()].orderList.length>0">
+  
+        <li v-for="(item,index) in orderList[returnKey()].orderList" @click="goDetail(item)" :key="index">
+>>>>>>> 601c8660a0b7ae471e9dbc989a0e90c89c4634ce
 
   <div>
           <div class="orderTitle textLabel">  
@@ -152,12 +160,19 @@
 
 
   </van-tab>
- <div class="flex flex-align-center flex-pack-center"  style="font-size:14px;padding:15px;">
-    <div v-if="orderList[returnKey()].loading">加载中...</div>
-</div>
+
+
         </ul>
 </van-tabs>
 
+ <div class=""  style="font-size:14px;padding:15px;" v-if="orderList[returnKey()].orderList.length==0">
+          <div style="margin-top:50px;text-align:center;">
+            <img src="../../assets/none.png" />
+            <p>暂时还没有相关的订单哦!</p>
+          </div>
+      </div>
+          <div v-if="orderList[returnKey()].orderList.loading">加载中...</div>
+      
   </div>
 </template>
 
