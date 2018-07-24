@@ -599,6 +599,7 @@ export default class ProductDetail extends Vue {
         }
         Toast("加入成功");
         this.keepModel = false;
+        this.getCartList()
         console.log("加入购物车", res.data);
       }
     );
@@ -702,6 +703,60 @@ export default class ProductDetail extends Vue {
   }
   created(){
   }
+
+
+    getCartList() {
+    Vue.prototype.$reqFormPost(
+      "/shop/cart/query",
+      {
+        userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .userId,
+        token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .token
+      },
+      res => {
+        if (res == null) {
+          console.log("网络请求错误！");
+          return;
+        }
+        if (res.data.status != 200) {
+          console.log(
+            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+          );
+          Toast(res.data.message);
+          return;
+        }
+
+        var div = document.getElementById("cartLen");
+        if (!document.getElementById("cartLen")) {
+          div = document.createElement("div");
+          div.setAttribute("id", "cartLen");
+          div.className = "messageFexid";
+          div.style.right = "18px";
+          div.style.top = "11px";
+          div.style.zIndex = "200";
+          var diva = document.getElementsByClassName(
+            "van-goods-action__mini-btn van-hairline"
+          )[1];
+          diva.appendChild(div);
+        }
+        
+        if (res.data.data.carts.length > 0) {
+          div.innerHTML = this.getNumber(res.data.data.carts);
+        } else {
+          div.style.display = "none";
+        }
+        
+      }
+    );
+  }
+   getNumber(cartList = []) {
+    let num = 0;
+    cartList.forEach((item, index) => {
+      num += item.num;
+    });
+    return num.toString();
+  }
   mounted() {
 
  
@@ -727,6 +782,9 @@ export default class ProductDetail extends Vue {
     this.goodsId = this.$route.query.goodsId;
     this.getProductDetail();
     this.collection_query();
+      setTimeout(()=>{
+    this.getCartList()
+        },500)
   }
 }
 </script>
