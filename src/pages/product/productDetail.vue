@@ -6,15 +6,16 @@
     <div v-if="$route.query.availWidth && $route.query.availHeight"  class="dialog"></div>
     
     <comhead ref="comhead" isLeftIcon="icon-zuo"   leftIconName="angle-left" @leftClick="false"   :contextIndex="true" isRightIcon="true"  ></comhead>
+    
+    
+    
      <!-- <ul>
-    <li @click="scrollTo('a')">section 1</li>
-    <li @click="scrollTo('b')">section 2</li>
-    <li @click="scrollTo('c')">section 3</li>
-    <li @click="scrollTo('d')">section 4</li>
+    <li  v-scroll-to="'#element'">section 1</li>
+  
 </ul>
 
-     <div style="margin-top:1000px;" v-scrollWatch="{name:'a',offset:0,callback:spyDomChange}">111</div>
-      -->
+     <div style="margin-top:1000px;"  id="element">111</div> -->
+     
         <van-swipe :autoplay="3000"  :style="'height:'+$store.getters[MutationTreeType.SYSTEM].availWidth+'px'">
           <van-swipe-item v-for="(image, index) in detatil['goodsImg'].split(',')"  :key="index" class="flex">
             <img v-lazy="image" style="width:100%;" />
