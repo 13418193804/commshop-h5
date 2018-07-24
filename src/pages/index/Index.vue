@@ -87,7 +87,7 @@
                         </div>
                         <div class="textLabel"  style="color:#A3A3A3;" :style="handlePX('font-size',28)+handlePX('line-height',44)">{{goods.jingle}}</div>
                         <div>
-                          <span style="color:#E05459" :style="handlePX('font-size',34)">￥{{goods.marketPrice}}</span>
+                          <span style="color:#E05459" :style="handlePX('font-size',34)">￥{{goods.marketPrice.toFixed(2)}}</span>
                           <span style="color:#C5C4C4;text-decoration:line-through;" :style="handlePX('font-size',24)">原价:{{goods.labelPrice}}</span>
                         </div>
                         <van-button style="border-radius:4%;background-color:#F4C542;color:#FFFFFF;border:#F4C542;" :style="handlePX('width',200)+handlePX('height',55)+handlePX('line-height',55)" @click.stop="doChangeModel(goods.goodsId)">立即抢购</van-button>
@@ -110,7 +110,7 @@
                           <img src="../../assets/image/特价.png" v-if="goods.isBargain" :style="handlePX('width',52)+handlePX('height',25)"/>
                         </div>
                         <div class="textLabel" :style="handlePX('font-size',28)+handlePX('line-height',40)">{{goods.goodsName}}</div>
-                        <div style="color:#E05459" :style="handlePX('font-size',30)+handlePX('line-height',40)">￥{{goods.marketPrice}}</div>
+                        <div style="color:#E05459" :style="handlePX('font-size',30)+handlePX('line-height',40)">￥{{goods.marketPrice.toFixed(2)}}</div>
                       </div>
                     </div>
                   </div>

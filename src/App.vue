@@ -69,6 +69,9 @@ export default class App extends Vue {
 }
 </style>
 <style>
+*{
+  font-size: 14px;
+}
   p,h5,h6{
     margin: 0;
   }
