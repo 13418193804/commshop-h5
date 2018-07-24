@@ -1,7 +1,7 @@
 <template>
   <div class="tab-contents">
     <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="领券中心" isRightIcon="true"  ></comhead>
-          <ul
+          <ul v-if="couponList.length>0"
   v-infinite-scroll="loadMore"
   :infinite-scroll-disabled="loading"
   infinite-scroll-distance="20" >
@@ -34,7 +34,7 @@
               </div>
               <div class="coupon_car_right" :style="handlePX('padding-right', 42)+handlePX('padding-top', 30)">
                 <van-button size="mini" :style="handlePX('width', 135)+handlePX('height', 40)" style="border:0;background-color:rgba(255,255,255,0.9);color:#fd5f61;">已领取</van-button>
-                <div style="color:rgba(255,255,255,0.8);" :style="handlePX('font-size', 26)">{{item.endDate}}</div>
+                 <div style="color:rgba(255,255,255,0.8);" :style="handlePX('font-size', 26)">{{item.createTime.split(' ')[0]}}-{{item.endDate.split(' ')[0]}}</div>
               </div>
             </div>
             <div class="coupon_car_bottom" :style="handlePX('line-height', 52)+handlePX('font-size', 20)+handlePX('padding-left', 40)">全场通用；特价商品或其他优惠活动商品不可叠加使用</div>
@@ -62,10 +62,13 @@
         </div>
     </li>
  </ul>
-<div class="flex flex-pack-center flex-align-center" style="font-size:14px;padding:15px;">
+<div class="flex flex-pack-center flex-align-center" style="font-size:14px;padding:15px;" v-else>
 
     <div v-if="!loading">加载中...</div>
-    <div v-else>-</div>
+    <div  style="font-size:14px;padding:15px;text-align: center;">
+      <img src="../../assets/image/空空如也.png" alt="">
+      <p>空空如也～</p>
+    </div>
   
 </div>
 
@@ -138,6 +141,7 @@ this.$router.push({name:'login'})
       }
   console.log(res)
     this.couponList = res.data.data.couponList;
+    console.log("领卷中心",res.data.data.couponList);
        if (res.data.data.couponList.length == 20) {
           this.loading = false;
         }

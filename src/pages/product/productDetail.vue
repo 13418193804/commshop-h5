@@ -7,7 +7,13 @@
     
     <comhead ref="comhead" isLeftIcon="icon-zuo"   leftIconName="angle-left" @leftClick="false"   :contextIndex="true" isRightIcon="true"  ></comhead>
     
-    
+    <div style="    height: 38px;
+    position: absolute;
+    z-index: 999;
+    top: 11px;
+    left: 51%;
+    width: 58px;
+    " @click="returnTop"></div>
     
      <!-- <ul>
     <li  v-scroll-to="'#element'">section 1</li>
@@ -757,8 +763,10 @@ export default class ProductDetail extends Vue {
     });
     return num.toString();
   }
+  returnTop(){
+    document.querySelector(".xq_video").scrollIntoView(true);
+  }
   mounted() {
-
  
     if (this.$route.query.availWidth && this.$route.query.availHeight) {
       this.setlabelActive({
@@ -786,6 +794,7 @@ export default class ProductDetail extends Vue {
     this.getCartList()
         },9000)
   }
+
 }
 </script>
 
