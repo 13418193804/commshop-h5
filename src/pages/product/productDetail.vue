@@ -784,7 +784,7 @@ export default class ProductDetail extends Vue {
     this.collection_query();
       setTimeout(()=>{
     this.getCartList()
-        },500)
+        },9000)
   }
 }
 </script>

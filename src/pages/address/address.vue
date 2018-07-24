@@ -1,7 +1,7 @@
 <template>
   <div class="tab-contents" style="background-color:#f8f8f8;height:-webkit-fill-available;">
     <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  :title="addressModel=='add'?'新增收货地址':'编辑收货地址'" isRightIcon="true"  ></comhead>
-    <div class="addressBox">
+    <!-- <div class="addressBox">
         <ul>
           <li class="flex">
               <div style="width:77px;">收货人:</div>
@@ -28,8 +28,8 @@
           <span :style="isDefault==1?'background-color:#FF0506;border:1px solid #FF0506;':''"></span>设为默认</div>
 
           <div class="save" @click="onSave()">保存</div>
-    </div>  
-<!-- <van-address-edit
+    </div>   -->
+<van-address-edit
   :area-list="areaList" 
   :show-delete="addressModel=='edit'"
   :show-set-default="!contents.is_default"
@@ -38,7 +38,7 @@
   @save="onSave"
   @delete="onDelete"
   @change-area="addlist"
-/> -->
+/>
 
   </div>
 </template>
