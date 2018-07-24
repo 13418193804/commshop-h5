@@ -80,9 +80,9 @@
         </li>
       </ul>
       <div style="font-size:14px;padding:15px;text-align: center;" v-else>
-          <div v-if="!loading">加载中...</div>
-          <img src="../../assets/WechatIMG683.png" />
-          <p style="font-size:14px;color:#a3a3a3;">空空如也～</p>
+          <div v-if="!loading && indexs == active" >加载中...</div>
+          <img src="../../assets/WechatIMG683.png" v-if="indexs == active"/>
+          <p style="font-size:14px;color:#a3a3a3;" v-if="indexs == active">空空如也～</p>
       </div>
 
       </van-tab>
