@@ -117,8 +117,13 @@ get editItem(){
   }
 
   toolAddress(address) {
+      if(this.contents.address_detail.length<5){
+        Toast("请填写详细地址并不少于五个字！");
+        return
+    }
     this.isSave = true;
     let data = [];
+  
     if (this.addressModel === "add") {
       data = [
         "/address/add",
@@ -138,7 +143,7 @@ get editItem(){
 
         res => {
           this.isSave = false;
-
+          
           if (res == null) {
             console.log("网络请求错误！");
             return;

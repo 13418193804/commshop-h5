@@ -65,7 +65,7 @@ export default class feedback extends Vue {
           Toast(res.data.message);
           return;
         }
-        Toast('已提交');        
+        Toast('反馈意见成功，谢谢您');        
         console.log('res.data',res.data)
         this.$router.go(-1);
       }

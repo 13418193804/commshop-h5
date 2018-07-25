@@ -5,7 +5,7 @@
         <div :style="handlePX('height', 300)" class="flex flex-pack-center flex-align-center flex-1 flex-v">
             <div>
                 <img src="../../assets/image/金币.png" :style="handlePX('width', 55)+handlePX('height', 55)" style="vertical-align: middle;"/>
-                <span>积分</span>
+                <span>积分余额</span>
             </div>
             <div :style="handlePX('margin-top', 20)" style="color:#ffc600;">￥{{award.awardBalance}}</div>
             <div style="color:#ababab; visibility: hidden;" @click="gogetreward()" >提现>></div>
@@ -14,7 +14,7 @@
         <div :style="handlePX('height', 300)" class="flex flex-pack-center flex-align-center flex-1 flex-v">
             <div>
                 <img src="../../assets/image/金币.png" :style="handlePX('width', 55)+handlePX('height', 55)" style="vertical-align: middle;"/>
-                <span >累计积分</span>
+                <span >累计获取积分</span>
             </div>
             <div :style="handlePX('margin-top', 20)" style="color:#ffc600;">￥{{award.awardAmount}}</div>
             <div style="color:#ababab;visibility: hidden;" @click="gorewarddetail()" >明细>></div>
