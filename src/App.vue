@@ -221,4 +221,7 @@ color:#f44!important;
 .van-tabs__wrap {
   overflow-x: auto;
 }
+.van-tabs__line{
+  background-color:#ffc630;
+}
 </style>
