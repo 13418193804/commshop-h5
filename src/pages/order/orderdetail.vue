@@ -1,6 +1,7 @@
 <template>
   <div class="tab-contents" style="height:-webkit-fill-available;">
             <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="订单详情" isRightIcon="true"  ></comhead>
+            <div @click="add()">惦记我</div>
             <div class="flex flex-pack-justify flex-align-center" style="background-color:#f7f7f7;padding: 10px;font-size: 16px;">
                 <div style="font-size:16px">订单状态</div>
                
@@ -269,6 +270,7 @@ export default class orderdetail extends Vue {
   orderId = "";
   detail = {};
 
+
   inputTransNo() {
     console.log("填写单号");
     this.$router.push({
@@ -315,7 +317,7 @@ export default class orderdetail extends Vue {
       }
     );
   }
-  recvgoods(orderId) {
+  recvgoods(orderId,ORDER_WAIT_REVIEW) {
     Dialog.confirm({
       title: "提示",
       message: "确认收货?"
@@ -348,11 +350,17 @@ export default class orderdetail extends Vue {
               return;
             }
             this.$router.push({
-                name: "addcomment",
-                query: {
-                  orderId: orderId
-                }
+                name: "orderlist",
             });
+
+            // add(ORDER_WAIT_REVIEW){
+            Vue.prototype.$confirmLogin({
+              name: "orderlist",
+              query: {
+                orderStatus: "ORDER_WAIT_REVIEW"
+              }
+            });
+            // }
             this.queryDetail();
           }
         );
