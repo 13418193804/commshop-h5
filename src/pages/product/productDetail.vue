@@ -139,13 +139,15 @@
             </van-tab>
           </van-tabs>
         </div>
-        <div class="xq_video" v-if="detatil.videoUrl">
-          <video id="video" autoplay="autoplay" style="width:100%;height:300px; background-color: #000;" controls="controls" :src="detatil.videoUrl">
-              <source type="video/mp4" />
-            Your browser does not support the video tag.
-            </video>
-        </div>
-        <div style="height:10px"></div>
+
+        <div class="shopDetail">
+          <div class="xq_video" v-if="detatil.videoUrl">
+            <video id="video" autoplay="autoplay" style="width:100%;height:300px; background-color: #000;" controls="controls" :src="detatil.videoUrl">
+                <source type="video/mp4" />
+              Your browser does not support the video tag.
+              </video>
+          </div>
+          <div style="height:10px"></div>
 
         <!-- <div style="background-color:#ffffff;margin-top:10px;padding:10px 15px;">
           <div style="display:flex;border-bottom:1px solid #ededed;">
@@ -176,9 +178,9 @@
             <img v-lazy="item" style="width:100%;"/>
           </div>
         </div>
-
+      </div>
         
-<van-goods-action style="z-index:9999;background-color: #ffffff;">
+<van-goods-action style="z-index:2;background-color: #ffffff;">
   <van-goods-action-mini-btn icon="chat"  onclick="showMeiQia()" class="flex flex-pack-center flex-align-center flex-v" style="border-top:1px #e5e5e5 solid;padding:0 10px;font-size:22px"/>
   <van-goods-action-mini-btn icon="cart"  @click="onClickMiniBtn_cart" class="flex flex-pack-center flex-align-center flex-v" style="border-top:1px #e5e5e5 solid;padding:0 10px;font-size:22px;"/>
   <van-goods-action-mini-btn icon="like"  @click="onClickMiniBtn_collection" :class="{collection_color:isCollection}" class="flex flex-pack-center flex-align-center flex-v" style="border-top:1px #e5e5e5 solid;font-size:22px;padding:0 10px;"/>
@@ -225,7 +227,7 @@
     <van-stepper v-model="num" :style="handlePX('margin-top',20)"/>
     </div>
   <div>
-      <van-goods-action class="vangoods" style="z-index:90;background-color: #ffffff;">
+      <van-goods-action class="vangoods" style="z-index:1;background-color: #ffffff;">
         <van-goods-action-mini-btn icon="chat" onclick="showMeiQia()" class="flex flex-pack-center flex-align-center flex-v" style="border-top:1px #e5e5e5 solid;font-size:22px;padding:0 10px;"/>
         <van-goods-action-mini-btn icon="cart"  @click="onClickMiniBtn_cart" class="flex flex-pack-center flex-align-center flex-v" style="border-top:1px #e5e5e5 solid;font-size:22px;padding:0 10px;"/>
         <van-goods-action-mini-btn icon="like" @click="onClickMiniBtn_collection" :class="{collection_color:isCollection}" class="flex flex-pack-center flex-align-center flex-v" style="border-top:1px #e5e5e5 solid;font-size:22px;padding:0 10px;"/>
