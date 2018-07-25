@@ -104,7 +104,7 @@
         <div  v-if="detail.detailList[0].refundStatus == 'WITHOUT_REFUND'  || detail.detailList[0].refundStatus == 'FAIL_REFUND' ">
       <van-button size="small" style="margin-right:10px;" @click.stop="getShip()">查看物流</van-button>
       <van-button size="small" style="margin-right:10px;" @click.stop="doRefund()">退货/退款</van-button>
-      <van-button size="small" style="margin-right:10px;"  :style="formatButtonColor()" @click.stop="recvgoods(detail.orderId)">确认收货</van-button>
+      <van-button size="small" style="margin-right:10px;"  :style="formatButtonColor()" @click.stop="recvgoods(detail.orderId,detail)">确认收货</van-button>
         </div>
         <div v-if="detail.detailList[0].refundStatus == 'APPLY_REFUND'&& detail.detailList[0].refundStatus !== 'FAIL_REFUND'">
       <van-button v-if="detail.detailList[0].refundStatus == 'APPLY_REFUND' && detail.detailList[0].refundStatus !== 'FAIL_REFUND'" size="small" style="margin-right:10px;" :style="formatButtonColor()" @click="cancelRefund()">取消退款</van-button>
@@ -347,7 +347,12 @@ export default class orderdetail extends Vue {
               Toast(res.data.message);
               return;
             }
-
+            this.$router.push({
+                name: "addcomment",
+                query: {
+                  orderId: orderId
+                }
+            });
             this.queryDetail();
           }
         );

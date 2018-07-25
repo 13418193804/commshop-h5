@@ -167,7 +167,7 @@ export default class Cart extends Vue {
   deleteCart(index, collect) {
     Dialog.confirm({
         title: "提示",
-        message: "你确定将这些商品从购物车中移除吗?"
+        message: "您确定要将这些商品从购物车中移除吗?"
     })
       .then(() => {
         Vue.prototype.$reqFormPost(
@@ -211,7 +211,7 @@ export default class Cart extends Vue {
     }
     Dialog.confirm({
         title: "提示",
-        message: "你确定将这些商品从购物车中移除吗?"
+        message: "您确定要将这些商品从购物车中移除吗?"
     })
      .then(() => {
         Vue.prototype.$reqFormPost(

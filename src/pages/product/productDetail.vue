@@ -7,13 +7,13 @@
     
     <comhead ref="comhead" isLeftIcon="icon-zuo"   leftIconName="angle-left" @leftClick="false"   :contextIndex="true" isRightIcon="true"  ></comhead>
     
-    <div style="    height: 38px;
+    <!-- <div style="    height: 38px;
     position: absolute;
     z-index: 999;
     top: 11px;
     left: 51%;
     width: 58px;
-    " @click="returnTop"></div>
+    " @click="returnTop"></div> -->
     
      <!-- <ul>
     <li  v-scroll-to="'#element'">section 1</li>
@@ -23,7 +23,7 @@
      <div style="margin-top:1000px;"  id="element">111</div> -->
      
         <van-swipe :autoplay="3000"  :style="'height:'+$store.getters[MutationTreeType.SYSTEM].availWidth+'px'">
-          <van-swipe-item v-for="(image, index) in detatil['goodsImg'].split(',')"  :key="index" class="flex">
+          <van-swipe-item v-for="(image, index) in detatil['goodsImg'].split(',')"  :key="index" class="flex shopTop">
             <img v-lazy="image" style="width:100%;" />
           </van-swipe-item>
         </van-swipe>
@@ -607,6 +607,27 @@ export default class ProductDetail extends Vue {
         this.keepModel = false;
         this.getCartList()
         console.log("加入购物车", res.data);
+
+        console.log('购物车条数',res.data.data.carts);
+        var div = document.getElementById("cartLen");
+        if (!document.getElementById("cartLen")) {
+          div = document.createElement("div");
+          div.setAttribute("id", "cartLen");
+          div.className = "messageFexid";
+          div.style.right = "18px";
+          div.style.top = "11px";
+          div.style.zIndex = "200";
+          var diva = document.getElementsByClassName(
+            "van-goods-action__mini-btn van-hairline"
+          )[1];
+          diva.appendChild(div);
+        }
+        
+        if (res.data.data.carts.length > 0) {
+          div.innerHTML = this.getNumber(res.data.data.carts);
+        } else {
+          div.style.display = "none";
+        }
       }
     );
   }
@@ -756,7 +777,7 @@ export default class ProductDetail extends Vue {
       }
     );
   }
-   getNumber(cartList = []) {
+  getNumber(cartList = []) {
     let num = 0;
     cartList.forEach((item, index) => {
       num += item.num;
@@ -792,7 +813,7 @@ export default class ProductDetail extends Vue {
     this.collection_query();
       setTimeout(()=>{
     this.getCartList()
-        },9000)
+        },2000)
   }
 
 }

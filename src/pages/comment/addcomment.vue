@@ -8,13 +8,15 @@
         </div>
         <div :style="handlePX('margin-left',30)">
             <div>{{detailList.goodsName}}</div>
-            <div style="color:#8b8b8b;">颜色：</div>
+            <span v-for="items in JSON.parse(detailList.skuKeyValue)">
+                <span style="font-size:12px;color:#888;">{{items.key}}:{{items.value}}</span>
+             </span>
         </div>
     </div>
     <div class="flex" :style="handlePX('padding',30)">
       <span>评分</span>
       <div class="star-box" style="margin:0 10px;">
-        <img v-for="(star,index) in stars" :key="index" :src="star.src" :style="handlePX('width',43)+handlePX('height',43)" @click="getstars(index+1)"/>
+        <img style="margin-right: 3px;" v-for="(star,index) in stars" :key="index" :src="star.src" :style="handlePX('width',43)+handlePX('height',43)" @click="getstars(index+1)"/>
       </div>
     </div>  
 
@@ -179,7 +181,8 @@ export default class addcomment extends Vue {
           Toast(res.data.message);
           return;
         }
-          this.$router.go(-1);        
+          this.$router.go(-1);
+          // this.getorderdetail();        
 
 
         console.log(res.data)

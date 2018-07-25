@@ -89,7 +89,7 @@
        <div  v-if="item.detailList[0].refundStatus == 'WITHOUT_REFUND' || item.detailList[0].refundStatus == 'FAIL_REFUND' ">
       <van-button size="small" style="margin-right:10px;" @click.stop="getShip(item)">查看物流</van-button>
       <van-button size="small" style="margin-right:10px;" @click.stop="doRefund(item)">退货/退款</van-button>
-      <van-button size="small" style="margin-right:10px;"  :style="formatButtonColor()" @click.stop="recvgoods(item.orderId)">确认收货</van-button>
+      <van-button size="small" style="margin-right:10px;"  :style="formatButtonColor()" @click.stop="recvgoods(item.orderId,item)">确认收货</van-button>
         </div>
         <div v-if="item.detailList[0].refundStatus == 'APPLY_REFUND' && item.detailList[0].refundStatus !== 'FAIL_REFUND'">
      <van-button v-if="item.detailList[0].refundStatus !== 'WITHOUT_REFUND' && item.detailList[0].refundStatus !== 'FAIL_REFUND'" size="small" style="margin-right:10px;" :style="formatButtonColor()" @click.stop="goDetail(item)">取消退款</van-button>
@@ -387,6 +387,7 @@ doDeleteOrder(orderId){
       }
     );
   }
+  orderId = "";
   recvgoods(orderId) {
     Dialog.confirm({
       title: "提示",
@@ -418,8 +419,14 @@ doDeleteOrder(orderId){
               );
               Toast(res.data.message);
               return;
+              
             }
-
+            this.$router.push({
+                name: "addcomment",
+                query: {
+                  orderId: orderId
+                }
+            });
             this.getOrderList(this.orderTitleList[this.active].status,true);
           }
         );
