@@ -8,13 +8,9 @@
   :infinite-scroll-disabled="loading"
   infinite-scroll-distance="20"
    >
-<<<<<<< HEAD
-  <van-tab v-for="(n,sindex) in orderTitleList"  :title="n.name" style="" :key="sindex" >
-=======
   <van-tab v-for="(n,sindex) in orderTitleList"  :title="n.name" style="" :key="sindex" 
  >
 
->>>>>>> 3440e120949c1630f7ae9cdf12d2825563f9cee6
 <!-- border-top:1px #e5e5e5 solid; -->
       <div  v-if="active == sindex&&orderList[returnKey()].orderList.length>0">
   
