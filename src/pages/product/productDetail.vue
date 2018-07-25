@@ -139,9 +139,9 @@
             </van-tab>
           </van-tabs>
         </div>
-        <div class="xq_video">
+        <div class="xq_video" v-if="detatil.videoUrl">
           <video id="video" autoplay="autoplay" style="width:100%;height:300px; background-color: #000;" controls="controls" :src="detatil.videoUrl">
-              <source src="https://rtmp.myappcc.com/factoryintroduction0510.m4" type="video/mp4" />
+              <source type="video/mp4" />
             Your browser does not support the video tag.
             </video>
         </div>
@@ -178,12 +178,12 @@
         </div>
 
         
-<van-goods-action style="z-index:90;background-color: #ffffff;">
+<van-goods-action style="z-index:9999;background-color: #ffffff;">
   <van-goods-action-mini-btn icon="chat"  onclick="showMeiQia()" class="flex flex-pack-center flex-align-center flex-v" style="border-top:1px #e5e5e5 solid;padding:0 10px;font-size:22px"/>
   <van-goods-action-mini-btn icon="cart"  @click="onClickMiniBtn_cart" class="flex flex-pack-center flex-align-center flex-v" style="border-top:1px #e5e5e5 solid;padding:0 10px;font-size:22px;"/>
   <van-goods-action-mini-btn icon="like"  @click="onClickMiniBtn_collection" :class="{collection_color:isCollection}" class="flex flex-pack-center flex-align-center flex-v" style="border-top:1px #e5e5e5 solid;font-size:22px;padding:0 10px;"/>
-  <van-goods-action-big-btn text="立即购买" @click="changeModel()" class="flex-1"/>
-  <van-goods-action-big-btn text="加入购物车" @click="changeModel()" primary class="flex-1"/>
+  <van-goods-action-big-btn text="立即购买" @click="changeModel('pay')" class="flex-1"/>
+  <van-goods-action-big-btn text="加入购物车" @click="changeModel('cart')" primary class="flex-1"/>
 </van-goods-action>
 <div :class="keepModel ?'bg_shop1' :'bg_shop_none1'" style='background-color: rgba(0, 0, 0, 0.498039);height: 100%;width: 100%;' @click='changeModel()'>
  <div style="position: relative;width:100%;height:100%;">
@@ -206,11 +206,7 @@
  </div>
  
       </div>
-      <!-- <div style='padding:10px;'>
-<i class="iconfont icon-shanchu3" style="    color: #000;
-    height: 17px;
-    line-height: 17px;"  @click.stop='changeModel()' ></i>
-      </div> -->
+   
     </div>
 
     <div style='font-size:14px;max-height:300px;overflow:auto;'>
@@ -487,8 +483,18 @@ export default class ProductDetail extends Vue {
     );
     // console.log(this.skuItem.skuId);
   }
-  changeModel() {
+  changeModel(type) {
+
+if( this.keepModel&& type){
+if(type == 'pay'){
+  this.addCar()
+}
+if(type == 'cart'){
+this.addCart()
+}
+}else{
     this.keepModel = !this.keepModel;
+}
   }
 
   selectSku(indextop, main) {
@@ -606,28 +612,39 @@ export default class ProductDetail extends Vue {
         Toast("加入成功");
         this.keepModel = false;
         this.getCartList()
-        console.log("加入购物车", res.data);
 
-        console.log('购物车条数',res.data.data.carts);
-        var div = document.getElementById("cartLen");
-        if (!document.getElementById("cartLen")) {
-          div = document.createElement("div");
-          div.setAttribute("id", "cartLen");
-          div.className = "messageFexid";
-          div.style.right = "18px";
-          div.style.top = "11px";
-          div.style.zIndex = "200";
-          var diva = document.getElementsByClassName(
-            "van-goods-action__mini-btn van-hairline"
-          )[1];
-          diva.appendChild(div);
-        }
+
+        // var div = document.getElementById("cartLen");
+        // if (!document.getElementById("cartLen")) {
+        //   div = document.createElement("div");
+        //   div.setAttribute("id", "cartLen");
+        //   div.className = "messageFexid";
+        //   div.style.right = "18px";
+        //   div.style.top = "11px";
+        //   div.style.zIndex = "200";
+
+
+
+
+        //   var diva = document.getElementsByClassName(
+        //     "van-goods-action__mini-btn van-hairline"
+        //   )[1];
+
+        //   if(diva ){
+
+        //   diva.appendChild(div);
+
+        //   }
+
+        // }
+
+
         
-        if (res.data.data.carts.length > 0) {
-          div.innerHTML = this.getNumber(res.data.data.carts);
-        } else {
-          div.style.display = "none";
-        }
+        // if (res.data.data.carts.length > 0) {
+        //   div.innerHTML = this.getNumber(res.data.data.carts);
+        // } else {
+        //   div.style.display = "none";
+        // }
       }
     );
   }
@@ -762,10 +779,9 @@ export default class ProductDetail extends Vue {
           div.style.right = "18px";
           div.style.top = "11px";
           div.style.zIndex = "200";
-          var diva = document.getElementsByClassName(
-            "van-goods-action__mini-btn van-hairline"
-          )[1];
-          diva.appendChild(div);
+
+     this.getDomCenter(div)
+
         }
         
         if (res.data.data.carts.length > 0) {
@@ -777,6 +793,29 @@ export default class ProductDetail extends Vue {
       }
     );
   }
+
+
+getDomCenter(div){
+  let timer = setInterval(()=> {
+  if(document.getElementsByClassName(
+            "van-goods-action__mini-btn van-hairline"
+          ).length>0){
+            let a =  document.getElementsByClassName(
+            "van-goods-action__mini-btn van-hairline"
+          )
+
+         a[1].appendChild(div);
+     
+          //    document.getElementsByClassName(
+          //   "van-goods-action__mini-btn van-hairline"
+          // )[4].appendChild(div);
+        clearInterval(timer);
+          }
+    }, 100);
+}
+
+
+
   getNumber(cartList = []) {
     let num = 0;
     cartList.forEach((item, index) => {
@@ -811,9 +850,7 @@ export default class ProductDetail extends Vue {
     this.goodsId = this.$route.query.goodsId;
     this.getProductDetail();
     this.collection_query();
-      setTimeout(()=>{
     this.getCartList()
-        },2000)
   }
 
 }
