@@ -8,7 +8,13 @@
   :infinite-scroll-disabled="loading"
   infinite-scroll-distance="20"
    >
+<<<<<<< HEAD
   <van-tab v-for="(n,sindex) in orderTitleList"  :title="n.name" style="" :key="sindex" >
+=======
+  <van-tab v-for="(n,sindex) in orderTitleList"  :title="n.name" style="" :key="sindex" 
+ >
+
+>>>>>>> 3440e120949c1630f7ae9cdf12d2825563f9cee6
 <!-- border-top:1px #e5e5e5 solid; -->
       <div  v-if="active == sindex&&orderList[returnKey()].orderList.length>0">
   
@@ -192,6 +198,7 @@ export default class orderList extends Vue {
     orderList_finish: { orderList: [], pageSize: 10, loading: true },
     orderList_refund: { orderList: [], pageSize: 10, loading: true }
   };
+ 
   onLoad() {
     setTimeout(() => {}, 500);
   }
@@ -420,13 +427,8 @@ doDeleteOrder(orderId){
               return;
               
             }
-            this.$router.push({
-                name: "addcomment",
-                query: {
-                  orderId: orderId
-                }
-            });
-            this.getOrderList(this.orderTitleList[this.active].status,true);
+            this.changePage(4);
+            // this.getOrderList(this.orderTitleList[this.active].status,true);
           }
         );
         // on confirm
