@@ -8,8 +8,7 @@
   :infinite-scroll-disabled="loading"
   infinite-scroll-distance="20"
    >
-  <van-tab v-for="(n,sindex) in orderTitleList"  :title="n.name" style="" :key="sindex" 
- >
+  <van-tab v-for="(n,sindex) in orderTitleList"  :title="n.name" style="" :key="sindex" >
 <!-- border-top:1px #e5e5e5 solid; -->
       <div  v-if="active == sindex&&orderList[returnKey()].orderList.length>0">
   
@@ -482,8 +481,8 @@ doDeleteOrder(orderId){
     }
   }
   getOrderList(orderStatus,keep:boolean=false) {
-    let valKey = this.returnKey();
 
+    let valKey = this.returnKey();
     Vue.prototype.$reqFormPost(
       orderStatus != "REFUND" ? "/order/queryorder" : "/refund/order/query",
       {
@@ -537,10 +536,13 @@ doDeleteOrder(orderId){
     });
   }
   changePage(index) {
+   
     this.active = index;
     this.getOrderList(this.orderTitleList[index].status,true);
+
   }
   mounted() {
+
     this.orderTitleList.forEach((item, index) => {
       if (this.$route.query.orderStatus == item.status) {
         this.active = index;
@@ -550,7 +552,9 @@ doDeleteOrder(orderId){
     if (this.$route.query.orderStatus === "REFUND") {
       return;
     }
-    this.getOrderList(this.orderTitleList[this.active].status);
+
+
+    // this.getOrderList(this.orderTitleList[this.active].status);
   }
 }
 </script>
