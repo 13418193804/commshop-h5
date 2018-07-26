@@ -1,7 +1,7 @@
 <template>
   <div class="tab-contents" style="height:-webkit-fill-available;">
             <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="订单详情" isRightIcon="true"  ></comhead>
-            <div @click="add()">惦记我</div>
+ 
             <div class="flex flex-pack-justify flex-align-center" style="background-color:#f7f7f7;padding: 10px;font-size: 16px;">
                 <div style="font-size:16px">订单状态</div>
                
