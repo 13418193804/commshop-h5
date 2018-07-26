@@ -113,7 +113,7 @@ export default class Cart extends Vue {
     var totalMoney = 0;
     for (var i = 0; i < this.cartList.length; i++) {
       if (this.result.indexOf(this.cartList[i].id) !== -1) {
-        totalMoney = totalMoney + this.cartList[i].price * this.cartList[i].num;
+        totalMoney = totalMoney + this.cartList[i].price.toFixed(2) * this.cartList[i].num.toFixed(2);
       }
     }
     totalMoney = totalMoney * 100;
@@ -525,8 +525,30 @@ export default class Cart extends Vue {
   background-color: #ffc630;
   border: 1px solid #ffc630;
 }
+.van-checkbox__icon, .van-checkbox__label{
+  display: inline-block;
+    vertical-align: middle;
+    line-height: 20px;
+    font-size: 8px;
+    width: 20px;
+    height: 20px;
+    /* background: #ccc; */
+    border-radius: 50px;
+    /* color: #fff; */
+    text-align: center;
+    border: 1px solid #ccc;
+    color: #ccc;
+}
+    
+
 .van-checkbox--checked {
-  border-color: #f44;
-  background-color: #f44;
+    border-color: #f44;
+    background-color: #f44;
+    color: #fff;
+    border-radius: 50px;
+    width: 20px;
+    height: 20px;
+    text-align: CENTER;
+    font-size: 8px;
 }
 </style>
