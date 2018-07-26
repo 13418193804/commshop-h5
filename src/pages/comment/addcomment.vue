@@ -183,7 +183,12 @@ export default class addcomment extends Vue {
         }
           this.$router.go(-1);
           // this.getorderdetail();        
-
+        Vue.prototype.$confirmLogin({
+              name: "orderlist",
+              query: {
+                orderStatus: "ORDER_WAIT_REVIEW"
+              }
+            });
 
         console.log(res.data)
         },

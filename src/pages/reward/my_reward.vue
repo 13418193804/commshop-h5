@@ -26,14 +26,13 @@
         <div style="color:#959595;">最新消息</div>
         <ul v-infinite-scroll="loadMore" :infinite-scroll-disabled="loading" infinite-scroll-distance="20" >
           <li v-for="(item, index) in awardList" :key="index" 
-          :style="handlePX('line-height', 88)" style="border-bottom:1px solid #e7e7e7;font-size:12px;">
+           style="border-bottom:1px solid #e7e7e7;font-size:12px;padding:10px 0;line-height: 22px;">
           {{item.member.nickName}}在{{item.createTime}}消费{{item.payTotal}}元，你获得{{item.awardAmount}}积分</li>
         </ul>
         <div class="flex flex-pack-center flex-align-center" style="font-size:14px;padding:15px;">
           <div v-if="loading">加载中...</div>
           <div v-else>暂无记录</div>
-        </div>
-      
+        </div>   
     </div>
 
   </div>
