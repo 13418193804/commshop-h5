@@ -525,19 +525,17 @@ export default class Cart extends Vue {
   background-color: #ffc630;
   border: 1px solid #ffc630;
 }
-.van-checkbox__icon, .van-checkbox__label{
+.van-checkbox__icon{
   display: inline-block;
     vertical-align: middle;
     line-height: 20px;
     font-size: 8px;
     width: 20px;
     height: 20px;
-    /* background: #ccc; */
     border-radius: 50px;
-    /* color: #fff; */
     text-align: center;
     border: 1px solid #ccc;
-    color: #ccc;
+    color: #fff;
 }
     
 

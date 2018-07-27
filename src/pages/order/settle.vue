@@ -53,7 +53,7 @@
     <div>{{freight.toFixed(2)}}</div>
 </div>   -->
 <van-cell-group>
-  <div style="padding:10px 15px;color:#333;border-bottom:10px solid rgb(247, 247, 247)">优惠券 <span>llll</span></div>
+  <div style="padding:10px 15px;color:#333;border-bottom:10px solid rgb(247, 247, 247)">优惠券 <span></span></div>
   <van-cell title="配送方式"  value="快递" />   
   <van-cell title="运费" :value="freight.toFixed(2)" />
   <van-cell title="发票抬头" is-link :value="titlevalue"  @click="goinvoice()"/>
