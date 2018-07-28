@@ -349,17 +349,16 @@ export default class orderdetail extends Vue {
               Toast(res.data.message);
               return;
             }
-            this.$router.push({
-                name: "orderlist",
-            });
+            // this.$router.push({
+            //     name: "orderlist",
+            // });
 
-            // add(ORDER_WAIT_REVIEW){
-            Vue.prototype.$confirmLogin({
-              name: "orderlist",
-              query: {
-                orderStatus: "ORDER_WAIT_REVIEW"
-              }
-            });
+            // Vue.prototype.$confirmLogin({
+            //   name: "orderlist",
+            //   query: {
+            //     orderStatus: "ORDER_WAIT_REVIEW"
+            //   }
+            // });
             // }
             this.queryDetail();
           }

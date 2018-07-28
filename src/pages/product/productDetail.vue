@@ -67,10 +67,10 @@
                 </span>
               </template>
             </van-cell>
-            <van-cell>
-              <template slot="title">
+            <van-cell v-if="detatil.remark">
+              <template slot="title" >
                 <span class="van-cell-text">备注：</span>
-                <span style="color:#ff6d72;">{{detatil.remark}}</span>
+                <span style="color:#ff6d72;" >{{detatil.remark}}</span>
               </template>
             </van-cell>
             <van-cell>

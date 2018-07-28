@@ -4,7 +4,7 @@
           <ul v-if="couponList.length>0"
   v-infinite-scroll="loadMore"
   :infinite-scroll-disabled="loading"
-  infinite-scroll-distance="20" >
+  infinite-scroll-distance="20" style="padding-bottom: 65px;">
         <li >
         <!-- 有卷列表 -->
         <div class="coupon_list">
@@ -71,6 +71,8 @@
     </div>
   
 </div>
+  <!-- 不使用优惠券按钮 -->
+  <div class="nonebtn"><span>不使用优惠券</span></div>
 
   </div>
 </template>
@@ -217,5 +219,18 @@ this.$router.push({name:'login'})
   position: absolute;
   text-align: center;
   color: #fff;
+}
+.nonebtn{
+  width: 100%;left:0;
+  position: fixed;
+  bottom: 0px;
+  background: #fff;
+  height:60px;
+  padding-top:5px;
+    span{
+         width:92%;margin: 0 auto;border: 1px solid #ededed;color: #838383;text-align: center;line-height: 45px;
+         border-radius: 8px;display: inline-block;margin-left: 4%;
+    }
+  
 }
 </style>
