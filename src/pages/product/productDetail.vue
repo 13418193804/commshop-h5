@@ -67,10 +67,10 @@
                 </span>
               </template>
             </van-cell>
-            <van-cell>
-              <template slot="title">
+            <van-cell v-if="detatil.remark">
+              <template slot="title" >
                 <span class="van-cell-text">备注：</span>
-                <span style="color:#ff6d72;">{{detatil.remark}}</span>
+                <span style="color:#ff6d72;" >{{detatil.remark}}</span>
               </template>
             </van-cell>
             <van-cell>
@@ -829,26 +829,7 @@ getDomCenter(div){
     document.querySelector(".xq_video").scrollIntoView(true);
   }
   mounted() {
- 
-    if (this.$route.query.availWidth && this.$route.query.availHeight) {
-      this.setlabelActive({
-        availWidth: this.$route.query.availWidth,
-        availHeight: this.$route.query.availHeight
-      });
-
-
-    } else {
-      if (
-        this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].userId ==
-          "" &&
-        this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].token ==
-          ""
-      ) {
-        this.$router.push({ name: "login" });
-        return;
-      }
-    }
-
+   
     this.goodsId = this.$route.query.goodsId;
     this.getProductDetail();
     this.collection_query();
