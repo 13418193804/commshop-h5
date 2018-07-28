@@ -1,12 +1,6 @@
-<<<<<<< HEAD
-<!DOCTYPE html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link rel=stylesheet href=https://unpkg.com/vant/lib/vant-css/index.css><script src=https://gw.alipayobjects.com/as/g/h5-lib/alipayjsapi/3.1.0/alipayjsapi.min.js></script><link rel=stylesheet href=https://unpkg.com/mint-ui/lib/style.css><script src=https://res.wx.qq.com/open/js/jweixin-1.2.0.js></script><title>中宜商城</title><link href=./static/css/app.4d9756fd41e11fb77e17a0532d042525.css rel=stylesheet></head><body onload=configWechatSDK()><div id=app></div><script type=text/javascript>// onload="configWechatSDK()"
-=======
-<!DOCTYPE html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link rel=stylesheet href=https://unpkg.com/vant/lib/vant-css/index.css><script src=https://gw.alipayobjects.com/as/g/h5-lib/alipayjsapi/3.1.0/alipayjsapi.min.js></script><link rel=stylesheet href=https://unpkg.com/mint-ui/lib/style.css><script src=https://res.wx.qq.com/open/js/jweixin-1.2.0.js></script><title>中宜商城</title><link href=./static/css/app.02b0159a31f9700ddcb2a6259b08c0ed.css rel=stylesheet></head><body onload=configWechatSDK()><div id=app></div><script type=text/javascript>// onload="configWechatSDK()"
->>>>>>> fdbe8dca31f1eca7d9dbc4133c32379b257d69f8
+<!DOCTYPE html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link rel=stylesheet href=https://unpkg.com/vant/lib/vant-css/index.css><script src=https://gw.alipayobjects.com/as/g/h5-lib/alipayjsapi/3.1.0/alipayjsapi.min.js></script><link rel=stylesheet href=https://unpkg.com/mint-ui/lib/style.css><script src=https://res.wx.qq.com/open/js/jweixin-1.2.0.js></script><title>中宜商城</title><link href=./static/css/app.a40811f4da03800f0c9c6d72c709223b.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript>// onload="configWechatSDK()"
 
 function  configWechatSDK (){
-
-  
   wx.config({
         debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
         appId: 'wx2e2d97a4e10ef2b6', // 必填，公众号的唯一标识
@@ -18,21 +12,33 @@ function  configWechatSDK (){
 
       wx.ready(function () {
 
-      wx.onMenuShareTimeline({
-    title: '标题', // 分享标题
-    link: 'www.baidu.com', // 分享链接
-    imgUrl: 'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1623643302,1867723597&fm=96&app=25&f=JPEG?w=121&h=75&s=4AA23A6240E472BCFD3159070100A0E0', // 分享图标
-    success: function () {
-    alert('分享成功')
-        // 用户确认分享后执行的回调函数
-    },
-    cancel: function () {
-    alert('分享取消')
-      
-        // 用户取消分享后执行的回调函数
-    }
-});
+
+//分享给朋友
+wx.onMenuShareAppMessage({
+  title:"我的二维码", // 分享标题
+  desc: "测试", // 分享描述
+  link: window.location.href.split('#')[0], // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+  imgUrl: "http://m.yourhr.com.cn/zhongyi/qrcode/file5b5537dbd29938253db3d274.png", // 分享图标
+  type: '', // 分享类型,music、video或link，不填默认为link
+  dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+  success: function (res) {
+   // 用户确认分享后执行的回调函数
+   alert("分享给朋友成功返回的信息为:",res);
+  },
+  cancel: function (res) {
+   // 用户取消分享后执行的回调函数
+   alert("取消分享给朋友返回的信息为:",res);
+  }
+ });
+
       });
+
+
+
+
+
+
+      
 
 
 }
@@ -70,11 +76,7 @@ function  configWechatSDK (){
         _MEIQIA('showPanel', {greeting:message})
       }
 
-<<<<<<< HEAD
-    }</script><script type=text/javascript src=./static/js/manifest.ecf0ca411f47e81634e8.js></script><script type=text/javascript src=./static/js/vendor.25b77de016ee6d2855a8.js></script><script type=text/javascript src=./static/js/app.6cad0843bb296fd0e54d.js></script></body><style>@font-face {
-=======
-    }</script><script type=text/javascript src=./static/js/manifest.f2a9996c5cff9a7757c8.js></script><script type=text/javascript src=./static/js/vendor.b6cb723b6f8e58aa0941.js></script><script type=text/javascript src=./static/js/app.7a4fca1c09a6f8851499.js></script></body><style>@font-face {
->>>>>>> fdbe8dca31f1eca7d9dbc4133c32379b257d69f8
+    }</script><script type=text/javascript src=./static/js/manifest.833ca61ea2240eed8488.js></script><script type=text/javascript src=./static/js/vendor.25b77de016ee6d2855a8.js></script><script type=text/javascript src=./static/js/app.643313e3ef3aaf0bc02c.js></script></body><style>@font-face {
     font-family: "iconfont";
     src: url('iconfont.eot?t=1527147826115');
     /* IE9*/
