@@ -53,26 +53,22 @@
             </div>
             <div class="coupon_car_bottom" :style="handlePX('line-height', 52)+handlePX('font-size', 20)+handlePX('padding-left', 40)">全场通用；特价商品或其他优惠活动商品不可叠加使用</div>
           </div>
-
           </div>
-
-
-          
 
         </div>
     </li>
  </ul>
 <div class="flex flex-pack-center flex-align-center" style="font-size:14px;padding:15px;" v-else>
 
-    <div v-if="!loading">加载中...</div>
+    <!-- <div v-if="!loading">加载中...</div> -->
     <div  style="font-size:14px;padding:15px;text-align: center;">
       <img src="../../assets/image/空空如也.png" alt="">
       <p>空空如也～</p>
     </div>
   
 </div>
-  <!-- 不使用优惠券按钮 -->
-  <div class="nonebtn"><span>不使用优惠券</span></div>
+
+
 
   </div>
 </template>

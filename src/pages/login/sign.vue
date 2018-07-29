@@ -171,6 +171,7 @@ export default class Sign extends Vue {
         }
         Toast("注册成功");
         this.$router.push("/login");
+
       }
     );
   }

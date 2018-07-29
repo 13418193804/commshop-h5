@@ -352,6 +352,16 @@ export default new Router({
             }
         },
         {
+            path: '/selectcoupon',
+            name: 'selectcoupon',
+            component: r => require.ensure([], () => r(require('../pages/coupon/selectcoupon')))
+            ,
+            meta: {
+                keepAlive: false // 不需要被缓存
+            }
+        },
+        
+        {
             path: '/collar_center',
             name: 'collar_center',
             component: r => require.ensure([], () => r(require('../pages/coupon/collar_center')))

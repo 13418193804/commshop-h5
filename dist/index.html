@@ -1,10 +1,4 @@
-<<<<<<< HEAD
-<!DOCTYPE html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link rel=stylesheet href=https://unpkg.com/vant/lib/vant-css/index.css><script src=https://gw.alipayobjects.com/as/g/h5-lib/alipayjsapi/3.1.0/alipayjsapi.min.js></script><link rel=stylesheet href=https://unpkg.com/mint-ui/lib/style.css><script src=https://res.wx.qq.com/open/js/jweixin-1.2.0.js></script><title>中宜商城</title><link href=./static/css/app.a40811f4da03800f0c9c6d72c709223b.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript>// onload="configWechatSDK()"
-=======
-<!DOCTYPE html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link rel=stylesheet href=https://unpkg.com/vant/lib/vant-css/index.css><script src=https://gw.alipayobjects.com/as/g/h5-lib/alipayjsapi/3.1.0/alipayjsapi.min.js></script><link rel=stylesheet href=https://unpkg.com/mint-ui/lib/style.css><script src=https://res.wx.qq.com/open/js/jweixin-1.2.0.js></script><title>中宜商城</title><link href=./static/css/app.5a38cc3183a133f54e2aca9d2df0e5ac.css rel=stylesheet></head><body onload=configWechatSDK()><div id=app></div><script type=text/javascript>// onload="configWechatSDK()"
->>>>>>> 4a77b07f6f5794a1515d1501c2baf9da6617d257
-
-function  configWechatSDK (){
+<!DOCTYPE html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link rel=stylesheet href=https://unpkg.com/vant/lib/vant-css/index.css><script src=https://gw.alipayobjects.com/as/g/h5-lib/alipayjsapi/3.1.0/alipayjsapi.min.js></script><link rel=stylesheet href=https://unpkg.com/mint-ui/lib/style.css><script src=https://res.wx.qq.com/open/js/jweixin-1.2.0.js></script><link rel=icon href=https://m.yourhr.com.cn/zhongyi/upload/20180723/file5b54c4ebd29938253db3d26c.png type=image/x-icon><link rel="shortcut icon" href=https://m.yourhr.com.cn/zhongyi/upload/20180723/file5b54c4ebd29938253db3d26c.png type=image/x-icon><title>中宜商城</title><link href=./static/css/app.e0972b6c2f412a2244ec5c4a9e6c078f.css rel=stylesheet></head><body onload=configWechatSDK()><div id=app></div><script type=text/javascript>function  configWechatSDK (){
   wx.config({
         debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
         appId: 'wx2e2d97a4e10ef2b6', // 必填，公众号的唯一标识
@@ -16,34 +10,46 @@ function  configWechatSDK (){
 
       wx.ready(function () {
 
-
 //分享给朋友
 wx.onMenuShareAppMessage({
-  title:"我的二维码", // 分享标题
-  desc: "测试", // 分享描述
-  link: window.location.href.split('#')[0], // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-  imgUrl: "http://m.yourhr.com.cn/zhongyi/qrcode/file5b5537dbd29938253db3d274.png", // 分享图标
+  title:"邀请你去'中宜商城'", // 分享标题
+  desc: "在这里，有你和我都想要的东西，优惠多多哦！", // 分享描述
+  link: "https://m.yourhr.com.cn/custom/#/sign?recommontId="+JSON.parse(localStorage.set_token_info).userId,  // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+  imgUrl: "https://m.yourhr.com.cn/zhongyi/upload/20180723/file5b54c4ebd29938253db3d26c.png", // 分享图标
   type: '', // 分享类型,music、video或link，不填默认为link
-  dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+  dataUrl: "http://www.expressjs.com.cn/4x/api.html" , // 如果type是music或video，则要提供数据链接，默认为空
   success: function (res) {
    // 用户确认分享后执行的回调函数
-   alert("分享给朋友成功返回的信息为:",res);
   },
   cancel: function (res) {
    // 用户取消分享后执行的回调函数
-   alert("取消分享给朋友返回的信息为:",res);
   }
  });
-
-      });
-
-
-
+   
+      // localStorage.set_token_info?"https://m.yourhr.com.cn/custom/#/sign?recommontId="+ JSON.parse(localStorage.set_token_info).userId:'https://m.yourhr.com.cn/custom/#/'
+//分享朋友圈
+      wx.onMenuShareTimeline({
+        title: "邀请你去'中宜商城'", // 分享标题
+        link: "https://m.yourhr.com.cn/custom/#/sign?recommontId="+JSON.parse(localStorage.set_token_info).userId,  // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        imgUrl: 'https://m.yourhr.com.cn/zhongyi/upload/20180723/file5b54c4ebd29938253db3d26c.png', // 分享图标
+        success: function () { 
+            // 用户确认分享后执行的回调函数
+        },
+        cancel: function () { 
+            // 用户取消分享后执行的回调函数
+        }
+    });
+    wx.error(function(res){
+        // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+        // alert("errorMSG:"+res);
+    });
 
 
 
       
 
+
+});
 
 }
 
@@ -80,11 +86,7 @@ wx.onMenuShareAppMessage({
         _MEIQIA('showPanel', {greeting:message})
       }
 
-<<<<<<< HEAD
-    }</script><script type=text/javascript src=./static/js/manifest.833ca61ea2240eed8488.js></script><script type=text/javascript src=./static/js/vendor.25b77de016ee6d2855a8.js></script><script type=text/javascript src=./static/js/app.643313e3ef3aaf0bc02c.js></script></body><style>@font-face {
-=======
-    }</script><script type=text/javascript src=./static/js/manifest.59bcae957cbb02296a45.js></script><script type=text/javascript src=./static/js/vendor.b6cb723b6f8e58aa0941.js></script><script type=text/javascript src=./static/js/app.2a8d7a6afd2a1f14f1df.js></script></body><style>@font-face {
->>>>>>> 4a77b07f6f5794a1515d1501c2baf9da6617d257
+    }</script><script type=text/javascript src=./static/js/manifest.81e38af61e5f8cb56bae.js></script><script type=text/javascript src=./static/js/vendor.359ea55dd0718274aaf5.js></script><script type=text/javascript src=./static/js/app.cad841d8dc6e51a051c8.js></script></body><style>@font-face {
     font-family: "iconfont";
     src: url('iconfont.eot?t=1527147826115');
     /* IE9*/

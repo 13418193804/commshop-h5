@@ -53,7 +53,15 @@
     <div>{{freight.toFixed(2)}}</div>
 </div>   -->
 <van-cell-group>
-  <div style="padding:10px 15px;color:#333;border-bottom:10px solid rgb(247, 247, 247)" @click="goconpon()">优惠券 <span></span></div>
+  <div style="padding:10px 15px;color:#333;" class="flex flex-pack-justify" @click="goconpon()">
+     <div>优惠券</div>
+      <div  style=" max-width: 70%;"><span class="marketPrice" v-if="currentCoupon">{{currentCoupon.couponName}}</span><span  class="marketPrice" v-else> {{couponList.length}}张可用</span>></div>
+    
+  </div>
+    <div v-if="currentCoupon" style="padding:10px 15px;color:#333;border-bottom:10px solid rgb(247, 247, 247)" class="flex flex-pack-justify" @click="goconpon()">
+     <div>优惠金额</div>
+      <div  style="max-width: 70%;">-￥{{currentCoupon.couponDenomination.toFixed(2)}}</div>
+  </div>
   <van-cell title="配送方式"  value="快递" />   
   <van-cell title="运费" :value="freight.toFixed(2)" />
   <van-cell title="发票抬头" is-link :value="titlevalue"  @click="goinvoice()"/>
@@ -118,14 +126,36 @@ freight=0;
   // 优惠券跳转
   goconpon(){
     this.$router.push({
-      name: "collar_center"
+      name: "selectcoupon",
+        query:{
+        prepareId:this.prepareId
+      }
     })
   }
+
+
+
   goinvoice(){
     this.$router.push({
-      name: "invoice"
+      name: "invoice",
+      query:{
+        titleType:this.titleType,
+        titlevalue:this.titlevalue,
+        invoiceTitle:this.invoiceTitle,
+        invoiceNo:this.invoiceNo
+      }
     });
+
+
+
+ 
+
+
   }
+
+
+
+  currentCoupon = null;
   getPreInfo(prepareId) {
     Vue.prototype.$reqFormPost(
       "/prepare/order/query",
@@ -149,6 +179,9 @@ freight=0;
           return;
         }
         console.log(res.data.data);
+        this.currentCoupon = res.data.data.currentCoupon
+this.couponList = res.data.data.couponList
+
         this.shopCartList = res.data.data.shopCartList;
         this.address = res.data.data.address;
         this.totalPrice = res.data.data.totalPrice ;
@@ -158,6 +191,7 @@ freight=0;
       }
     );
   }
+  couponList = []
   onSubmit() {
     if (!this.address) {
       Toast("请选择一个收货地址");
@@ -212,6 +246,8 @@ freight=0;
     this.getPreInfo(
       this.$store.getters[Vue.prototype.MutationTreeType.PREPAREID]
     );
+
+
     if(this.$route.query.titleType){
       if(this.$route.query.titleType=='PERSON'){
         this.titleType='PERSON';
@@ -223,6 +259,9 @@ freight=0;
         this.invoiceNo=this.$route.query.invoiceNo;
       }
     }
+
+
+
   }
 }
 </script>

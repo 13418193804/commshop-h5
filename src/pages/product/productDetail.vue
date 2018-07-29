@@ -611,9 +611,10 @@ this.addCart()
           Toast(res.data.message);
           return;
         }
+        this.getCartList()
+        
         Toast("加入成功");
         this.keepModel = false;
-        this.getCartList()
 
 
         // var div = document.getElementById("cartLen");
@@ -773,7 +774,9 @@ this.addCart()
           return;
         }
 
+
         var div = document.getElementById("cartLen");
+
         if (!document.getElementById("cartLen")) {
           div = document.createElement("div");
           div.setAttribute("id", "cartLen");
@@ -781,17 +784,16 @@ this.addCart()
           div.style.right = "18px";
           div.style.top = "11px";
           div.style.zIndex = "200";
-
      this.getDomCenter(div)
-
         }
         
         if (res.data.data.carts.length > 0) {
           div.innerHTML = this.getNumber(res.data.data.carts);
+          div.style.display = "block";
         } else {
           div.style.display = "none";
         }
-        
+
       }
     );
   }
@@ -807,7 +809,6 @@ getDomCenter(div){
           )
 
          a[1].appendChild(div);
-     
           //    document.getElementsByClassName(
           //   "van-goods-action__mini-btn van-hairline"
           // )[4].appendChild(div);

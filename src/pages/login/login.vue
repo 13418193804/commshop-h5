@@ -106,6 +106,8 @@ export default class shopIndex extends Vue {
 
         }
         this.$router.push("/");
+        window.location.reload();
+
       }
       
     );
