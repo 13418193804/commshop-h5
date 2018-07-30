@@ -1,6 +1,6 @@
 <template>
   <div class="tab-contents">
-    <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="我的订单" isRightIcon="true"  ></comhead>
+    <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="$router.replace('/')"  title="我的订单" isRightIcon="true"  ></comhead>
      
         <van-tabs :active="active" :sticky="true" @click="changePage" > 
            <ul

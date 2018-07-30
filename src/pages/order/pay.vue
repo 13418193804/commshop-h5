@@ -124,7 +124,7 @@ if(this.isWeiXin){
 }else{
     let a:any = window
    Vue.prototype.$reqFormPost(
-        "/wechat/pay/scan",
+        "/wechat/pay/wap",
         {
           userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
             .userId,
@@ -151,8 +151,8 @@ if(this.isWeiXin){
             Toast(res.data.message);
             return;
           }
-            if(res.data.data.codeUrl){
-                window.location.href =  res.data.data.codeUrl
+            if(res.data.data.mwebUrl){
+                window.location.href =  res.data.data.mwebUrl +"&redirect_url=" +encodeURIComponent("https://m.yourhr.com.cn/custom/#/orderlist");
             }else{
              Toast('请重试')
             }

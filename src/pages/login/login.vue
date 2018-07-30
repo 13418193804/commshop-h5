@@ -95,6 +95,7 @@ export default class shopIndex extends Vue {
         );
 
         if(this.isWeixinBrowser()){
+
           // 跨域
     // axios.get('https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx2e2d97a4e10ef2b6&redirect_uri=http://sr.cncloud.com/qichang/wechat/enter/bind?action=viewtest&response_type=code&scope=snsapi_base&state=UI5ad94ae15b065d55ac86ae0d#wechat_redirect')
     //     .then(res => {
@@ -106,7 +107,9 @@ export default class shopIndex extends Vue {
 
         }
         this.$router.push("/");
+        setTimeout(()=>{
         window.location.reload();
+        },200)
 
       }
       
