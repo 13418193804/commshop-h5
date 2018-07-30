@@ -19,7 +19,11 @@
               </div>
               <div class="coupon_car_right" :style="handlePX('padding-right', 42)+handlePX('padding-top', 30)">
                 <van-button size="mini" :style="handlePX('width', 135)+handlePX('height', 40)" style="border:0;background-color:rgba(255,255,255,0.5);color:#DAA000;" @click="addcoupon(item.id)">领券</van-button>
-                <div style="color:rgba(255,255,255,0.8);" :style="handlePX('font-size', 26)"><span v-if="item.validityType == 'ABSELUTE_DATE'">{{item.createTime.split(' ')[0]}} - {{item.endDate.split(' ')[0]}}</span><span v-else>{{item.days}}天有效</span></div>
+                <div style="color:rgba(255,255,255,0.8);" :style="handlePX('font-size', 26)">
+                  <span v-if="item.validityType == 'ABSELUTE_DATE'">
+                    {{item.createTime.split(' ')[0]}} - {{item.endDate.split(' ')[0]}}
+                    </span>
+                <span v-else>{{item.days}}天有效</span></div>
               </div>
             </div>
             <div class="coupon_car_bottom" :style="handlePX('line-height', 52)+handlePX('font-size', 20)+handlePX('padding-left', 40)">全场通用；特价商品或其他优惠活动商品不可叠加使用</div>
@@ -211,10 +215,14 @@ this.$router.push({name:'login'})
   }
 }
 .coupon_car_bottom {
+  width: 97%;
   bottom: 0;
   position: absolute;
   text-align: center;
   color: #fff;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .nonebtn{
   width: 100%;left:0;

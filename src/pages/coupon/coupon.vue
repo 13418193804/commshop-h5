@@ -24,11 +24,18 @@
             <div class="coupon_cardbox" :style="handlePX('padding-top', 30)">
               <div class="coupon_car_left" :style="handlePX('padding-left', 60)">
                 <div style="color:#fff;" :style="handlePX('font-size', 65)">{{item.coupon?item.coupon.couponDenomination:''}}<span :style="handlePX('font-size', 42)">元</span></div>
-                <div style="color:rgba(255,255,255,0.8);">{{item.coupon?item.coupon.couponName:''}}</div>
+                <div style="color:rgba(255,255,255,0.8);    margin-right: 5px;
+    color: rgb(255, 255, 255);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;">{{item.coupon?item.coupon.couponName:''}}</div>
+                 
               </div>
               <div class="coupon_car_right" :style="handlePX('padding-right', 42)+handlePX('padding-top', 30)">
                 <van-button size="mini" :style="handlePX('width', 135)+handlePX('height', 40)" @click="goIndex()"
                 style="border:0;background-color:rgba(255,255,255,0.9);color:#fd5f61;">去使用</van-button>
+                <div> <i style="color: #fff;" v-if="item.createTime">{{item.createTime.split(' ')[0]}} - </i>
+                      <i style="color: #fff;" v-if="item.validityTime">{{item.validityTime.split(' ')[0]}}</i></div>
                 <!-- <div style="color:rgba(255,255,255,0.8);" :style="handlePX('font-size', 26)">2018.03.24-2018.03.24</div> -->
               </div>
             </div>
@@ -242,9 +249,13 @@ goIndex(){
   }
 }
 .coupon_car_bottom {
+  width: 97%;
   bottom: 0;
   position: absolute;
   text-align: center;
   color: #fff;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 </style>
