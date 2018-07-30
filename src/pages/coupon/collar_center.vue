@@ -9,7 +9,7 @@
         <!-- 有卷列表 -->
         <div class="coupon_list">
           <div v-for="(item,index) in couponList" :key="index">
-
+            
           <!-- collar列表 -->          
           <div v-if="item.getStatus==false&&item.status==true" class="coupon_collar" :style="handlePX('width', 702)+handlePX('height', 248)+handlePX('margin-top', 20)" >
             <div class="coupon_cardbox" :style="handlePX('padding-top', 30)">
@@ -19,7 +19,7 @@
               </div>
               <div class="coupon_car_right" :style="handlePX('padding-right', 42)+handlePX('padding-top', 30)">
                 <van-button size="mini" :style="handlePX('width', 135)+handlePX('height', 40)" style="border:0;background-color:rgba(255,255,255,0.5);color:#DAA000;" @click="addcoupon(item.id)">领券</van-button>
-                <div style="color:rgba(255,255,255,0.8);" :style="handlePX('font-size', 26)">{{item.createTime.split(' ')[0]}}-{{item.endDate.split(' ')[0]}}</div>
+                <div style="color:rgba(255,255,255,0.8);" :style="handlePX('font-size', 26)"><span v-if="item.validityType == 'ABSELUTE_DATE'">{{item.createTime.split(' ')[0]}} - {{item.endDate.split(' ')[0]}}</span><span v-else>{{item.days}}天有效</span></div>
               </div>
             </div>
             <div class="coupon_car_bottom" :style="handlePX('line-height', 52)+handlePX('font-size', 20)+handlePX('padding-left', 40)">全场通用；特价商品或其他优惠活动商品不可叠加使用</div>
@@ -34,7 +34,7 @@
               </div>
               <div class="coupon_car_right" :style="handlePX('padding-right', 42)+handlePX('padding-top', 30)">
                 <van-button size="mini" :style="handlePX('width', 135)+handlePX('height', 40)" style="border:0;background-color:rgba(255,255,255,0.9);color:#fd5f61;">已领取</van-button>
-                 <div style="color:rgba(255,255,255,0.8);" :style="handlePX('font-size', 26)">{{item.createTime.split(' ')[0]}}-{{item.endDate.split(' ')[0]}}</div>
+                 <div style="color:rgba(255,255,255,0.8);" :style="handlePX('font-size', 26)"><span v-if="item.validityType == 'ABSELUTE_DATE'">{{item.createTime.split(' ')[0]}} - {{item.endDate.split(' ')[0]}}</span><span v-else>{{item.days}}天有效</span></div>
               </div>
             </div>
             <div class="coupon_car_bottom" :style="handlePX('line-height', 52)+handlePX('font-size', 20)+handlePX('padding-left', 40)">全场通用；特价商品或其他优惠活动商品不可叠加使用</div>
@@ -48,7 +48,7 @@
                 <div style="color:rgba(255,255,255,0.8);">满{{item.fullDenomination}}减{{item.couponDenomination}}</div>
               </div>
               <div class="coupon_car_right" style="align-self: flex-end;" :style="handlePX('padding-right', 42)+handlePX('padding-top', 30)">
-                <div style="color:rgba(255,255,255,0.8);" :style="handlePX('font-size', 26)">{{item.endDate}}</div>
+                <div style="color:rgba(255,255,255,0.8);" :style="handlePX('font-size', 26)"><span v-if="item.validityType == 'ABSELUTE_DATE'">{{item.createTime.split(' ')[0]}} - {{item.endDate.split(' ')[0]}}</span><span v-else>{{item.days}}天有效</span></div>
               </div>
             </div>
             <div class="coupon_car_bottom" :style="handlePX('line-height', 52)+handlePX('font-size', 20)+handlePX('padding-left', 40)">全场通用；特价商品或其他优惠活动商品不可叠加使用</div>
