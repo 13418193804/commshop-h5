@@ -8,6 +8,8 @@
   <script src="https://gw.alipayobjects.com/as/g/h5-lib/alipayjsapi/3.1.0/alipayjsapi.min.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/mint-ui/lib/style.css">
   <script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <!-- 微博取IP -->
+    <script src="https://pv.sohu.com/cityjson?ie=utf-8"></script>
 <!--网页标题左侧显示-->
 <link rel="icon" href="https://m.yourhr.com.cn/zhongyi/upload/20180723/file5b54c4ebd29938253db3d26c.png" type="image/x-icon">
 <!--收藏夹显示图标-->
@@ -122,6 +124,9 @@ wx.onMenuShareAppMessage({
         _MEIQIA('showPanel', {greeting:message})
       }
 
+    }
+    window.getAddressIP = function(){
+      return returnCitySN;
     }
   </script>
 </body>

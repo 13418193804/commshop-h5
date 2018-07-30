@@ -31,7 +31,7 @@
   <div :style="handlePX('height',80)+handlePX('line-height',80)" style="margin-left:15px;color:#A3A3A3;border-bottom:1px solid #EFEFEF;">选择支付方式</div>
   <van-radio-group v-model="payActive">
     <van-cell-group>
-      <van-cell  clickable @click="payActive = 'ali'">
+      <van-cell  clickable @click="payActive = 'ali'" v-if="!isWeiXin">
         <template slot="title">
           <div :style="handlePX('height',80)" class="flex flex-align-center">        
             <van-radio name="ali" />
@@ -40,7 +40,7 @@
           </div>
         </template>
       </van-cell>
-      <van-cell  clickable @click="payActive = 'wechat'">
+      <van-cell  clickable @click="payActive = 'wechat'" >
         <template slot="title">
           <div :style="handlePX('height',80)" class="flex flex-align-center">
             <van-radio name="wechat" />
@@ -117,11 +117,59 @@ export default class shopIndex extends Vue {
         }
       );
     }else{
-//  console.log("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx2e2d97a4e10ef2b6&redirect_uri=http://sr.cncloud.com/qichang/wechat/enter/call?action=viewtest&response_type=code&scope=snsapi_userinfo&state="+
-//        this.obj["payId"] +"#wechat_redirect")
-        window.location.href ="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx2e2d97a4e10ef2b6&redirect_uri=https://m.yourhr.com.cn/zhongyi/wechat/enter/call?action=viewtest&response_type=code&scope=snsapi_userinfo&state="+
+
+if(this.isWeiXin){
+    window.location.href ="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx2e2d97a4e10ef2b6&redirect_uri=https://m.yourhr.com.cn/zhongyi/wechat/enter/call?action=viewtest&response_type=code&scope=snsapi_userinfo&state="+
        this.obj["payId"] +"#wechat_redirect"
-    }
+}else{
+    let a:any = window
+   Vue.prototype.$reqFormPost(
+        "/wechat/pay/scan",
+        {
+          userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+            .userId,
+          token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+            .token,
+            spbillCreateIp:a.getAddressIP().cip,
+          body: this.obj["body"],
+          outTradeNo: this.obj["payId"],
+          totalFee: 0.01
+        },
+        res => {
+          
+          if (res == null) {
+            console.log("网络请求错误！");
+            return;
+          }
+          if (res.data.status != 200) {
+            console.log(
+              "需控制错误码" +
+                res.data.status +
+                ",错误信息：" +
+                res.data.message
+            );
+            Toast(res.data.message);
+            return;
+          }
+            if(res.data.data.codeUrl){
+                window.location.href =  res.data.data.codeUrl
+            }else{
+             Toast('请重试')
+            }
+        }
+      );
+}
+
+
+
+
+
+
+
+
+
+
+}
   }
   handlePX(CssName, PxNumber) {
     return (
@@ -133,6 +181,7 @@ export default class shopIndex extends Vue {
       "px;"
     );
   }
+  isWeiXin = false
   mounted() {
     this.obj.body = this.$route.query.body;
     this.obj.payId = this.$route.query.payId;
@@ -140,6 +189,15 @@ export default class shopIndex extends Vue {
     this.address.address = this.$route.query.address; 
     this.address.contactname = this.$route.query.contactname; 
     this.address.contactmobile = this.$route.query.contactmobile; 
+
+       var ua:any = navigator.userAgent.toLowerCase();
+    if (ua.match(/MicroMessenger/i) == "micromessenger") {
+        this.isWeiXin = true
+    }else{
+        this.isWeiXin = false
+    }
+
+
   }
 }
 </script>
