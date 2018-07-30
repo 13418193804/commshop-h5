@@ -200,10 +200,14 @@ this.getPreInfo(this.prepareId)
   }
 }
 .coupon_car_bottom {
+  width: 97%;
   bottom: 0;
   position: absolute;
   text-align: center;
   color: #fff;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .nonebtn{
   width: 100%;left:0;
