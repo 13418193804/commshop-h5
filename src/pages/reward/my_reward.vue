@@ -25,9 +25,13 @@
     <div :style="handlePX('padding', 30)">
         <div style="color:#959595;">最新消息</div>
         <ul v-infinite-scroll="loadMore" :infinite-scroll-disabled="loading" infinite-scroll-distance="20" >
-          <li v-for="(item, index) in awardList" :key="index" 
+          <li v-for="(item, index) in awardList" :key="index"  v-if="item.awardType == 'DISTRIBUTE'"
            style="border-bottom:1px solid #e7e7e7;font-size:12px;padding:10px 0;line-height: 22px;">
-          {{item.member.nickName}}在{{item.createTime}}消费{{item.payTotal}}元，你获得{{item.awardAmount}}积分奖励</li>
+          {{item.member.nickName}}在{{item.createTime}}消费{{item.payTotal}}元，您获得{{item.awardAmount}}积分奖励</li>
+
+          <li v-for="(item, index) in awardList" :key="index"  v-else
+           style="border-bottom:1px solid #e7e7e7;font-size:12px;padding:10px 0;line-height: 22px;">
+          您在{{item.createTime}}消费{{item.payTotal}}元，您获得{{item.awardAmount}}积分奖励</li>
         </ul>
         <div class="flex flex-pack-center flex-align-center" style="font-size:14px;padding:15px;">
           <div v-if="loading">加载中...</div>
