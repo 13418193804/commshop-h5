@@ -28,6 +28,12 @@
   </div>
 </div>
 
+   <ul 
+  v-infinite-scroll="loadMore"
+  :infinite-scroll-disabled="loading"
+  infinite-scroll-distance="20" style="padding-bottom: 65px;">
+        <li >
+
   <!-- swipeable -->
 <van-tabs :active="active" @click="changeTab" class="index_tabs flex-1" >
 <!-- :style="$route.query.active?'margin-top:-45px':''" -->
@@ -72,7 +78,6 @@
                    {{items.nameEn}}
                   </div>
                   </div>
-                 
               </div>
                 <div class="goodsBody" v-if="items.columnNum ===1" >
                   <div v-for="(goods,goodsIndex) in items.items" @click="goProductDetail(goods.goodsId)" :key="goodsIndex" class="goodsItem" style="width:-webkit-fill-available;border-top: 1px solid #e5e5e5;">
@@ -115,10 +120,33 @@
                     </div>
                   </div>
                 </div>
+
+
+<div style="height:10px; background-color:#f7f7f7;"></div>
+
+
+
+
+
+
+
+            </div>
+            
+        </div>
+
+
+    <div class="goodsTitleTab">
+                  <div style="">
+                    <span style="color:#ffc630;margin:0 3px">G</span>
+                    <span>商品列表</span>
+                     <div style="font-size: 12px;color: #999;">
+                   GOODSLIST
+                  </div>
+                  </div>
+                  </div>
 <!-- 没有3 -->
-<!-- 
-                <div class="goodsBody" v-if="items.columnNum === 3" style="  padding:10px 0;border-top:1px #e5e5e5 solid;">
-                  <div v-for="(goods,goodsIndex) in items.items" @click="goProductDetail(goods.goodsId)" :key="goodsIndex" class="goodsItem">
+                <div class="goodsBody" v-if="goodsList.length>0"  style="  padding:10px 0;border-top:1px #e5e5e5 solid;">
+                  <div v-for="(goods,goodsIndex) in goodsList" @click="goProductDetail(goods.goodsId)" :key="goodsIndex" class="goodsItem">
                     <div style="  width:-webkit-fill-available;  ">
                       <div class="flex flex-pack-center flex-align-center" style="border: 1px #e5e5e5 solid;box-sizing: border-box;overflow:hidden;position:relative;margin:5px auto;" :style="handlePX('height', 410)+handlePX('width', 345)">
                         <img src="../../assets/image/热.png" style="width:-webkit-fill-available;position: absolute;top: 0;left:0;" :style="handlePX('width', 43)+handlePX('height', 49)"/>
@@ -135,20 +163,28 @@
                       </div>
                     </div>
                   </div>
-                </div> -->
-<div style="height:10px; background-color:#f7f7f7;"></div>
-            </div>
-        </div>
+                </div>
+
+<!-- 商品下拉刷新 -->
 
 
         </div>
 
+<!-- 加多个条件是catId -->
+<div v-if="active == index" style="text-align:center">
+  <div v-if="!loading">加载中...</div>
+<div v-else>-</div>
+</div>
 
 
   </van-tab>
 <div style="height:50px;"></div> 
   
 </van-tabs>
+
+   </li>
+ </ul>
+
 
 
 <!-- 选择规格 -->
@@ -264,6 +300,22 @@ export default class shopIndex extends Vue {
     this.keepModel = !this.keepModel;
   }
 
+
+
+   loadMore(){
+    console.log('---------')
+    this.loading = true;
+       this.pageSize += 10
+
+if(this.selectPageId){
+    setTimeout(() => {
+    this.pageGetGoods()
+    }, 1000);
+}
+
+  }
+
+
   imagePreview(img) {
     ImagePreview([img], 0);
   }
@@ -350,7 +402,6 @@ export default class shopIndex extends Vue {
         console.log("网络请求错误！");
         return;
       }
-
       if (res.data.status != 200) {
         console.log(
           "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
@@ -365,8 +416,8 @@ export default class shopIndex extends Vue {
       }
     });
   }
-
-
+page = 0;
+pageSize = 10
   changeTab(active) {
     this.active = active;
     this.isShow = false;
@@ -374,7 +425,9 @@ export default class shopIndex extends Vue {
       Vue.prototype.$reqFormPost(
         "/page/info",
         {
-          pageId: this.indexList[active].pageId
+          pageId: this.indexList[active].pageId,
+          page:this.page,
+          pageSize:this.pageSize
         },
         res => {
           if (res == null) {
@@ -392,16 +445,21 @@ export default class shopIndex extends Vue {
 
           this.indexList.push();
 
+        this.selectPageId = this.indexList[active].pageId
 
-    console.log('this.indexList[active].children',this.indexList[active].children)
-          
-          if (this.indexList[active].catId) {
-
+        this.pageGetGoods()
+    
+        }
+      );
+    }
+  }
+selectPageId = ""
+  pageGetGoods(){
+    
           Vue.prototype.$reqFormPost(
-              "/user/goods/list",
+              "/page/goods/list",
               {
-                catId: this.indexList[active].catId,
-
+                pageId: this.selectPageId,
               },
               res => {
                 if (res == null) {
@@ -412,26 +470,14 @@ export default class shopIndex extends Vue {
                   Toast(res.data.message);
                   return;
                 }
-                console.log("分类查商品",res.data)
-                this.indexList[active].children.push({
-                  componentType: "COMPONENT_TYPE_GOODS_TAG",
-                name:'商品列表',
-                letter:'G',
-                nameEn:'GOODLIST',
-               columnNum: 2,
-                  items: res.data.data.goodsList
-                });
-
+                console.log("分类查商品",res.data.data.goodsList)
+              this.goodsList = res.data.data.goodsList 
                 this.indexList.push();
+                this.loading = false
               }
             );
-
-
-          }
-        }
-      );
-    }
   }
+  goodsList = []
   toggle() {
     this.isShow = !this.isShow;
   }
@@ -733,6 +779,9 @@ export default class shopIndex extends Vue {
       }
     );
   }
+
+
+  loading=false
   mounted() {
     let status = false
     if (this.$route.query.active) {

@@ -146,6 +146,7 @@ export default class addcomment extends Vue {
   subcomment(){
       if(this.commentContent==""){
           Toast("请填写评价");
+          return
       }
       let commentImg = this.filename.toString()
       Vue.prototype.$reqFormPost(

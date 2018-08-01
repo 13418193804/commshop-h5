@@ -20,7 +20,7 @@
               <div class="coupon_car_right" :style="handlePX('padding-right', 42)+handlePX('padding-top', 30)">
                 <van-button size="mini" :style="handlePX('width', 135)+handlePX('height', 40)" style="border:0;background-color:rgba(255,255,255,0.5);color:#DAA000;" @click="addcoupon(item.id)">领券</van-button>
                 <div style="color:rgba(255,255,255,0.8);" :style="handlePX('font-size', 26)">
-                  <span v-if="item.validityType == 'ABSELUTE_DATE'">
+                  <span v-if="item.getStatus  && item.validityType == 'RELATIVE_DATE'">
                     {{item.createTime.split(' ')[0]}} - {{item.endDate.split(' ')[0]}}
                     </span>
                 <span v-else>{{item.days}}天有效</span></div>
@@ -38,11 +38,16 @@
               </div>
               <div class="coupon_car_right" :style="handlePX('padding-right', 42)+handlePX('padding-top', 30)">
                 <van-button size="mini" :style="handlePX('width', 135)+handlePX('height', 40)" style="border:0;background-color:rgba(255,255,255,0.9);color:#fd5f61;">已领取</van-button>
-                 <div style="color:rgba(255,255,255,0.8);" :style="handlePX('font-size', 26)"><span v-if="item.validityType == 'ABSELUTE_DATE'">{{item.createTime.split(' ')[0]}} - {{item.endDate.split(' ')[0]}}</span><span v-else>{{item.days}}天有效</span></div>
+                 <div style="color:rgba(255,255,255,0.8);" :style="handlePX('font-size', 26)">
+                   <span v-if="item.getStatus  && item.validityType == 'RELATIVE_DATE'">
+                     {{item.createTime.split(' ')[0]}} - {{item.endDate.split(' ')[0]}}
+                     </span><span v-else>{{item.days}}天有效</span>
+                     </div>
               </div>
             </div>
             <div class="coupon_car_bottom" :style="handlePX('line-height', 52)+handlePX('font-size', 20)+handlePX('padding-left', 40)">全场通用；特价商品或其他优惠活动商品不可叠加使用</div>
           </div>
+
 
           <!-- 已过期 -->      
           <div class="coupon_overdue" v-if="item.status==false" :style="handlePX('width', 702)+handlePX('height', 248)+handlePX('margin-top', 20)">
@@ -52,7 +57,7 @@
                 <div style="color:rgba(255,255,255,0.8);">满{{item.fullDenomination}}减{{item.couponDenomination}}</div>
               </div>
               <div class="coupon_car_right" style="align-self: flex-end;" :style="handlePX('padding-right', 42)+handlePX('padding-top', 30)">
-                <div style="color:rgba(255,255,255,0.8);" :style="handlePX('font-size', 26)"><span v-if="item.validityType == 'ABSELUTE_DATE'">{{item.createTime.split(' ')[0]}} - {{item.endDate.split(' ')[0]}}</span><span v-else>{{item.days}}天有效</span></div>
+                <div style="color:rgba(255,255,255,0.8);" :style="handlePX('font-size', 26)"><span v-if="item.getStatus  && item.validityType == 'RELATIVE_DATE'">{{item.createTime.split(' ')[0]}} - {{item.endDate.split(' ')[0]}}</span><span v-else>{{item.days}}天有效</span></div>
               </div>
             </div>
             <div class="coupon_car_bottom" :style="handlePX('line-height', 52)+handlePX('font-size', 20)+handlePX('padding-left', 40)">全场通用；特价商品或其他优惠活动商品不可叠加使用</div>
@@ -107,6 +112,8 @@ export default class collar_center extends Vue {
   couponList=[];
   page=0;
   loadMore(){
+    if(!this.goodsId){
+
     let self = this;
     self.loading=true;    
     setTimeout(() => {
@@ -116,10 +123,45 @@ export default class collar_center extends Vue {
         self.loading = false;
       }
     }, 1000);
+    }
+
+
   }
+
   getList() {
+    console.log('this.goodsId ',this.goodsId)
+
+if(this.goodsId){
+
+
+Vue.prototype.$reqFormPost(
+      "/coupon/goods/list",
+      {
+        userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .userId,
+        token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .token,
+        goodsId: this.goodsId,
+      },
+      res => {
+      if (res == null) {
+        console.log("网络请求错误！");
+        return;
+      }
+      if (res.data.status != 200) {
+        console.log(
+          "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+        );
+        Toast(res.data.message);
+        return;
+      }
+        this.couponList = res.data.data
+      }
+    );
+
+}else{
+
  Vue.prototype.$reqFormPost("/coupon/center/list", {
-   
       userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
         .userId,
       token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
@@ -136,9 +178,7 @@ export default class collar_center extends Vue {
           "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
         );
         Toast(res.data.message);
-this.$router.push({name:'login'})
-
-
+        this.$router.push({name:'login'})
         return;
       }
   console.log(res)
@@ -148,9 +188,9 @@ this.$router.push({name:'login'})
           this.loading = false;
         }
     });
-
-
+}
   }
+
   addcoupon(couponId){
     Vue.prototype.$reqFormPost("/coupon/user/linkadd", {
       userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
@@ -174,7 +214,10 @@ this.$router.push({name:'login'})
       this.getList();
     });
   }
+goodsId = null;
   mounted() {
+this.goodsId = this.$route.query.goodsId
+
     this.getList();
     console.log("领卷中心");
   }

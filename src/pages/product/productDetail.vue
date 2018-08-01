@@ -450,6 +450,16 @@ export default class ProductDetail extends Vue {
     );
   }
   addCar() {
+
+   if (
+      this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].userId !=
+        "" &&
+      this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].token != ""
+    ) {}else{
+      this.$router.push({name:'login'})
+    }
+
+    
     if (!this.skuItem["skuId"]) {
       Toast("请选择规格属性");
       return;
@@ -588,6 +598,13 @@ this.addCart()
   }
 
   addCart() {
+      if (
+      this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].userId !=
+        "" &&
+      this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].token != ""
+    ) {}else{
+      this.$router.push({name:'login'})
+    }
     if (!this.skuItem["skuId"]) {
       Toast("请选择规格属性");
       return;
@@ -702,7 +719,7 @@ this.addCart()
         this.couponListOne = res.data.data;
         console.log('商品信息',this.couponListOne);
         console.log(this.goodsId);
-        this.couponList = res.data.data.couponList;
+        // this.couponList = res.data.data.couponList;
 
         this.detatil.skuKey.forEach((keyItem, keyIndex) => {
           keyItem.valueList.forEach((valueItem, valueIndex) => {
@@ -739,7 +756,28 @@ this.addCart()
     });
   }
   go_collar_center() {
-    this.$router.push("/collar_center");
+ 
+    if (
+      this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].userId !=
+        "" &&
+      this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].token != ""
+    ) {
+
+    this.$router.push({
+      path:"/collar_center",
+     query: {
+        goodsId:this.goodsId
+      }
+    });
+
+    }else{
+       this.$router.push({name:'login'})
+    }
+
+
+
+
+
   }
   handlePX(CssName, PxNumber) {
     return (
@@ -832,12 +870,49 @@ getDomCenter(div){
   returnTop(){
     document.querySelector(".xq_video").scrollIntoView(true);
   }
+
+  getCouponList(){
+
+    Vue.prototype.$reqFormPost(
+      "/coupon/goods/list",
+      {
+        userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .userId,
+        token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .token,
+        goodsId: this.goodsId,
+      },
+      res => {
+      if (res == null) {
+          console.log("网络请求错误！");
+          return;
+        }
+        if (res.data.status != 200) {
+          console.log(
+            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+          );
+          Toast(res.data.message);
+          return;
+        }
+
+        console.log(res.data)
+
+        this.couponList = res.data.data
+        
+      }
+    );
+    
+  }
+
+
   mounted() {
    
     this.goodsId = this.$route.query.goodsId;
     this.getProductDetail();
     this.collection_query();
     this.getCartList()
+    this.getCouponList();
+
   }
 
 }

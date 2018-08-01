@@ -320,7 +320,7 @@ export default class orderdetail extends Vue {
   recvgoods(orderId,ORDER_WAIT_REVIEW) {
     Dialog.confirm({
       title: "提示",
-      message: "确认收货?"
+      message: "请确保收到商品后才进行确认收货，是否已收到商品?"
     })
       .then(() => {
         Vue.prototype.$reqFormPost(

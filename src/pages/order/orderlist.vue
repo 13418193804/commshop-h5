@@ -1,6 +1,6 @@
 <template>
   <div class="tab-contents">
-    <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="$router.replace('/user')"  title="我的订单" isRightIcon="true"  ></comhead>
+    <comhead ref="comhead" isLeftIcon="icon-zuo" :gouser="true" leftIconName="angle-left" @leftClick="goUser()"  title="我的订单" isRightIcon="true"  ></comhead>
      
         <van-tabs :active="active" :sticky="true" @click="changePage" > 
            <ul
@@ -161,6 +161,8 @@
             <p>暂时还没有相关的订单哦!</p>
           </div>
       </div>
+
+      
           <div v-if="orderList[returnKey()].orderList.loading">加载中...</div>
       
   </div>
@@ -296,6 +298,13 @@ doDeleteOrder(orderId){
       this.getOrderList(this.orderTitleList[this.active].status);
     }, 1000);
   }
+
+  goUser(){
+
+    console.log('---------')
+    this.$router.replace('/user');
+    
+  }
   // ORDER_WAIT_PAY
   // ORDER_CANCEL_PAY
   // ORDER_WAIT_SENDGOODS
@@ -393,7 +402,7 @@ doDeleteOrder(orderId){
   recvgoods(orderId) {
     Dialog.confirm({
       title: "提示",
-      message: "确认收货?"
+      message: "请确保收到商品后才进行确认收货，是否已收到商品?"
     })
       .then(() => {
         Vue.prototype.$reqFormPost(

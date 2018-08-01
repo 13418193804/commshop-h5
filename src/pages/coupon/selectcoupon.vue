@@ -85,11 +85,9 @@ export default class collar_center extends Vue {
   page=0;
  prepareId=""
 couponList=[]
-
-
+addressId = null
 
 doChangePreDis(value){
-
 let data = {
         userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
           .userId,
@@ -98,6 +96,13 @@ let data = {
           prepareId:this.$store.getters[Vue.prototype.MutationTreeType.PREPAREID],
           couponId: value
 }
+
+if(this.addressId){
+  
+(<any>Object).assign(data,{addressId:this.addressId})
+
+}
+
    Vue.prototype.$reqFormPost(
       "/prepare/order/update",
       data,
@@ -161,6 +166,9 @@ currentCoupon=null
 // 可领取列表
   mounted() {
 this.prepareId = this.$route.query.prepareId
+if(this.$route.query.addressId){
+this.addressId = this.$route.query.addressId
+}
 this.getPreInfo(this.prepareId)
 }
 }

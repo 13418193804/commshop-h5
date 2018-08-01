@@ -82,8 +82,7 @@ export default class shopIndex extends Vue {
   dopay() {
     //    this.obj["payTotal"]
     if (this.payActive == "ali") {
-      console.log('支付宝支付')
-      
+     
       Vue.prototype.$reqFormPost(
         "/ali/pay/wap",
         {
@@ -152,7 +151,7 @@ if(this.isWeiXin){
             return;
           }
             if(res.data.data.mwebUrl){
-                window.location.href =  res.data.data.mwebUrl +"&redirect_url=" +encodeURIComponent("https://m.yourhr.com.cn/custom/#/orderlist");
+                window.location.href =  res.data.data.mwebUrl +"&redirect_url=" +encodeURIComponent("https://m.yourhr.com.cn/custom/#/orderlist?orderStatus=ORDER_WAIT_SENDGOODS");
             }else{
              Toast('请重试')
             }

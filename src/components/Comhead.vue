@@ -70,6 +70,9 @@ export default class Comhead extends Vue {
   skin: any;
   @Prop({ required: false })
   contextIndex: any;
+    @Prop({ required: false })
+      gouser: any;
+
 
   type = "H5";
   leftScale = "1.5";
@@ -78,11 +81,14 @@ export default class Comhead extends Vue {
     this.$emit("rightClick");
   }
   leftClick() {
-    if (this.isLeftIcon == "icon-zuo") {
+
+    if (this.isLeftIcon == "icon-zuo" && !this.gouser) {
       this.$router.go(-1);
       return;
     }
+
     this.$emit("leftClick");
+
   }
   changecontextIndex(contextIndex) {
     if (contextIndex == 1) {

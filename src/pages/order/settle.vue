@@ -64,7 +64,9 @@
   </div>
   <van-cell title="配送方式"  value="快递" />   
   <van-cell title="运费" :value="freight.toFixed(2)" />
-  <van-cell title="发票抬头" is-link :value="titlevalue"  @click="goinvoice()"/>
+  <van-cell title="发票信息" is-link :value="titlevalue"  @click="goinvoice()"/>
+  <van-cell class="fonll" title="抬头"  :value="invoiceTitle"  v-if="titlevalue =='单位'"/>
+  <van-cell class="fonll" title="纳税人识别号"  :value="invoiceNo" v-if="titlevalue =='单位'"/>
   <van-field v-model="remark" label="卖家留言选填：" type="textarea" placeholder="选填内容已和卖家协商确认" rows="1" autosize/>
 </van-cell-group>
 <div style="margin: 0 10px;text-align:right;padding:10px;">
@@ -125,11 +127,22 @@ freight=0;
   }
   // 优惠券跳转
   goconpon(){
-    this.$router.push({
-      name: "selectcoupon",
-        query:{
+
+if(this.couponList.length){
+  return
+}
+
+    let data = {
         prepareId:this.prepareId
       }
+
+if(this.address){
+  (<any>Object).assign(data,{addressId:this.address.addressId})
+}
+
+    this.$router.push({
+      name: "selectcoupon",
+        query:data
     })
   }
 
@@ -180,8 +193,9 @@ freight=0;
         }
         console.log(res.data.data);
         this.currentCoupon = res.data.data.currentCoupon
-this.couponList = res.data.data.couponList
-
+        
+        this.couponList = res.data.data.couponList
+        
         this.shopCartList = res.data.data.shopCartList;
         this.address = res.data.data.address;
         this.totalPrice = res.data.data.totalPrice ;
@@ -300,6 +314,11 @@ this.couponList = res.data.data.couponList
 <style>
 .van-field .van-cell__title{
   max-width: 100px;
+}
+.fonll>.van-cell__value{
+ overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 </style>
 

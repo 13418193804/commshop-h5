@@ -28,9 +28,6 @@ export default class App extends Vue {
 @import './style/_var';
 @import './style/reset';
 
-
-
-
 .lineTwo{
    overflow: hidden;
   text-overflow: ellipsis;
