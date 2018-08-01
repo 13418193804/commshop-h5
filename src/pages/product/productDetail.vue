@@ -62,9 +62,12 @@
               <template slot="title">
                 <!-- <img v-lazy="'1'" :style="handlePX('width',112)+handlePX('height',26)"/> -->
                 <span class="van-cell-text" v-if="couponListOne.couponList && couponListOne.couponList.length>0">领券:</span>
-                <span class="full_bg" v-if="couponListOne.couponList&& couponListOne.couponList.length>0">
-                  {{couponListOne.couponList[0].couponName}} 
+                <span class="full_bg" v-for="(item,index) in couponList" :key="index">
+                  {{item.couponName}}
                 </span>
+                <!-- <span class="full_bg" v-if="couponListOne.couponList&& couponListOne.couponList.length>0">
+                  {{couponListOne.couponList[0].couponName}}
+                </span> -->
               </template>
             </van-cell>
             <van-cell v-if="detatil.remark">
