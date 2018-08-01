@@ -190,8 +190,7 @@ if(this.isWeiXin){
     this.address.contactname = this.$route.query.contactname; 
     this.address.contactmobile = this.$route.query.contactmobile; 
 
-       var ua:any = navigator.userAgent.toLowerCase();
-    if (ua.match(/MicroMessenger/i) == "micromessenger") {
+    if (navigator.userAgent.toLowerCase().match(/MicroMessenger/i)[0] == "micromessenger") {
         this.isWeiXin = true
     }else{
         this.isWeiXin = false

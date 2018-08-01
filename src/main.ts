@@ -25,12 +25,11 @@ Vue.use(Api);
 Vue.use(Vant);
 
 router.beforeEach((to, from, next) => {
-    let ua: any = navigator.userAgent.toLowerCase();
-    if (ua.match(/MicroMessenger/i) === 'micromessenger') {
-
+    if (navigator.userAgent.toLowerCase().match(/MicroMessenger/i)[0] == "micromessenger") {
         if (localStorage.master !== 'true') {
             if (!localStorage.openId || !localStorage.timeStamp || !localStorage.nonceStr || !localStorage.package) {
                 window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx2e2d97a4e10ef2b6&redirect_uri=https://m.yourhr.com.cn/zhongyi/wechat/enter/bind?action=viewtest&response_type=code&scope=snsapi_userinfo&state=${window.location.href}#wechat_redirect`
+                next();
             } else {
                 next();
             }
