@@ -210,4 +210,7 @@ export default class goodscomment extends Vue {
   text-align: center;
   border-radius: 6px;
 }
+.star-box img{
+  margin-right:5px;
+}
 </style>
