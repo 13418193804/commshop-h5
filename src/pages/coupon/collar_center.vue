@@ -1,6 +1,6 @@
 <template>
   <div class="tab-contents">
-    <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="领券中心" isRightIcon="true"  ></comhead>
+    <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  :title="goodsId ?'商品适用优惠券':'领券中心'" isRightIcon="true"  ></comhead>
           <ul v-if="couponList.length>0"
   v-infinite-scroll="loadMore"
   :infinite-scroll-disabled="loading"
