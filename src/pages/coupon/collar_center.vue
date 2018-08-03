@@ -20,10 +20,12 @@
               <div class="coupon_car_right" :style="handlePX('padding-right', 42)+handlePX('padding-top', 30)">
                 <van-button size="mini" :style="handlePX('width', 135)+handlePX('height', 40)" style="border:0;background-color:rgba(255,255,255,0.5);color:#DAA000;" @click="addcoupon(item.id)">领券</van-button>
                 <div style="color:rgba(255,255,255,0.8);" :style="handlePX('font-size', 26)">
-                  <span v-if="item.getStatus  && item.validityType == 'RELATIVE_DATE'">
+                 
+                <span v-if="!item.getStatus  && item.validityType == 'RELATIVE_DATE'" >{{item.days}}天有效</span>
+                 <span v-else>
                     {{item.createTime.split(' ')[0]}} - {{item.endDate.split(' ')[0]}}
                     </span>
-                <span v-else>{{item.days}}天有效</span></div>
+                    </div>
               </div>
             </div>
             <div class="coupon_car_bottom" :style="handlePX('line-height', 52)+handlePX('font-size', 20)+handlePX('padding-left', 40)">   <span v-if="item.conditionType == 'NEW_USER'">新人专享;</span>               <span v-if="item.rangeType == 'ALL'">全场通用;</span>               <span v-else>{{item.catName}}类商品适用;</span>               特价商品或其他优惠活动商品不可叠加使用；特价商品或其他优惠活动商品不可叠加使用</div>
@@ -39,9 +41,10 @@
               <div class="coupon_car_right" :style="handlePX('padding-right', 42)+handlePX('padding-top', 30)">
                 <van-button size="mini" :style="handlePX('width', 135)+handlePX('height', 40)" style="border:0;background-color:rgba(255,255,255,0.9);color:#fd5f61;">已领取</van-button>
                  <div style="color:rgba(255,255,255,0.8);" :style="handlePX('font-size', 26)">
-                   <span v-if="item.getStatus  && item.validityType == 'RELATIVE_DATE'">
-                     {{item.createTime.split(' ')[0]}} - {{item.endDate.split(' ')[0]}}
-                     </span><span v-else>{{item.days}}天有效</span>
+                 <span v-if="!item.getStatus  && item.validityType == 'RELATIVE_DATE'" >{{item.days}}天有效</span>
+                 <span v-else>
+                    {{item.createTime.split(' ')[0]}} - {{item.endDate.split(' ')[0]}}
+                    </span>
                      </div>
               </div>
             </div>
@@ -57,7 +60,12 @@
                 <div style="color:rgba(255,255,255,0.8);">满{{item.fullDenomination}}减{{item.couponDenomination}}</div>
               </div>
               <div class="coupon_car_right" style="align-self: flex-end;" :style="handlePX('padding-right', 42)+handlePX('padding-top', 30)">
-                <div style="color:rgba(255,255,255,0.8);" :style="handlePX('font-size', 26)"><span v-if="item.getStatus  && item.validityType == 'RELATIVE_DATE'">{{item.createTime.split(' ')[0]}} - {{item.endDate.split(' ')[0]}}</span><span v-else>{{item.days}}天有效</span></div>
+                <div style="color:rgba(255,255,255,0.8);" :style="handlePX('font-size', 26)">
+                  <span v-if="!item.getStatus  && item.validityType == 'RELATIVE_DATE'" >{{item.days}}天有效</span>
+                 <span v-else>
+                    {{item.createTime.split(' ')[0]}} - {{item.endDate.split(' ')[0]}}
+                    </span>
+                  </div>
               </div>
             </div>
             <div class="coupon_car_bottom" :style="handlePX('line-height', 52)+handlePX('font-size', 20)+handlePX('padding-left', 40)">   <span v-if="item.conditionType == 'NEW_USER'">新人专享;</span>               <span v-if="item.rangeType == 'ALL'">全场通用;</span>               <span v-else>{{item.catName}}类商品适用;</span>               特价商品或其他优惠活动商品不可叠加使用；特价商品或其他优惠活动商品不可叠加使用</div>
