@@ -783,6 +783,10 @@ selectPageId = ""
 
   loading=false
   mounted() {
+
+//        if (navigator.userAgent.toLowerCase().match(/MicroMessenger/i) && navigator.userAgent.toLowerCase().match(/MicroMessenger/i)[0] == "micromessenger" && (!localStorage.openId || !localStorage.timeStamp || !localStorage.nonceStr || !localStorage.package)) {
+//      window.location.reload();
+// }
     let status = false
     if (this.$route.query.active) {
       status = true
@@ -804,6 +808,8 @@ selectPageId = ""
     ) {
       this.getCartList();
     }
+
+    
   }
 }
 </script>

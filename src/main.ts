@@ -29,15 +29,18 @@ Component.registerHooks([
     'beforeRouteEnter',
     'beforeRouteLeave',
     'beforeRouteUpdate' // for vue-router 2.2+
-  ])
+])
 
 router.beforeEach((to, from, next) => {
-   
-    if (navigator.userAgent.toLowerCase().match(/MicroMessenger/i) &&  navigator.userAgent.toLowerCase().match(/MicroMessenger/i)[0] == "micromessenger") {
-        if (localStorage.master !== 'true') {
-            if (!localStorage.openId || !localStorage.timeStamp || !localStorage.nonceStr || !localStorage.package) {
-                window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx2e2d97a4e10ef2b6&redirect_uri=https://m.yourhr.com.cn/zhongyi/wechat/enter/bind?action=viewtest&response_type=code&scope=snsapi_userinfo&state=${window.location.href}#wechat_redirect`
-                next();
+    if (to.fullPath.indexOf('/sign?recommontId=') === -1 && to.fullPath !== '/login') {
+        if (navigator.userAgent.toLowerCase().match(/MicroMessenger/i) && navigator.userAgent.toLowerCase().match(/MicroMessenger/i)[0] == "micromessenger") {
+            if (localStorage.master !== 'true') {
+                if (!localStorage.openId || !localStorage.timeStamp || !localStorage.nonceStr || !localStorage.package) {
+                    window.location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx2e2d97a4e10ef2b6&redirect_uri=https://m.yourhr.com.cn/zhongyi/wechat/enter/bind?action=viewtest&response_type=code&scope=snsapi_userinfo&state=${window.location.href}#wechat_redirect`
+                    next();
+                } else {
+                    next();
+                }
             } else {
                 next();
             }
@@ -46,6 +49,7 @@ router.beforeEach((to, from, next) => {
         }
     } else {
         next();
+
     }
 });
 
