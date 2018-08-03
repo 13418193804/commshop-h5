@@ -24,7 +24,10 @@ Vue.use(Vuex);
 Vue.use(Api);
 Vue.use(Vant);
 
+
+
 router.beforeEach((to, from, next) => {
+   
     if (navigator.userAgent.toLowerCase().match(/MicroMessenger/i) &&  navigator.userAgent.toLowerCase().match(/MicroMessenger/i)[0] == "micromessenger") {
         if (localStorage.master !== 'true') {
             if (!localStorage.openId || !localStorage.timeStamp || !localStorage.nonceStr || !localStorage.package) {

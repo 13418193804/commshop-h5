@@ -81,9 +81,10 @@ export default class share_code extends Vue {
   }
   mounted() {
 
-      // window.location.reload();
-
       this.queryuserinfo();
+
+       window.location.replace('https://m.yourhr.com.cn/custom/#/share_code');
+    
   }
 
 }

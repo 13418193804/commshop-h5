@@ -107,10 +107,6 @@ export default class shopIndex extends Vue {
 
         }
         this.$router.push("/");
-        setTimeout(()=>{
-        window.location.reload();
-        },200)
-
       }
       
     );

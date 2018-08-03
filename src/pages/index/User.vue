@@ -23,11 +23,14 @@
 
 <div style="font-size:16px;margin:5px 0;" @click="go_essential()">
     <img v-if="userIcon" v-lazy="userIcon" style="width:80px;height:80px;border-radius: 80px;"/>
-    <div  v-else> <img src="../../assets/image/userIcon.png" style="width:80px;height:80px;border-radius: 80px;"/>
+     <img v-else src="../../assets/image/userIcon.png" style="width:80px;height:80px;border-radius: 80px;"/>
+    
+    <div style="text-align:center;" v-if="user.loginName||user.nickName">
+      {{user.nickName?user.nickName:user.loginName}}
+      </div>
+       <div  v-else> 
           <p style="text-align: center;margin-top: 2px;">登录/注册</p>
     </div>
-    
-    <div style="text-align:center;" v-if="user">{{user.nickName?user.nickName:user.loginName}}</div>
 </div>
       </div>
 
