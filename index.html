@@ -30,7 +30,6 @@
 
 
 function  configWechatSDK (){
-
   wx.config({
         debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
         appId: 'wx2e2d97a4e10ef2b6', // 必填，公众号的唯一标识
@@ -43,7 +42,17 @@ function  configWechatSDK (){
 
 
       wx.ready(function () {
-    
+
+        localStorage.configTime =  formatDateTime(new Date());
+        wx.error(function(res){
+        // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+ 
+        localStorage.errorTime =   formatDateTime(new Date())
+
+        //     localStorage.timeStamp  = "";
+    // localStorage.nonceStr = "";
+    // localStorage.package ="";
+    });
 //分享给朋友
 wx.onMenuShareAppMessage({
   title:"邀请你去'中宜商城'", // 分享标题
@@ -74,16 +83,7 @@ wx.onMenuShareAppMessage({
         }
     });
 
-    wx.error(function(res){
-        // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
-  
-    
 
-        //     localStorage.timeStamp  = "";
-    // localStorage.nonceStr = "";
-    // localStorage.package ="";
-
-    });
 
 
 
@@ -93,6 +93,37 @@ wx.onMenuShareAppMessage({
 });
 
 }
+
+function formatDateTime(theDate) {
+
+var _hour = theDate.getHours();
+
+var _minute = theDate.getMinutes();
+
+var _second = theDate.getSeconds();
+
+var _year = theDate.getFullYear()
+
+var _month = theDate.getMonth();
+
+var _date = theDate.getDate();
+
+if(_hour<10){_hour="0"+_hour ;}
+
+if(_minute<10){_minute="0"+_minute;  }
+
+if(_second<10){_second="0"+_second  }
+
+_month = _month + 1;
+
+if(_month < 10){_month = "0" + _month;}
+
+if(_date<10){_date="0"+_date  }
+
+return  _year + "-" + _month + "-" + _date + " " + _hour + ":" + _minute + ":" + _second ;
+
+}
+
 
     (function (m, ei, q, i, a, j, s) {
       m[i] = m[i] || function () {

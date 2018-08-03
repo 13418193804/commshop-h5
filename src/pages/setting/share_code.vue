@@ -82,40 +82,93 @@ export default class share_code extends Vue {
 
   mounted() {
 
-      this.queryuserinfo();
+   if (
+      this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].userId !=
+        "" &&
+      this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO].token != ""
+    ) {
+    
+        this.queryuserinfo();
+      if(localStorage.configTime &&   localStorage.errorTime  && localStorage.configTime == localStorage.errorTime){
 
-      // window.location.replace('https://m.yourhr.com.cn/custom/#/share_code');
-this.formatDateTime(new Date())
+     this.getSign()
+      }
+     
+    }else{
+this.$router.replace('/login');
+    }
+
   }
- formatDateTime(theDate) {
 
-var _hour = theDate.getHours();
 
-var _minute = theDate.getMinutes();
+getSign(){
+    Vue.prototype.$reqFormPost(
+      "/wechat/pub/sign",
+      {
+        userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .userId,
+        token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .token
+      },
+      res => {
+        if (res == null) {
+          console.log("网络请求错误！");
+          return;
+        }
+        if (res.data.status != 200) {
+          console.log(
+            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+          );
+          Toast(res.data.message);
+          return;
+        }
 
-var _second = theDate.getSeconds();
+        //     let a = this.formatDateTime(new Date());
+        // sessionStorage.shareTime = a;
 
-var _year = theDate.getFullYear()
+        localStorage.timeStamp= res.data.data.timeStamp
+        localStorage.nonceStr = res.data.data.nonceStr
+        localStorage.package = res.data.data.sign
+        setTimeout(()=>{
+        window.location.replace('https://m.yourhr.com.cn/custom/#/share_code');
+        },500)
+          console.log(res.data)
+      }
+    );
+}
 
-var _month = theDate.getMonth();
 
-var _date = theDate.getDate();
 
-if(_hour<10){_hour="0"+_hour ;}
 
-if(_minute<10){_minute="0"+_minute;  }
 
-if(_second<10){_second="0"+_second  }
 
-_month = _month + 1;
+   timeFn(d1) {
+     //di作为一个变量传进来
+    //如果时间格式是正确的，那下面这一步转化时间格式就可以不用了
+    var dateBegin = new Date(d1.replace(/-/g, "/"));//将-转化为/，使用new Date
+    var dateEnd = new Date();//获取当前时间
+    var dateDiff = dateEnd.getTime() - dateBegin.getTime();//时间差的毫秒数
+    var dayDiff = Math.floor(dateDiff / (24 * 3600 * 1000));//计算出相差天数
+    var leave1=dateDiff%(24*3600*1000)    //计算天数后剩余的毫秒数
+    var hours=Math.floor(leave1/(3600*1000))//计算出小时数
+    //计算相差分钟数
+    var leave2=leave1%(3600*1000)    //计算小时数后剩余的毫秒数
+    var minutes=Math.floor(leave2/(60*1000))//计算相差分钟数
+    //计算相差秒数
+    var leave3=leave2%(60*1000)      //计算分钟数后剩余的毫秒数
+    var seconds=Math.round(leave3/1000)
 
-if(_month < 10){_month = "0" + _month;}
 
-if(_date<10){_date="0"+_date  }
+  
+            if(hours>0||dayDiff>0||minutes>10|| !sessionStorage.shareTime ){
+              this.getSign()
+            }
 
-return  _year + "-" + _month + "-" + _date + " " + _hour + ":" + _minute + ":" + _second ;
 
 }
+
+
+
 }
 </script>
 

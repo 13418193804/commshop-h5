@@ -11,6 +11,7 @@ import Vant from 'vant';
 import Api from './config/fetch';
 import MutationTreeType from './store/mutation-types';
 import MintUI from 'mint-ui';
+import Component from 'vue-class-component';
 
 Vue.use(MutationTreeType);
 Vue.use(VueLazyload, {
@@ -24,7 +25,11 @@ Vue.use(Vuex);
 Vue.use(Api);
 Vue.use(Vant);
 
-
+Component.registerHooks([
+    'beforeRouteEnter',
+    'beforeRouteLeave',
+    'beforeRouteUpdate' // for vue-router 2.2+
+  ])
 
 router.beforeEach((to, from, next) => {
    
