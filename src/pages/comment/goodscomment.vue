@@ -42,9 +42,10 @@
         </ul>
 <div class="flex flex-pack-center flex-align-center" style="font-size:14px;padding:15px;">
 
-    <div v-if="!loading">加载中...</div>
+<div v-if="commentList>0">
+    <div v-if="!loading" >加载中...</div>
     <div v-else>-</div>
-  
+  </div>
 </div>
 
   </div>

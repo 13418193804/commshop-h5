@@ -26,7 +26,7 @@
                 <span v-else>{{item.days}}天有效</span></div>
               </div>
             </div>
-            <div class="coupon_car_bottom" :style="handlePX('line-height', 52)+handlePX('font-size', 20)+handlePX('padding-left', 40)">全场通用；特价商品或其他优惠活动商品不可叠加使用</div>
+            <div class="coupon_car_bottom" :style="handlePX('line-height', 52)+handlePX('font-size', 20)+handlePX('padding-left', 40)">   <span v-if="item.conditionType == 'NEW_USER'">新人专享;</span>               <span v-if="item.rangeType == 'ALL'">全场通用;</span>               <span v-else>{{item.catName}}类商品适用;</span>               特价商品或其他优惠活动商品不可叠加使用；特价商品或其他优惠活动商品不可叠加使用</div>
           </div>
 
           <!-- 已领取 -->
@@ -45,7 +45,7 @@
                      </div>
               </div>
             </div>
-            <div class="coupon_car_bottom" :style="handlePX('line-height', 52)+handlePX('font-size', 20)+handlePX('padding-left', 40)">全场通用；特价商品或其他优惠活动商品不可叠加使用</div>
+            <div class="coupon_car_bottom" :style="handlePX('line-height', 52)+handlePX('font-size', 20)+handlePX('padding-left', 40)">   <span v-if="item.conditionType == 'NEW_USER'">新人专享;</span>               <span v-if="item.rangeType == 'ALL'">全场通用;</span>               <span v-else>{{item.catName}}类商品适用;</span>               特价商品或其他优惠活动商品不可叠加使用；特价商品或其他优惠活动商品不可叠加使用</div>
           </div>
 
 
@@ -60,7 +60,7 @@
                 <div style="color:rgba(255,255,255,0.8);" :style="handlePX('font-size', 26)"><span v-if="item.getStatus  && item.validityType == 'RELATIVE_DATE'">{{item.createTime.split(' ')[0]}} - {{item.endDate.split(' ')[0]}}</span><span v-else>{{item.days}}天有效</span></div>
               </div>
             </div>
-            <div class="coupon_car_bottom" :style="handlePX('line-height', 52)+handlePX('font-size', 20)+handlePX('padding-left', 40)">全场通用；特价商品或其他优惠活动商品不可叠加使用</div>
+            <div class="coupon_car_bottom" :style="handlePX('line-height', 52)+handlePX('font-size', 20)+handlePX('padding-left', 40)">   <span v-if="item.conditionType == 'NEW_USER'">新人专享;</span>               <span v-if="item.rangeType == 'ALL'">全场通用;</span>               <span v-else>{{item.catName}}类商品适用;</span>               特价商品或其他优惠活动商品不可叠加使用；特价商品或其他优惠活动商品不可叠加使用</div>
           </div>
           </div>
 

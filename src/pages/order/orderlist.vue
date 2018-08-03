@@ -543,13 +543,10 @@ doDeleteOrder(orderId){
     });
   }
   changePage(index) {
-   
     this.active = index;
     this.getOrderList(this.orderTitleList[index].status,true);
-
   }
   mounted() {
-
     this.orderTitleList.forEach((item, index) => {
       if (this.$route.query.orderStatus == item.status) {
         this.active = index;
@@ -559,8 +556,6 @@ doDeleteOrder(orderId){
     if (this.$route.query.orderStatus === "REFUND") {
       return;
     }
-
-
     // this.getOrderList(this.orderTitleList[this.active].status);
   }
 }

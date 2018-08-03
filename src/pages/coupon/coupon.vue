@@ -39,7 +39,7 @@
                 <!-- <div style="color:rgba(255,255,255,0.8);" :style="handlePX('font-size', 26)">2018.03.24-2018.03.24</div> -->
               </div>
             </div>
-            <div class="coupon_car_bottom" :style="handlePX('line-height', 52)+handlePX('font-size', 20)+handlePX('padding-left', 40)">全场通用；特价商品或其他优惠活动商品不可叠加使用</div>
+            <div class="coupon_car_bottom" :style="handlePX('line-height', 52)+handlePX('font-size', 20)+handlePX('padding-left', 40)">   <span v-if="item.conditionType == 'NEW_USER'">新人专享;</span>               <span v-if="item.rangeType == 'ALL'">全场通用;</span>               <span v-else>{{item.catName}}类商品适用;</span>               特价商品或其他优惠活动商品不可叠加使用；特价商品或其他优惠活动商品不可叠加使用</div>
           </div>
           <!-- 已使用列表 -->      
           <div class="coupon_used" v-if="item.status == 'USED' && active == 1 &&item.coupon" :style="handlePX('width', 702)+handlePX('height', 248)+handlePX('margin-top', 20)">
@@ -53,7 +53,7 @@
                 <!-- <div style="color:rgba(255,255,255,0.8);" :style="handlePX('font-size', 26)">2018.03.24-2018.03.24</div> -->
               </div>
             </div>
-            <div class="coupon_car_bottom" :style="handlePX('line-height', 52)+handlePX('font-size', 20)+handlePX('padding-left', 40)">全场通用；特价商品或其他优惠活动商品不可叠加使用</div>
+            <div class="coupon_car_bottom" :style="handlePX('line-height', 52)+handlePX('font-size', 20)+handlePX('padding-left', 40)">   <span v-if="item.conditionType == 'NEW_USER'">新人专享;</span>               <span v-if="item.rangeType == 'ALL'">全场通用;</span>               <span v-else>{{item.catName}}类商品适用;</span>               特价商品或其他优惠活动商品不可叠加使用；特价商品或其他优惠活动商品不可叠加使用</div>
           </div>
 
           <!-- 已过期列表 -->      
@@ -67,7 +67,7 @@
                 <!-- <div style="color:rgba(255,255,255,0.8);" :style="handlePX('font-size', 26)">2018.03.24-2018.03.24</div> -->
               </div>
             </div>
-            <div class="coupon_car_bottom" :style="handlePX('line-height', 52)+handlePX('font-size', 20)+handlePX('padding-left', 40)">全场通用；特价商品或其他优惠活动商品不可叠加使用</div>
+            <div class="coupon_car_bottom" :style="handlePX('line-height', 52)+handlePX('font-size', 20)+handlePX('padding-left', 40)">   <span v-if="item.conditionType == 'NEW_USER'">新人专享;</span>               <span v-if="item.rangeType == 'ALL'">全场通用;</span>               <span v-else>{{item.catName}}类商品适用;</span>               特价商品或其他优惠活动商品不可叠加使用；特价商品或其他优惠活动商品不可叠加使用</div>
           </div>
         </div>
         </li>
