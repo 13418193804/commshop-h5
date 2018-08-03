@@ -1,8 +1,8 @@
 <<<<<<< HEAD
-<!DOCTYPE html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link rel=stylesheet href=https://unpkg.com/vant/lib/vant-css/index.css><script src=https://gw.alipayobjects.com/as/g/h5-lib/alipayjsapi/3.1.0/alipayjsapi.min.js></script><link rel=stylesheet href=https://unpkg.com/mint-ui/lib/style.css><script src=https://res.wx.qq.com/open/js/jweixin-1.2.0.js></script><script src="https://pv.sohu.com/cityjson?ie=utf-8"></script><link rel=icon href=https://m.yourhr.com.cn/zhongyi/upload/20180723/file5b54c4ebd29938253db3d26c.png type=image/x-icon><link rel="shortcut icon" href=https://m.yourhr.com.cn/zhongyi/upload/20180723/file5b54c4ebd29938253db3d26c.png type=image/x-icon><title>中宜商城</title><link href=./static/css/app.2429846ed95abdef0026af91d6eb2e37.css rel=stylesheet></head><body onload=configWechatSDK()><div id=app></div><script type=text/javascript>function  configWechatSDK (){
+<!DOCTYPE html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link rel=stylesheet href=https://unpkg.com/vant/lib/vant-css/index.css><script src=https://gw.alipayobjects.com/as/g/h5-lib/alipayjsapi/3.1.0/alipayjsapi.min.js></script><link rel=stylesheet href=https://unpkg.com/mint-ui/lib/style.css><script src=https://res.wx.qq.com/open/js/jweixin-1.2.0.js></script><script src="https://pv.sohu.com/cityjson?ie=utf-8"></script><link rel=icon href=https://m.yourhr.com.cn/zhongyi/upload/20180723/file5b54c4ebd29938253db3d26c.png type=image/x-icon><link rel="shortcut icon" href=https://m.yourhr.com.cn/zhongyi/upload/20180723/file5b54c4ebd29938253db3d26c.png type=image/x-icon><title>中宜商城</title><link href=./static/css/app.9d8d7ee5e5b1ee28817746ad3d7cd5f0.css rel=stylesheet></head><body onload=configWechatSDK()><div id=app></div><script type=text/javascript>function  configWechatSDK (){
 =======
-<!DOCTYPE html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link rel=stylesheet href=https://unpkg.com/vant/lib/vant-css/index.css><script src=https://gw.alipayobjects.com/as/g/h5-lib/alipayjsapi/3.1.0/alipayjsapi.min.js></script><link rel=stylesheet href=https://unpkg.com/mint-ui/lib/style.css><script src=https://res.wx.qq.com/open/js/jweixin-1.2.0.js></script><script src="https://pv.sohu.com/cityjson?ie=utf-8"></script><link rel=icon href=https://m.yourhr.com.cn/zhongyi/upload/20180723/file5b54c4ebd29938253db3d26c.png type=image/x-icon><link rel="shortcut icon" href=https://m.yourhr.com.cn/zhongyi/upload/20180723/file5b54c4ebd29938253db3d26c.png type=image/x-icon><title>中宜商城</title><link href=./static/css/app.d093db6d6ed0b802695d5b7f773e2b67.css rel=stylesheet></head><body onload=configWechatSDK()><div id=app></div><script type=text/javascript>function  configWechatSDK (){
->>>>>>> d0c3fa9a285ddf56bfa064a8c1f5c964d23b3d53
+<!DOCTYPE html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link rel=stylesheet href=https://unpkg.com/vant/lib/vant-css/index.css><script src=https://gw.alipayobjects.com/as/g/h5-lib/alipayjsapi/3.1.0/alipayjsapi.min.js></script><link rel=stylesheet href=https://unpkg.com/mint-ui/lib/style.css><script src=https://res.wx.qq.com/open/js/jweixin-1.2.0.js></script><script src="https://pv.sohu.com/cityjson?ie=utf-8"></script><link rel=icon href=https://m.yourhr.com.cn/zhongyi/upload/20180723/file5b54c4ebd29938253db3d26c.png type=image/x-icon><link rel="shortcut icon" href=https://m.yourhr.com.cn/zhongyi/upload/20180723/file5b54c4ebd29938253db3d26c.png type=image/x-icon><title>中宜商城</title><link href=./static/css/app.90dd5429a7db4105eb85e4c67a5f1763.css rel=stylesheet></head><body onload=configWechatSDK()><div id=app></div><script type=text/javascript>function  configWechatSDK (){
+>>>>>>> c9a9b4e8ec358fa086a51d6ae450e91c12a49896
 
   wx.config({
         debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
@@ -13,10 +13,10 @@
         jsApiList: ['chooseWXPay','onMenuShareTimeline','onMenuShareAppMessage'] // 必填，需要使用的JS接口列表
       });
 
-
-
       wx.ready(function () {
-    
+
+
+
 //分享给朋友
 wx.onMenuShareAppMessage({
   title:"邀请你去'中宜商城'", // 分享标题
@@ -46,13 +46,11 @@ wx.onMenuShareAppMessage({
             // 用户取消分享后执行的回调函数
         }
     });
-
     wx.error(function(res){
         // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
-  
-    
-
-        //     localStorage.timeStamp  = "";
+        alert("errorMSG:"+res);
+      
+    //     localStorage.timeStamp  = "";
     // localStorage.nonceStr = "";
     // localStorage.package ="";
 
@@ -104,10 +102,14 @@ wx.onMenuShareAppMessage({
     window.getAddressIP = function(){
       return returnCitySN;
 <<<<<<< HEAD
-    }</script><script type=text/javascript src=./static/js/manifest.25b7e0f763546d47973b.js></script><script type=text/javascript src=./static/js/vendor.359ea55dd0718274aaf5.js></script><script type=text/javascript src=./static/js/app.3c0494247f84dab147ae.js></script></body><style>@font-face {
+<<<<<<< HEAD
+    }</script><script type=text/javascript src=./static/js/manifest.40939713b5ba9c98c062.js></script><script type=text/javascript src=./static/js/vendor.78c03fede0ac3cc13913.js></script><script type=text/javascript src=./static/js/app.e73db27bac0fe4c721cc.js></script></body><style>@font-face {
 =======
-    }</script><script type=text/javascript src=./static/js/manifest.654108c971d0ba575a84.js></script><script type=text/javascript src=./static/js/vendor.78c03fede0ac3cc13913.js></script><script type=text/javascript src=./static/js/app.741080ac7e38a00a43f0.js></script></body><style>@font-face {
->>>>>>> d0c3fa9a285ddf56bfa064a8c1f5c964d23b3d53
+    }</script><script type=text/javascript src=./static/js/manifest.85d4541b4fe080f04307.js></script><script type=text/javascript src=./static/js/vendor.359ea55dd0718274aaf5.js></script><script type=text/javascript src=./static/js/app.5e6d3a64eeef6b90fda0.js></script></body><style>@font-face {
+>>>>>>> 8f117073574baca9c612fe05310562b80b9f2bb2
+=======
+    }</script><script type=text/javascript src=./static/js/manifest.5f34520b7a7c8ce08ce4.js></script><script type=text/javascript src=./static/js/vendor.359ea55dd0718274aaf5.js></script><script type=text/javascript src=./static/js/app.53a1ead8352ef4bffdc9.js></script></body><style>@font-face {
+>>>>>>> c9a9b4e8ec358fa086a51d6ae450e91c12a49896
     font-family: "iconfont";
     src: url('iconfont.eot?t=1527147826115');
     /* IE9*/
