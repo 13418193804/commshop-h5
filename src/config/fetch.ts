@@ -8,6 +8,30 @@ const bizUrl = "https://m.yourhr.com.cn/zhongyi";
 
 //this.axios.post("http://119.23.44.223:8080/game/ssq/bet?token=3883e10d01054a6996e9b601dc4d368f&userid=cyl45dbcb75d39b4e47aaccf77d1bde22ef",
 
+
+axios.interceptors.response.use(response => {
+    // 系统报错
+    if (response.data && response.data.err !== 0) {
+        console.log('正常')
+    }
+
+    return response;
+}, error => {
+ 
+    if(!error.response){
+        return Promise.resolve({
+            data:{
+                message:"网络连接失败，请检查网络。",
+                status:404
+            }
+        })
+    }
+    return Promise.resolve(error.response)
+})
+
+
+
+
 const querystring = require('querystring');
 
 

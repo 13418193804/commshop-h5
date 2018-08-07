@@ -7,7 +7,7 @@
                 <img src="../../assets/image/金币.png" :style="handlePX('width', 55)+handlePX('height', 55)" style="vertical-align: middle;"/>
                 <span>积分余额</span>
             </div>
-            <div :style="handlePX('margin-top', 20)" style="color:#ffc600;">￥{{award.awardBalance}}</div>
+            <div :style="handlePX('margin-top', 20)" style="color:#ffc600;">￥{{award.awardBalance.toFixed(2)}}</div>
             <div style="color:#ababab; visibility: hidden;" @click="gogetreward()" >提现>></div>
             <van-button :style="handlePX('width', 220)+handlePX('height', 60)+handlePX('line-height', 60)+handlePX('margin-top', 20)" @click="gomember()">我的成员</van-button>
         </div>
@@ -16,7 +16,7 @@
                 <img src="../../assets/image/金币.png" :style="handlePX('width', 55)+handlePX('height', 55)" style="vertical-align: middle;"/>
                 <span >累计获取积分</span>
             </div>
-            <div :style="handlePX('margin-top', 20)" style="color:#ffc600;">￥{{award.awardAmount}}</div>
+            <div :style="handlePX('margin-top', 20)" style="color:#ffc600;">￥{{award.awardAmount.toFixed(2)}}</div>
             <div style="color:#ababab;visibility: hidden;" @click="gorewarddetail()" >明细>></div>
             <van-button :style="handlePX('width', 220)+handlePX('height', 60)+handlePX('line-height', 60)+handlePX('margin-top', 20)" @click="$router.push('/rewardtext')">积分规则</van-button>
         </div>
@@ -33,9 +33,9 @@
           <li v-for="(item, index) in awardList" :key="index" 
          style="border-bottom:1px solid #e7e7e7;font-size:12px;padding:10px 0;line-height: 22px;">
       
-         <div v-if="item.awardType == 'DISTRIBUTE'">{{item.member.nickName}}在{{item.createTime}}消费{{item.payTotal}}元，您获得{{item.awardAmount}}积分奖励。</div>
+         <div v-if="item.awardType == 'DISTRIBUTE'">{{item.member.nickName}}在{{item.createTime}}消费{{item.payTotal}}元，您获得{{item.awardAmount.toFixed(2)}}积分奖励。</div>
          
-         <div v-else>  您在{{item.createTime}}消费{{item.payTotal}}元，您获得{{item.awardAmount}}积分奖励。</div>
+         <div v-else>  您在{{item.createTime}}消费{{item.payTotal.toFixed(2)}}元，您获得{{item.awardAmount.toFixed(2)}}积分奖励。</div>
          
          </li>
 

@@ -86,22 +86,31 @@
         </div>
 
         <div class="userCommentList" id="detail" style="background-color:#ffffff;margin-top:10px;">
-          <van-cell-group>
-            <van-cell is-link @click="go_comment()">
+
+
+            <van-cell is-link @click="go_comment()" >
               <template slot="title">
-                <span class="van-cell-text">用户评价({{commentnum}})</span>
+                <span class="van-cell-text">用户评价<span style="margin-left:10px;">({{commentnum}})</span></span>
               </template>
               <template>
                 <span>{{praise}}%好评</span>
               </template>
             </van-cell>
-          </van-cell-group>
+
+
           <div  v-for="(item,index) in detatil.commentList" :key="index" v-if="index == 0">
             <div class="userComment" style="padding:10px 15px;">
-              <div>
+              <div class="flex">
                 <img v-if="item.user.userIcon" v-lazy="item.user.userIcon" :style="handlePX('width',45)+handlePX('height',45)" style="vertical-align:middle;border-radius:50%;"/>                
                 <img v-else src="../../assets/image/userIcon.png" :style="handlePX('width',45)+handlePX('height',45)" style="vertical-align:middle;border-radius:50%;"/>
-                <span>{{item.user.nickName}}</span>
+                <div class="textLabel" style="    max-width: 50%;">{{item.user.nickName}}</div>
+                 <div class="star-box" style="margin:0 10px;">
+        <img v-for="(star,index) in item.star" :key="index" :src="require('../../assets/image/星星.png')" style="margin-right:5px;" :style="handlePX('width',37)+handlePX('height',37)"/>
+        <img v-for="(star,index) in 5-item.star" :key="index" :src="require('../../assets/image/灰色星星.png')" style="margin-right:5px;" :style="handlePX('width',37)+handlePX('height',37)"/>
+    
+      </div>
+
+
               </div>
                       <div style="color:#999999;font-size:14px;">{{item.createTime}}
               <span v-for="n in JSON.parse(item.skuKeyValue)" style="margin:0 5px;">{{n.key}}：{{n.value}}</span>
@@ -150,7 +159,6 @@
               Your browser does not support the video tag.
               </video>
           </div>
-          <div style="height:10px"></div>
 
         <!-- <div style="background-color:#ffffff;margin-top:10px;padding:10px 15px;">
           <div style="display:flex;border-bottom:1px solid #ededed;">
@@ -176,10 +184,23 @@
           </div>
         </div> -->
     
+
+    
+      
+
         <div style="background-color:#ffffff;margin-top:10px;">
+                <van-cell >
+              <template slot="title">
+                <span class="van-cell-text">商品详情</span>
+              </template>
+         
+            </van-cell>
+<div style="min-height:100px;">
           <div v-for="(item,index) in detatil.detail.imageList" :key="index">
             <img v-lazy="item" style="width:100%;"/>
           </div>
+        </div>
+
         </div>
       </div>
         
@@ -285,7 +306,28 @@ export default class ProductDetail extends Vue {
   //           scrollwatch.scrollTo(name)
   //       }
 
-
+  stars = [
+    {
+      src: require("../../assets/image/灰色星星.png"),
+      active: false
+    },
+    {
+      src: require("../../assets/image/灰色星星.png"),
+      active: false
+    },
+    {
+      src: require("../../assets/image/灰色星星.png"),
+      active: false
+    },
+    {
+      src: require("../../assets/image/灰色星星.png"),
+      active: false
+    },
+    {
+      src: require("../../assets/image/灰色星星.png"),
+      active: false
+    }
+  ];
 
 
   tablist = ["大家还看了", "新品推荐"];
