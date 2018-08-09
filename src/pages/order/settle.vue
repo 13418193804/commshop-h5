@@ -171,7 +171,7 @@ if(this.address){
   currentCoupon = null;
   getPreInfo(prepareId) {
     Vue.prototype.$reqFormPost(
-      "/prepare/order/query",
+      "/prepare/query",
       {
         userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
           .userId,
@@ -212,7 +212,7 @@ if(this.address){
       return;
     }
     Vue.prototype.$reqFormPost(
-      "/prepare/order/submit",
+      "/prepare/submit",
       {
         userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
           .userId,

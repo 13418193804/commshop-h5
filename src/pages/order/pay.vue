@@ -132,7 +132,7 @@ if(this.isWeiXin){
             spbillCreateIp:a.getAddressIP().cip,
           body: this.obj["body"],
           outTradeNo: this.obj["payId"],
-          totalFee: 0.01
+          totalFee: this.obj['payTotal']
         },
         res => {
           

@@ -38,7 +38,7 @@ export default class AddressList extends Vue {
   addressList = [];
   selectDefault(params) {
     Vue.prototype.$reqFormPost(
-      "/prepare/order/update",
+      "/prepare/update",
       {
         userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
           .userId,

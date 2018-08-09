@@ -507,7 +507,7 @@ export default class ProductDetail extends Vue {
       return;
     }
     Vue.prototype.$reqFormPost(
-      "/prepare/order/direct",
+      "/prepare/direct",
       {
         userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
           .userId,

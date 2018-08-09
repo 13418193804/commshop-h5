@@ -104,7 +104,7 @@ if(this.addressId){
 }
 
    Vue.prototype.$reqFormPost(
-      "/prepare/order/update",
+      "/prepare/update",
       data,
       res => {
         if (res == null) {
@@ -133,7 +133,7 @@ if(this.addressId){
 
  getPreInfo(prepareId) {
     Vue.prototype.$reqFormPost(
-      "/prepare/order/query",
+      "/prepare/query",
       {
         userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
           .userId,
