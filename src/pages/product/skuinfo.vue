@@ -207,7 +207,7 @@ export default class shopIndex extends Vue {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: 100px;
+  max-width: 200px;
 }
 
 .num_box {

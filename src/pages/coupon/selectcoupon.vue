@@ -14,16 +14,24 @@
         <div class="coupon_list">
           <div v-for="(item,index) in couponList" :key="index">
 
-          <!-- collar列表 -->          
-          <div class="coupon_notused" @click="doChangePreDis(item.id)" :style="handlePX('width', 702)+handlePX('height', 248)+handlePX('margin-top', 20)" >
+          <!-- collar列表 -->
+          <div class="coupon_notused" @click="doChangePreDis(item.couponId)" :style="handlePX('width', 702)+handlePX('height', 248)+handlePX('margin-top', 20)" >
             <div class="coupon_cardbox" :style="handlePX('padding-top', 30)">
               <div class="coupon_car_left" :style="handlePX('padding-left', 60)">
                 <div style="color:#fff;" :style="handlePX('font-size', 65)">{{item.couponDenomination}}<span :style="handlePX('font-size', 42)">元</span></div>
                 <div style="color:rgba(255,255,255,0.8);">满{{item.fullDenomination}}减{{item.couponDenomination}}</div>
               </div>
+
               <div class="coupon_car_right" :style="handlePX('padding-right', 42)+handlePX('padding-top', 20)">
-                <div style="background-color: #FF5359; border: 1px #fff solid;color: #fff;width: 67.5px;height: 25px;" class="flex flex-pack-center flex-align-center">已选择</div>
-                <div style="color:rgba(255,255,255,0.8);" :style="handlePX('font-size', 26)"><span v-if="item.createTime">{{item.createTime.split(' ')[0]}}</span> <span v-if="item.validityTime">-{{item.validityTime.split(' ')[0]}}</span></div>
+
+                <div style="    position: relative;background-color: #FF5359; border: 1px #fff solid;color: #fff;width: 67.5px;height: 25px;" class="flex flex-pack-center flex-align-center" v-if="currentCoupon && currentCoupon.couponId == item.couponId" >
+                <i class="iconfont icon-gouxuan" style="    font-size: 13.8px;
+    position: absolute;
+    right: 0;
+    top: 0;"></i>
+                  已选择
+                  </div>
+                <div style="color:rgba(255,255,255,0.8);" :style="handlePX('font-size', 26)"><span v-if="item.linkUpdateTime">{{item.linkUpdateTime.split(' ')[0]}}</span> <span v-if="item.validityTime">-{{item.validityTime.split(' ')[0]}}</span></div>
               </div>
             </div>
             <div class="coupon_car_bottom" :style="handlePX('line-height', 52)+handlePX('font-size', 20)+handlePX('padding-left', 40)">   <span v-if="item.conditionType == 'NEW_USER'">新人专享;</span>               <span v-if="item.rangeType == 'ALL'">全场通用;</span>               <span v-else>{{item.catName}}类商品适用;</span>               特价商品或其他优惠活动商品不可叠加使用；特价商品或其他优惠活动商品不可叠加使用</div>
@@ -88,6 +96,7 @@ couponList=[]
 addressId = null
 
 doChangePreDis(value){
+
 let data = {
         userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
           .userId,
@@ -98,9 +107,7 @@ let data = {
 }
 
 if(this.addressId){
-  
 (<any>Object).assign(data,{addressId:this.addressId})
-
 }
 
    Vue.prototype.$reqFormPost(
@@ -165,6 +172,7 @@ if(this.addressId){
 currentCoupon=null
 // 可领取列表
   mounted() {
+
 this.prepareId = this.$route.query.prepareId
 if(this.$route.query.addressId){
 this.addressId = this.$route.query.addressId

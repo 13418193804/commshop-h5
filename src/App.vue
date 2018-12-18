@@ -75,27 +75,25 @@ export default class App extends Vue {
 </style>
 
 <style>
-.van-tabbar-item__text{
+ .van-tabbar-item__text{
   position: relative;
 }
-.van-dialog__footer{
-  display: flex;
-}
-.van-search{
-  padding:12px 15px;
-}
+
 .van-tabbar{
-  z-index:200;
+  z-index:200!important;
 }
 .van-tabbar-item--active{
   color: #ffc630;
 }
+/*
 .van-hairline--top-bottom::after {
   border-width: 0;
 }
+
 .van-tab--active {
-  color: #ffc630;
+  color: #ffc630!important;
 }
+
 .van-tabs__nav-bar {
   background-color: rgb(255, 198, 48);
   left: 22px;
@@ -107,15 +105,29 @@ export default class App extends Vue {
   -webkit-overflow-scrolling: touch;
   overflow-x: auto ;
   overflow-y: hidden ;
-  
 }
+
 .van-tab{
   min-width: 79px;
 }
+
 .van-tabs__wrap{
   z-index: 79;
-}
+} */
 
+
+.van-dialog__footer{
+  display: flex;
+}
+.van-search{
+  padding:12px 15px;
+}
+.van-submit-bar__price{
+  flex:1;
+  display: flex;
+    justify-content: flex-end;
+    padding-right: 10px;
+}
 .van-submit-bar__price-interger{
 color:#f44!important;
 }
@@ -201,10 +213,16 @@ color:#f44!important;
 </style>
 
 <style>
+
+
+
+
 .index_tabs .van-tabs__wrap {
   margin-right: 36px;
 }
-
+/* .searchbox1.van-field__control{
+      margin-left: 20px!important;
+} */
 .index_tabs .van-swipe__indicators > i {
   width: 8px;
   height: 8px;
@@ -215,10 +233,31 @@ color:#f44!important;
 .index_tabs .van-swipe__indicators > .van-swipe__indicator--active {
   background-color: #ffc630;
 }
-.van-tabs__wrap {
-  overflow-x: auto;
-}
 .van-tabs__line{
   background-color:#ffc630;
 }
+.van-tab--active{
+  color:#ffc630;
+}
+.van-tabs__line{
+  
+}
+.van-cell:not(:last-child)::after{
+  border: 0!important;
+}
+.van-submit-bar__price::first-letter { font-size: 18px!important; }
+/* 
+.van-tabs__wrap {
+  overflow-x: auto;
+}
+
+.van-picker-column--selected{
+      color: #000!important;
+}
+.van-ellipsis{
+      overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  padding: 0 5px;
+} */
 </style>

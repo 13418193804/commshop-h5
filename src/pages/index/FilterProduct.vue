@@ -6,7 +6,7 @@
       <div style=" margin-top:6px;" @click="onCancel">
           <i   class="iconfont icon-zuo"  style="color:#101010;margin:10px"></i>
       </div>
-     <van-search placeholder="搜索商品" v-model="value"  @search="onSearch"   class="flex-1" style="background-color: #fafafa;" @click="doChange()"/>
+     <van-search placeholder="搜索商品" v-model="value"  @search="onSearch"   class="flex-1 packlll" style="background-color: #fafafa;" @click="doChange()"/>
 </div>
 </form>
    
@@ -17,9 +17,25 @@
 
 
 <div v-if="!model">
+  <div v-if="queryList.length>0" class="flex flex-pack-justify flex-align-center" style="color:#999;padding-left:10px;font-size:15.8px;">
+   <div>搜索记录</div>
+   <div style="padding:10px;" @click="doClear()">
+
+     <i class="iconfont icon-iconfontshanchu3"></i>
+
+     </div>
+  </div>
+<div v-for="(item,index) in queryList" class="slectQuery" @click="slectQuery(item)">
+{{item}}
+</div>
+<div>
+
+</div>
+
+  
 <div style="height:10px;background-color:#f7f7f7;">
 </div>
-  <div class="btmTitle">
+  <div class="" style="padding:10px;color:#999;">
     热门搜索
   </div>
   <div class="btmTitle flex ">
@@ -150,7 +166,7 @@ export default class shopIndex extends Vue {
     this.$router.go(-1);
   }
   loading = false;
- goProductDetail(goodsId) {
+  goProductDetail(goodsId) {
     this.$router.push({
       path: "/productdetail",
       query: {
@@ -163,12 +179,10 @@ export default class shopIndex extends Vue {
     this.loading = true;
     let self = this;
     setTimeout(() => {
-      if(!self.loading){
-
-      self.pageindex = self.pageindex + 10;
-      self.onSearch();
-      self.loading = false;
-
+      if (!self.loading) {
+        self.pageindex = self.pageindex + 10;
+        self.onSearch();
+        self.loading = false;
       }
     }, 1000);
   }
@@ -211,6 +225,19 @@ export default class shopIndex extends Vue {
     this.onSearch();
   }
   pageindex = 10;
+  queryList: any = [];
+  doClear() {
+    this.queryList = [];
+    localStorage.queryList = JSON.stringify(this.queryList);
+  }
+  removeByValue(arr, val) {
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i] == val) {
+        arr.splice(i, 1);
+        break;
+      }
+    }
+  }
 
   onSearch() {
     if ((this.value || "") == "") {
@@ -223,7 +250,7 @@ export default class shopIndex extends Vue {
         .token,
       keyWord: this.value,
       catId: this.catId,
-      page:  0,
+      page: 0,
       pageSize: this.pageindex
     };
     if (this.sortStatus != "") {
@@ -245,20 +272,31 @@ export default class shopIndex extends Vue {
         return;
       }
 
+      this.queryList = localStorage.queryList
+        ? JSON.parse(localStorage.queryList)
+        : [];
 
+      if (
+        this.queryList.filter(item => {
+          return item === this.value;
+        }).length > 0
+      ) {
+        this.removeByValue(this.queryList, this.value);
+      }
+      this.queryList.unshift(this.value);
+      if (this.queryList.length > 3) {
+        this.queryList = [
+          this.queryList[0],
+          this.queryList[1],
+          this.queryList[2]
+        ];
+      }
+      localStorage.queryList = JSON.stringify(this.queryList);
 
-      // this.goodsList = res.data.data.goodsList;
-  console.log("请求完成", res.data.data.goodsList);
-        // let goodsList = this.goodsList ? this.goodsList : [];
- 
-        if (res.data.data.goodsList.length == 20) {
-          this.loading = false;
-        } else {
-          // this.finished = true;
-        }
-        this.goodsList = res.data.data.goodsList;
-
-
+      if (res.data.data.goodsList.length == 20) {
+        this.loading = false;
+      }
+      this.goodsList = res.data.data.goodsList;
 
       this.model = true;
     });
@@ -284,7 +322,9 @@ export default class shopIndex extends Vue {
       this.hotwordList = res.data.data;
     });
   }
-
+  slectQuery(item) {
+    this.value = item;
+  }
   gethotword() {
     Vue.prototype.$reqUrlGet("/hotword/query", {}, res => {
       if (res == null) {
@@ -332,9 +372,14 @@ export default class shopIndex extends Vue {
   }
   catList = [];
   mounted() {
+    this.queryList = localStorage.queryList
+      ? JSON.parse(localStorage.queryList)
+      : [];
+
     this.sortStatus == "";
     this.gethotword();
     this.getCatList();
+(<any>document.getElementsByClassName('van-field__control')[0]).style.marginLeft = "20px"
   }
 }
 </script>
@@ -349,13 +394,14 @@ export default class shopIndex extends Vue {
 .searchbox1 .van-search .van-icon-clear {
   position: absolute;
   right: 5px;
+  padding: 10px;
 }
 .searchbox1 .van-search__input-wrap {
   width: 100%;
   display: flex;
   align-items: center;
   position: relative;
-  padding-right:15px
+  padding-right: 15px;
 }
 .searchbox1 .van-search__action-text {
   white-space: nowrap;
@@ -369,18 +415,19 @@ export default class shopIndex extends Vue {
   background-color: #f0f0f0;
   padding-left: 30px;
   padding-top: 5px;
-  padding-bottom:5px;
-  
+  padding-bottom: 5px;
 }
-.searchbox1 .van-search .van-icon-clear{
-  right:23px
+.searchbox1 .van-search .van-icon-clear {
+  right: 23px;
+  padding: 10px;
 }
-.searchbox1 .van-search{
-  padding:6px 0 0 0;
+.searchbox1 .van-search {
+  padding: 6px 0 0 0;
 }
 .searchbox1 {
   border-bottom: 1px #e5e5e5 solid;
-  position: fixed;    background-color: #fafafa;
+  position: fixed;
+  background-color: #fafafa;
   top: 0;
   width: 100%;
   z-index: 999;
@@ -448,6 +495,14 @@ export default class shopIndex extends Vue {
 .goodsItem {
   width: 50%;
 }
+.slectQuery {
+  padding: 10px;
+  border-bottom: 1px #e5e5e5 solid;
+}
+.slectQuery:active {
+  background: #f2f2f2;
+}
+
 </style>
 
 

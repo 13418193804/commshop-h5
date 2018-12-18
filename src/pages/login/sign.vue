@@ -29,6 +29,30 @@
 <div><p style="color:#d2d2d2;">注册表示您同意<a href="#" style="color:#f4c542;" @click="$router.push('/signtext')">《用户协议》</a></p></div>  
 </div>
         </div>
+
+<div style=" position: relative;">
+  <div style="background-color:rgba(0, 0, 0, 0.498039);    z-index: 99999;position: fixed;width: 100%;height: 100vh;top:0;" class="flex  flex-align-center flex-pack-center" v-show="keepModel" >
+<div style="width: 70%;">
+
+      <div class="sign_success flex  flex-align-center flex-pack-center">
+        <div style="text-align:center;">
+          <div style="font-size:22px;">账号注册成功</div>
+            <img  src="../../assets/image/图案@2x.png" style="margin:20px 0;width: 55%;"/>
+<div class="openApp" @click="openApp">打开App</div>
+</div>
+
+      </div>
+
+<div class="flex  flex-align-center flex-pack-center" style="margin-top: 45px;" >
+            <img  src="../../assets/image/关闭@2x.png" style="width:22px;" @click="keepModel = false"/>
+      </div>
+      </div>
+
+</div>
+</div>
+
+
+
   </div>
 </template>
 
@@ -58,10 +82,9 @@ export default class Sign extends Vue {
   timerNum = 60;
   timer = 60;
   recommontId = "";
+  keepModel = false
   timelop() {
     let self = this;
-
-    console.log("获取验证码");
     self.timer = setInterval(function() {
       self.isGetverify = true;
       if (self.timerNum >= 1) {
@@ -75,8 +98,6 @@ export default class Sign extends Vue {
       //       num : self.timerNum
       //   }
       self.setLoginVerifyCode(self.timerNum);
-
-      console.log(self.timerNum);
     }, 1000);
   }
 
@@ -116,6 +137,9 @@ export default class Sign extends Vue {
         this.timelop();
       }
     );
+  }
+  openApp(){
+    window.location.href = "https://m.yourhr.com.cn/transmit.html"
   }
   vistyText() {
     if (this.$store.getters[Vue.prototype.MutationTreeType.VERCODE] < 60) {
@@ -169,8 +193,16 @@ export default class Sign extends Vue {
 
           return;
         }
+
+      if((this.recommontId||'')===''){
         Toast("注册成功");
         this.$router.push("/login");
+
+      }else{
+        this.keepModel = true
+      }
+
+
 
       }
     );
@@ -231,6 +263,17 @@ export default class Sign extends Vue {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+.sign_success{
+  background-color: #fff;
+        padding:20px;
+    border-radius: 14px;
+}
+.openApp{
+    background-color: rgb(254, 197, 47);
+    color:#fff;
+    border-radius: 2px;
+    padding: 10px;margin:10px;
 }
 </style>
 

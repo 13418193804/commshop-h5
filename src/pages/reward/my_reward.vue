@@ -32,11 +32,17 @@
          
           <li v-for="(item, index) in awardList" :key="index" 
          style="border-bottom:1px solid #e7e7e7;font-size:12px;padding:10px 0;line-height: 22px;">
-      
-         <div v-if="item.awardType == 'DISTRIBUTE'">{{item.member.nickName}}在{{item.createTime}}消费{{item.payTotal}}元，您获得{{item.awardAmount.toFixed(2)}}积分奖励。</div>
          
-         <div v-else>  您在{{item.createTime}}消费{{item.payTotal.toFixed(2)}}元，您获得{{item.awardAmount.toFixed(2)}}积分奖励。</div>
-         
+         <div v-if="item.awardType == 'DISTRIBUTE'">
+           {{item.member.nickName}}在{{item.createTime}}消费{{item.payTotal}}元，您获得{{item.awardAmount.toFixed(2)}}积分奖励。</div>
+         <div  v-if="item.awardType == 'BUY'">  
+           您在{{item.createTime}}消费{{item.payTotal.toFixed(2)}}元，您获得{{item.awardAmount.toFixed(2)}}积分奖励。</div>
+         <div  v-if="item.awardType == 'PROMOTION'">  
+         手机号码为{{item.memberLoginName.substring(0,3)}}****{{item.memberLoginName.substring(6,10)}}已经在中宜严选注册会员，成为您的成员！您获得{{item.awardAmount.toFixed(2)}}积分！</div>
+
+   <div  v-if="item.awardType == 'BUY_SCORE_GOODS'">  
+         您在{{item.createTime}}购买积分商品，消费{{item.awardAmount.toFixed(2)}}积分！</div>
+          <!-- 您在{{item.createTime}}消费{{item.payTotal.toFixed(2)}}元，您获得{{item.awardAmount.toFixed(2)}}积分奖励。</div> -->
          </li>
 
           
@@ -45,9 +51,14 @@
   
         <div class="flex flex-pack-center flex-align-center" style="font-size:14px;padding:15px;">
           <div v-if="loading">加载中...</div>
-          <div v-else>暂无记录</div>
+          <div v-if="awardList.length == 0">暂无记录</div>
+          
         </div>   
+
+        
     </div>
+
+
 
   </div>
 </template>
@@ -67,58 +78,61 @@ import comhead from "../../components/Comhead.vue";
   mixins: [mixin]
 })
 export default class my_reward extends Vue {
-    pageindex = 0;
-    loading = false;
-    award="";
-    awardList=[];
+  pageindex = 0;
+  loading = false;
+  award = "";
+  awardList = [];
 
-    getreward(){
-    Vue.prototype.$reqFormPost("/user/account/query", {
-      userId: this.$store.getters[
-            Vue.prototype.MutationTreeType.TOKEN_INFO
-        ].userId,
-        token: this.$store.getters[
-            Vue.prototype.MutationTreeType.TOKEN_INFO
-        ].token,
-     }, res => {
-      if (res == null) {
-        console.log("网络请求错误！");
-        return;
+  getreward() {
+    Vue.prototype.$reqFormPost(
+      "/user/account/query",
+      {
+        userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .userId,
+        token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .token
+      },
+      res => {
+        if (res == null) {
+          console.log("网络请求错误！");
+          return;
+        }
+        if (res.data.status != 200) {
+          console.log(
+            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+          );
+          Toast(res.data.message);
+          return;
+        }
+        this.award = res.data.data;
       }
-      if (res.data.status != 200) {
-        console.log(
-          "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
-        );
-        Toast(res.data.message)
-        return;
-      }
-      this.award = res.data.data
-    });
+    );
   }
-  get_user_rewardlist(){
-    Vue.prototype.$reqFormPost("/award/record/userquery", {
-      userId: this.$store.getters[
-          Vue.prototype.MutationTreeType.TOKEN_INFO
-      ].userId,
-      token: this.$store.getters[
-          Vue.prototype.MutationTreeType.TOKEN_INFO
-      ].token,
-      page:this.pageindex,
-      pageSize:20
-     }, res => {
-      if (res == null) {
-        console.log("网络请求错误！");
-        return;
-      }
-      if (res.data.status != 200) {
-        console.log(
-          "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
-        );
-        Toast(res.data.message)
-        return;
-      }
-      console.log( res.data.data.awardList,'------')
-      let awardList = this.awardList ? this.awardList : [];
+  get_user_rewardlist() {
+    Vue.prototype.$reqFormPost(
+      "/award/record/userquery",
+      {
+        userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .userId,
+        token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .token,
+        page: this.pageindex,
+        pageSize: 20
+      },
+      res => {
+        if (res == null) {
+          console.log("网络请求错误！");
+          return;
+        }
+        if (res.data.status != 200) {
+          console.log(
+            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+          );
+          Toast(res.data.message);
+          return;
+        }
+        console.log(res.data.data.awardList, "------");
+        let awardList = this.awardList ? this.awardList : [];
 
         for (let i = 0; i < res.data.data.awardList.length; i++) {
           awardList.push(res.data.data.awardList[i]);
@@ -128,29 +142,35 @@ export default class my_reward extends Vue {
           this.loading = false;
         }
         this.awardList = awardList;
- 
-      console.log("awardList",this.awardList);
-    });
+      }
+    );
   }
-    gogetreward(){
-        this.$router.push("/reward");
-    }
-    gorewarddetail(){
+  gogetreward() {
+    this.$router.push("/reward");
+  }
+  gorewarddetail() {
     this.$router.push("/present_record");
   }
-  gomember(){
+  gomember() {
     this.$router.push("/my_member");
   }
-    handlePX(CssName, PxNumber) {
-    return CssName +":" +this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth /750 * PxNumber +"px;";
+  handlePX(CssName, PxNumber) {
+    return (
+      CssName +
+      ":" +
+      this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth /
+        750 *
+        PxNumber +
+      "px;"
+    );
   }
   loadMore() {
     console.log("刷新");
     this.loading = true;
     let self = this;
-      self.pageindex = self.pageindex + 1;
-      self.get_user_rewardlist();
-      self.loading = false;
+    self.pageindex = self.pageindex + 1;
+    self.get_user_rewardlist();
+    self.loading = false;
   }
   mounted() {
     this.getreward();

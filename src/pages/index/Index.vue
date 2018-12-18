@@ -87,12 +87,12 @@
                       </div>
                       <div style="padding-left:10px;" class="textLabel flex-1" :style="handlePX('line-height', 48)">
                         <div>
-                          <img src="../../assets/image/新品特价.png" v-if="goods.isBargain"  :style="handlePX('width',92)+handlePX('height',30)"  style="vertical-align: middle;"/>
+                          <img src="../../assets/image/新品特价.png" v-if="goods.bargainStatus"  :style="handlePX('width',92)+handlePX('height',30)"  style="vertical-align: middle;"/>
                           <span class="textLabel" style="color:#000000;" :style="handlePX('font-size',28)">{{goods.goodsName}}</span>
                         </div>
                         <div class="textLabel"  style="color:#A3A3A3;" :style="handlePX('font-size',28)+handlePX('line-height',44)">{{goods.jingle}}</div>
                         <div>
-                          <span style="color:#E05459" :style="handlePX('font-size',34)">￥{{goods.marketPrice.toFixed(2)}}</span>
+                          <span style="color:#E05459" :style="handlePX('font-size',34)"><span v-if="goods.goodsType =='RETAIL'">￥</span>{{goods.marketPrice.toFixed(2)}}<span v-if="goods.goodsType =='SCORE'">积分</span></span>
                           <span style="color:#C5C4C4;text-decoration:line-through;" :style="handlePX('font-size',24)">原价:{{goods.labelPrice}}</span>
                         </div>
                         <van-button style="border-radius:4%;background-color:#F4C542;color:#FFFFFF;border:#F4C542;" :style="handlePX('width',200)+handlePX('height',55)+handlePX('line-height',55)" @click.stop="doChangeModel(goods.goodsId)">立即抢购</van-button>
@@ -111,11 +111,12 @@
                       </div>
                       <div class="flex flex-pack-center flex-v" style="margin:5px auto;width:-webkit-fill-available;" :style="handlePX('width', 345)">
                         <div>
-                          <img src="../../assets/image/满减.png" v-if="goods.bargainStatus" :style="handlePX('width',52)+handlePX('height',25)"/>
-                          <img src="../../assets/image/特价.png" v-if="goods.isBargain" :style="handlePX('width',52)+handlePX('height',25)"/>
+                         
+                          <img src="../../assets/image/满减.png" v-if="goods.couponList && goods.couponList.length>0" :style="handlePX('width',52)+handlePX('height',25)"/>
+                          <img src="../../assets/image/特价.png" v-if="goods.bargainStatus" :style="handlePX('width',52)+handlePX('height',25)"/>
                         </div>
                         <div class="textLabel" :style="handlePX('font-size',28)+handlePX('line-height',40)">{{goods.goodsName}}</div>
-                        <div style="color:#E05459" :style="handlePX('font-size',30)+handlePX('line-height',40)">￥{{goods.marketPrice.toFixed(2)}}</div>
+                        <div style="color:#E05459" :style="handlePX('font-size',30)+handlePX('line-height',40)"><span v-if="goods.goodsType =='RETAIL'">￥</span>{{goods.marketPrice.toFixed(2)}}<span v-if="goods.goodsType =='SCORE'">积分</span></div>
                       </div>
                     </div>
                   </div>
@@ -135,7 +136,7 @@
         </div>
 
 
-    <div class="goodsTitleTab">
+    <div class="goodsTitleTab" v-if="goodsList.length>0">
                   <div style="">
                     <span style="color:#ffc630;margin:0 3px">G</span>
                     <span>商品列表</span>
@@ -149,31 +150,29 @@
                   <div v-for="(goods,goodsIndex) in goodsList" @click="goProductDetail(goods.goodsId)" :key="goodsIndex" class="goodsItem">
                     <div style="  width:-webkit-fill-available;  ">
                       <div class="flex flex-pack-center flex-align-center" style="border: 1px #e5e5e5 solid;box-sizing: border-box;overflow:hidden;position:relative;margin:5px auto;" :style="handlePX('height', 410)+handlePX('width', 345)">
-                        <img src="../../assets/image/热.png" style="width:-webkit-fill-available;position: absolute;top: 0;left:0;" :style="handlePX('width', 43)+handlePX('height', 49)"/>
+                        <img src="../../assets/image/热.png"  v-if="goods.hotStatus" style="width:-webkit-fill-available;position: absolute;top: 0;left:0;" :style="handlePX('width', 43)+handlePX('height', 49)"/>
                         <img v-lazy="goods.goodsImg.split(',')[0]" style="width:-webkit-fill-available;position: absolute;top: 0;z-index:-1;"/>
                         <div class="textLabel" style="position: absolute;bottom: 0;width: 100%;background-color:rgba(207,207,207,0.3);text-align:center;color:#A3A3A3" :style="handlePX('height', 70)+handlePX('line-height', 70)+handlePX('font-size', 28)">{{goods.jingle}}</div>
                       </div>
                       <div class="flex flex-pack-center flex-v" style="margin:5px auto;width:-webkit-fill-available;" :style="handlePX('width', 345)">
                         <div>
-                          <img src="../../assets/image/满减.png" :style="handlePX('width',52)+handlePX('height',25)"/>
-                          <img src="../../assets/image/特价.png" :style="handlePX('width',52)+handlePX('height',25)"/>
+                          <img src="../../assets/image/满减.png"  v-if="goods.couponList && goods.couponList.length>0" :style="handlePX('width',52)+handlePX('height',25)"/>
+                          <img src="../../assets/image/特价.png"  v-if="goods.bargainStatus" :style="handlePX('width',52)+handlePX('height',25)"/>
                         </div>
                         <div class="textLabel" :style="handlePX('font-size',28)+handlePX('line-height',40)">{{goods.goodsName}}</div>
-                        <div style="color:#E05459" :style="handlePX('font-size',30)+handlePX('line-height',40)">￥{{goods.marketPrice}}</div>
+                        <div style="color:#E05459" :style="handlePX('font-size',30)+handlePX('line-height',40)"><span v-if="goods.goodsType =='RETAIL'">￥</span>{{goods.marketPrice.toFixed(2)}}<span v-if="goods.goodsType =='SCORE'">积分</span></div>
                       </div>
                     </div>
                   </div>
                 </div>
-
 <!-- 商品下拉刷新 -->
 
 
         </div>
-
 <!-- 加多个条件是catId -->
-<div v-if="active == index" style="text-align:center">
-  <div v-if="!loading">加载中...</div>
-<div v-else>-</div>
+<div v-if="active == index && goodsList.length>0" style="text-align:center">
+  <!-- <div v-if="!loading">加载中...</div> -->
+<div >-</div>
 </div>
 
 
@@ -201,8 +200,9 @@
       <div class="flex-1" style='font-size:13px;padding: 10px 0 0 0;'>
         <div style="font-size:16px;">{{detatil['goodsName']}}</div>
         <div style='overflow: hidden;' :style="handlePX('margin-top',20)">
-          <span style='font-size:18px;color:rgb(229, 28, 35)'>￥{{skuItem.marketPrice?skuItem.marketPrice:detatil.marketPrice}}</span>
-          <span class="labelPrice">￥{{detatil['labelPrice']}}</span>
+          <span style='font-size:18px;color:rgb(229, 28, 35)'>
+            <span v-if="detatil.goodsType =='RETAIL'">￥</span>{{skuItem.marketPrice?skuItem.marketPrice:detatil.marketPrice}}<span v-if="detatil.goodsType =='SCORE'">积分</span></span>
+          <span class="labelPrice" v-if="detatil.goodsType =='RETAIL'">￥{{detatil['labelPrice']}}</span>
         </div>
  <div style="font-size:14px;" :style="handlePX('margin-top',10)">
    <span v-if="chosensku.length>0" class="van-cell-text">已选择:
@@ -238,7 +238,7 @@
         <van-goods-action-mini-btn icon="cart"  @click="onClickMiniBtn_cart" class="flex flex-pack-center flex-align-center flex-v" style="border-top:1px #e5e5e5 solid;font-size:22px;padding:0 10px;"/>
         <!-- <van-goods-action-mini-btn icon="like" @click="onClickMiniBtn_collection" :class="{collection_color:isCollection}" class="flex flex-pack-center flex-align-center flex-v" style="border-top:1px #e5e5e5 solid;font-size:22px;padding:0 10px;"/> -->
         <van-goods-action-big-btn text="立即购买" @click="addCar()" class="flex-1"/>
-        <van-goods-action-big-btn text="加入购物车" @click="addCart()" primary class="flex-1"/>
+        <van-goods-action-big-btn text="加入购物车" @click="addCart()" primary class="flex-1" v-if="detatil.goodsType =='RETAIL'"/>
       </van-goods-action>
     </div>
       </div>
@@ -753,10 +753,7 @@ selectPageId = ""
           console.log("网络请求错误！");
           return;
         }
-        if (res.data.status != 200) {
-          console.log(
-            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
-          );
+         if (res.data.status != 200 && (res.data.message ||'') !=='') {
           Toast(res.data.message);
           return;
         }
@@ -958,6 +955,9 @@ selectPageId = ""
 </style>
 
 <style>
+.searchbox{
+  background: rgb(250, 250, 250);
+}
 .searchbox .van-search__input-wrap {
   width: 100%;
   display: flex;
@@ -1058,7 +1058,7 @@ selectPageId = ""
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: 100px;
+  max-width: 200px;
 }
 
 .vangoods {

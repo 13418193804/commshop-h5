@@ -28,14 +28,14 @@
               <div class="textLabel" style="position: absolute;bottom: 0;width: 100%;background-color:rgba(207,207,207,0.3);text-align:center;color:#A3A3A3" :style="handlePX('height', 70)+handlePX('line-height', 70)+handlePX('font-size', 28)">{{item.jingle}}</div>
             </div>
             <div style="margin:0 5px;">
-              
             <div>
-              <img src="../../assets/image/满减.png" v-if="item.bargainStatus" :style="handlePX('width',52)+handlePX('height',25)"/>
+              <img src="../../assets/image/满减.png" v-if="item.couponList && item.couponList.length>0" :style="handlePX('width',52)+handlePX('height',25)"/>
               <img src="../../assets/image/特价.png" v-if="item.isBargain" :style="handlePX('width',52)+handlePX('height',25)"/>
             </div>
            
             <div class="textLabel" :style="handlePX('font-size',28)" style="color:#000000;">{{item.goodsName}}</div>
-            <div :style="handlePX('font-size',30)" style="color:#E05459;">￥{{item.marketPrice}}</div>
+            <div :style="handlePX('font-size',30)" style="color:#E05459;">
+              <span v-if="item.goodsType =='RETAIL'">￥</span>{{ item.goodsType =='RETAIL' ?item.marketPrice:`${item.marketPrice}积分`}}</div>
             </div>
           </div>
         </div>
@@ -60,7 +60,7 @@ import Component from "vue-class-component";
 import Swipe from "../../components/Swipe.vue";
 import mixin from "../../config/mixin";
 import comhead from "../../components/Comhead.vue";
-import { List,Toast } from "vant";
+import { List, Toast } from "vant";
 @Component({
   components: {
     Swipe,
@@ -132,7 +132,7 @@ export default class ProductList extends Vue {
           console.log(
             "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
           );
-          Toast(res.data.message)
+          Toast(res.data.message);
           return;
         }
 
@@ -161,7 +161,7 @@ export default class ProductList extends Vue {
           console.log(
             "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
           );
-          Toast(res.data.message)
+          Toast(res.data.message);
           return;
         }
         this.catlist = res.data.data;

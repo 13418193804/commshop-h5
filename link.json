@@ -1,0 +1,20 @@
+[
+    {
+        "remark": "中宜商城测试场",
+        "host": "222.84.159.205",
+        "username": "root",
+        "port": 60022,
+        "password": "WIM7hf4g",
+        "remotFileUrl": "/usr/local/nginx/custom/",
+        "localFileUrl": "H:/tongyong/commshop-git-h5/dist/"
+    },
+    {
+        "remark": "中宜商城正式场",
+        "host": "139.198.4.66",
+        "username": "root",
+        "port": 11222,
+        "password": "mdkAzn7E8tEyTmH2",
+        "remotFileUrl": "/usr/local/nginx/custom/",
+        "localFileUrl": "H:/tongyong/commshop-git-h5/dist/"
+    }
+]

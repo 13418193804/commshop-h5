@@ -1,8 +1,11 @@
 <template>
-  <div class="tab-contents" >
+  <div class="tab-contents" style="overflow-x: hidden;">
     <comhead ref="comhead" title="购物车"   :rightTitle="isLogin() && cartList.length >0?'删除':false" @rightClick="deleteshopCart()"></comhead>
-<van-checkbox-group v-model="result" @change="checkchange()">
 
+
+
+
+<van-checkbox-group v-model="result" @change="checkchange()">
 <van-cell-swipe :right-width="130" v-for="(item,index) in cartList" :key="index">
   <van-cell-group>
     
@@ -16,13 +19,13 @@
 <div>{{item.goodsName}}</div>
 <div style="font-size:14px;color:#666">{{item.jingle}}</div>
                 <div style="color:red;margin-top">￥{{item.price.toFixed(2)}}</div>
-<van-stepper v-model="item.num" @plus="pluscart(item.id,item.num)" @minus="minuscart(item.id,item.num)" style="float: right;"/>
+<van-stepper v-model="item.num"  @change="changeNum(item.id,item.num)"  @plus="pluscart(item.id,item.num)" @minus="minuscart(item.id,item.num)" style="float: right;"/>
 </div>
 </div>
     
   </van-cell-group>
-  <span slot="right" class="van-cell-swipe__right" @click="deleteCart(index)" >删除</span>
-  <div class="collect flex flex-pack-center flex-align-center" slot="right" @click="collect(index)" style="background-color: #f90;width: 100%;
+  <span slot="right" class="van-swipe-cell__right" style="margin-right: -65px;" @click="deleteCart(index)" >删除</span>
+  <div class=" flex flex-pack-center flex-align-center van-swipe-cell__right"  slot="right" @click="collect(index)" style="background-color: #f90;
     height: 100%;">移至收藏夹</div>
     <div style="background-color:#f7f7f7;height:10px;"></div>
 </van-cell-swipe>
@@ -35,7 +38,7 @@
   <div style="text-align:center;color:#ffc630;font-size:17px;margin-top:10px;" @click="goindex()">立即逛逛>></div>
   </div>
 <div v-else>
-  <div style="margin:10px; color:#666">您还未登录</div>
+  <div style="margin:10px; color:#666">暂未登录，请点击登录查看</div>
   <div  style="text-align:center;color:#ffc630;font-size:17px;" @click="$router.push({name:'login'})">登录</div>
 </div>
 
@@ -285,10 +288,7 @@ export default class Cart extends Vue {
           console.log("网络请求错误！");
           return;
         }
-        if (res.data.status != 200) {
-          console.log(
-            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
-          );
+              if (res.data.status != 200 && (res.data.message ||'') !=='') {
           Toast(res.data.message);
           return;
         }
@@ -314,6 +314,39 @@ export default class Cart extends Vue {
       }
     );
   }
+   changeNum(id, num){
+     if(!num || num == 0){
+return ;
+     }
+setTimeout(()=>{
+Vue.prototype.$reqFormPost(
+      "/shop/cart/updatenum",
+      {
+        userId: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .userId,
+        token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
+          .token,
+        cartId: id,
+        num: num
+      },
+      res => {
+        if (res == null) {
+          console.log("网络请求错误！");
+          return;
+        }
+        if (res.data.status != 200) {
+          console.log(
+            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
+          );
+          Toast(res.data.message);
+          return;
+        }
+        console.log("加1", res.data);
+        this.getCartList();
+      }
+    );
+},500)
+ }
   pluscart(id, num) {
     Vue.prototype.$reqFormPost(
       "/shop/cart/updatenum",
@@ -497,7 +530,7 @@ export default class Cart extends Vue {
 }
 </style>
 <style>
-.van-cell-swipe__right {
+.van-swipe-cell__right {
   color: #fff;
   font-size: 15px;
   width: 65px;
@@ -507,6 +540,7 @@ export default class Cart extends Vue {
   display: flex;
   align-items: center;
   justify-content: center;
+
 }
 .cartItem {
   padding: 10px;
@@ -519,13 +553,22 @@ export default class Cart extends Vue {
 .van-submit-bar__bar {
   border-top: 1px solid #e5e5e5;
   box-sizing: border-box;
+    height: 50px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    font-size: 14px;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    background-color: #fff;
 }
 
 .van-button--danger {
   background-color: #ffc630;
   border: 1px solid #ffc630;
 }
-.van-checkbox__icon{
+/* .van-checkbox__icon{
   display: inline-block;
     vertical-align: middle;
     line-height: 20px;
@@ -536,7 +579,7 @@ export default class Cart extends Vue {
     text-align: center;
     border: 1px solid #ccc;
     color: #fff;
-}
+} */
     
 
 .van-checkbox--checked {

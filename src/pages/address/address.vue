@@ -68,7 +68,7 @@ get editItem(){
 }
 // addressModel="add"
   contents = {
-    address_detail: "",
+    addressDetail: "",
     area_code: "",
     city: "",
     county: "",
@@ -80,7 +80,7 @@ get editItem(){
   };
   isDefault=0;
   isdef(){
-    console.log('s')
+
     if(this.isDefault==0){
       this.isDefault=1
     }else{
@@ -117,7 +117,7 @@ get editItem(){
   }
 
   toolAddress(address) {
-      if(this.contents.address_detail.length<5){
+      if(this.contents.addressDetail.length<5){
         Toast("请填写详细地址并不少于五个字！");
         return
     }
@@ -135,7 +135,7 @@ get editItem(){
           provinceId: address["province"].id,
           cityId: address["city"].id,
           countryId: address["country"].id,
-          address: this.contents.address_detail,
+          address: this.contents.addressDetail,
           contactName: this.contents.name,
           contactMobile: this.contents.tel,
           isDefault: this.contents.is_default ? 1 : 0
@@ -176,7 +176,7 @@ get editItem(){
                provinceId: address["province"].id,
           cityId: address["city"].id,
           countryId: address["country"].id,
-          address: this.contents.address_detail,
+          address: this.contents.addressDetail,
           contactName: this.contents.name,
           contactMobile: this.contents.tel,
           isDefault: this.contents.is_default ? 1 : 0
@@ -263,17 +263,18 @@ get editItem(){
         }
       }
    
+
    for(let n in this.editItem){
    this.contents[n] =  this.editItem[n]
    }
-      this.contents.address_detail = this.editItem.readdress;
+      this.contents.addressDetail = this.editItem.readdress;
       this.contents.is_default = this.editItem.isdefault;
       this.contents.name = this.editItem.contactname;
       this.contents.tel = this.editItem.contactmobile;
       this.contents.area_code = area_codeObj;
     }else{
        this.contents = {
-    address_detail: "",
+    addressDetail: "",
     area_code: "",
     city: "",
     county: "",
@@ -284,7 +285,6 @@ get editItem(){
     tel: ""
   }
     }
-
   }
 }
 </script>

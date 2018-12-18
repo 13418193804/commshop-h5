@@ -17,13 +17,17 @@
                 </div>
                 <div style="padding-left:10px;" class="textLabel flex-1" :style="handlePX('line-height', 48)">
                   <div class="flex flex-align-center" style="max-width:calc;">
-                    <img src="../../assets/image/新品特价.png" v-if="item.isBargain" :style="handlePX('width',92)+handlePX('height',30)" style="vertical-align: middle;"/>
+                    <img src="../../assets/image/特价.png" v-if="item.bargainStatus" :style="handlePX('width',62)+handlePX('height',30)" style="vertical-align: middle;"/>
                     <div class="textLabel" style="color:#000000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" :style="handlePX('font-size',28)+handlePX('width',320)">{{item.goodsName}}</div>
                   </div>
                   <div class="textLabel"  style="color:#A3A3A3;" :style="handlePX('font-size',28)+handlePX('line-height',44)+handlePX('width',!isShow?'460':'370')">{{item.jingle}}</div>
                   <div style="padding-top:5px;">
-                    <span style="color:#E05459" :style="handlePX('font-size',34)">￥{{item.marketPrice}}</span>
-                    <span style="color:#C5C4C4;text-decoration:line-through;margin-left:5px;" :style="handlePX('font-size',24)">原价:{{item.labelPrice}}</span>
+
+                    
+                    <span style="color:#E05459" :style="handlePX('font-size',34)">
+                           <span v-if="item.goodsType =='RETAIL'">￥</span>
+                                      {{item.marketPrice}}<span v-if="item.goodsType =='SCORE'">积分</span></span>
+                    <span style="color:#C5C4C4;text-decoration:line-through;margin-left:5px;" :style="handlePX('font-size',24)" v-if="item.goodsType =='RETAIL'">原价:{{item.labelPrice}}</span>
                   </div>
               </div>
             </div>

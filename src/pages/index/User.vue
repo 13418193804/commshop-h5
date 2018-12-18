@@ -8,10 +8,9 @@
    <div style="line-height:47px;">
 
      <span style="padding: 10px;    position: relative;" @click="goMessageList()">
-       <!--  -->
+
 <i class="iconfont icon-icon-p_xinfeng" style="font-size:25px;"></i>
       <div v-if="messageCount && messageCount!=0" class="messageFexid" style="right: 25px;top: 5px;">{{messageCount}}</div>
-
      </span>
                <span style="padding: 10px;" @click="goshare()">
                   <i class="iconfont icon-erweima" style="font-size:25px;"></i>
@@ -21,11 +20,15 @@
 
             
 
-<div style="font-size:16px;margin:5px 0;" @click="go_essential()">
+<div style="font-size:16px;margin:5px 0;    text-align: center;" @click="go_essential()">
     <img v-if="userIcon" v-lazy="userIcon" style="width:80px;height:80px;border-radius: 80px;"/>
      <img v-else src="../../assets/image/userIcon.png" style="width:80px;height:80px;border-radius: 80px;"/>
     
-    <div style="text-align:center;" v-if="user.loginName||user.nickName">
+    <div style="max-width:250px
+    margin: 0 auto;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;" v-if="user.loginName||user.nickName">
       {{user.nickName?user.nickName:user.loginName}}
       </div>
        <div  v-else> 
@@ -306,10 +309,7 @@ export default class User extends Vue {
           console.log("网络请求错误！");
           return;
         }
-        if (res.data.status != 200) {
-          console.log(
-            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
-          );
+        if (res.data.status != 200 && (res.data.message ||'') !=='') {
           Toast(res.data.message);
           return;
         }

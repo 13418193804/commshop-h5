@@ -9,14 +9,13 @@
         <div v-for="(item,index) in catList" :key="index" class="left-box-item" :class="index == selectIndex?'active':'fontcolor'" @click="selectCategoyItem(index)">
          <div class="flex flex-pack-center flex-align-center" style="position: relative;">
            <div class="activeItem"></div>
-            {{item.label}}</div>
+            <div style=" overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">{{item.label}}</div>
+            </div>
         </div>
   </div>
 
 <div class="rightContent">
      <div v-for="(item,index) in catList" :key="index" v-if="index == selectIndex" style="text-align:center;margin-top:15px;font-size:16px;">{{item.catName}}</div>
-
-
 <div class="catList">
     <div style="width:33%;padding:15px;overflow:hidden;" v-for="(item,index) in catContent" :key="index" @click="goProductList(item.catId,item.parentId,index)">
     <div class="cat-item" >
@@ -98,10 +97,7 @@ export default class Category extends Vue {
           console.log("网络请求错误！");
           return;
         }
-        if (res.data.status != 200) {
-          console.log(
-            "需控制错误码" + res.data.status + ",错误信息：" + res.data.message
-          );
+            if (res.data.status != 200 && (res.data.message ||'') !=='') {
           Toast(res.data.message);
           return;
         }
@@ -167,7 +163,8 @@ export default class Category extends Vue {
 <style lang="scss" scoped>
 @import "../../style/utils.scss";
 .left-box-item {
-  padding: 10px 0;
+  padding: 10px 0 10px 12px;
+   overflow:hidden;white-space:nowrap;text-overflow:ellipsis;
 }
 .contentBody {
   z-index: -1;
@@ -179,7 +176,8 @@ export default class Category extends Vue {
   top: 0;
 }
 .leftTitle {
-  padding-top: 47px;
+   overflow:hidden;white-space:nowrap;text-overflow:ellipsis;
+  padding-top: 54px;
   text-align: center;
   width: 80px;
   height: 100vh;
@@ -301,7 +299,7 @@ export default class Category extends Vue {
     padding: 0 10px;
     position: absolute;
     height: 14px;
-    left: 15px;
+    left: -3px;
   }
 }
 .fontcolor {

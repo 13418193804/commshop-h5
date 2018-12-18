@@ -22,3 +22,8 @@
     //     console.log(res);
     //   }
     // );
+
+//   npm install
+//   npm run dev
+// npm run build
+// ./server 自动打包上传前确认配置好路径 引入 node-ssh

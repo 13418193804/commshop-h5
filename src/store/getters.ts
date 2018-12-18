@@ -59,6 +59,14 @@ export default {
         return state.prepareId;
     },
     [MutationTreeType.SYSTEM](state) {
-        return state.labelActive;
+        if (!state.labelActive.availWidth || !state.labelActive.availHeight) {
+            state.labelActive.availHeight = window.screen.availHeight
+            state.labelActive.availWidth = window.screen.availWidth
+            return state.labelActive;
+        } else {
+
+            return state.labelActive;
+        }
+
     }
 };

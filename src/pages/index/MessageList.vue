@@ -6,17 +6,12 @@
   v-infinite-scroll="loadMore"
   :infinite-scroll-disabled="loading"
   infinite-scroll-distance="20" >
-        <li v-for="(item,index) in messagelist" :key="index" v-if="item.type=='ORDER_MSG'"  @click="goOrderDetail(item)">
-          <div class="flex flex-pack-justify" style="border-bottom:1px solid #f4f4f4;background-color: #fff;" :style="handlePX('padding',20)">
-            <div style="font-size:12px;color:#a9a9a9;">{{item.content}}</div>
-            <div style="font-size:12px;color:#a9a9a9;text-align: right;vertical-align: middle;" :style="handlePX('width',300)">{{item.updateTime}}</div> 
-          </div>
-        </li>
+    
         <!-- 积分消息 -->
-        <li v-for="(item,index) in messagelist" :key="index" v-if="item.type=='AWARD_MSG'"  @click="goReward()">
-          <div class="flex flex-pack-justify" style="border-bottom:1px solid #f4f4f4;background-color: #fff;" :style="handlePX('padding',20)">
-            <div style="font-size:12px;color:#a9a9a9;">{{item.content}}</div>
-            <div style="font-size:12px;color:#a9a9a9;text-align: right;vertical-align: middle;" :style="handlePX('width',300)">{{item.updateTime}}</div> 
+        <li v-for="(item,index) in messagelist" :key="index"   @click="goCenter(item)">
+          <div class="flex flex-pack-justify" style="border-bottom:1px solid #f4f4f4;background-color: #fff;" :style="handlePX('padding',20)+(item.status==false?'font-size: 14px;color:#000':'font-size: 14px;color:#a9a9a9')">
+            <div style="font-size:12px;">{{item.content}}</div>
+            <div style="font-size:12px;text-align: right;vertical-align: middle;" :style="handlePX('width',300)">{{item.updateTime}}</div> 
           </div>
         </li>
  </ul>
@@ -53,15 +48,28 @@ export default class shopIndex extends Vue {
   page=0;
   loadMore(){
     let self = this;
-    self.loading=true;    
+    
     setTimeout(() => {
       if(!self.loading){
-        self.page+=1;
+    self.loading=true;
+       console.log('guolu')  
+        self.pageSize+=20;
         self.getList();
         self.loading = false;
       }
     }, 1000);
   }
+
+goCenter(item){
+
+  if(item.type=='ORDER_MSG'){
+this.goOrderDetail(item);
+  }
+  if(item.type=='AWARD_MSG'){
+this.goReward()
+  }
+}
+
   // 消息订单详情
    goOrderDetail(item) {
    console.log('查看详情')
@@ -86,8 +94,8 @@ export default class shopIndex extends Vue {
         .userId,
       token: this.$store.getters[Vue.prototype.MutationTreeType.TOKEN_INFO]
         .token,
-      page: this.page,
-      pageSize: 20
+      page: 0,
+      pageSize: this.pageSize
  }, res => {
       if (res == null) {
         console.log("网络请求错误！");
@@ -100,11 +108,12 @@ export default class shopIndex extends Vue {
         Toast(res.data.message);
         return;
       }
-    console.log('消息',res.data.data.messageList)
+      console.log(this.messagelist.length ,  res.data.data.messageList.length)
+      if(this.messagelist.length !=    res.data.data.messageList.length){
     this.messagelist = res.data.data.messageList;
-       if (res.data.data.messageList.length == 20) {
           this.loading = false;
-        }
+      }
+      
     });
 
 

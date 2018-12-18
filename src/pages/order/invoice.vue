@@ -1,7 +1,6 @@
  <template>
   <div class="tab-contents" style="height:-webkit-fill-available;background-color:#f3f3f3;">
     <comhead ref="comhead" isLeftIcon="icon-zuo" leftIconName="angle-left" @leftClick="false"  title="发票信息"  rightTitle="保存" @rightClick="save()" ></comhead>
-
     <van-radio-group v-model="titleType">
         <van-cell-group>
             <van-cell title="个人" clickable @click="titleType = 'PERSON'">
@@ -15,17 +14,17 @@
     <van-cell-group style="margin-top: 5px;">
         <van-cell title="抬头" v-if="titleType=='PERSON'">
             <template>
-                <div style="text-align: right;">个人</div>
+                <input type="text" class="van-field__control" v-model="PERSON_invoiceTitle" style="text-align: right;"/>
             </template>
         </van-cell>
         <van-cell title="抬头" v-if="titleType=='COMPANY'">
             <template>
-                <input type="text" class="van-field__control" v-model="invoiceTitle" style="text-align: right;"/>
+                <input type="text" class="van-field__control" v-model="COMPANY_invoiceTitle" style="text-align: right;"/>
             </template>
         </van-cell>
         <van-cell title="纳税人识别号" v-if="titleType=='COMPANY'">
             <template>
-                <input type="text" class="van-field__control" v-model="invoiceNo" style="text-align: right;"/>
+                <input type="text" class="van-field__control" v-model="COMPANY_invoiceNo" style="text-align: right;"/>
             </template>
         </van-cell>
     </van-cell-group>
@@ -46,66 +45,58 @@ import comhead from "../../components/Comhead.vue";
   mixins: [mixin]
 })
 export default class invoice extends Vue {
-    titleType='1';
-    invoiceTitle="";
-    invoiceNo="";
+  titleType = "PERSON";
+  PERSON_invoiceTitle = "个人";
+  invoiceNo = "";
+  COMPANY_invoiceTitle = "";
+  COMPANY_invoiceNo = "";
+  save() {
+    sessionStorage.handleSave = "true";
+    if (
+      (this.titleType == "PERSON" && this.PERSON_invoiceTitle == "") ||
+      (this.titleType == "COMPANY" && this.COMPANY_invoiceTitle == "")
+    ) {
+      Toast("请输入抬头");
+      return;
+    }
+    if (this.titleType == "COMPANY" && this.COMPANY_invoiceNo == "") {
+      Toast("请输入纳税人识别号");
+      return;
+    }
 
-  save(){
-      if(this.titleType=='PERSON'){
-        this.$router.replace({
-            path: "/settle",
-            query: {
-                titleType: 'PERSON',
-            }
-        });
-      }else if(this.titleType=='COMPANY'){
-          if(this.invoiceTitle==""){
-              Toast("请输入抬头");
-              return;
-          }
-          if(this.invoiceNo==""){
-              Toast("请输入纳税人识别号");
-              return;              
-          }
-          this.$router.replace({
-            path: "/settle",
-            query: {
-                titleType: 'COMPANY',
-                invoiceTitle:this.invoiceTitle,
-                invoiceNo:this.invoiceNo,
-            }
-        });
+    this.$router.replace({
+      path: "/settle",
+      query: {
+        titleType: this.titleType,
+        PERSON_invoiceTitle: this.PERSON_invoiceTitle,
+        COMPANY_invoiceTitle: this.COMPANY_invoiceTitle,
+        COMPANY_invoiceNo: this.COMPANY_invoiceNo
       }
-
-
+    });
   }
 
   handlePX(CssName, PxNumber) {
-    return CssName +":" +this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth /750 * PxNumber +"px;";
+    return (
+      CssName +
+      ":" +
+      this.$store.getters[Vue.prototype.MutationTreeType.SYSTEM].availWidth /
+        750 *
+        PxNumber +
+      "px;"
+    );
   }
-
 
   mounted() {
-    
-    console.log("发票信息")
-
-  console.log(  this.$route.query )
-    
-this.titleType =  this.$route.query.titleType
-
-if( this.$route.query.titleType =='COMPANY'){
-            this.invoiceTitle=this.$route.query.invoiceTitle;
-        this.invoiceNo=this.$route.query.invoiceNo;
-}else{
-                this.invoiceTitle="";
-        this.invoiceNo="";
-}
+    console.log("发票信息");
+    console.log(this.$route.query);
+    this.titleType = this.$route.query.titleType;
+    this.COMPANY_invoiceTitle = this.$route.query.COMPANY_invoiceTitle;
+    this.COMPANY_invoiceNo = this.$route.query.COMPANY_invoiceNo;
+    this.PERSON_invoiceTitle = this.$route.query.PERSON_invoiceTitle ||'个人';
 
     //  this.titleType='COMPANY';
-        // this.titlevalue='单位';        
-
+    // this.titlevalue='单位';
   }
-
 }
 </script>
 

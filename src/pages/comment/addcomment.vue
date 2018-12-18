@@ -190,7 +190,7 @@ export default class addcomment extends Vue {
                 orderStatus: "ORDER_WAIT_REVIEW"
               }
             });
-
+            Toast('已提交评论')
         console.log(res.data)
         },
         {
